@@ -1,0 +1,11 @@
+<nav class="panel">
+  <p class="panel-heading d-flex-row align-space-between-center">
+    <span>{{title}}</span>
+    <dato-icon-button datoIcon="expend" datoType="none" class="rotate-90deg" (click)="toggleCode()"></dato-icon-button>
+  </p>
+  <div class="panel-block">
+    <ng-content select="dato-tabs" *ngIf="expended"></ng-content>
+    <ng-content></ng-content>
+  </div>
+</nav>
+

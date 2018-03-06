@@ -1,0 +1,45 @@
+<dato-preview title="Inputs">
+
+  <section>
+    <div style="margin-top: 20px">
+      <dato-input placeholder="Hint" datoSize="sm"></dato-input>
+    </div>
+
+    <div class="d-flex" style="margin-top: 20px">
+      <dato-input placeholder="Hint" [formControl]="control" [debounceTime]="300"></dato-input>
+      <code>
+        {{control.value}}
+      </code>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-input placeholder="Hint" type="search" datoSize="lg"></dato-input>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-input placeholder="Hint" [disabled]="true"></dato-input>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-input placeholder="Hint" type="search"></dato-input>
+    </div>
+
+
+  </section>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+      <dato-input placeholder="Hint" datoSize="sm"></dato-input>
+      <dato-input placeholder="Hint" [formControl]="control" [debounceTime]="300"></dato-input>
+      <dato-input placeholder="Hint" type="search" datoSize="lg"></dato-input>
+      <dato-input placeholder="Hint" [disabled]="true"></dato-input>
+      <dato-input placeholder="Hint" type="search"></dato-input>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      control = new FormControl('initial value');
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>

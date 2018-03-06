@@ -1,0 +1,54 @@
+<dato-preview title="Icons">
+
+  <section class="d-flex flex-wrap">
+    <dato-icon datoIcon="arrow-left" datoSize="sm"></dato-icon>
+    <dato-icon datoIcon="arrow-right" datoColor="primary-400"></dato-icon>
+    <dato-icon datoIcon="arrow-left-double" datoSize="lg" datoColor="accent-700"></dato-icon>
+    <dato-icon datoIcon="arrow-right-double"></dato-icon>
+    <dato-icon datoIcon="expend" datoColor="accent-200"></dato-icon>
+    <dato-icon datoIcon="collapse"></dato-icon>
+  </section>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+
+      <dato-icon datoIcon="arrow-left" datoSize="sm"></dato-icon>
+      <dato-icon datoIcon="arrow-right" datoColor="primary-400"></dato-icon>
+      <dato-icon datoIcon="arrow-left-double" datoSize="lg" datoColor="accent-700"></dato-icon>
+      <dato-icon datoIcon="arrow-right-double"></dato-icon>
+      <dato-icon datoIcon="expend" datoColor="accent-200"></dato-icon>
+      <dato-icon datoIcon="collapse"></dato-icon>
+
+    </textarea>
+
+    <textarea datoHighlight="js">
+      icons = [
+        'arrow-left',
+        'arrow-right',
+        'arrow-left-double',
+        'arrow-right-double',
+        'expend',
+        'collapse',
+        'fit-to-content',
+        'fit-to-container'
+      ];
+    </textarea>
+
+
+  </dato-tabs>
+</dato-preview>
+
+
+<dato-preview title="All Registered Icons">
+
+  <section class="d-flex flex-wrap">
+    <ul>
+      <li *ngFor="let icon of icons" class="icon-list">
+        <dato-icon [datoIcon]="icon" datoSize="lg" datoColor="primary-400"></dato-icon>
+        <dato-text class="icon-name">{{icon}}</dato-text>
+      </li>
+    </ul>
+  </section>
+
+</dato-preview>

@@ -1,0 +1,63 @@
+dato-button button {
+  background-color: themify(accent-400);
+  color: themify((light: primary-0, dark: primary-700));
+}
+
+dato-button button:hover {
+  background-color: themify((light: accent-500, dark: accent-300));
+}
+
+dato-button button:active {
+  background-color: themify((light: accent-600, dark: accent-200));
+}
+
+dato-button button.disabled {
+  background-color: themify(primary-300, 0.1);
+  color: themify(primary-300, 0.5);
+}
+
+/**
+ Secondary
+ */
+dato-button[datoType='secondary'] button {
+  background-color: themify(primary-300, 0.15);
+  color: themify(primary-500);
+}
+
+dato-button[datoType='secondary'] button:hover {
+  background-color: themify(primary-300, 0.25);
+  color: themify(primary-600);
+}
+
+dato-button[datoType='secondary'] button:active {
+  background-color: themify(primary-300, 0.35);
+  color: themify(primary-600);
+}
+
+/**
+ None - no background
+ */
+dato-button[datoType='none'] button {
+  color: themify(primary-300);
+}
+dato-button[datoType='none'] button.disabled {
+  color: themify(primary-300, 0.3);
+}
+:root dato-button[datoType='none'] button,
+:root dato-button[datoType='none'] button.disabled {
+  background-color: transparent;
+}
+
+dato-button[datoType='none'] button:hover:not(.disabled) {
+  color: themify(accent-600);
+}
+:root dato-button[datoType='none'] button:hover {
+  background-color: transparent;
+}
+
+dato-button[datoType='none'] button:active:not(.disabled) {
+  color: themify(primary-600);
+}
+:root dato-button[datoType='none'] button:active {
+  background-color: transparent;
+}

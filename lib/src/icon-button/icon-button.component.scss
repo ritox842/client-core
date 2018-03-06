@@ -1,0 +1,15 @@
+:host {
+  display: inline-block;
+}
+
+:host dato-icon {
+  padding: 3px;
+}
+
+:host[datoSize='md'] dato-icon {
+  padding: 5px;
+}
+
+:host[datoSize='sm'] dato-icon {
+  padding: 2px;
+}

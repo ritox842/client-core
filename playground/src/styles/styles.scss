@@ -1,0 +1,19 @@
+@import '~@datorama/atomic/dist/index.css';
+@import '../../../tmp/bundle.css';
+
+* {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+code * {
+  font-family: Fira Mono, monospace;
+  font-size: 16px;
+}
+
+$navbar-from-color: #606b79;
+$navbar-to-color: #001026;
+
+.navbar {
+  background-image: linear-gradient(to right, $navbar-from-color 0%, $navbar-to-color 100%) !important;
+}

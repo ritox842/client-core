@@ -1,0 +1,275 @@
+<script src="../../../../../../../Downloads/tx.ts"></script>
+<dato-preview title="Introduction">
+  <dato-text>
+    dato-grid component, is a wrapper around AgGrid, with predefined configuration,
+    built-in functionality (such as the pagination component) and opinionated graphic design.<br>
+    dato-toolbar component, integrates with dato-grid and provides easy, opinionated way to interact with the grid.
+
+    <br><br>
+    The toolbar component, can received any ng-template element in the HTML markup,<br>
+    or an array of actions (see the full <a href="/gallery/grid#toolbar_api">API</a> below).
+
+    <br><br>
+    This page does not include how to work with AgGrid API. You can see AgGrid API <a
+    href="https://www.ag-grid.com/javascript-grid-reference-overview/" target="_blank">here</a>.
+  </dato-text>
+</dato-preview>
+
+
+<dato-preview title="Grid">
+  <dato-text>
+    Provides a full example of dato-grid and the toolbar capabillities.<br>
+    The buttons in the toolbar, appended directly in the markup as ng-template.
+    <br> You can choose when to show each button, according to the number of selected rows, or even write your own
+    function.
+    <br> Checkout the source-code for more information.
+  </dato-text>
+  <div style="height: 250px">
+    <dato-grid-toolbar [grid]="gridRef" class="mb-10">
+
+      <ng-template datoGridToolbarItem showWhen="none">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          None
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem showWhen="always">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          Always
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem showWhen="single">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          When Single
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem showWhen="multi">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          When Multiple
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem [showWhen]="myCustomLogic">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          Only when one of the values equal to 5
+        </dato-button>
+      </ng-template>
+
+    </dato-grid-toolbar>
+    <dato-grid [options]="options" #gridRef></dato-grid>
+  </div>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+
+      <dato-grid-toolbar [grid]="gridRef" class="mb-10">
+
+        <ng-template datoGridToolbarItem showWhen="none">
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+            None
+          </dato-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem showWhen="always">
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+            Always
+          </dato-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem showWhen="single">
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+            When Single
+          </dato-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem showWhen="multi">
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+            When Multiple
+          </dato-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem [showWhen]="myCustomLogic">
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+            Only when one of the values equal to 5
+          </dato-button>
+        </ng-template>
+
+      </dato-grid-toolbar>
+
+      <dato-grid [options]="options" #gridRef></dato-grid>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      options: GridOptions = {
+        columnDefs: [
+          {
+            headerName: 'ID',
+            field: 'id',
+            width: 100
+          },
+          {
+            headerName: 'Value',
+            field: 'value',
+            width: 100
+          },
+        ],
+
+        rowData: [...]
+      };
+    </textarea>
+
+
+  </dato-tabs>
+
+
+</dato-preview>
+
+
+<dato-preview title="Grid - With Actions">
+  <dato-text>
+    Provides a simple and intuitive way of configure actions on the toolbar.<br>
+    Instead of defining the ng-template on the markup, you can pass an array of ToolbarAction
+    (see the source-code).<br><br> There are several build-in actions you should use for CRUD actions:<br>
+    <ul>
+      <li class="ml-30" style="list-style-type: disc;">Add button - Used to add new entities.</li>
+      <li class="ml-30" style="list-style-type: disc;">Edit button - Used to edit entities.</li>
+      <li class="ml-30" style="list-style-type: disc;">Delete button - Used to delete entities.</li>
+      <li class="ml-30" style="list-style-type: disc;">Copy button - Used to copy entities.</li>
+    </ul>
+    <br>
+
+  </dato-text>
+
+  <div style="height: 250px">
+    <dato-grid-toolbar [grid]="gridRef2" class="mb-10" [actions]="toolbarActions">
+    </dato-grid-toolbar>
+    <dato-grid [options]="options2" #gridRef2></dato-grid>
+  </div>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
+      </dato-grid-toolbar>
+      <dato-grid [options]="options2" #gridRef></dato-grid>
+    </textarea>
+
+    <textarea datoHighlight="js">
+
+      toolbarActions: ToolbarAction[] = [
+        {
+          actionType: ToolbarActionType.Add,
+          click: function () {
+            alert('you clicked me :)');
+          },
+        },
+        {
+          actionType: ToolbarActionType.Edit,
+          click: function () {
+            alert('you clicked me :)');
+          },
+        },
+        {
+          actionType: ToolbarActionType.Delete,
+          click: function () {
+            alert('you clicked me :)');
+          },
+        },
+        {
+          actionType: ToolbarActionType.Copy,
+          click: function () {
+            alert('you clicked me :)');
+          },
+        },
+        {
+          text: 'cool button',
+          icon: 'edit',
+          showWhen: 'single',
+          click: function () {
+            alert('you clicked me :)');
+          },
+        }
+      ];
+
+      options: GridOptions = {
+        columnDefs: [
+          {
+            headerName: 'ID',
+            field: 'id',
+            width: 100
+          },
+          {
+            headerName: 'Value',
+            field: 'value',
+            width: 100
+          },
+        ],
+
+        rowData: [...]
+      };
+    </textarea>
+
+
+  </dato-tabs>
+
+</dato-preview>
+
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    Grid API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>options</td>
+        <td>GridOptions</td>
+        <td>{{ '{}' }}</td>
+        <td>The grid options</td>
+      </tr>
+    </dato-api-table>
+
+    <dato-api-table type="outputs">
+      <tr>
+        <td>gridReady</td>
+        <td>GridReadyEvent</td>
+        <td>Emits the event when the grid is ready</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>
+
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    <a name="toolbar_api" href="javascript: void(0)"></a>
+    Toolbar API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>grid</td>
+        <td>DatoGridComponent</td>
+        <td>none</td>
+        <td>A reference to DatoGridComponent</td>
+      </tr>
+      <tr>
+        <td>actions</td>
+        <td>ToolbarAction[]</td>
+        <td>[]</td>
+        <td>An array of toolbar buttons</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

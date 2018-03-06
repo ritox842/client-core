@@ -1,0 +1,63 @@
+@import '../scss/helpers';
+
+:host {
+  display: inline-block;
+}
+
+:host input {
+  $height: 30px;
+  height: $height;
+  line-height: $height;
+  border-radius: 2px;
+  padding-left: 10px;
+  padding-right: 25px;
+  font-size: 12px;
+}
+
+:host div {
+  position: relative;
+  overflow: hidden;
+}
+
+:host dato-icon {
+  position: absolute;
+  right: 2px;
+  top: 3px;
+}
+
+:host[datoSize='sm'] dato-icon {
+  right: 3px;
+  top: 1px;
+}
+
+:host[datoSize='lg'] dato-icon {
+  right: 5px;
+  top: 6px;
+}
+
+:host .dato-icon-close {
+  cursor: pointer;
+}
+
+@include size(input, sm) {
+  $height: 25px;
+  height: $height;
+  line-height: $height;
+  font-size: 14px;
+}
+
+@include size(input, lg) {
+  $height: 35px;
+  height: $height;
+  line-height: $height;
+  font-size: 14px;
+}
+
+:host input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+:host input:hover {
+  transition: 0.3s all;
+}

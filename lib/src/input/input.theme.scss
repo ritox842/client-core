@@ -1,0 +1,36 @@
+@import '../scss/helpers.scss';
+
+dato-input input {
+  background-color: themify(primary-0);
+  border: 1px solid themify(primary-200);
+  color: themify(primary-600);
+  @include placeholder() {
+    color: themify(primary-300);
+  }
+}
+
+dato-input input:hover {
+  border-color: themify(primary-300);
+}
+
+dato-input input:focus {
+  border-color: themify(accent-400);
+}
+
+dato-input input[disabled] {
+  background-color: themify(primary-300, 0.1);
+  cursor: not-allowed;
+  border: none;
+}
+
+dato-input input[disabled] ~ dato-icon path {
+  fill: themify(primary-200);
+}
+
+dato-input dato-icon path {
+  fill: themify(primary-300);
+}
+
+dato-input:hover dato-icon path {
+  fill: themify(primary-400);
+}

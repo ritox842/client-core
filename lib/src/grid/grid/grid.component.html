@@ -1,0 +1,12 @@
+<ag-grid-angular #agGrid class="ag-dato-core"
+                 [gridOptions]="gridOptions"
+                 rowHeight="30"
+                 headerHeight="30"
+                 (gridReady)="onGridReady($event)">
+</ag-grid-angular>
+<dato-grid-pagination
+        *ngIf="hasPagination"
+        class="d-flex-row flex-0-0-100"
+        [agGridApi]="gridApi"
+        [agGridColumnApi]="gridColumnApi">
+</dato-grid-pagination>

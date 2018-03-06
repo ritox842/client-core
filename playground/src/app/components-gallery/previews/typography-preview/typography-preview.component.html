@@ -1,0 +1,80 @@
+<dato-preview title="Typography - with components">
+
+  <dato-text type="simple">
+    You can use the <span datoFont="simple-bold">dato-text</span> component, to generate your text.
+    The component adds a <span datoFont="simple-bold">p</span> tag and injects your content to it.
+  </dato-text>
+
+  <dato-text type="headline">headline</dato-text>
+  <dato-text type="sub-headline">sub-headline</dato-text>
+  <dato-text type="simple-bold">simple-bold</dato-text>
+  <dato-text type="simple">simple</dato-text>
+  <dato-text type="simple-italic">simple-italic</dato-text>
+  <dato-text type="note-bold">note-bold</dato-text>
+  <dato-text type="note">note</dato-text>
+  <dato-text type="note-italic">note-italic</dato-text>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+        <dato-text type="headline">headline</dato-text>
+        <dato-text type="sub-headline">sub-headline</dato-text>
+        <dato-text type="simple-bold">simple-bold</dato-text>
+        <dato-text type="simple">simple</dato-text>
+        <dato-text type="simple-italic">simple-italic</dato-text>
+        <dato-text type="note-bold">note-bold</dato-text>
+        <dato-text type="note">note</dato-text>
+        <dato-text type="note-italic">note-italic</dato-text>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Typography - with directives">
+
+    <span datoFont="headline">The gardener</span>
+    <span datoFont="sub-headline">grows grain in the garden</span>,
+    <span datoFont="note-bold">good grain grows in the garden.</span>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <span datoFont="headline">The gardener</span>
+      <span datoFont="sub-headline">grows grain in the garden</span>,
+      <span datoFont="note-bold">good grain grows in the garden.</span>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+
+<dato-preview title="Typography - usage in SASS">
+
+  <dato-text type="simple">
+    The two methods above are considered the <span datoFont="simple-bold">best practice</span>
+    for applying typography in your elements.<br>
+    If you have to use it as part of your CSS, and you don't have an access to the HTML -
+    you can use the <span datoFont="simple-bold">typography mixin</span>. <br>
+    In order to apply one of the predefined typography styles in your SASS classess, <br>
+    you can leverage the <span datoFont="simple-bold">typography mixin</span>.
+    The <span datoFont="simple-bold">typography mixin</span> recieved the name of the typography as a parameter,
+    and generate the appropriate font properties:
+  </dato-text>
+
+
+  <dato-tabs show="sass">
+
+    <textarea datoHighlight="css">
+      .my-class {
+        @include typography(note-bold);
+      }
+      .my-other-class {
+        @include typography(simple);
+      }
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>

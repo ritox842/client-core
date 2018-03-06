@@ -1,0 +1,91 @@
+<div class="d-flex-row flex-auto flex-wrap">
+  <div *ngIf="tablePagesLength > 1" #navigation
+       class="navigation d-flex-row d-flex-0-0-auto align-center"
+       [ngClass]="{'small': smallVersion}">
+
+    <!-- First Page -->
+    <dato-icon-button *ngIf="!disableButtons"
+                      class="mr-4"
+                      datoIcon="arrow-left-double"
+                      datoType="secondary"
+                      datoSize="md"
+                      (click)="navigatePage(0)">
+    </dato-icon-button>
+
+    <!-- Previous Page -->
+    <dato-icon-button datoIcon="arrow-left" datoType="secondary" datoSize="md"
+                      (click)="navigatePage(pageNumbersDisplay.currentPage - 2)">
+    </dato-icon-button>
+
+
+    <div class="d-flex-row mx-5">
+      <dato-link-button class="page-number mx-5" datoType="secondary"
+                        *ngIf="pageNumbersDisplay.showFirstEllipsis && !smallVersion"
+                        (click)="showPreviousBatch()">...
+      </dato-link-button>
+      <dato-link-button class="page-number" datoType="secondary"
+                        *ngFor="let page of pageNumbersDisplay.pages; trackBy: trackByFunc;"
+                        [ngClass]="{'current-page': page === pageNumbersDisplay.currentPage,
+                            'note-bold': page === pageNumbersDisplay.currentPage}"
+                        (click)="navigatePage(page - 1)">
+        {{page}}
+      </dato-link-button>
+
+      <div class="d-flex-row" *ngIf="pageNumbersDisplay.showLastPage && !smallVersion">
+        <dato-link-button class="page-number" datoType="secondary" (click)="showNextBatch()">...</dato-link-button>
+        <dato-link-button class="page-number" datoType="secondary" (click)="navigatePage(tablePagesLength - 1)">
+          {{tablePagesLength}}
+        </dato-link-button>
+      </div>
+
+    </div>
+
+    <!-- Next Page -->
+    <dato-icon-button datoIcon="arrow-right" datoType="secondary" datoSize="md"
+                      (click)="navigatePage(pageNumbersDisplay.currentPage)">
+    </dato-icon-button>
+
+    <!-- Last Page -->
+    <dato-icon-button *ngIf="!disableButtons"
+                      class="ml-4" datoIcon="arrow-right-double"
+                      datoType="secondary" datoSize="md"
+                      (click)="navigatePage(tablePagesLength - 1)">
+    </dato-icon-button>
+
+  </div>
+
+  <div *ngIf="tablePagesLength > 1 && !smallVersion"
+       class="separator mx-10 my-auto" datoColor="primary-100 background">
+  </div>
+
+  <div class="total d-flex-0-0-auto d-flex-row align-center" [ngClass]="{'small': smallVersion}">
+    <dato-text type="note" datoColor="primary-400">{{rowsRange}}</dato-text>
+  </div>
+
+</div>
+
+<div class="d-flex-0-0-auto d-flex-row align-center" *ngIf="!smallVersion">
+
+  <!-- Expend / Collapse -->
+  <dato-icon-button *ngIf="showCollapseExpand"
+                    [datoIcon]="isCollapsed ? 'expand' : 'collapse'"
+                    datoType="secondary"
+                    datoSize="md"
+                    (click)="toggleExpand()">
+  </dato-icon-button>
+
+  <!-- Fit Columns to Content -->
+  <dato-icon-button *ngIf="!showFitToContent"
+                    datoIcon="fit-to-content"
+                    datoType="secondary"
+                    datoSize="md"
+                    (click)="bubbleFitToContentEvent()">
+  </dato-icon-button>
+
+  <!-- Fit Columns to Container -->
+  <dato-icon-button datoIcon="fit-to-container"
+                    datoType="secondary" datoSize="md"
+                    (click)="bubbleFitToContainerEvent()">
+  </dato-icon-button>
+
+</div>

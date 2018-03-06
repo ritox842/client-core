@@ -1,0 +1,25 @@
+@function is-map($var, $getridoferror: none) {
+  @return type-of($var) == 'map';
+}
+
+@function themify($props...) {
+  @if (is-map($props...)) {
+    $value: json-encode($props...);
+    @return "themify(#{$value})";
+  } @else {
+    $color: primary-100;
+    $opacity: 1;
+    $theme: null;
+
+    @if (length($props) >= 1) {
+      $color: nth($props, 1);
+    }
+
+    @if (length($props) >= 2) {
+      $opacity: nth($props, 2);
+    }
+
+    $value: json-encode((light: (#{$color}, #{$opacity}), dark: (#{$color}, #{$opacity})));
+    @return "themify(#{$value})";
+  }
+}

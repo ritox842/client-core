@@ -1,0 +1,69 @@
+@import '../scss/helpers.scss';
+
+:host {
+  display: inline-block;
+}
+
+:host button {
+  border: none;
+  overflow: visible;
+  text-transform: none;
+  appearance: button;
+  cursor: pointer;
+  border-radius: 2px;
+  height: 35px;
+  padding: 0px 15px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/** Size **/
+@include size(button, lg) {
+  height: 35px;
+}
+
+@include size(button, sm) {
+  height: 24px;
+  font-size: 12px;
+}
+
+/** Disabled **/
+:host button.disabled {
+  cursor: not-allowed;
+}
+
+/** Focus **/
+
+:host button:focus {
+  outline: none;
+}
+
+/** Circle & Icons Buttons **/
+
+:host[datoCircle] button {
+  border-radius: 50%;
+}
+
+// Large Circle
+:host[datoCircle] button,
+:host.dato-icon-button button {
+  padding: 0;
+  width: 34px;
+  height: 34px;
+}
+
+:host[datoCircle][datoSize='md'] button,
+:host.dato-icon-button[datoSize='md'] button {
+  width: 24px;
+  height: 24px;
+}
+
+:host[datoCircle][datoSize='sm'] button,
+:host.dato-icon-button[datoSize='sm'] button {
+  width: 16px;
+  height: 16px;
+}
+
+:host:not([datoCircle]) ::ng-deep dato-icon {
+  margin-right: 10px;
+}

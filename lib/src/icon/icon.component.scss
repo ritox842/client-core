@@ -1,0 +1,31 @@
+$icon-sm-size: 12px;
+$icon-md-size: 24px;
+$icon-lg-size: 36px;
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  fill: currentColor;
+  width: $icon-md-size;
+  height: $icon-md-size;
+}
+
+:host[datoSize='lg'],
+dato-button[datoSize='lg'] :host {
+  width: $icon-lg-size;
+  height: $icon-lg-size;
+}
+
+:host[datoSize='md'],
+dato-button[datoSize='md'] :host {
+  width: $icon-md-size;
+  height: $icon-md-size;
+}
+
+:host[datoSize='sm'],
+dato-button[datoSize='sm'] :host {
+  width: $icon-sm-size;
+  height: $icon-sm-size;
+}

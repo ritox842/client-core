@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {GridOptions} from 'ag-grid';
 import {RowSelectionType, ToolbarAction, ToolbarActionType} from "../../../../../../lib";
+import {timer} from "rxjs/observable/timer";
+import {mapTo} from "rxjs/operators";
 
 @Component({
   selector: 'dato-grid-preview',
@@ -63,16 +65,27 @@ export class GridPreviewComponent implements OnInit {
 
   options2 : GridOptions;
 
-  constructor() {
-
+  ngOnInit() {
+    this.options2 = {...this.options};
+    this.options2.rowData = [{
+      id: 1,
+      value: 'one'
+    }]
   }
 
-  ngOnInit() {
-    // add rows
+  ready( grid ) {
+    this.asyncRows().subscribe(res => {
+      grid.api.setRowData(res);
+    });
+  }
+
+  asyncRows() {
+    let rows = [];
     for ( let i = 0; i < 1000; i ++ ) {
-      this.options.rowData.push({id: i, value: i * 5});
+      rows.push({id: i, value: i * 5});
     }
-    this.options2 = {...{}, ...this.options};
+    return timer(3000).pipe(mapTo(rows))
+
   }
 
   myCustomLogic( selectedRows : any[] ) {

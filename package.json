@@ -53,5 +53,7 @@
     "through2": "^2.0.3",
     "zone.js": "^0.8.19"
   },
-  "dependencies": {}
+  "dependencies": {
+    "popper.js": "^1.12.9"
+  }
 }

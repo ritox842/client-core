@@ -1,5 +1,5 @@
 import {
-  AfterContentInit, Component, ContentChildren, ElementRef, HostListener, Input, OnInit, QueryList,
+  AfterContentInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostListener, Input, OnInit, QueryList,
   ViewChild, ViewChildren
 } from '@angular/core';
 import {DatoGridToolbarItemDirective} from './grid-toolbar-item.directive';
@@ -88,7 +88,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
     return [ ...this.items.toArray(), ...this.actionItems.toArray() ];
   }
 
-  constructor() {
+  constructor( private cdr : ChangeDetectorRef ) {
   }
 
   ngOnInit() {
@@ -100,8 +100,6 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * @memberof DaGridToolbarComponent
    */
   ngAfterContentInit() {
-
-
   }
 
   /**
@@ -114,10 +112,6 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
     this.gridApi.sizeColumnsToFit();
   }
 
-  /**
-   *
-   * @memberof DaGridToolbarComponent
-   */
   ngOnDestroy() {
     // @TakeUntilDestroy()
   }
@@ -140,6 +134,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
 
     this.selectedRowsCount = rowsCount;
     this._filterItems(false, rowsCount, rowData);
+    this.cdr.detectChanges();
   }
 
   /**
@@ -185,7 +180,6 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
     // 2. Group the items by their area
     this.filteredItems = this.itemTemplates.filter(( item ) => {
       const condition = item.showWhen || 'always';
-
       if ( isFunction(condition) ) {
         return this._handleCustomFunction(condition, data);
       } else {
@@ -207,8 +201,6 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
 
       return previousValue;
     }), initialItems);
-
-
   }
 
   /**
@@ -260,14 +252,14 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
   }
 
   /**
-   * @private
-   * @param {(string | showWhenFunc)} condition
+   *
+   * @param {string | showWhenFunc} condition
    * @param {number} rowsCount
-   * @returns
-   * @memberof DaGridToolbarComponent
+   * @returns {boolean}
+   * @private
    */
   private _isMultiple( condition : string | showWhenFunc, rowsCount : number ) {
-    return condition === RowSelectionType.MULTI && rowsCount >= 1;
+    return condition === RowSelectionType.MULTI && rowsCount > 1;
   }
 
   /**

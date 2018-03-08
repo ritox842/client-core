@@ -1,9 +1,10 @@
-import {Attribute, Component, Input} from '@angular/core';
+import {Attribute, ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 @Component({
   selector: 'dato-icon-button',
   templateUrl: './icon-button.component.html',
-  styleUrls: [ './icon-button.component.scss' ]
+  styleUrls: [ './icon-button.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatoIconButtonComponent {
 

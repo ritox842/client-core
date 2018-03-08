@@ -58,7 +58,7 @@
       </ng-template>
 
     </dato-grid-toolbar>
-    <dato-grid [options]="options" #gridRef></dato-grid>
+    <dato-grid [options]="options" #gridRef (gridReady)="ready($event)"></dato-grid>
   </div>
 
   <dato-tabs show="html,js">

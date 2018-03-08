@@ -1,0 +1,8 @@
+<div>
+  <span></span>
+  <ng-content></ng-content>
+  details/undo
+  <button *ngIf="detailsFunction" (click)="detailsFunction()">Details</button>
+  <button *ngIf="undoFunction" (click)="undoFunction()">Undo</button>
+  <span *ngIf="dismissible" (click)="onClose()">x</span>
+</div>

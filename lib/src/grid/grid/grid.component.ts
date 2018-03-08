@@ -17,21 +17,24 @@ import {ColumnApi, GridApi, GridOptions, GridReadyEvent} from 'ag-grid';
   encapsulation: ViewEncapsulation.None
 })
 export class DatoGridComponent {
+  @Output() rowDataChanged = new EventEmitter();
 
   private defaultGridOptions : GridOptions = {
     // Replace the build-in pagination
     suppressPaginationPanel: true,
     pagination: true,
-
+    onRowDataChanged: ( event ) => {
+      this.rowDataChanged.emit(event);
+    },
     rowSelection: 'multiple',
     rowDeselection: true
   };
 
-  @HostBinding('class.grid-pagination') hasPagination = true;
-
   gridApi : GridApi;
   gridColumnApi : ColumnApi;
   gridOptions : GridOptions;
+
+  @HostBinding('class.grid-pagination') hasPagination = true;
 
   @Input()
   set options( options : GridOptions ) {

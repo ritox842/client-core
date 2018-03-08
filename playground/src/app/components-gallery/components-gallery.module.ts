@@ -19,6 +19,7 @@ import {GridPreviewComponent} from './previews/grid-preview/grid-preview.compone
 import {InputsPreviewComponent} from './previews/inputs-preview/inputs-preview.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DatoCoreModule} from "../../../../lib";
+import {ActionMenuPreviewComponent} from "./previews/action-menu-preview/action-menu-preview.component";
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import {DatoCoreModule} from "../../../../lib";
     ColorsPreviewComponent,
     IconsPreviewComponent,
     GridPreviewComponent,
-    InputsPreviewComponent
+    InputsPreviewComponent,
+    ActionMenuPreviewComponent
   ]
 })
 export class ComponentsGalleryModule {

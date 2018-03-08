@@ -3877,6 +3877,14 @@ dato-text *, [datoFont] {
     color: rgba(var(--primary-500), 1);
 }
 
+dato-action-menu-item:hover {
+    background-color: rgba(var(--primary-100), 1);
+}
+
+dato-dropdown {
+    background-color: rgba(var(--primary-0), 1);
+}
+
 .dark .primary-700-color {
     color: rgba(var(--primary-700), 1);
 }
@@ -5099,4 +5107,12 @@ dato-text *, [datoFont] {
 
 .dark dato-text *, [datoFont] {
     color: rgba(var(--primary-500), 1);
+}
+
+.dark dato-action-menu-item:hover {
+    background-color: rgba(var(--primary-100), 1);
+}
+
+.dark dato-dropdown {
+    background-color: rgba(var(--primary-0), 1);
 }

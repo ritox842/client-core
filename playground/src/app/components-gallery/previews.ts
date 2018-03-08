@@ -4,6 +4,7 @@ import { ColorsPreviewComponent } from './previews/colors-preview/colors-preview
 import { IconsPreviewComponent } from './previews/icons-preview/icons-preview.component';
 import { GridPreviewComponent } from './previews/grid-preview/grid-preview.component';
 import { InputsPreviewComponent } from './previews/inputs-preview/inputs-preview.component';
+import {ActionMenuPreviewComponent} from "./previews/action-menu-preview/action-menu-preview.component";
 
 export const previews = [
   ButtonsPreviewComponent,
@@ -11,7 +12,8 @@ export const previews = [
   ColorsPreviewComponent,
   IconsPreviewComponent,
   GridPreviewComponent,
-  InputsPreviewComponent
+  InputsPreviewComponent,
+  ActionMenuPreviewComponent
 ];
 
 export const routeToComponent = {
@@ -20,5 +22,6 @@ export const routeToComponent = {
   colors: ColorsPreviewComponent,
   icons: IconsPreviewComponent,
   grid: GridPreviewComponent,
-  inputs: InputsPreviewComponent
+  inputs: InputsPreviewComponent,
+  menu: ActionMenuPreviewComponent
 };

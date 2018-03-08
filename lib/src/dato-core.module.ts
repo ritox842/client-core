@@ -8,20 +8,28 @@ import {DatoIconModule} from "./icon/icon.module";
 import {DatoLinkButtonModule} from "./link-button/link-button.module";
 import {DatoTextModule} from "./text/text.module";
 import {DatoGridModule} from "./grid/grid.module";
+import {DatoDirectives} from "./directives/directives.module";
+import {DatoActionMenuModule} from "./action-menu/action-menu.module";
+import {DatoDropdownModule} from "./shared/dropdown/dropdown.module";
+import {DatoSnackbar} from "./services/snackbar.service";
 
 const modules = [
+  DatoDirectives,
   DatoButtonModule,
   DatoThemesModule,
   DatoInputModule,
   DatoIconModule,
   DatoLinkButtonModule,
   DatoTextModule,
-  DatoGridModule
+  DatoGridModule,
+  DatoActionMenuModule,
+  DatoDropdownModule
 ];
 
 const providers = [
   IconRegistry,
-  ThemeManager
+  ThemeManager,
+  DatoSnackbar
 ];
 
 @NgModule({

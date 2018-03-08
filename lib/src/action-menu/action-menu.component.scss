@@ -1,0 +1,19 @@
+dato-action-menu {
+  display: inline-block;
+}
+
+dato-action-menu-item {
+  display: block;
+  height: 35px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.dato-overlay-clean {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+}

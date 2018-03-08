@@ -1,11 +1,12 @@
-import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 import {kebabCase} from "@datorama/utils";
 import {IconRegistry} from "../services/icon-registry";
 
 @Component({
   selector: 'dato-icon',
   template: '',
-  styleUrls: [ './icon.component.scss' ]
+  styleUrls: [ './icon.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatoIconComponent implements OnInit {
 

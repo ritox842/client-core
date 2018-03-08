@@ -1,4 +1,4 @@
-export const enum RowSelectionType {
+export enum RowSelectionType {
   SINGLE = 'single',
   MULTI = 'multi',
   ALWAYS = 'always',

@@ -1,21 +1,29 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter,
-  Input, OnChanges, Output, ViewChild
+  Input, OnChanges, OnInit, Output, ViewChild
 } from '@angular/core';
-import {ColumnApi, GridApi} from 'ag-grid';
+import {AgGridEvent, ColumnApi, GridApi} from 'ag-grid';
+import {Subject} from "rxjs/Subject";
+import {takeUntil} from "rxjs/operators";
+import {OnDestroy, TakeUntilDestroy} from "ngx-take-until-destroy";
+import {Observable} from "rxjs/Observable";
 
 interface Translations {
   of : string;
   items : string;
 }
 
+@TakeUntilDestroy()
 @Component({
   selector: 'dato-grid-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './grid-pagination.component.html',
   styleUrls: [ './grid-pagination.component.scss' ]
 })
-export class DatoGridPaginationComponent implements OnChanges {
+export class DatoGridPaginationComponent implements OnInit, OnDestroy {
+  destroyed$ : Observable<boolean>;
+
+
   // number of rows in the table
   private rowCount : number;
   private rowsPerPage : number;
@@ -44,6 +52,8 @@ export class DatoGridPaginationComponent implements OnChanges {
   /** Whether to shot the Fit-To-Content button */
   @Input() showFitToContent = true;
 
+  @Input() rowDataChanged : Subject<AgGridEvent>;
+
   /** bubble fit to container event */
   @Output() fitToContainer : EventEmitter<any> = new EventEmitter();
   /** bubble fit to content event */
@@ -62,6 +72,40 @@ export class DatoGridPaginationComponent implements OnChanges {
     if ( content && this.smallVersion === null ) {
       this.calculateNavigationSize();
     }
+  }
+
+
+  ngOnInit() {
+    this.rowDataChanged
+      .pipe(
+        takeUntil(this.destroyed$)
+      )
+      .subscribe(( event : AgGridEvent ) => {
+        this.calcPagination(event);
+      });
+  }
+
+  /**
+   *
+   * @param {AgGridEvent} gridApi
+   */
+  private calcPagination( gridApi : AgGridEvent ) {
+    this.showCollapseExpand = gridApi.columnApi.isPivotMode() && this.agGridColumnApi.getRowGroupColumns().length > 1;
+    // The length of the pages starting from 1
+    this.tablePagesLength = gridApi.api.paginationGetTotalPages();
+
+    this.rowCount = gridApi.api.paginationGetRowCount();
+
+    this.rowsPerPage = gridApi.api.paginationGetPageSize();
+
+    // Set the init value of the pagination view to normal size
+    this.pagesInView = this.DISPLAY_LENGTH;
+
+    // Current page index starts from 0
+    if ( this.agGridApi ) {
+      this.navigatePage(0);
+    }
+    this.changeDetector.detectChanges();
   }
 
   /**
@@ -99,26 +143,6 @@ export class DatoGridPaginationComponent implements OnChanges {
     // TODO: replace with a real translation
     this.translations.of = 'Of';
     this.translations.items = 'Items';
-  }
-
-  ngOnChanges( changeObj ) {
-    // kick the component when api is given
-    if ( changeObj.agGridApi && changeObj.agGridApi.currentValue ) {
-      this.showCollapseExpand = this.agGridColumnApi.isPivotMode() && this.agGridColumnApi.getRowGroupColumns().length > 1;
-
-      // The length of the pages starting from 1
-      this.tablePagesLength = this.agGridApi.paginationGetTotalPages();
-
-      this.rowCount = this.agGridApi.paginationGetRowCount();
-
-      this.rowsPerPage = this.agGridApi.paginationGetPageSize();
-
-      // Set the init value of the pagination view to normal size
-      this.pagesInView = this.DISPLAY_LENGTH;
-
-      // Current page index starts from 0
-      this.navigatePage(0);
-    }
   }
 
   /**
@@ -215,6 +239,9 @@ export class DatoGridPaginationComponent implements OnChanges {
    */
   trackByFunc( index : number, page : number ) {
     return page;
+  }
+
+  ngOnDestroy() : void {
   }
 
   /**

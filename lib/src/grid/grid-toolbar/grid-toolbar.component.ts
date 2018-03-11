@@ -1,72 +1,84 @@
 import {
-  AfterContentInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostListener, Input, OnInit, QueryList,
-  ViewChild, ViewChildren
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
 } from '@angular/core';
-import {DatoGridToolbarItemDirective} from './grid-toolbar-item.directive';
-import {debounce, delay} from 'helpful-decorators';
-import {DatoGridComponent} from '../grid/grid.component';
-import {Events, GridApi, GridReadyEvent} from 'ag-grid';
-import {first, takeUntil} from 'rxjs/operators';
-import {TakeUntilDestroy, OnDestroy} from 'ngx-take-until-destroy';
-import {Observable} from 'rxjs/Observable';
-import {RowSelectionType, showWhenFunc, ToolbarAction, ToolbarActionType, ToolbarArea} from './grid-toolbar';
-import {HashMap, isFunction} from "@datorama/utils";
+import { DatoGridToolbarItemDirective } from './grid-toolbar-item.directive';
+import { debounce, delay } from 'helpful-decorators';
+import { DatoGridComponent } from '../grid/grid.component';
+import { Events, GridApi, GridReadyEvent } from 'ag-grid';
+import { first, takeUntil } from 'rxjs/operators';
+import { TakeUntilDestroy, OnDestroy } from 'ngx-take-until-destroy';
+import { Observable } from 'rxjs/Observable';
+import {
+  RowSelectionType,
+  showWhenFunc,
+  ToolbarAction,
+  ToolbarActionType,
+  ToolbarArea
+} from './grid-toolbar';
+import { HashMap, isFunction } from '@datorama/utils';
 
 @TakeUntilDestroy()
 @Component({
   selector: 'dato-grid-toolbar',
   templateUrl: './grid-toolbar.component.html',
-  styleUrls: [ './grid-toolbar.component.scss' ]
+  styleUrls: ['./grid-toolbar.component.scss']
 })
 export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContentInit {
-
-  private areaActions : HashMap<ToolbarArea> = {
-    [ ToolbarActionType.Button ]: ToolbarArea.Left,
-    [ ToolbarActionType.Add ]: ToolbarArea.InternalArea,
-    [ ToolbarActionType.Copy ]: ToolbarArea.PreservedArea,
-    [ ToolbarActionType.Edit ]: ToolbarArea.PreservedArea,
-    [ ToolbarActionType.Delete ]: ToolbarArea.PreservedArea,
-    [ ToolbarActionType.MenuItem ]: ToolbarArea.Menu
+  private areaActions: HashMap<ToolbarArea> = {
+    [ToolbarActionType.Button]: ToolbarArea.Left,
+    [ToolbarActionType.Add]: ToolbarArea.InternalArea,
+    [ToolbarActionType.Copy]: ToolbarArea.PreservedArea,
+    [ToolbarActionType.Edit]: ToolbarArea.PreservedArea,
+    [ToolbarActionType.Delete]: ToolbarArea.PreservedArea,
+    [ToolbarActionType.MenuItem]: ToolbarArea.Menu
   };
 
-  private gridApi : GridApi;
+  private gridApi: GridApi;
 
   private selectedRowsCount = 0;
 
-  destroyed$ : Observable<boolean>;
+  destroyed$: Observable<boolean>;
 
-  @Input() actions : ToolbarAction[];
+  @Input() actions: ToolbarAction[];
 
   @Input()
-  set grid( grid : DatoGridComponent ) {
-    if ( grid && ! this.gridApi ) {
-
+  set grid(grid: DatoGridComponent) {
+    if (grid && !this.gridApi) {
       // get gridApi
-      grid.gridReady.pipe(
-        takeUntil(this.destroyed$),
-        first()
-      ).subscribe(( event : GridReadyEvent ) => {
-        this.gridApi = event.api;
-        this.onGridReady();
-      });
+      grid.gridReady
+        .pipe(takeUntil(this.destroyed$), first())
+        .subscribe((event: GridReadyEvent) => {
+          this.gridApi = event.api;
+          this.onGridReady();
+        });
     }
   }
 
   get leftAreaItems() {
-    return this.filteredItems[ ToolbarArea.Left ];
+    return this.filteredItems[ToolbarArea.Left];
   }
 
   get preservedAreaItems() {
-    return this.filteredItems[ ToolbarArea.PreservedArea ];
+    return this.filteredItems[ToolbarArea.PreservedArea];
   }
 
   get internalAreaItems() {
-    return this.filteredItems[ ToolbarArea.InternalArea ];
+    return this.filteredItems[ToolbarArea.InternalArea];
   }
 
-  @ContentChildren(DatoGridToolbarItemDirective) items : QueryList<DatoGridToolbarItemDirective>;
-  @ViewChildren(DatoGridToolbarItemDirective) actionItems : QueryList<DatoGridToolbarItemDirective>;
-  @ViewChild('container') container : ElementRef;
+  @ContentChildren(DatoGridToolbarItemDirective) items: QueryList<DatoGridToolbarItemDirective>;
+  @ViewChildren(DatoGridToolbarItemDirective) actionItems: QueryList<DatoGridToolbarItemDirective>;
+  @ViewChild('container') container: ElementRef;
 
   open = false;
 
@@ -74,33 +86,28 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * Contains the custom elements
    * @type {any[]}
    */
-  filteredItems : HashMap<DatoGridToolbarItemDirective[]> = {
-    [ ToolbarArea.Menu ]: [],
-    [ ToolbarArea.Left ]: [],
-    [ ToolbarArea.PreservedArea ]: [],
-    [ ToolbarArea.InternalArea ]: []
+  filteredItems: HashMap<DatoGridToolbarItemDirective[]> = {
+    [ToolbarArea.Menu]: [],
+    [ToolbarArea.Left]: [],
+    [ToolbarArea.PreservedArea]: [],
+    [ToolbarArea.InternalArea]: []
   };
-
 
   selectedRows = [];
 
   get itemTemplates() {
-    return [ ...this.items.toArray(), ...this.actionItems.toArray() ];
+    return [...this.items.toArray(), ...this.actionItems.toArray()];
   }
 
-  constructor( private cdr : ChangeDetectorRef ) {
-  }
+  constructor(private cdr: ChangeDetectorRef) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   /**
    *
    * @memberof DaGridToolbarComponent
    */
-  ngAfterContentInit() {
-  }
+  ngAfterContentInit() {}
 
   /**
    *
@@ -117,7 +124,10 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
   }
 
   private onGridReady() {
-    this.gridApi.addEventListener(Events.EVENT_SELECTION_CHANGED, this.rowSelectionChange.bind(this));
+    this.gridApi.addEventListener(
+      Events.EVENT_SELECTION_CHANGED,
+      this.rowSelectionChange.bind(this)
+    );
 
     this._filterItems(true);
     this.fitGridSizeOnInit();
@@ -128,7 +138,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
     const rowsCount = rowData.length;
     this.open = false;
 
-    if ( this._shouldNotRerender(rowsCount) ) {
+    if (this._shouldNotRerender(rowsCount)) {
       return;
     }
 
@@ -144,8 +154,8 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * @returns
    * @memberof DaGridToolbarComponent
    */
-  private _shouldNotRerender( rowsCount : number ) {
-    return this.selectedRowsCount === rowsCount && ! this._hasCustomFunctions();
+  private _shouldNotRerender(rowsCount: number) {
+    return this.selectedRowsCount === rowsCount && !this._hasCustomFunctions();
   }
 
   /**
@@ -155,7 +165,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * @memberof DaGridToolbarComponent
    */
   private _hasCustomFunctions() {
-    return this.itemTemplates.filter(( item ) => isFunction(item.showWhen)).length;
+    return this.itemTemplates.filter(item => isFunction(item.showWhen)).length;
   }
 
   /**
@@ -167,40 +177,42 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * @returns
    * @memberof DaGridToolbarComponent
    */
-  private _filterItems( init : boolean, rowsCount? : number, data? : any ) {
-
-    const initialItems : HashMap<DatoGridToolbarItemDirective[]> = {
-      [ ToolbarArea.Menu ]: [],
-      [ ToolbarArea.Left ]: [],
-      [ ToolbarArea.PreservedArea ]: [],
-      [ ToolbarArea.InternalArea ]: []
+  private _filterItems(init: boolean, rowsCount?: number, data?: any) {
+    const initialItems: HashMap<DatoGridToolbarItemDirective[]> = {
+      [ToolbarArea.Menu]: [],
+      [ToolbarArea.Left]: [],
+      [ToolbarArea.PreservedArea]: [],
+      [ToolbarArea.InternalArea]: []
     };
 
     // 1. decide which items to show, based on their condition
     // 2. Group the items by their area
-    this.filteredItems = this.itemTemplates.filter(( item ) => {
-      const condition = item.showWhen || 'always';
-      if ( isFunction(condition) ) {
-        return this._handleCustomFunction(condition, data);
-      } else {
-        return (
-          this._isSingle(condition, rowsCount) ||
-          this._isMultiple(condition, rowsCount) ||
-          this._isNone(condition, rowsCount) ||
-          this._showAlways(condition)
-        );
-      }
-    }).sort(( a, b ) => {
-      return a.order - b.order;
-    }).reduce((( previousValue, currentValue ) => {
-      // retrieve the item type. Default to custom
-      const actionType = currentValue.actionType || ToolbarActionType.Button;
-      // get the area we need to place this item
-      const area : ToolbarArea = this.areaActions[ actionType ];
-      previousValue[ area ].push(currentValue);
+    this.filteredItems = this.itemTemplates
+      .filter(item => {
+        const condition = item.showWhen || 'always';
+        if (isFunction(condition)) {
+          return this._handleCustomFunction(condition, data);
+        } else {
+          return (
+            this._isSingle(condition, rowsCount) ||
+            this._isMultiple(condition, rowsCount) ||
+            this._isNone(condition, rowsCount) ||
+            this._showAlways(condition)
+          );
+        }
+      })
+      .sort((a, b) => {
+        return a.order - b.order;
+      })
+      .reduce((previousValue, currentValue) => {
+        // retrieve the item type. Default to custom
+        const actionType = currentValue.actionType || ToolbarActionType.Button;
+        // get the area we need to place this item
+        const area: ToolbarArea = this.areaActions[actionType];
+        previousValue[area].push(currentValue);
 
-      return previousValue;
-    }), initialItems);
+        return previousValue;
+      }, initialItems);
   }
 
   /**
@@ -209,7 +221,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * @returns {boolean}
    * @private
    */
-  private _showAlways( condition ) {
+  private _showAlways(condition) {
     return condition === RowSelectionType.ALWAYS;
   }
 
@@ -221,8 +233,8 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * @returns
    * @memberof DaGridToolbarComponent
    */
-  private _handleCustomFunction( condition : string | showWhenFunc, selectedRows : any[] ) {
-    if ( isFunction(condition) ) {
+  private _handleCustomFunction(condition: string | showWhenFunc, selectedRows: any[]) {
+    if (isFunction(condition)) {
       return (condition as Function)(selectedRows || []);
     }
     return false;
@@ -236,7 +248,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * @returns
    * @memberof DaGridToolbarComponent
    */
-  private _isSingle( condition : string | showWhenFunc, rowsCount : number ) {
+  private _isSingle(condition: string | showWhenFunc, rowsCount: number) {
     return condition === RowSelectionType.SINGLE && rowsCount === 1;
   }
 
@@ -247,8 +259,8 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * @return {boolean}
    * @private
    */
-  private _isNone( condition : string | showWhenFunc, rowsCount : number | undefined ) {
-    return condition === RowSelectionType.NONE && ! rowsCount;
+  private _isNone(condition: string | showWhenFunc, rowsCount: number | undefined) {
+    return condition === RowSelectionType.NONE && !rowsCount;
   }
 
   /**
@@ -258,7 +270,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * @returns {boolean}
    * @private
    */
-  private _isMultiple( condition : string | showWhenFunc, rowsCount : number ) {
+  private _isMultiple(condition: string | showWhenFunc, rowsCount: number) {
     return condition === RowSelectionType.MULTI && rowsCount > 1;
   }
 
@@ -271,5 +283,4 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
   private fitGridSizeOnInit() {
     this.gridApi.sizeColumnsToFit();
   }
-
 }

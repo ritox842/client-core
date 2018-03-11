@@ -5,7 +5,7 @@ export enum RowSelectionType {
   NONE = 'none'
 }
 
-export type showWhenFunc = ( data : any ) => boolean;
+export type showWhenFunc = (data: any) => boolean;
 
 /**
  * Define the type of this action
@@ -43,7 +43,6 @@ export enum ToolbarActionType {
 }
 
 export enum ToolbarArea {
-
   /**
    * This area, preserved for build-in actions
    */
@@ -60,10 +59,10 @@ export enum ToolbarArea {
 }
 
 export interface ToolbarAction {
-  actionType? : ToolbarActionType;
-  order? : number;
-  text? : string;
-  icon? : string;
-  showWhen? : RowSelectionType | showWhenFunc;
-  click? : () => void;
+  actionType?: ToolbarActionType;
+  order?: number;
+  text?: string;
+  icon?: string;
+  showWhen?: RowSelectionType | showWhenFunc;
+  click?: () => void;
 }

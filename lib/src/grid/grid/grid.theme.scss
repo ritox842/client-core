@@ -1,6 +1,7 @@
 @import '../../scss/typography.scss';
 @import '../../../../node_modules/ag-grid/src/styles/ag-theme-classic-common';
 @import '../../../../node_modules/ag-grid/src/styles/ag-theme-classic-vars';
+@import '../grid-header/grid-header.theme';
 
 $icons-path: "/node_modules/ag-grid/src/styles/icons/";
 

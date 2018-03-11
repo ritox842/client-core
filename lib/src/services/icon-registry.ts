@@ -1,28 +1,26 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import coreIcons from '../svg/svg';
-import {HashMap, kebabCase} from '@datorama/utils';
+import { HashMap, kebabCase } from '@datorama/utils';
 
 class SvgIconConfig {
-
   /**
    * SVG element contents
    * @type {null}
    */
-  contents : string = null;
+  contents: string = null;
 
   /**
    * Whether the SVG already contains the valid attributes
    */
   appliedAttributes = false;
 
-  constructor( contents : string ) {
+  constructor(contents: string) {
     this.contents = contents;
   }
 }
 
 @Injectable()
 export class IconRegistry {
-
   private svgMap = new Map<string, SvgIconConfig>();
 
   constructor() {
@@ -34,17 +32,16 @@ export class IconRegistry {
    * Register SVG
    * @param {HashMap<string>} svg
    */
-  register( svg : HashMap<string> ) {
-    if ( ! svg ) {
+  register(svg: HashMap<string>) {
+    if (!svg) {
       return;
     }
 
     const svgKeys = Object.keys(svg);
-    for ( const key of svgKeys ) {
-
+    for (const key of svgKeys) {
       this.validateSvgKey(key);
 
-      const svgContents = svg[ key ];
+      const svgContents = svg[key];
       const config = new SvgIconConfig(svgContents);
       this.svgMap.set(key, config);
     }
@@ -55,12 +52,12 @@ export class IconRegistry {
    * @param {string} key
    * @return {string}
    */
-  getSvg( key : string ) : string {
+  getSvg(key: string): string {
     const config = this.svgMap.get(key);
     let svgContent;
-    if ( config ) {
+    if (config) {
       // add default attributes to the SVG
-      if ( ! config.appliedAttributes ) {
+      if (!config.appliedAttributes) {
         this.applySvgAttibutes(config);
       }
 
@@ -75,7 +72,7 @@ export class IconRegistry {
    * @param {string} key
    * @return {boolean}
    */
-  hasSvg( key : string ) : boolean {
+  hasSvg(key: string): boolean {
     return this.svgMap.has(key);
   }
 
@@ -84,7 +81,7 @@ export class IconRegistry {
    * and apply the default attributes
    * @param {SvgIconConfig} config
    */
-  private applySvgAttibutes( config : SvgIconConfig ) {
+  private applySvgAttibutes(config: SvgIconConfig) {
     const svg = this.svgElementFromString(config.contents);
     this.setSvgAttributes(svg);
     config.contents = svg.outerHTML;
@@ -94,11 +91,11 @@ export class IconRegistry {
   /**
    * Creates a DOM element from the given SVG string.
    */
-  private svgElementFromString( str : string ) : SVGElement {
+  private svgElementFromString(str: string): SVGElement {
     const div = document.createElement('DIV');
     div.innerHTML = str;
     const svg = div.querySelector('svg') as SVGElement;
-    if ( ! svg ) {
+    if (!svg) {
       throw Error('<svg> tag not found');
     }
 
@@ -108,8 +105,8 @@ export class IconRegistry {
   /**
    * Sets the default attributes for an SVG element to be used as an icon.
    */
-  private setSvgAttributes( svg : SVGElement ) : SVGElement {
-    if ( ! svg.getAttribute('xmlns') ) {
+  private setSvgAttributes(svg: SVGElement): SVGElement {
+    if (!svg.getAttribute('xmlns')) {
       svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
     }
     svg.setAttribute('fit', '');
@@ -126,9 +123,9 @@ export class IconRegistry {
    * Make sure the SVG key is a kebabCase
    * @param {string} svgKey
    */
-  private validateSvgKey( svgKey : string ) {
+  private validateSvgKey(svgKey: string) {
     const isValid = svgKey && kebabCase(svgKey) === svgKey;
-    if ( ! isValid ) {
+    if (!isValid) {
       throw new Error(`The SVG key '${svgKey}' should be in kebabCase.`);
     }
   }
@@ -137,7 +134,7 @@ export class IconRegistry {
    * Return all registered icons
    * @return {string[]}
    */
-  getAll() : string[] {
+  getAll(): string[] {
     return Array.from(this.svgMap.keys());
   }
 }

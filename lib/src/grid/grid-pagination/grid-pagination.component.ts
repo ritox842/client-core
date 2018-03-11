@@ -1,16 +1,24 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter,
-  Input, OnChanges, OnInit, Output, ViewChild
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild
 } from '@angular/core';
-import {AgGridEvent, ColumnApi, GridApi} from 'ag-grid';
-import {Subject} from "rxjs/Subject";
-import {takeUntil} from "rxjs/operators";
-import {OnDestroy, TakeUntilDestroy} from "ngx-take-until-destroy";
-import {Observable} from "rxjs/Observable";
+import { AgGridEvent, ColumnApi, GridApi } from 'ag-grid';
+import { Subject } from 'rxjs/Subject';
+import { takeUntil } from 'rxjs/operators';
+import { OnDestroy, TakeUntilDestroy } from 'ngx-take-until-destroy';
+import { Observable } from 'rxjs/Observable';
 
 interface Translations {
-  of : string;
-  items : string;
+  of: string;
+  items: string;
 }
 
 @TakeUntilDestroy()
@@ -18,48 +26,47 @@ interface Translations {
   selector: 'dato-grid-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './grid-pagination.component.html',
-  styleUrls: [ './grid-pagination.component.scss' ]
+  styleUrls: ['./grid-pagination.component.scss']
 })
 export class DatoGridPaginationComponent implements OnInit, OnDestroy {
-  destroyed$ : Observable<boolean>;
-
+  destroyed$: Observable<boolean>;
 
   // number of rows in the table
-  private rowCount : number;
-  private rowsPerPage : number;
-  private translations : Partial<Translations> = {};
+  private rowCount: number;
+  private rowsPerPage: number;
+  private translations: Partial<Translations> = {};
   // how many numbers are showing on the same time besides the last page number
-  private _pagesInView : number;
+  private _pagesInView: number;
   // The number of pages displayed on each side of the selected page.
-  private pagesOnSides : number;
+  private pagesOnSides: number;
   // if the number of pages in the table fits the number of displaying pages
-  private pagesFitView : boolean;
+  private pagesFitView: boolean;
   // how many numbers to show on each side besides the selected number
-  private navigationElement : ElementRef;
+  private navigationElement: ElementRef;
   // The number of pages displayed in the navigation panel for each view as defined by product.
-  private readonly MINI_DISPLAY_LENGTH : number = 2;
-  private readonly DISPLAY_LENGTH : number = 5;
+  private readonly MINI_DISPLAY_LENGTH: number = 2;
+  private readonly DISPLAY_LENGTH: number = 5;
   // Widget's width the determines the pagination view type [ small, xs] as defined by product.
-  private readonly XS_DISPLAY_SIZE : number = 160;
-  private readonly SMALL_DISPLAY_SIZE : number = 390;
+  private readonly XS_DISPLAY_SIZE: number = 160;
+  private readonly SMALL_DISPLAY_SIZE: number = 390;
 
   /** The ag-grid api */
-  @Input() agGridApi : GridApi;
+  @Input() agGridApi: GridApi;
   /** The ag-grid column api */
-  @Input() agGridColumnApi : ColumnApi;
+  @Input() agGridColumnApi: ColumnApi;
   /** update the expand collapse item according to the table state */
-  @Input() isCollapsed : boolean;
+  @Input() isCollapsed: boolean;
   /** Whether to shot the Fit-To-Content button */
   @Input() showFitToContent = true;
 
-  @Input() rowDataChanged : Subject<AgGridEvent>;
+  @Input() rowDataChanged: Subject<AgGridEvent>;
 
   /** bubble fit to container event */
-  @Output() fitToContainer : EventEmitter<any> = new EventEmitter();
+  @Output() fitToContainer: EventEmitter<any> = new EventEmitter();
   /** bubble fit to content event */
-  @Output() fitToContent : EventEmitter<any> = new EventEmitter();
+  @Output() fitToContent: EventEmitter<any> = new EventEmitter();
   /** bubble grouped row expand collapse */
-  @Output() toggleRowGroup : EventEmitter<any> = new EventEmitter();
+  @Output() toggleRowGroup: EventEmitter<any> = new EventEmitter();
 
   /**
    * This setter is used to assign the navigation element ref and to set
@@ -67,30 +74,26 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * @param {ElementRef} content
    */
   @ViewChild('navigation')
-  set content( content : ElementRef ) {
+  set content(content: ElementRef) {
     this.navigationElement = content;
-    if ( content && this.smallVersion === null ) {
+    if (content && this.smallVersion === null) {
       this.calculateNavigationSize();
     }
   }
 
-
   ngOnInit() {
-    this.rowDataChanged
-      .pipe(
-        takeUntil(this.destroyed$)
-      )
-      .subscribe(( event : AgGridEvent ) => {
-        this.calcPagination(event);
-      });
+    this.rowDataChanged.pipe(takeUntil(this.destroyed$)).subscribe((event: AgGridEvent) => {
+      this.calcPagination(event);
+    });
   }
 
   /**
    *
    * @param {AgGridEvent} gridApi
    */
-  private calcPagination( gridApi : AgGridEvent ) {
-    this.showCollapseExpand = gridApi.columnApi.isPivotMode() && this.agGridColumnApi.getRowGroupColumns().length > 1;
+  private calcPagination(gridApi: AgGridEvent) {
+    this.showCollapseExpand =
+      gridApi.columnApi.isPivotMode() && this.agGridColumnApi.getRowGroupColumns().length > 1;
     // The length of the pages starting from 1
     this.tablePagesLength = gridApi.api.paginationGetTotalPages();
 
@@ -102,7 +105,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
     this.pagesInView = this.DISPLAY_LENGTH;
 
     // Current page index starts from 0
-    if ( this.agGridApi ) {
+    if (this.agGridApi) {
       this.navigatePage(0);
     }
     this.changeDetector.detectChanges();
@@ -113,7 +116,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * panel & update the number of pages displayed on each side of the selected page.
    * @param {number} newNumbersLength - The new length of the displaying numbers
    */
-  set pagesInView( newNumbersLength : number ) {
+  set pagesInView(newNumbersLength: number) {
     this._pagesInView = newNumbersLength;
     this.pagesOnSides = Math.floor(this._pagesInView / 2);
     this.pagesFitView = this._pagesInView + 1 >= this.tablePagesLength;
@@ -122,24 +125,24 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
   }
 
   // when the widget's width is smaller than XS_DISPLAY_SIZE disable go to first/last buttons
-  disableButtons : boolean = null;
+  disableButtons: boolean = null;
   // when the widget's width is smaller than SMALL_DISPLAY_SIZE change to small pagination view
-  smallVersion : boolean | null = null;
+  smallVersion: boolean | null = null;
   // number of pages in the table
-  tablePagesLength : number;
+  tablePagesLength: number;
   // Is the table cross tab table
   showCollapseExpand = false;
   // The display rows range
-  rowsRange : string;
+  rowsRange: string;
   // managing object for the navigation
-  pageNumbersDisplay : any = {
+  pageNumbersDisplay: any = {
     currentPage: 0,
     pages: [],
     showFirstEllipsis: false,
     showLastPage: false
   };
 
-  constructor( private changeDetector : ChangeDetectorRef ) {
+  constructor(private changeDetector: ChangeDetectorRef) {
     // TODO: replace with a real translation
     this.translations.of = 'Of';
     this.translations.items = 'Items';
@@ -151,18 +154,18 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * we call the reflow function.
    */
   calculateNavigationSize() {
-    if ( this.navigationElement ) {
+    if (this.navigationElement) {
       const elementWidth = this.navigationElement.nativeElement.parentElement.clientWidth;
       this.disableButtons = elementWidth < this.XS_DISPLAY_SIZE;
       const navigateTo = this.pageNumbersDisplay.currentPage - 1;
-      if ( elementWidth < this.SMALL_DISPLAY_SIZE ) {
-        if ( this._pagesInView !== this.MINI_DISPLAY_LENGTH ) {
+      if (elementWidth < this.SMALL_DISPLAY_SIZE) {
+        if (this._pagesInView !== this.MINI_DISPLAY_LENGTH) {
           this.smallVersion = true;
           this.pagesInView = this.MINI_DISPLAY_LENGTH;
           this.navigatePage(navigateTo);
         }
       } else {
-        if ( this._pagesInView !== this.DISPLAY_LENGTH ) {
+        if (this._pagesInView !== this.DISPLAY_LENGTH) {
           this.smallVersion = false;
           this.pagesInView = this.DISPLAY_LENGTH;
           this.navigatePage(navigateTo);
@@ -177,8 +180,8 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * updates the displaying page numbers and the current number.
    * @param pageNumber - The page number to navigate to
    */
-  navigatePage( pageNumber ) {
-    if ( pageNumber >= 0 && pageNumber <= this.tablePagesLength - 1 ) {
+  navigatePage(pageNumber) {
+    if (pageNumber >= 0 && pageNumber <= this.tablePagesLength - 1) {
       this.agGridApi.paginationGoToPage(pageNumber);
       // Add 1 because ag-grid API works with first index 0
       const displayNumber = pageNumber + 1;
@@ -186,7 +189,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
       // Set the displaying rows range
       this.setRowsDisplayRange(pageNumber);
 
-      if ( this.pageNumbersDisplay.pages.length === 0 || ! this.pagesFitView ) {
+      if (this.pageNumbersDisplay.pages.length === 0 || !this.pagesFitView) {
         this.pageNumbersDisplay.pages = this.getPages(displayNumber);
       }
     }
@@ -196,7 +199,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * updates the displaying page numbers to show the next numbers set
    */
   showNextBatch() {
-    const anchor = this.pageNumbersDisplay.pages[ 0 ] + this._pagesInView + this.pagesOnSides;
+    const anchor = this.pageNumbersDisplay.pages[0] + this._pagesInView + this.pagesOnSides;
     this.pageNumbersDisplay.pages = this.getPages(anchor);
   }
 
@@ -204,7 +207,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * updates the displaying page numbers to show the previous numbers set
    */
   showPreviousBatch() {
-    const anchor = this.pageNumbersDisplay.pages[ 0 ] - this._pagesInView + this.pagesOnSides;
+    const anchor = this.pageNumbersDisplay.pages[0] - this._pagesInView + this.pagesOnSides;
     this.pageNumbersDisplay.pages = this.getPages(anchor);
   }
 
@@ -237,25 +240,24 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * @param page - the current item's page number
    * @return {number}
    */
-  trackByFunc( index : number, page : number ) {
+  trackByFunc(index: number, page: number) {
     return page;
   }
 
-  ngOnDestroy() : void {
-  }
+  ngOnDestroy(): void {}
 
   /**
    * Sets the rows display string
    * @param pageNumber - The current page number (starting index 0)
    * @private
    */
-  private setRowsDisplayRange( pageNumber ) : void {
+  private setRowsDisplayRange(pageNumber): void {
     const firstRowIndex = 1 + pageNumber * this.rowsPerPage;
     const lastRow = (pageNumber + 1) * this.rowsPerPage;
     const lastRowIndex = this.rowCount > lastRow ? lastRow : this.rowCount;
     this.rowsRange = `${firstRowIndex} - ${lastRowIndex} ${this.translations.of} ${this.rowCount} ${
       this.translations.items
-      }`;
+    }`;
   }
 
   /**
@@ -264,23 +266,24 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * @return {number[]} - An array of the new numbers to display
    * @private
    */
-  private getPages( anchor : number ) : number[] {
+  private getPages(anchor: number): number[] {
     const pagesToDisplay = [];
     // indicates rather the table has more pages than the display length, we add 1 because of
     // a logic that says that if your current view is 1 number away from the last page
     // display him as well.
-    this.pageNumbersDisplay.showLastPage = ! this.pagesFitView && anchor + this.pagesOnSides < this.tablePagesLength;
-    this.pageNumbersDisplay.showFirstEllipsis = ! this.pagesFitView && anchor - this.pagesOnSides > 1;
+    this.pageNumbersDisplay.showLastPage =
+      !this.pagesFitView && anchor + this.pagesOnSides < this.tablePagesLength;
+    this.pageNumbersDisplay.showFirstEllipsis =
+      !this.pagesFitView && anchor - this.pagesOnSides > 1;
 
     // set the first number to be displayed
     const firstNumber = this.getFirstPageNumber(anchor);
     const loopLength = this.pagesFitView ? this.tablePagesLength : this._pagesInView;
-    for ( let i = 0; i < loopLength; i ++ ) {
+    for (let i = 0; i < loopLength; i++) {
       pagesToDisplay.push(firstNumber + i);
     }
     // If the last displayed number is 1 number before the last page display him as well
-    if ( ! this.smallVersion
-      && pagesToDisplay[ loopLength - 1 ] + 1 === this.tablePagesLength ) {
+    if (!this.smallVersion && pagesToDisplay[loopLength - 1] + 1 === this.tablePagesLength) {
       pagesToDisplay.push(this.tablePagesLength);
       this.pageNumbersDisplay.showLastPage = false;
     }
@@ -293,19 +296,18 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * @return {number} - The first number to be displayed
    * @private
    */
-  private getFirstPageNumber( anchor : number ) : number {
+  private getFirstPageNumber(anchor: number): number {
     let firstNumber = anchor - this.pagesOnSides;
     // If in small version show only next page so set first page to anchor
-    if ( this.smallVersion && anchor > 1 ) {
-      if ( anchor !== this.tablePagesLength ) {
+    if (this.smallVersion && anchor > 1) {
+      if (anchor !== this.tablePagesLength) {
         firstNumber = anchor;
       }
-    } else if ( ! this.pageNumbersDisplay.showFirstEllipsis ) {
+    } else if (!this.pageNumbersDisplay.showFirstEllipsis) {
       firstNumber = 1;
-    } else if ( ! this.pageNumbersDisplay.showLastPage ) {
+    } else if (!this.pageNumbersDisplay.showLastPage) {
       firstNumber = this.tablePagesLength - (this._pagesInView - 1);
     }
     return firstNumber;
   }
-
 }

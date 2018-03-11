@@ -8,10 +8,10 @@ import {
   OnDestroy,
   Renderer2,
   ViewEncapsulation
-} from "@angular/core";
-import {DatoOriginDirective} from "../directives/public_api";
+} from '@angular/core';
+import { DatoOriginDirective } from '../directives/public_api';
 import Popper from 'popper.js';
-import {DatoDropdownComponent} from "./../shared/dropdown/dropdown.component";
+import { DatoDropdownComponent } from './../shared/dropdown/dropdown.component';
 import PopperOptions = Popper.PopperOptions;
 
 // TODO: wrap within overlay/animations
@@ -19,24 +19,21 @@ import PopperOptions = Popper.PopperOptions;
 @Component({
   selector: 'dato-action-menu',
   template: '<ng-content></ng-content>',
-  styleUrls: [ './action-menu.component.scss' ],
+  styleUrls: ['./action-menu.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatoActionMenuComponent implements AfterContentInit, OnDestroy {
+  @ContentChild(DatoOriginDirective) origin: DatoOriginDirective;
+  @ContentChild(DatoDropdownComponent) dropdown: DatoDropdownComponent;
 
-  @ContentChild(DatoOriginDirective) origin : DatoOriginDirective;
-  @ContentChild(DatoDropdownComponent) dropdown : DatoDropdownComponent;
+  @Input() placement = 'bottom-start';
 
-  @Input() placement = "bottom-start";
-
-  private popper : Popper;
+  private popper: Popper;
   private isOpen = false;
   private originSub;
 
-  constructor( private host : ElementRef,
-               private renderer : Renderer2 ) {
-  }
+  constructor(private host: ElementRef, private renderer: Renderer2) {}
 
   // @HostListener("document:click", [ "$event.target" ])
   // click( target ) {
@@ -45,15 +42,13 @@ export class DatoActionMenuComponent implements AfterContentInit, OnDestroy {
   //   }
   // }
 
-
   /**
    * Subscribe to the origin click event
    */
   ngAfterContentInit() {
     this.originSub = this.origin.click.subscribe(_ => {
-
-      this.isOpen = ! this.isOpen;
-      if ( this.isOpen ) {
+      this.isOpen = !this.isOpen;
+      if (this.isOpen) {
         this.open();
       } else {
         this.close();
@@ -67,10 +62,9 @@ export class DatoActionMenuComponent implements AfterContentInit, OnDestroy {
   open() {
     // const overlay = this.createOverlay();
     // overlay.appendChild(this.dropdown.element);
-    document.body.appendChild(this.dropdown.element)
+    document.body.appendChild(this.dropdown.element);
     this.popper = new Popper(this.origin.element, this.dropdown.element, this.getOptions() as any);
   }
-
 
   /**
    * Destroy popper and hide the dropdown
@@ -86,9 +80,9 @@ export class DatoActionMenuComponent implements AfterContentInit, OnDestroy {
    * @param {boolean} show
    * @private
    */
-  private toggleDropdown( show = true ) {
-    const display = show ? "inline-block" : "none";
-    this.renderer.setStyle(this.dropdown.element, "display", display);
+  private toggleDropdown(show = true) {
+    const display = show ? 'inline-block' : 'none';
+    this.renderer.setStyle(this.dropdown.element, 'display', display);
   }
 
   /**
@@ -107,7 +101,7 @@ export class DatoActionMenuComponent implements AfterContentInit, OnDestroy {
           }
         }
       }
-    }
+    };
   }
 
   private createOverlay() {
@@ -124,5 +118,4 @@ export class DatoActionMenuComponent implements AfterContentInit, OnDestroy {
     this.originSub && this.originSub.unsubscribe();
     this.close();
   }
-
 }

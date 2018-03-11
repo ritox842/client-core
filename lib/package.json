@@ -1,6 +1,6 @@
 {
   "name": "@datorama/core",
-  "version": "1.0.0-beta",
+  "version": "1.0.5-beta",
   "repository": {
     "type": "git",
     "url": "url"
@@ -11,12 +11,25 @@
   "license": "MIT",
   "scripts": {
     "build": "gulp --gulpfile build-tools/gulpfile.js",
+    "commitmsg": "commitlint -e $GIT_PARAMS",
+    "commit": "git-cz",
+    "precommit": "lint-staged",
+    "format": "prettier --write --config .prettierrc src/*.ts src/**/*.ts src/**/**/**.ts",
     "watch": "gulp --gulpfile build-tools/gulpfile.js -- watch:themes"
   },
   "main": "./bundles/datorama.umd.js",
   "es2015": "./esm2015/datorama.js",
   "module": "./esm5/datorama.es5.js",
   "typings": "./datorama.d.ts",
+  "src/**/*.ts": [
+    "npm run format",
+    "git add"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./../node_modules/cz-conventional-changelog"
+    }
+  },
   "devDependencies": {
     "@datorama/utils": "^1.0.1",
     "autoprefixer": "^8.1.0",

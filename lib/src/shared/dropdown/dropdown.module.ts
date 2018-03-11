@@ -7,6 +7,4 @@ import { DatoDropdownComponent } from './dropdown.component';
   declarations: [DatoDropdownComponent],
   exports: [DatoDropdownComponent]
 })
-export class DatoDropdownModule {
-
-}
+export class DatoDropdownModule {}

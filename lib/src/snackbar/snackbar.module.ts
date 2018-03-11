@@ -7,6 +7,4 @@ import { DatoSnackbarComponent } from './snackbar.component';
   declarations: [DatoSnackbarComponent],
   exports: [DatoSnackbarComponent]
 })
-export class DatoSnackbarModule {
-
-}
+export class DatoSnackbarModule {}

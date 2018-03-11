@@ -7,6 +7,4 @@ import { DatoIconComponent } from './icon.component';
   declarations: [DatoIconComponent],
   exports: [DatoIconComponent]
 })
-export class DatoIconModule {
-
-}
+export class DatoIconModule {}

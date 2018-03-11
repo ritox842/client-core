@@ -7,6 +7,4 @@ import { CommonModule } from '@angular/common';
   declarations: [DatoButtonComponent],
   exports: [DatoButtonComponent]
 })
-export class DatoButtonModule {
-
-}
+export class DatoButtonModule {}

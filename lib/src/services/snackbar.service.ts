@@ -1,18 +1,16 @@
-import {Injectable} from "@angular/core";
-import {SnackbarType} from "../snackbar/snackbar.types";
+import { Injectable } from '@angular/core';
+import { SnackbarType } from '../snackbar/snackbar.types';
 
 @Injectable()
 export class DatoSnackbar {
-  constructor() {
-
-  }
+  constructor() {}
 
   /**
    *
    * @param {SnackbarType} type
    * @param {string} msg
    */
-  snack( type : SnackbarType, msg : string ) {
+  snack(type: SnackbarType, msg: string) {
     alert(msg);
   }
 
@@ -20,7 +18,7 @@ export class DatoSnackbar {
    *
    * @param {string} msg
    */
-  info( msg : string ) {
+  info(msg: string) {
     this.snack(SnackbarType.INFO, msg);
   }
 
@@ -28,34 +26,31 @@ export class DatoSnackbar {
    *
    * @param {string} msg
    */
-  success( msg : string ) {
+  success(msg: string) {
     this.snack(SnackbarType.SUCCESS, msg);
-
   }
 
   /**
    *
    * @param {string} msg
    */
-  error( msg : string ) {
+  error(msg: string) {
     this.snack(SnackbarType.ERROR, msg);
-
   }
 
   /**
    *
    * @param {string} msg
    */
-  dramaticSuccess( msg : string ) {
+  dramaticSuccess(msg: string) {
     this.snack(SnackbarType.DRAMATIC_SUCCESS, msg);
-
   }
 
   /**
    *
    * @param {string} msg
    */
-  dramaticError( msg : string ) {
+  dramaticError(msg: string) {
     this.snack(SnackbarType.DRAMATIC_ERROR, msg);
   }
 }

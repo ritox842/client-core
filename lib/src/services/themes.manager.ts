@@ -2,12 +2,9 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ThemeManager {
-
-  constructor() {
-  }
+  constructor() {}
 
   setColors() {
     console.warn('working');
   }
-
 }

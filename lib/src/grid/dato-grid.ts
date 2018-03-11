@@ -1,38 +1,46 @@
-import {ColDef, ColGroupDef, GridApi, GridOptions, RowNode} from "ag-grid";
-import {coerceArray, toBoolean} from "@datorama/utils";
-import {OnInit} from "@angular/core";
-import {ToolbarAction} from "./grid-toolbar/grid-toolbar";
+import { ColDef, ColGroupDef, GridApi, GridOptions, RowNode } from 'ag-grid';
+import { coerceArray, toBoolean } from '@datorama/utils';
+import { OnInit } from '@angular/core';
+import { ToolbarAction } from './grid-toolbar/grid-toolbar';
 
 export type GridColumns = (ColDef | ColGroupDef)[];
 
 export abstract class DatoGrid<T> implements OnInit {
-  options : GridOptions;
-  toolbarActions : ToolbarAction[];
-  private _gridApi : GridApi;
+  options: GridOptions;
+  toolbarActions: ToolbarAction[];
+  private _gridApi: GridApi;
 
   get gridApi() {
     return this._gridApi;
   }
 
-  set gridApi( gridApi ) {
+  set gridApi(gridApi) {
     this._gridApi = gridApi;
   }
 
-  abstract getColumns() : GridColumns;
+  abstract getColumns(): GridColumns;
 
-  abstract getToolbarActions() : ToolbarAction[];
+  abstract getToolbarActions(): ToolbarAction[];
 
-  abstract getRows( value : T[] ) : Partial<T>[];
+  abstract getRows(value: T[]): Partial<T>[];
 
   ngOnInit() {
-    this.options = {columnDefs: this.getColumns()};
+    this.options = { columnDefs: this.getColumns() };
+  }
+
+  /**
+   *
+   * @returns {T}
+   */
+  getSelectedRow(): T & RowNode {
+    return this.gridApi.getSelectedRows()[0];
   }
 
   /**
    *
    * @param data
    */
-  setRows( data ) {
+  setRows(data) {
     this.gridApi.setRowData(data);
     this.gridApi.sizeColumnsToFit();
   }
@@ -43,12 +51,12 @@ export abstract class DatoGrid<T> implements OnInit {
    * @param {number} index
    * @returns {RowNodeTransaction}
    */
-  addRows( row : T, index : number ) : any {
+  addRows(row: T, index: number): any {
     const rows = coerceArray(row);
-    let data : any = {
-      add: [ row ],
+    let data: any = {
+      add: rows
     };
-    if ( toBoolean(index) ) {
+    if (toBoolean(index)) {
       data.addIndex = index;
     }
     return this.gridApi.updateRowData(data);
@@ -59,7 +67,7 @@ export abstract class DatoGrid<T> implements OnInit {
    * @param {T[]} row
    * @returns {RowNodeTransaction}
    */
-  updateRows( row : T[] ) : any {
+  updateRows(row: T[]): any {
     const rows = coerceArray(row);
     return this.gridApi.updateRowData({
       update: rows
@@ -72,18 +80,17 @@ export abstract class DatoGrid<T> implements OnInit {
    * @param {string} key
    * @param newValue
    */
-  updateRowValue( id : string, key : string, newValue : any ) {
+  updateRowValue(id: string, key: string, newValue: any) {
     const rowNode = this.gridApi.getRowNode(id);
     rowNode.setDataValue(key, newValue);
   }
-
 
   /**
    *
    * @param {RowNode | RowNode[]} row
    * @returns {RowNodeTransaction}
    */
-  removeRows( row : RowNode | RowNode[] ) : any {
+  removeRows(row: RowNode | RowNode[]): any {
     const rows = coerceArray(row);
     return this.gridApi.updateRowData({
       remove: rows
@@ -95,7 +102,7 @@ export abstract class DatoGrid<T> implements OnInit {
    * @returns {RowNodeTransaction}
    */
   removeSelectedRow() {
-    const selectedRow = this.gridApi.getSelectedRows()[ 0 ];
+    const selectedRow = this.gridApi.getSelectedRows()[0];
     return this.removeRows(selectedRow);
   }
 

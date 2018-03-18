@@ -65,3 +65,4 @@ build
 
 lib/node_modules
 playground/node_modules
+workspace.xml

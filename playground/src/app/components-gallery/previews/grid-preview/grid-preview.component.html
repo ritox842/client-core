@@ -24,7 +24,9 @@
     function.
     <br> Checkout the source-code for more information.
   </dato-text>
-  <div style="height: 250px">
+
+  <div>
+    <dato-grid-header [grid]="gridRef">Title</dato-grid-header>
     <dato-grid-toolbar [grid]="gridRef" class="mb-10">
 
       <ng-template datoGridToolbarItem showWhen="none">
@@ -58,13 +60,16 @@
       </ng-template>
 
     </dato-grid-toolbar>
-    <dato-grid [options]="options" #gridRef (gridReady)="ready($event)"></dato-grid>
+    <div style="height: 450px">
+      <dato-grid [options]="options" #gridRef (gridReady)="ready($event)"></dato-grid>
+    </div>
   </div>
+
 
   <dato-tabs show="html,js">
 
     <textarea datoHighlight="html">
-
+      <dato-grid-header [grid]="gridRef">Title</dato-grid-header>
       <dato-grid-toolbar [grid]="gridRef" class="mb-10">
 
         <ng-template datoGridToolbarItem showWhen="none">

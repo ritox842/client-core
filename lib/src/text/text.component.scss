@@ -2,3 +2,7 @@
   display: inline-block;
   font-size: 14px;
 }
+
+:host p {
+  margin: 0;
+}

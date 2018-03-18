@@ -9,6 +9,7 @@ import { DatoGridComponent } from '../grid/grid.component';
 @Component({
   selector: 'dato-grid-header',
   templateUrl: './grid-header.component.html',
+  styleUrls: [`./grid-header.component.scss`],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatoGridHeaderComponent implements OnDestroy {

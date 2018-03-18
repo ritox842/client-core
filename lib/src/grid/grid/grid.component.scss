@@ -9,7 +9,9 @@ dato-grid {
 }
 dato-grid.grid-pagination {
   // reduce the grid height when we have a pagination
-  padding-bottom: $grid-pagination-height;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .ag-dato-core {

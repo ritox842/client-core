@@ -7,7 +7,8 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
+import { ColDef, ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
+import { DatoTranslateService } from '../../services/translate.service';
 
 @Component({
   selector: 'dato-grid',
@@ -38,6 +39,7 @@ export class DatoGridComponent {
 
   @Input()
   set options(options: GridOptions) {
+    this.translateColumns(options);
     this.gridOptions = { ...this.defaultGridOptions, ...options };
     // check if we got a pagination
     this.hasPagination = this.gridOptions.pagination;
@@ -49,7 +51,7 @@ export class DatoGridComponent {
 
   @Output() gridReady = new EventEmitter<GridReadyEvent>();
 
-  constructor() {
+  constructor(private translate: DatoTranslateService) {
     this.gridOptions = { ...this.defaultGridOptions };
   }
 
@@ -63,5 +65,18 @@ export class DatoGridComponent {
     this.gridColumnApi = event.columnApi;
 
     this.gridReady.emit(event);
+  }
+
+  /**
+   *
+   * @param {GridOptions} options
+   */
+  private translateColumns(options: GridOptions) {
+    options.columnDefs = options.columnDefs.map(column => {
+      return {
+        ...column,
+        headerName: this.translate.transform(column.headerName)
+      };
+    });
   }
 }

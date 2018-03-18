@@ -1255,6 +1255,10 @@ dato-link-button[datoType='secondary'] a:active {
     font-style: italic;
 }
 
+dato-grid-header span {
+    color: rgba(var(--primary-300), 1);
+}
+
 /*
  Common variables
 */
@@ -5030,6 +5034,10 @@ dato-dropdown {
 
 .dark dato-link-button[datoType='secondary'] a:active {
     color: rgba(var(--accent-700), 1);
+}
+
+.dark dato-grid-header span {
+    color: rgba(var(--primary-300), 1);
 }
 
 .dark .ag-dato-core {

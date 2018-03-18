@@ -26,6 +26,7 @@ import {
   ToolbarArea
 } from './grid-toolbar';
 import { HashMap, isFunction } from '@datorama/utils';
+import { DatoTranslateService } from '../../services/translate.service';
 
 @TakeUntilDestroy()
 @Component({
@@ -34,6 +35,7 @@ import { HashMap, isFunction } from '@datorama/utils';
   styleUrls: ['./grid-toolbar.component.scss']
 })
 export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContentInit {
+  private eventHandler;
   private areaActions: HashMap<ToolbarArea> = {
     [ToolbarActionType.Button]: ToolbarArea.Left,
     [ToolbarActionType.Add]: ToolbarArea.InternalArea,
@@ -49,7 +51,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
 
   destroyed$: Observable<boolean>;
 
-  @Input() actions: ToolbarAction[];
+  @Input() actions: ToolbarAction[] = [];
 
   @Input()
   set grid(grid: DatoGridComponent) {
@@ -99,9 +101,23 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
     return [...this.items.toArray(), ...this.actionItems.toArray()];
   }
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.translateActions();
+  }
+
+  /**
+   * Translate the actions
+   */
+  translateActions() {
+    this.actions = this.actions.map(action => {
+      return {
+        ...action,
+        text: this.translate.transform(action.text)
+      };
+    });
+  }
 
   /**
    *
@@ -121,13 +137,14 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
 
   ngOnDestroy() {
     // @TakeUntilDestroy()
+    this.gridApi &&
+      this.gridApi.removeEventListener(Events.EVENT_SELECTION_CHANGED, this.eventHandler);
   }
 
   private onGridReady() {
-    this.gridApi.addEventListener(
-      Events.EVENT_SELECTION_CHANGED,
-      this.rowSelectionChange.bind(this)
-    );
+    this.eventHandler = this.rowSelectionChange.bind(this);
+
+    this.gridApi.addEventListener(Events.EVENT_SELECTION_CHANGED, this.eventHandler);
 
     this._filterItems(true);
     this.fitGridSizeOnInit();

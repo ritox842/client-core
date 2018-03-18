@@ -1,6 +1,6 @@
 {
   "name": "@datorama/core",
-  "version": "1.0.5-beta",
+  "version": "1.0.16-beta",
   "repository": {
     "type": "git",
     "url": "url"
@@ -10,10 +10,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gulp --gulpfile build-tools/gulpfile.js",
-    "commitmsg": "commitlint -e $GIT_PARAMS",
-    "commit": "git-cz",
-    "precommit": "lint-staged",
+    "build": "npm run format && gulp --gulpfile build-tools/gulpfile.js",
     "format": "prettier --write --config .prettierrc src/*.ts src/**/*.ts src/**/**/**.ts",
     "watch": "gulp --gulpfile build-tools/gulpfile.js -- watch:themes"
   },

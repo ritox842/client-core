@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { SnackbarType } from '../snackbar/snackbar.types';
+import { DatoTranslateService } from './translate.service';
 
 @Injectable()
 export class DatoSnackbar {
-  constructor() {}
+  constructor(private translate: DatoTranslateService) {}
 
   /**
    *
@@ -11,7 +12,7 @@ export class DatoSnackbar {
    * @param {string} msg
    */
   snack(type: SnackbarType, msg: string) {
-    alert(msg);
+    console.info(this.translate.transform(msg));
   }
 
   /**

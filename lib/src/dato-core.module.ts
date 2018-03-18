@@ -13,6 +13,7 @@ import { DatoActionMenuModule } from './action-menu/action-menu.module';
 import { DatoDropdownModule } from './shared/dropdown/dropdown.module';
 import { DatoSnackbar } from './services/snackbar.service';
 import { DatoLoaderModule } from './loader/loader.module';
+import { DatoTranslateService } from './services/translate.service';
 
 const modules = [
   DatoDirectives,
@@ -28,7 +29,7 @@ const modules = [
   DatoLoaderModule
 ];
 
-const providers = [IconRegistry, ThemeManager, DatoSnackbar];
+const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService];
 
 @NgModule({
   imports: [],

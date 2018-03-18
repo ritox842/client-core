@@ -1,9 +1,12 @@
 @import '../../scss/typography.scss';
+@import '../grid-pagination/grid-pagination.theme';
 @import '../../../../node_modules/ag-grid/src/styles/ag-theme-classic-common';
 @import '../../../../node_modules/ag-grid/src/styles/ag-theme-classic-vars';
 @import '../grid-header/grid-header.theme';
 
 $icons-path: "/node_modules/ag-grid/src/styles/icons/";
+$default-font-family: 'Open Sans';
+$default-font-size: 12px;
 
 /*
  Common variables
@@ -48,7 +51,7 @@ $selected-color: $menu-option-active-color !default;
 
 $cell-data-changed-color: white !default;
 
-$focused-cell-border-color: darkgrey !default;
+$focused-cell-border-color: transparent !default;
 
 $tab-background-color: #e6e6e6 !default;
 
@@ -84,10 +87,10 @@ $params: (
   toolpanel-indent-size: $toolpanel-indent-size,
   row-group-indent-size: $row-group-indent-size,
   icons-path: $icons-path,
-  font-family: $font-family,
-  font-size: $font-size,
+  font-family: $default-font-family,
+  font-size: $default-font-size,
   font-weight: $font-weight,
-  secondary-font-family: $secondary-font-family,
+  secondary-font-family: $default-font-family,
   secondary-font-size: $secondary-font-size,
   secondary-font-weight: $secondary-font-weight,
   foreground-color: $foreground-color,
@@ -147,6 +150,7 @@ $params: (
   /* Header */
   .ag-header {
     border-bottom: solid 2px themify(primary-200);
+    font-family: 'Open Sans';
 
     .ag-header-cell-label {
       color: themify(primary-300);

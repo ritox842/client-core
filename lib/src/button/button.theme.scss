@@ -12,8 +12,8 @@ dato-button button:active {
 }
 
 dato-button button.disabled {
-  background-color: themify(primary-300, 0.1);
-  color: themify(primary-300, 0.5);
+  background-color: themify(primary-300, 0.1)!important;
+  color: themify(primary-300, 0.5)!important;
 }
 
 /**

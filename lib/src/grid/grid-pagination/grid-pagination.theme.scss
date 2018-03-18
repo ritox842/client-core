@@ -1,0 +1,9 @@
+dato-grid-pagination {
+  .page-number a {
+    color: themify(primary-300);
+    font-weight: normal;
+  }
+  .current-page a {
+    color: themify(primary-600);
+  }
+}

@@ -73,7 +73,6 @@ export class DatoGridComponent {
    * call ag-grid's size all columns to fit to container
    */
   fitToContainer(): void {
-    debugger;
     this.gridOptions.api.sizeColumnsToFit();
   }
 
@@ -81,7 +80,6 @@ export class DatoGridComponent {
    * call ag-grid's size all columns to fit to content
    */
   fitToContent(): void {
-      debugger;
     this.gridOptions.columnApi.autoSizeAllColumns();
     const {width} = this.element.nativeElement.getBoundingClientRect();
     const agBody = this.element.nativeElement.querySelector(".ag-body-container");

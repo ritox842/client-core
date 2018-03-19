@@ -288,7 +288,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
    * @private
    */
   private _isMultiple(condition: string | showWhenFunc, rowsCount: number) {
-    return condition === RowSelectionType.MULTI && rowsCount > 1;
+    return condition === RowSelectionType.MULTI && rowsCount >= 1;
   }
 
   /**

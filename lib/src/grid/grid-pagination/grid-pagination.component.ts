@@ -81,6 +81,15 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
     }
   }
 
+  get prevPageDisabled() {
+    return this.pageNumbersDisplay.currentPage === 1;
+  }
+
+  get nextPageDisabled() {
+      return this.pageNumbersDisplay.currentPage === this.totalPages;
+  }
+
+
   ngOnInit() {
     this.rowDataChanged.pipe(takeUntil(this.destroyed$)).subscribe((event: AgGridEvent) => {
       this.calcPagination(event);
@@ -94,8 +103,9 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
   private calcPagination(gridApi: AgGridEvent) {
     this.showCollapseExpand =
       gridApi.columnApi.isPivotMode() && this.agGridColumnApi.getRowGroupColumns().length > 1;
+
     // The length of the pages starting from 1
-    this.tablePagesLength = gridApi.api.paginationGetTotalPages();
+    this.totalPages = gridApi.api.paginationGetTotalPages();
 
     this.rowCount = gridApi.api.paginationGetRowCount();
 
@@ -119,7 +129,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
   set pagesInView(newNumbersLength: number) {
     this._pagesInView = newNumbersLength;
     this.pagesOnSides = Math.floor(this._pagesInView / 2);
-    this.pagesFitView = this._pagesInView + 1 >= this.tablePagesLength;
+    this.pagesFitView = this._pagesInView + 1 >= this.totalPages;
     // invalidate displaying pages upon resize
     this.pageNumbersDisplay.pages = [];
   }
@@ -129,7 +139,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
   // when the widget's width is smaller than SMALL_DISPLAY_SIZE change to small pagination view
   smallVersion: boolean | null = null;
   // number of pages in the table
-  tablePagesLength: number;
+  totalPages: number;
   // Is the table cross tab table
   showCollapseExpand = false;
   // The display rows range
@@ -181,7 +191,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * @param pageNumber - The page number to navigate to
    */
   navigatePage(pageNumber) {
-    if (pageNumber >= 0 && pageNumber <= this.tablePagesLength - 1) {
+    if (pageNumber >= 0 && pageNumber <= this.totalPages - 1) {
       this.agGridApi.paginationGoToPage(pageNumber);
       // Add 1 because ag-grid API works with first index 0
       const displayNumber = pageNumber + 1;
@@ -272,19 +282,19 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
     // a logic that says that if your current view is 1 number away from the last page
     // display him as well.
     this.pageNumbersDisplay.showLastPage =
-      !this.pagesFitView && anchor + this.pagesOnSides < this.tablePagesLength;
+      !this.pagesFitView && anchor + this.pagesOnSides < this.totalPages;
     this.pageNumbersDisplay.showFirstEllipsis =
       !this.pagesFitView && anchor - this.pagesOnSides > 1;
 
     // set the first number to be displayed
     const firstNumber = this.getFirstPageNumber(anchor);
-    const loopLength = this.pagesFitView ? this.tablePagesLength : this._pagesInView;
+    const loopLength = this.pagesFitView ? this.totalPages : this._pagesInView;
     for (let i = 0; i < loopLength; i++) {
       pagesToDisplay.push(firstNumber + i);
     }
     // If the last displayed number is 1 number before the last page display him as well
-    if (!this.smallVersion && pagesToDisplay[loopLength - 1] + 1 === this.tablePagesLength) {
-      pagesToDisplay.push(this.tablePagesLength);
+    if (!this.smallVersion && pagesToDisplay[loopLength - 1] + 1 === this.totalPages) {
+      pagesToDisplay.push(this.totalPages);
       this.pageNumbersDisplay.showLastPage = false;
     }
     return pagesToDisplay;
@@ -300,13 +310,13 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
     let firstNumber = anchor - this.pagesOnSides;
     // If in small version show only next page so set first page to anchor
     if (this.smallVersion && anchor > 1) {
-      if (anchor !== this.tablePagesLength) {
+      if (anchor !== this.totalPages) {
         firstNumber = anchor;
       }
     } else if (!this.pageNumbersDisplay.showFirstEllipsis) {
       firstNumber = 1;
     } else if (!this.pageNumbersDisplay.showLastPage) {
-      firstNumber = this.tablePagesLength - (this._pagesInView - 1);
+      firstNumber = this.totalPages - (this._pagesInView - 1);
     }
     return firstNumber;
   }

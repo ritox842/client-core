@@ -1,6 +1,8 @@
 @import "../../../../node_modules/ag-grid/dist/styles/ag-grid.css";
 
-$grid-pagination-height: 40px;
+$grid-pagination-height: 25px !default;
+$grid-pagination-margin-top: 7px !default;
+$total-grid-pagination-height: $grid-pagination-height + $grid-pagination-margin-top;
 
 dato-grid {
   display: block;
@@ -12,6 +14,11 @@ dato-grid.grid-pagination {
   padding-bottom: 0;
   display: flex;
   flex-direction: column;
+
+  ag-grid-angular {
+    margin-bottom: 7px;
+    height: calc(100% - #{$total-grid-pagination-height});
+  }
 }
 
 .ag-dato-core {

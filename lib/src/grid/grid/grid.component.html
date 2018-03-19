@@ -6,6 +6,8 @@
 </ag-grid-angular>
 <dato-grid-pagination
         *ngIf="hasPagination"
+        (fitToContainer)="fitToContainer()"
+        (fitToContent)="fitToContent()"
         class="d-flex-row flex-0-0-100"
         [rowDataChanged]="rowDataChanged"
         [agGridApi]="gridApi"

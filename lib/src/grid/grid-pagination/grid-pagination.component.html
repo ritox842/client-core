@@ -1,5 +1,5 @@
-<div class="d-flex-row flex-auto flex-wrap">
-  <div *ngIf="tablePagesLength > 1" #navigation
+<div class="d-flex-row d-flex-auto d-flex-wrap">
+  <div *ngIf="totalPages > 1" #navigation
        class="navigation d-flex-row d-flex-0-0-auto align-center"
        [ngClass]="{'small': smallVersion}">
 
@@ -9,21 +9,23 @@
                       datoIcon="arrow-left-double"
                       datoType="secondary"
                       datoSize="md"
+                      [disabled]="prevPageDisabled"
                       (click)="navigatePage(0)">
     </dato-icon-button>
 
     <!-- Previous Page -->
     <dato-icon-button datoIcon="arrow-left" datoType="secondary" datoSize="md"
+                      [disabled]="prevPageDisabled"
                       (click)="navigatePage(pageNumbersDisplay.currentPage - 2)">
     </dato-icon-button>
 
 
     <div class="d-flex-row mx-5">
-      <dato-link-button class="page-number mx-5" datoType="secondary"
+      <dato-link-button class="page-number mx-5" datoType="secondary" datoSize="sm"
                         *ngIf="pageNumbersDisplay.showFirstEllipsis && !smallVersion"
                         (click)="showPreviousBatch()">...
       </dato-link-button>
-      <dato-link-button class="page-number" datoType="secondary"
+      <dato-link-button class="page-number" datoType="secondary" datoSize="sm"
                         *ngFor="let page of pageNumbersDisplay.pages; trackBy: trackByFunc;"
                         [ngClass]="{'current-page': page === pageNumbersDisplay.currentPage,
                             'note-bold': page === pageNumbersDisplay.currentPage}"
@@ -32,9 +34,11 @@
       </dato-link-button>
 
       <div class="d-flex-row" *ngIf="pageNumbersDisplay.showLastPage && !smallVersion">
-        <dato-link-button class="page-number" datoType="secondary" (click)="showNextBatch()">...</dato-link-button>
-        <dato-link-button class="page-number" datoType="secondary" (click)="navigatePage(tablePagesLength - 1)">
-          {{tablePagesLength}}
+        <dato-link-button class="page-number" datoType="secondary" datoSize="sm"
+                          (click)="showNextBatch()">...</dato-link-button>
+        <dato-link-button class="page-number" datoType="secondary" datoSize="sm"
+                          (click)="navigatePage(totalPages - 1)">
+          {{totalPages}}
         </dato-link-button>
       </div>
 
@@ -42,19 +46,21 @@
 
     <!-- Next Page -->
     <dato-icon-button datoIcon="arrow-right" datoType="secondary" datoSize="md"
-                      (click)="navigatePage(pageNumbersDisplay.currentPage)">
+                      (click)="navigatePage(pageNumbersDisplay.currentPage)"
+                      [disabled]="nextPageDisabled">
     </dato-icon-button>
 
     <!-- Last Page -->
     <dato-icon-button *ngIf="!disableButtons"
                       class="ml-4" datoIcon="arrow-right-double"
                       datoType="secondary" datoSize="md"
-                      (click)="navigatePage(tablePagesLength - 1)">
+                      [disabled]="nextPageDisabled"
+                      (click)="navigatePage(totalPages - 1)">
     </dato-icon-button>
 
   </div>
 
-  <div *ngIf="tablePagesLength > 1 && !smallVersion"
+  <div *ngIf="totalPages > 1 && !smallVersion"
        class="separator mx-10 my-auto" datoColor="primary-100 background">
   </div>
 
@@ -75,7 +81,8 @@
   </dato-icon-button>
 
   <!-- Fit Columns to Content -->
-  <dato-icon-button *ngIf="!showFitToContent"
+  <dato-icon-button *ngIf="showFitToContent"
+                    class="mr-5"
                     datoIcon="fit-to-content"
                     datoType="secondary"
                     datoSize="md"

@@ -26,7 +26,7 @@
   </dato-text>
 
   <div>
-    <dato-grid-header [grid]="gridRef">Title</dato-grid-header>
+    <dato-grid-header [grid]="gridRef">Grid Title</dato-grid-header>
     <dato-grid-toolbar [grid]="gridRef" class="mb-10">
 
       <ng-template datoGridToolbarItem showWhen="none">
@@ -108,6 +108,11 @@
     </textarea>
 
     <textarea datoHighlight="js">
+
+      myCustomLogic( selectedRows : any[] ) {
+        return selectedRows.some(( row ) => row.value === 5);
+      }
+
       options: GridOptions = {
         columnDefs: [
           {
@@ -148,10 +153,11 @@
 
   </dato-text>
 
-  <div style="height: 250px">
+  <div style="height: 250px" class="d-flex-column flex-1">
     <dato-grid-toolbar [grid]="gridRef2" class="mb-10" [actions]="toolbarActions">
     </dato-grid-toolbar>
-    <dato-grid [options]="options2" #gridRef2></dato-grid>
+    <dato-grid [options]="options2" #gridRef2 class="d-flex-column">
+    </dato-grid>
   </div>
 
   <dato-tabs show="html,js">

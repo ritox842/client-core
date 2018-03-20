@@ -86,9 +86,8 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
   }
 
   get nextPageDisabled() {
-      return this.pageNumbersDisplay.currentPage === this.totalPages;
+    return this.pageNumbersDisplay.currentPage === this.totalPages;
   }
-
 
   ngOnInit() {
     this.rowDataChanged.pipe(takeUntil(this.destroyed$)).subscribe((event: AgGridEvent) => {

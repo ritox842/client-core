@@ -1,11 +1,12 @@
 import {
-    ChangeDetectionStrategy,
-    Component, ElementRef,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output,
-    ViewEncapsulation
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+  ViewEncapsulation
 } from '@angular/core';
 import { ColDef, ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
 import { DatoTranslateService } from '../../services/translate.service';
@@ -18,7 +19,6 @@ import { DatoTranslateService } from '../../services/translate.service';
   encapsulation: ViewEncapsulation.None
 })
 export class DatoGridComponent {
-
   @Output() rowDataChanged = new EventEmitter();
 
   private defaultGridOptions: GridOptions = {
@@ -52,8 +52,7 @@ export class DatoGridComponent {
 
   @Output() gridReady = new EventEmitter<GridReadyEvent>();
 
-  constructor(private translate: DatoTranslateService,
-              private element: ElementRef) {
+  constructor(private translate: DatoTranslateService, private element: ElementRef) {
     this.gridOptions = { ...this.defaultGridOptions };
   }
 
@@ -81,8 +80,8 @@ export class DatoGridComponent {
    */
   fitToContent(): void {
     this.gridOptions.columnApi.autoSizeAllColumns();
-    const {width} = this.element.nativeElement.getBoundingClientRect();
-    const agBody = this.element.nativeElement.querySelector(".ag-body-container");
+    const { width } = this.element.nativeElement.getBoundingClientRect();
+    const agBody = this.element.nativeElement.querySelector('.ag-body-container');
     const bodyWidth: number = agBody ? agBody.clientWidth : 0;
     if (width > bodyWidth) {
       this.fitToContainer();

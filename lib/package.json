@@ -18,15 +18,6 @@
   "es2015": "./esm2015/datorama.js",
   "module": "./esm5/datorama.es5.js",
   "typings": "./datorama.d.ts",
-  "src/**/*.ts": [
-    "npm run format",
-    "git add"
-  ],
-  "config": {
-    "commitizen": {
-      "path": "./../node_modules/cz-conventional-changelog"
-    }
-  },
   "devDependencies": {
     "@datorama/utils": "^1.0.1",
     "autoprefixer": "^8.1.0",

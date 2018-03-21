@@ -1,4 +1,4 @@
-dato-link-button a {
+dato-link a {
   color: themify(accent-400);
 
   &:hover {
@@ -16,7 +16,7 @@ dato-link-button a {
 /**
  Secondary
  */
-dato-link-button[datoType='secondary'] a {
+dato-link[datoType='secondary'] a {
   color: themify(primary-400);
 
   &:hover {

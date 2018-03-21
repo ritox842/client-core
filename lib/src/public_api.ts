@@ -7,6 +7,7 @@ export * from './icon-button/public_api';
 export * from './grid/public_api';
 export * from './action-menu/public_api';
 export * from './loader/public_api';
+export * from './sortable/public_api';
 export * from './shared/public_api';
 
 export * from './services/public_api';

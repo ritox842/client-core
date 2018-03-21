@@ -3,22 +3,12 @@
 }
 
 :host a {
-  height: 35px;
-  padding: 0px 15px;
-  // Default: Medium
   font-size: 14px;
   font-weight: 600;
 }
 
-/** Size **/
-
 :host[datoSize='sm'] a {
-  height: 24px;
   font-size: 12px;
-}
-
-:host[datoSize='lg'] a {
-  height: 35px;
 }
 
 /** Disabled **/

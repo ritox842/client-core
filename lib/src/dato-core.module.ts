@@ -14,6 +14,7 @@ import { DatoDropdownModule } from './shared/dropdown/dropdown.module';
 import { DatoSnackbar } from './services/snackbar.service';
 import { DatoLoaderModule } from './loader/loader.module';
 import { DatoTranslateService } from './services/translate.service';
+import { DatoSortableModule } from './sortable/sortable.module';
 
 const modules = [
   DatoDirectives,
@@ -26,7 +27,8 @@ const modules = [
   DatoGridModule,
   DatoActionMenuModule,
   DatoDropdownModule,
-  DatoLoaderModule
+  DatoLoaderModule,
+  DatoSortableModule
 ];
 
 const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService];

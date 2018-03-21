@@ -1,0 +1,23 @@
+dato-sortable {
+  display: inline-block;
+}
+
+.dato-sortable-handler {
+  cursor: move;
+  cursor: -webkit-grabbing;
+}
+
+.dato-sortable-ghost {
+  background-color: grey !important;
+}
+
+.dato-sortable-ghost > * {
+  display: none !important;
+}
+
+.dato-sortable-drag {
+  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dato-sortable-chosen {
+}

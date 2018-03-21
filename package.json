@@ -54,9 +54,6 @@
     "zone.js": "^0.8.19"
   },
   "dependencies": {
-    "ngx-take-until-destroy": "^2.1.1",
-    "helpful-decorators": "^1.7.0",
-    "popper.js": "^1.12.9",
     "@angular/animations": "^5.2.7",
     "@angular/cli": "1.6.5",
     "@angular/common": "^5.2.7",
@@ -72,6 +69,11 @@
     "@datorama/utils": "^1.1.0",
     "ag-grid": "^16.0.1",
     "ag-grid-angular": "^16.0.0",
-    "ag-grid-enterprise": "^16.0.1"
+    "ag-grid-enterprise": "^16.0.1",
+    "angular-sortablejs": "^2.5.2",
+    "helpful-decorators": "^1.7.0",
+    "ngx-take-until-destroy": "^2.1.1",
+    "popper.js": "^1.12.9",
+    "sortablejs": "^1.7.0"
   }
 }

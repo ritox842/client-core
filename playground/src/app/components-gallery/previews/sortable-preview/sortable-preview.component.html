@@ -1,0 +1,127 @@
+<dato-preview title="Introduction">
+  <dato-text>
+    This component is a wrapper for
+    <dato-link href="https://github.com/RubaXa/Sortable" target="_blank">Sortable</dato-link>
+    JS.
+    <br>
+    <br>
+    You should add the <span class="code">datoSortableHandle</span> directive on your handle element. (The element that triggers the drag)
+  </dato-text>
+</dato-preview>
+
+<dato-preview title="Sortable">
+
+  <dato-sortable [datoList]="items" (update)="onUpdate($event)">
+    <list-item *ngFor="let item of items;" [item]="item" (remove)="remove($event)"></list-item>
+  </dato-sortable>
+
+  <dato-tabs show="html, css">
+
+    <textarea datoHighlight="html">
+      <dato-sortable [list]="items" (update)="onUpdate($event)">
+        <list-item *ngFor="let item of items;" [item]="item" (remove)="remove($event)"></list-item>
+      </dato-sortable>
+    </textarea>
+
+    <textarea datoHighlight="css">
+      .dato-sortable-handler {
+        cursor: move;
+        cursor: -webkit-grabbing;
+      }
+
+      .dato-sortable-ghost {
+        background-color: mediumspringgreen !important;
+      }
+
+      .dato-sortable-drag {
+        box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      .dato-sortable-chosen {
+      }
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+
+<dato-preview title="Sortable - Async Pipe">
+
+  <dato-sortable [datoList]="asyncList$ | async" (update)="onUpdate($event)">
+    <list-item *ngFor="let item of (asyncList$ | async)" [item]="item"></list-item>
+  </dato-sortable>
+
+  <dato-tabs show="html, css">
+
+    <textarea datoHighlight="html">
+     <section class="scrollbale">
+        <dato-sortable [datoList]="asyncList$ | async" (update)="onUpdate($event)">
+          <list-item *ngFor="let item of (asyncList$ | async)" [item]="item" (remove)="remove($event)"></list-item>
+         </dato-sortable>
+     </section>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Sortable - Scorllable Container">
+
+  <section class="scrollbale">
+    <dato-sortable [datoList]="longList" (update)="onUpdate($event)">
+      <list-item *ngFor="let item of longList;" [item]="item" (remove)="remove($event)"></list-item>
+    </dato-sortable>
+  </section>
+
+
+  <dato-tabs show="html, css">
+
+    <textarea datoHighlight="html">
+     <section class="scrollbale">
+       <dato-sortable [datoList]="longList" (update)="onUpdate($event)">
+         <list-item *ngFor="let item of longList;" [item]="item"></list-item>
+       </dato-sortable>
+     </section>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>datoList</td>
+        <td><span class="code">T[]</span></td>
+        <td><span class="code">[]</span></td>
+        <td>Your list of items</td>
+      </tr>
+      <tr>
+        <td>datoOptions</td>
+        <td>
+          <dato-link href="https://github.com/RubaXa/Sortable#options" target="_blank">Options</dato-link>
+        </td>
+        <td></td>
+        <td>Options for the Sortable library</td>
+      </tr>
+    </dato-api-table>
+
+    <dato-api-table type="outputs">
+      <tr>
+        <td>update</td>
+        <td>Event object</td>
+        <td>When the sorted list updated</td>
+        <td></td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

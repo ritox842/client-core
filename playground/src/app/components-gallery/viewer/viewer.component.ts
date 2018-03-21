@@ -12,9 +12,9 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./viewer.component.scss']
 })
 export class ViewerComponent implements OnInit, OnDestroy {
+  destroyed$;
   @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef;
 
-  destroyed$: Observable<boolean>;
   private klass: ComponentRef<any>;
 
   constructor(private route: ActivatedRoute, private resolver: ComponentFactoryResolver) {

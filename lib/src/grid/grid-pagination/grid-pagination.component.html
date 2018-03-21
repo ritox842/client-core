@@ -21,25 +21,25 @@
 
 
     <div class="d-flex-row mx-5">
-      <dato-link-button class="page-number mx-5" datoType="secondary" datoSize="sm"
+      <dato-link class="page-number mx-5" datoType="secondary" datoSize="sm"
                         *ngIf="pageNumbersDisplay.showFirstEllipsis && !smallVersion"
                         (click)="showPreviousBatch()">...
-      </dato-link-button>
-      <dato-link-button class="page-number" datoType="secondary" datoSize="sm"
+      </dato-link>
+      <dato-link class="page-number" datoType="secondary" datoSize="sm"
                         *ngFor="let page of pageNumbersDisplay.pages; trackBy: trackByFunc;"
                         [ngClass]="{'current-page': page === pageNumbersDisplay.currentPage,
                             'note-bold': page === pageNumbersDisplay.currentPage}"
                         (click)="navigatePage(page - 1)">
         {{page}}
-      </dato-link-button>
+      </dato-link>
 
       <div class="d-flex-row" *ngIf="pageNumbersDisplay.showLastPage && !smallVersion">
-        <dato-link-button class="page-number" datoType="secondary" datoSize="sm"
-                          (click)="showNextBatch()">...</dato-link-button>
-        <dato-link-button class="page-number" datoType="secondary" datoSize="sm"
+        <dato-link class="page-number" datoType="secondary" datoSize="sm"
+                          (click)="showNextBatch()">...</dato-link>
+        <dato-link class="page-number" datoType="secondary" datoSize="sm"
                           (click)="navigatePage(totalPages - 1)">
           {{totalPages}}
-        </dato-link-button>
+        </dato-link>
       </div>
 
     </div>

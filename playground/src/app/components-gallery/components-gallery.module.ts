@@ -20,6 +20,7 @@ import {InputsPreviewComponent} from './previews/inputs-preview/inputs-preview.c
 import {ReactiveFormsModule} from '@angular/forms';
 import {DatoCoreModule} from "../../../../lib";
 import {ActionMenuPreviewComponent} from "./previews/action-menu-preview/action-menu-preview.component";
+import {ListItemComponent} from "./list-item/list-item.component";
 
 @NgModule({
   imports: [
@@ -36,16 +37,11 @@ import {ActionMenuPreviewComponent} from "./previews/action-menu-preview/action-
     HighlightDirective,
     ViewerComponent,
     PreviewComponent,
-    ButtonsPreviewComponent,
-    TypographyPreviewComponent,
     TabsComponent,
     TabComponent,
     ApiTableComponent,
-    ColorsPreviewComponent,
-    IconsPreviewComponent,
-    GridPreviewComponent,
-    InputsPreviewComponent,
-    ActionMenuPreviewComponent
+    previews,
+    ListItemComponent
   ]
 })
 export class ComponentsGalleryModule {

@@ -66,7 +66,7 @@
     "@angular/platform-browser": "^5.2.7",
     "@angular/platform-browser-dynamic": "^5.2.7",
     "@angular/router": "^5.2.7",
-    "@datorama/utils": "^1.1.0",
+    "@datorama/utils": "~1.8.0",
     "ag-grid": "^16.0.1",
     "ag-grid-angular": "^16.0.0",
     "ag-grid-enterprise": "^16.0.1",

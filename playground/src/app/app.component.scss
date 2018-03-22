@@ -6,3 +6,11 @@ html, body{
 a.active {
   background-color: gray;
 }
+
+.navbar-item {
+  color: #fff;
+  &:hover {
+    background: hotpink;
+    color: #fff;
+  }
+}

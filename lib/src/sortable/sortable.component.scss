@@ -7,10 +7,6 @@ dato-sortable {
   cursor: -webkit-grabbing;
 }
 
-.dato-sortable-ghost {
-  background-color: grey !important;
-}
-
 .dato-sortable-ghost > * {
   display: none !important;
 }

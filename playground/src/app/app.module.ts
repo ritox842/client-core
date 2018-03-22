@@ -9,11 +9,15 @@ import {AppComponent} from './app.component';
 import '../styles/styles.scss';
 import {DatoCoreModule} from "../../../lib/src/dato-core.module";
 import {ComponentsGalleryModule} from 'app/components-gallery/components-gallery.module';
+import { AtomicPageComponent } from './atomic-page.component';
+import { UtilsPageComponent } from 'app/utils-page.component';
 
 @NgModule({
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
+    AtomicPageComponent,
+    UtilsPageComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +27,7 @@ import {ComponentsGalleryModule} from 'app/components-gallery/components-gallery
       preloadingStrategy: PreloadAllModules
     }),
     DatoCoreModule.forRoot(),
-    ComponentsGalleryModule
+    ComponentsGalleryModule,
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.

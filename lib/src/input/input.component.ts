@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright Datorama LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license.
+ */
+
 import {
   Attribute,
   ChangeDetectionStrategy,
@@ -11,11 +18,11 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { debounceTime, pluck, takeUntil, tap } from 'rxjs/operators';
+import { pluck, takeUntil, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
-import { toBoolean } from '@datorama/utils';
 import { OnDestroy, TakeUntilDestroy } from 'ngx-take-until-destroy';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { optionalDebounce } from '../rx/debounce';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -74,7 +81,7 @@ export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
       .pipe(
         pluck('target', 'value'),
         tap(val => this.activateDeleteIcon(val)),
-        addDebounce(this.debounceTime),
+        optionalDebounce(this.debounceTime),
         takeUntil(this.destroyed$)
       )
       .subscribe(val => {
@@ -165,18 +172,4 @@ export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
     }
     this.cdr.detectChanges();
   }
-}
-
-/**
- *
- * @param time
- * @returns {(source: Observable<T>) => Observable<T>}
- */
-function addDebounce<T>(time = undefined): (source: Observable<T>) => Observable<T> {
-  return (source: Observable<T>) => {
-    if (toBoolean(time)) {
-      return source.pipe(debounceTime(time));
-    }
-    return source;
-  };
 }

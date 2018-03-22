@@ -55,7 +55,7 @@
   <dato-tabs show="html, css">
 
     <textarea datoHighlight="html">
-     <section class="scrollbale">
+     <section class="scrollable">
         <dato-sortable [datoList]="asyncList$ | async" (update)="onUpdate($event)">
           <list-item *ngFor="let item of (asyncList$ | async)" [item]="item" (remove)="remove($event)"></list-item>
          </dato-sortable>
@@ -68,7 +68,7 @@
 
 <dato-preview title="Sortable - Scorllable Container">
 
-  <section class="scrollbale">
+  <section class="scrollable">
     <dato-sortable [datoList]="longList" (update)="onUpdate($event)">
       <list-item *ngFor="let item of longList;" [item]="item" (remove)="remove($event)"></list-item>
     </dato-sortable>
@@ -78,7 +78,7 @@
   <dato-tabs show="html, css">
 
     <textarea datoHighlight="html">
-     <section class="scrollbale">
+     <section class="scrollable">
        <dato-sortable [datoList]="longList" (update)="onUpdate($event)">
          <list-item *ngFor="let item of longList;" [item]="item"></list-item>
        </dato-sortable>

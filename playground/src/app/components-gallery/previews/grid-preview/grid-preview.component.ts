@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {GridOptions} from 'ag-grid';
+import {GridApi, GridOptions} from 'ag-grid';
 import {RowSelectionType, ToolbarAction, ToolbarActionType} from "../../../../../../lib";
 import {timer} from "rxjs/observable/timer";
 import {mapTo} from "rxjs/operators";
@@ -10,6 +10,8 @@ import {mapTo} from "rxjs/operators";
   styleUrls: [ './grid-preview.component.scss' ]
 })
 export class GridPreviewComponent implements OnInit {
+
+  gridApi: GridApi;
 
   options : GridOptions = {
     columnDefs: [
@@ -33,25 +35,23 @@ export class GridPreviewComponent implements OnInit {
       actionType: ToolbarActionType.Add,
       click: function () {
         alert('you clicked me :)');
-      },
+      }
     },
     {
       actionType: ToolbarActionType.Edit,
       click: function () {
         alert('you clicked me :)');
-      },
+      }
     },
     {
       actionType: ToolbarActionType.Delete,
-      click: function () {
-        alert('you clicked me :)');
-      },
+      click: this.deleteRow.bind(this)
     },
     {
       actionType: ToolbarActionType.Copy,
       click: function () {
         alert('you clicked me :)');
-      },
+      }
     },
     {
       text: 'cool button',
@@ -59,7 +59,7 @@ export class GridPreviewComponent implements OnInit {
       showWhen: RowSelectionType.SINGLE,
       click: function () {
         alert('you clicked me :)');
-      },
+      }
     }
   ];
 
@@ -70,10 +70,19 @@ export class GridPreviewComponent implements OnInit {
     this.options2.rowData = [{
       id: 1,
       value: 'one'
-    }]
+    },
+      {
+        id: 2,
+        value: 'two'
+      },
+      {
+        id: 3,
+        value: 'three'
+      }]
   }
 
   ready( grid ) {
+    this.gridApi = grid.api;
     this.asyncRows().subscribe(res => {
       grid.api.setRowData(res);
     });
@@ -85,11 +94,16 @@ export class GridPreviewComponent implements OnInit {
       rows.push({id: i, value: i * 5});
     }
     return timer(3000).pipe(mapTo(rows))
-
   }
 
   myCustomLogic( selectedRows : any[] ) {
     return selectedRows.some(( row ) => row.value === 5);
+  }
+
+  private deleteRow(selectedRows : any[]) {
+    return this.gridApi.updateRowData({
+      remove: selectedRows
+    });
   }
 
 }

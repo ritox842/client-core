@@ -25,7 +25,7 @@
                         *ngIf="pageNumbersDisplay.showFirstEllipsis && !smallVersion"
                         (click)="showPreviousBatch()">...
       </dato-link>
-      <dato-link class="page-number" datoType="secondary" datoSize="sm"
+      <dato-link class="page-number mx-5" datoType="secondary" datoSize="sm"
                         *ngFor="let page of pageNumbersDisplay.pages; trackBy: trackByFunc;"
                         [ngClass]="{'current-page': page === pageNumbersDisplay.currentPage,
                             'note-bold': page === pageNumbersDisplay.currentPage}"
@@ -34,9 +34,9 @@
       </dato-link>
 
       <div class="d-flex-row" *ngIf="pageNumbersDisplay.showLastPage && !smallVersion">
-        <dato-link class="page-number" datoType="secondary" datoSize="sm"
+        <dato-link class="page-number mx-5" datoType="secondary" datoSize="sm"
                           (click)="showNextBatch()">...</dato-link>
-        <dato-link class="page-number" datoType="secondary" datoSize="sm"
+        <dato-link class="page-number mx-5" datoType="secondary" datoSize="sm"
                           (click)="navigatePage(totalPages - 1)">
           {{totalPages}}
         </dato-link>

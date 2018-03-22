@@ -1,0 +1,88 @@
+import {Component} from '@angular/core';
+import {DatoGrid, GridColumns, RowSelectionType, ToolbarAction, ToolbarActionType} from "../../../../../../../lib";
+
+@Component({
+  selector: 'dato-grid-actions-preview',
+  templateUrl: './grid-actions-preview.component.html'
+})
+export class GridActionsPreviewComponent extends DatoGrid<any> {
+
+  getColumns(): GridColumns {
+    return [
+      {
+        headerName: 'ID',
+        field: 'id',
+        width: 100
+      },
+      {
+        headerName: 'Value',
+        field: 'value',
+        width: 100
+      },
+    ];
+  }
+
+  toolbarActions = this.getToolbarActions();
+
+  getToolbarActions(): ToolbarAction[] {
+    return [
+      {
+        actionType: ToolbarActionType.Add,
+        click: function () {
+          alert('you clicked me :)');
+        },
+      },
+      {
+        actionType: ToolbarActionType.Edit,
+        click: function () {
+          alert('you clicked me :)');
+        },
+      },
+      {
+        actionType: ToolbarActionType.Delete,
+        click: this.deleteRow.bind(this)
+      },
+      {
+        actionType: ToolbarActionType.Copy,
+        click: function () {
+          alert('you clicked me :)');
+        },
+      },
+      {
+        text: 'cool button',
+        icon: 'edit',
+        showWhen: RowSelectionType.SINGLE,
+        click: function () {
+          alert('you clicked me :)');
+        },
+      }
+    ];
+  }
+
+  getRows(): Partial<any>[] {
+    return [{
+      id: 1,
+      value: 'one'
+    },
+      {
+        id: 2,
+        value: 'two'
+      },
+      {
+        id: 3,
+        value: 'three'
+      }];
+  }
+
+  ready(grid) {
+    this.gridApi = grid.api;
+    this.setRows(this.getRows());
+  }
+
+  private deleteRow(selectedRows: any[]) {
+    return this.gridApi.updateRowData({
+      remove: selectedRows
+    });
+  }
+
+}

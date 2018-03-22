@@ -1,7 +1,7 @@
-import { ColDef, ColGroupDef, GridApi, GridOptions, RowNode } from 'ag-grid';
-import { coerceArray, toBoolean } from '@datorama/utils';
-import { OnInit } from '@angular/core';
-import { ToolbarAction } from './grid-toolbar/grid-toolbar';
+import {ColDef, ColGroupDef, GridApi, GridOptions, RowNode} from 'ag-grid';
+import {coerceArray, toBoolean} from '@datorama/utils';
+import {OnInit} from '@angular/core';
+import {ToolbarAction} from './grid-toolbar/grid-toolbar';
 
 export type GridColumns = (ColDef | ColGroupDef)[];
 
@@ -22,25 +22,32 @@ export abstract class DatoGrid<T> implements OnInit {
 
   abstract getToolbarActions(): ToolbarAction[];
 
-  abstract getRows(value: T[]): Partial<T>[];
+  abstract getRows(): Partial<T>[];
 
   ngOnInit() {
-    this.options = { columnDefs: this.getColumns() };
+    this.options = {columnDefs: this.getColumns()};
   }
 
   /**
    *
    * @returns {T}
    */
-  getSelectedRow(): T & RowNode {
-    return this.gridApi.getSelectedRows()[0];
+  getSelectedRows(onlyFirstRow: true): T & RowNode;
+  getSelectedRows(onlyFirstRow?: false): T[] & RowNode[];
+  getSelectedRows(onlyFirstRow: boolean): T[] & RowNode[] | T & RowNode;
+  getSelectedRows(onlyFirstRow = false): T[] & RowNode[] | T & RowNode {
+    const rows = this.gridApi.getSelectedRows();
+    if (!onlyFirstRow) {
+      return rows;
+    }
+    return rows.length ? rows[0] : null;
   }
 
   /**
    *
    * @param data
    */
-  setRows(data) {
+  setRows(data: T[]) {
     this.gridApi.setRowData(data);
     this.gridApi.sizeColumnsToFit();
   }
@@ -101,9 +108,9 @@ export abstract class DatoGrid<T> implements OnInit {
    *
    * @returns {RowNodeTransaction}
    */
-  removeSelectedRow() {
-    const selectedRow = this.gridApi.getSelectedRows()[0];
-    return this.removeRows(selectedRow);
+  removeSelectedRows() {
+    const selectedRows = this.getSelectedRows();
+    return this.removeRows(selectedRows);
   }
 
   /**

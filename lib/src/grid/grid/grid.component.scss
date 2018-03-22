@@ -30,4 +30,13 @@ dato-grid.grid-pagination {
     border-width: 0 4px 1px 4px;
   }
 
+  .sort-icon {
+    display: inline-block;
+    line-height: 31px;
+    svg {
+      width: 12px;
+      height: 14px;
+    }
+  }
+
 }

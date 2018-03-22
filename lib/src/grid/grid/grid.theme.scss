@@ -157,6 +157,10 @@ $params: (
     .ag-header-cell-label {
       @include typography(note-bold);
     }
+
+    .sort-icon {
+      fill: themify(primary-300);
+    }
   }
 
 }

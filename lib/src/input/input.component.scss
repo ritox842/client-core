@@ -1,17 +1,13 @@
-@import '../scss/helpers';
+@import './input-helper.scss';
 
 :host {
   display: inline-block;
 }
 
-:host input {
-  $height: 30px;
-  height: $height;
-  line-height: $height;
-  border-radius: 2px;
-  padding-left: 10px;
-  padding-right: 25px;
-  font-size: 12px;
+:host {
+  input {
+    @include input-like();
+  }
 }
 
 :host div {
@@ -40,24 +36,9 @@
 }
 
 @include size(input, sm) {
-  $height: 25px;
-  height: $height;
-  line-height: $height;
-  font-size: 14px;
+  @include input-size(sm);
 }
 
 @include size(input, lg) {
-  $height: 35px;
-  height: $height;
-  line-height: $height;
-  font-size: 14px;
-}
-
-:host input:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-:host input:hover {
-  transition: 0.3s all;
+  @include input-size(lg);
 }

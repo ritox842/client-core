@@ -73,7 +73,7 @@ export class DatoGridComponent {
     this.defaultGridOptions.icons = {
       sortAscending: `<span class="sort-icon">${iconRegistry.getSvg('sort-asc')}</span>`,
       sortDescending: `<span class="sort-icon">${iconRegistry.getSvg('sort-desc')}</span>`,
-      filter: `<span class="sort-icon">${iconRegistry.getSvg('filter')}</span>`,
+      filter: `<span class="sort-icon active">${iconRegistry.getSvg('filter')}</span>`,
       menu: `<span class="sort-icon">${iconRegistry.getSvg('filter')}</span>`
     };
 

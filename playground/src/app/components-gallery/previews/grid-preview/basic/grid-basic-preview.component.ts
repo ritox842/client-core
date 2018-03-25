@@ -15,7 +15,8 @@ export class GridBasicPreviewComponent extends DatoGrid<any> {
       {
         headerName: 'ID',
         field: 'id',
-        width: 100
+        width: 100,
+        filter: "agNumberColumnFilter"
       },
       {
         headerName: 'Value',

@@ -64,5 +64,5 @@ export interface ToolbarAction {
   text?: string;
   icon?: string;
   showWhen?: RowSelectionType | showWhenFunc;
-  click?: (selectedRows: any[]) => void;
+  click?: <T>(selectedRows: T[]) => void;
 }

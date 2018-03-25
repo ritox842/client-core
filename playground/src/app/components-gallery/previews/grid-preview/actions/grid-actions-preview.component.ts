@@ -40,7 +40,7 @@ export class GridActionsPreviewComponent extends DatoGrid<any> {
       },
       {
         actionType: ToolbarActionType.Delete,
-        click: this.deleteRow.bind(this)
+        click: this.removeSelectedRows.bind(this)
       },
       {
         actionType: ToolbarActionType.Copy,
@@ -77,12 +77,6 @@ export class GridActionsPreviewComponent extends DatoGrid<any> {
   ready(grid) {
     this.gridApi = grid.api;
     this.setRows(this.getRows());
-  }
-
-  private deleteRow(selectedRows: any[]) {
-    return this.gridApi.updateRowData({
-      remove: selectedRows
-    });
   }
 
 }

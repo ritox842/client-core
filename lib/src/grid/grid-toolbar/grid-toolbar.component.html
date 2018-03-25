@@ -32,7 +32,7 @@
         <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement
                      (click)="actionClick(action)">
           <dato-icon *ngIf="action.icon" [datoIcon]="action.icon"></dato-icon>
-          {{action.text}}
+          <span class="ml-4">{{action.text}}</span>
         </dato-button>
       </ng-template>
 

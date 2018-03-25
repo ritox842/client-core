@@ -95,8 +95,6 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
     [ToolbarArea.InternalArea]: []
   };
 
-  selectedRows = [];
-
   get itemTemplates() {
     return [...this.items.toArray(), ...this.actionItems.toArray()];
   }

@@ -1,12 +1,35 @@
 @import '../../scss/typography.scss';
+@import '../../scss/helpers';
+@import '../../input/input-helper';
 @import '../grid-pagination/grid-pagination.theme';
-@import '../../../../node_modules/ag-grid/src/styles/ag-theme-classic-common';
-@import '../../../../node_modules/ag-grid/src/styles/ag-theme-classic-vars';
+@import "../../../../node_modules/ag-grid/src/styles/ag-theme-common";
 @import '../grid-header/grid-header.theme';
 
 $icons-path: "/node_modules/ag-grid/src/styles/icons/";
-$default-font-family: 'Open Sans';
-$default-font-size: 12px;
+
+// opacity values used for black values, taken from material spec
+$foreground-opacity: 0.87 !default;
+$secondary-foreground-color-opacity: 0.54 !default;
+$disabled-foreground-color-opacity: 0.38 !default;
+
+// Sizing
+$grid-size: 8px !default;
+$icon-size: 18px !default;
+$row-height: 35px !default;
+$header-height: $row-height !default;
+$toolpanel-indent-size: $grid-size + $icon-size !default;
+$row-group-indent-size: $grid-size * 3 + $icon-size !default;
+$cell-horizontal-padding: 12px !default;
+$virtual-item-height: $grid-size * 5;
+$header-icon-size: 14px !default;
+
+// Fonts
+$font-family: 'Open Sans' !default; // legacy: font
+$font-size: 12px !default;
+$font-weight: 400 !default;
+$secondary-font-family: $font-family !default;
+$secondary-font-size: 12px !default;
+$secondary-font-weight: 700 !default; // font-secondary-weight
 
 /*
  Common variables
@@ -30,7 +53,7 @@ $primary-color: black !default;
 $accent-color: black !default;
 
 $background-color: themify(primary-50) !default;
-$odd-row-background-color: transparent !default;
+$odd-row-background-color: themify(primary-0) !default;
 
 $editor-background-color: #f6f6f6 !default;
 
@@ -55,7 +78,7 @@ $focused-cell-border-color: transparent !default;
 
 $tab-background-color: #e6e6e6 !default;
 
-$cell-highlight-border: 2px solid darkgreen !default;
+$cell-highlight-border: 2px solid transparent !default;
 $cell-horizontal-border: 1px dotted silver !default;
 
 $ag-range-selected-color-1: rgba(120, 120, 120, 0.4) !default;
@@ -66,85 +89,91 @@ $ag-range-selected-color-4: rgba(0, 0, 0, 0.4) !default;
 $row-floating-background-color: #f0f0f0 !default;
 $row-stub-background-color: #f0f0f0 !default;
 
+// Misc
+$transition-speed: 120ms !default;
+$card-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+$card-radius: 2px;
+
 // delta changes
 $value-change-delta-up-color: darkgreen !default;
 $value-change-delta-down-color: darkred !default;
 $value-change-value-highlight-background-color: #cec !default;
 
-// Sizing
-$row-height: 35px !default;
-$header-height: $row-height !default;
-
 $params: (
-  grid-size: $grid-size,
-  icon-size: $icon-size,
-  header-icon-size: $header-icon-size,
-  row-height: $row-height,
-  header-height: $header-height,
-  virtual-item-height: $virtual-item-height,
-  rich-select-item-height: $row-height,
-  cell-horizontal-padding: $cell-horizontal-padding,
-  toolpanel-indent-size: $toolpanel-indent-size,
-  row-group-indent-size: $row-group-indent-size,
-  icons-path: $icons-path,
-  font-family: $default-font-family,
-  font-size: $default-font-size,
-  font-weight: $font-weight,
-  secondary-font-family: $default-font-family,
-  secondary-font-size: $secondary-font-size,
-  secondary-font-weight: $secondary-font-weight,
-  foreground-color: $foreground-color,
-  foreground-opacity: $foreground-opacity,
-  secondary-foreground-color-opacity: $secondary-foreground-color-opacity,
-  secondary-foreground-color: $secondary-foreground-color,
-  disabled-foreground-color-opacity: $disabled-foreground-color-opacity,
-  disabled-foreground-color: $disabled-foreground-color,
-  background-color: $background-color,
-  tab-background-color: $tab-background-color,
-  odd-row-background-color: $odd-row-background-color,
-  header-cell-moving-background-color: $header-cell-moving-background-color,
-  icon-color: $icon-color,
-  border-color: $border-color,
-  button-background-color: transparent,
-  cell-data-changed-color: $cell-data-changed-color,
-  chip-background-color: $chip-background-color,
-  editor-background-color: $editor-background-color,
-  range-selection-background-color: $range-selection-background-color,
-  range-selection-highlight-color: $range-selection-highlight-color,
-  header-background-color: $header-background-color,
-  header-background-image: $header-background-image,
-  panel-background-color: $panel-background-color,
-  tool-panel-background-color: $tool-panel-background-color,
-  card-background-color: $card-background-color,
-  accent-color: $accent-color,
-  primary-color: $primary-color,
-  hover-color: $hover-color,
-  selected-color: $selected-color,
-  icon-opacity: $foreground-opacity,
-  button-text-transform: uppercase,
-  card-radius: $card-radius,
-  card-shadow: $card-shadow,
-  input-height: $grid-size * 4,
-  focused-cell-border-color: $focused-cell-border-color,
-  menu-option-active-color: $menu-option-active-color,
-  ag-range-selected-color-1: $ag-range-selected-color-1,
-  ag-range-selected-color-2: $ag-range-selected-color-2,
-  ag-range-selected-color-3: $ag-range-selected-color-3,
-  ag-range-selected-color-4: $ag-range-selected-color-4,
-  cell-highlight-border: $cell-highlight-border,
-  cell-horizontal-border: $cell-horizontal-border,
-  value-change-delta-up-color: $value-change-delta-up-color,
-  value-change-delta-down-color: $value-change-delta-down-color,
-  value-change-value-highlight-background-color: $value-change-value-highlight-background-color,
-  row-floating-background-color: $row-floating-background-color,
-  row-stub-background-color: $row-stub-background-color,
+        grid-size: $grid-size,
+        icon-size: $icon-size,
+        header-icon-size: $header-icon-size,
+        row-height: $row-height,
+        header-height: $header-height,
+        virtual-item-height: $virtual-item-height,
+        rich-select-item-height: $row-height,
+        cell-horizontal-padding: $cell-horizontal-padding,
+        toolpanel-indent-size: $toolpanel-indent-size,
+        row-group-indent-size: $row-group-indent-size,
+        icons-path: $icons-path,
+        font-family: $font-family,
+        font-size: $font-size,
+        font-weight: $font-weight,
+        secondary-font-family: $font-family,
+        secondary-font-size: $secondary-font-size,
+        secondary-font-weight: $secondary-font-weight,
+        foreground-color: $foreground-color,
+        foreground-opacity: $foreground-opacity,
+        secondary-foreground-color-opacity: $secondary-foreground-color-opacity,
+        secondary-foreground-color: $secondary-foreground-color,
+        disabled-foreground-color-opacity: $disabled-foreground-color-opacity,
+        disabled-foreground-color: $disabled-foreground-color,
+        background-color: $background-color,
+        tab-background-color: $tab-background-color,
+        odd-row-background-color: $odd-row-background-color,
+        icon-color: $icon-color,
+        border-color: $border-color,
+        button-background-color: transparent,
+        cell-data-changed-color: $cell-data-changed-color,
+        chip-background-color: $chip-background-color,
+        editor-background-color: $editor-background-color,
+        range-selection-background-color: $range-selection-background-color,
+        range-selection-highlight-color: $range-selection-highlight-color,
+        header-background-color: $header-background-color,
+        header-background-image: $header-background-image,
+        panel-background-color: $panel-background-color,
+        tool-panel-background-color: $tool-panel-background-color,
+        card-background-color: $card-background-color,
+        accent-color: $accent-color,
+        primary-color: $primary-color,
+        hover-color: $hover-color,
+        selected-color: $selected-color,
+        icon-opacity: $foreground-opacity,
+        button-text-transform: uppercase,
+        card-radius: $card-radius,
+        card-shadow: $card-shadow,
+        focused-textbox-border: 2px solid $primary-color,
+        input-height: $grid-size * 4,
+        focused-cell-border-color: $focused-cell-border-color,
+        menu-option-active-color: $menu-option-active-color,
+        ag-range-selected-color-1: $ag-range-selected-color-1,
+        ag-range-selected-color-2: $ag-range-selected-color-2,
+        ag-range-selected-color-3: $ag-range-selected-color-3,
+        ag-range-selected-color-4: $ag-range-selected-color-4,
+        cell-highlight-border: $cell-highlight-border,
+        cell-horizontal-border: $cell-horizontal-border,
+        value-change-delta-up-color: $value-change-delta-up-color,
+        value-change-delta-down-color: $value-change-delta-down-color,
+        value-change-value-highlight-background-color: $value-change-value-highlight-background-color,
+        row-floating-background-color: $row-floating-background-color,
+        row-stub-background-color: $row-stub-background-color,
+        customize-inputs: true,
+        customize-buttons: true,
+        full-width-tabs: true
 );
 
 .ag-dato-core {
-  @include ag-theme-classic($params);
+
+  @include ag-grid-theme($params);
 
   .ag-root {
     border-color: themify(primary-100);
+    border-style: solid;
   }
 
   /* Header */
@@ -157,6 +186,104 @@ $params: (
     .ag-header-cell-label {
       @include typography(note-bold);
     }
+
+    .sort-icon {
+      fill: themify(primary-300);
+      &.active,
+      &:hover {
+        fill: themify(accent-400);
+      }
+    }
+  }
+
+  .ag-cell-highlight {
+    background-color: $range-selection-highlight-color !important;
+  }
+
+  .ag-cell-highlight-animation {
+    transition: background-color 1s;
+  }
+
+  .ag-row-drag {
+    background-position-y: center;
+  }
+
+  .ag-column-drag {
+    background-position-y: center;
+  }
+
+  .ag-header-cell-resize {
+    right: -($grid-size) + 1px;
+  }
+
+  // we do not want to color the range color when the cell is also focused
+  .ag-cell-range-selected-1:not(.ag-cell-focus) {
+    background-color: $range-selection-background-color;
+  }
+
+  .ag-cell-range-selected-2:not(.ag-cell-focus) {
+    background-color: darken($range-selection-background-color, 4);
+  }
+
+  .ag-cell-range-selected-3:not(.ag-cell-focus) {
+    background-color: darken($range-selection-background-color, 8);
+  }
+
+  .ag-cell-range-selected-4:not(.ag-cell-focus) {
+    background-color: darken($range-selection-background-color, 12);
+  }
+
+  .ag-cell-focus {
+    border: none;
+  }
+
+  .ag-tool-panel {
+    border-bottom: 0;
+    border-right: 0;
+    border-top: 0;
+
+    .ag-side-buttons button {
+      border: 0;
+      color: $secondary-foreground-color;
+      font-family: $secondary-font-family;
+      font-size: $secondary-font-size;
+      font-weight: $secondary-font-weight;
+    }
+  }
+
+  // filter
+  .ag-filter {
+
+    .ag-filter-body {
+      margin: 8px;
+    }
+
+    .ag-filter-body input[type='text'],
+    .ag-filter-body input[type='date'],
+    select.ag-filter-select {
+
+      @include input-like(sm);
+      @include input-like-theme();
+
+      // disable default bottom padding
+      padding-bottom: 0;
+    }
+
+    select.ag-filter-select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+
+      line-height: 22px;
+      background: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path fill-rule='evenodd' d='M9.392.92a.513.513 0 0 0-.923-.348l-3.59 3.733L1.29.572a.515.515 0 0 0-.738.718l4 4.102a.513.513 0 0 0 .738 0l4-4.102a.513.513 0 0 0 .103-.37z'/></svg>") 96% / 6% no-repeat currentColor;
+    }
+
+    /* CAUTION: IE hackery ahead */
+
+    select.ag-filter-select::-ms-expand {
+      display: none; /* remove default arrow in IE 10 and 11 */
+    }
+
   }
 
 }

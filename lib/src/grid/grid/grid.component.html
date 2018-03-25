@@ -2,6 +2,9 @@
                  [gridOptions]="gridOptions"
                  rowHeight="30"
                  headerHeight="30"
+                 [enableFilter]="enableFilter"
+                 [enableSorting]="enableSorting"
+                 multiSortKey="ctrl"
                  (gridReady)="onGridReady($event)">
 </ag-grid-angular>
 <dato-grid-pagination

@@ -8,8 +8,14 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { ColDef, ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
+import { ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
 import { DatoTranslateService } from '../../services/translate.service';
+import {IconRegistry} from "../../services/icon-registry";
+
+export type ExtendedGridOptions = {
+  onRowDataUpdated: (event) => void;
+}
+export type DatoGridOptions = ExtendedGridOptions & GridOptions;
 
 @Component({
   selector: 'dato-grid',
@@ -21,38 +27,56 @@ import { DatoTranslateService } from '../../services/translate.service';
 export class DatoGridComponent {
   @Output() rowDataChanged = new EventEmitter();
 
-  private defaultGridOptions: GridOptions = {
+  private defaultGridOptions: DatoGridOptions = {
     // Replace the build-in pagination
     suppressPaginationPanel: true,
     pagination: true,
     onRowDataChanged: event => {
       this.rowDataChanged.emit(event);
     },
+    onRowDataUpdated: event => {
+      this.rowDataChanged.emit(event);
+    },
     rowSelection: 'multiple',
-    rowDeselection: true
+    rowDeselection: true,
+    icons: {}
   };
 
   gridApi: GridApi;
   gridColumnApi: ColumnApi;
-  gridOptions: GridOptions;
+  gridOptions: DatoGridOptions;
 
   @HostBinding('class.grid-pagination') hasPagination = true;
 
+  @Input() enableSorting = true;
+  @Input() enableFilter = true;
+
+
   @Input()
-  set options(options: GridOptions) {
+  set options(options: DatoGridOptions) {
     this.translateColumns(options);
     this.gridOptions = { ...this.defaultGridOptions, ...options };
     // check if we got a pagination
     this.hasPagination = this.gridOptions.pagination;
   }
 
-  get options(): GridOptions {
+  get options(): DatoGridOptions {
     return this.gridOptions;
   }
 
   @Output() gridReady = new EventEmitter<GridReadyEvent>();
 
-  constructor(private translate: DatoTranslateService, private element: ElementRef) {
+  constructor(private translate: DatoTranslateService,
+              private element: ElementRef,
+              private iconRegistry: IconRegistry) {
+
+    this.defaultGridOptions.icons = {
+      sortAscending: `<span class="sort-icon">${iconRegistry.getSvg('sort-asc')}</span>`,
+      sortDescending: `<span class="sort-icon">${iconRegistry.getSvg('sort-desc')}</span>`,
+      filter: `<span class="sort-icon active">${iconRegistry.getSvg('filter')}</span>`,
+      menu: `<span class="sort-icon">${iconRegistry.getSvg('filter')}</span>`
+    };
+
     this.gridOptions = { ...this.defaultGridOptions };
   }
 

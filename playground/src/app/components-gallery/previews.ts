@@ -6,6 +6,8 @@ import {GridPreviewComponent} from './previews/grid-preview/grid-preview.compone
 import {InputsPreviewComponent} from './previews/inputs-preview/inputs-preview.component';
 import {ActionMenuPreviewComponent} from "./previews/action-menu-preview/action-menu-preview.component";
 import {SortablePreviewComponent} from "./previews/sortable-preview/sortable-preview.component";
+import {GridBasicPreviewComponent} from "./previews/grid-preview/basic/grid-basic-preview.component";
+import {GridActionsPreviewComponent} from "./previews/grid-preview/actions/grid-actions-preview.component";
 
 export const previews = [
   ButtonsPreviewComponent,
@@ -13,6 +15,8 @@ export const previews = [
   ColorsPreviewComponent,
   IconsPreviewComponent,
   GridPreviewComponent,
+  GridBasicPreviewComponent,
+  GridActionsPreviewComponent,
   InputsPreviewComponent,
   ActionMenuPreviewComponent,
   SortablePreviewComponent,

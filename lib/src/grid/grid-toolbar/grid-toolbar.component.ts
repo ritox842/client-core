@@ -95,8 +95,6 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
     [ToolbarArea.InternalArea]: []
   };
 
-  selectedRows = [];
-
   get itemTemplates() {
     return [...this.items.toArray(), ...this.actionItems.toArray()];
   }
@@ -139,6 +137,13 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
     // @TakeUntilDestroy()
     this.gridApi &&
       this.gridApi.removeEventListener(Events.EVENT_SELECTION_CHANGED, this.eventHandler);
+  }
+
+  actionClick(action: ToolbarAction) {
+    if (action.click) {
+        const selectedRows = this.gridApi.getSelectedRows();
+        action.click(selectedRows);
+    }
   }
 
   private onGridReady() {

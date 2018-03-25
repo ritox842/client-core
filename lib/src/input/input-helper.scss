@@ -1,0 +1,61 @@
+@import '../scss/helpers.scss';
+
+// (height, fontSize)
+$inputsize: (
+  sm: (25px, 12px),
+  md: (30px, 14px),
+  lg: (35px, 16px)
+);
+
+@mixin input-size($size) {
+
+  $sizeVal: map_get($inputsize, $size);
+  $height: nth($sizeVal, 1);
+  $fontSize: nth($sizeVal, 2);
+
+  height: $height;
+  line-height: $height;
+  font-size: $fontSize;
+}
+
+@mixin input-like($defaultSize: md) {
+
+  @include input-size($defaultSize);
+
+  border-radius: 2px;
+  padding-left: 10px;
+  padding-right: 25px;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  &:hover {
+    transition: 0.3s all;
+  }
+}
+
+@mixin input-like-theme() {
+
+  background-color: themify(primary-0);
+  border: 1px solid themify(primary-200);
+  color: themify(primary-600);
+  @include placeholder() {
+    color: themify(primary-300);
+  }
+
+  &:hover {
+    border-color: themify(primary-300);
+  }
+  &:focus {
+    border-color: themify(accent-400);
+  }
+  &[disabled] {
+    background-color: themify(primary-300, 0.1);
+    cursor: not-allowed;
+    border: none;
+  }
+  &[disabled] ~ dato-icon path {
+    fill: themify(primary-200);
+  }
+}

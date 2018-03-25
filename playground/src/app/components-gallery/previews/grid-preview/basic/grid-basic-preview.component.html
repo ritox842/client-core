@@ -1,0 +1,120 @@
+<dato-preview title="Grid">
+  <dato-text>
+    Provides a full example of dato-grid and the toolbar capabillities.<br>
+    The buttons in the toolbar, appended directly in the markup as ng-template.
+    <br> You can choose when to show each button, according to the number of selected rows, or even write your own
+    function.
+    <br> Checkout the source-code for more information.
+  </dato-text>
+
+  <div>
+    <dato-grid-header [grid]="gridRef">Grid Title</dato-grid-header>
+    <dato-grid-toolbar [grid]="gridRef" class="mb-10">
+
+      <ng-template datoGridToolbarItem showWhen="none">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          None
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem showWhen="always">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          Always
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem showWhen="single">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          When Single
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem showWhen="multi">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          When Multiple
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem [showWhen]="myCustomLogic">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          Only when one of the values equal to 5
+        </dato-button>
+      </ng-template>
+
+    </dato-grid-toolbar>
+    <div style="height: 450px">
+      <dato-grid [options]="options" #gridRef (gridReady)="ready($event)"></dato-grid>
+    </div>
+  </div>
+
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-grid-header [grid]="gridRef">Title</dato-grid-header>
+      <dato-grid-toolbar [grid]="gridRef" class="mb-10">
+
+        <ng-template datoGridToolbarItem showWhen="none">
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+            None
+          </dato-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem showWhen="always">
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+            Always
+          </dato-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem showWhen="single">
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+            When Single
+          </dato-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem showWhen="multi">
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+            When Multiple
+          </dato-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem [showWhen]="myCustomLogic">
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+            Only when one of the values equal to 5
+          </dato-button>
+        </ng-template>
+
+      </dato-grid-toolbar>
+
+      <dato-grid [options]="options" #gridRef></dato-grid>
+    </textarea>
+
+    <textarea datoHighlight="js">
+
+      myCustomLogic( selectedRows : any[] ) {
+        return selectedRows.some(( row ) => row.value === 5);
+      }
+
+      options: GridOptions = {
+        columnDefs: [
+          {
+            headerName: 'ID',
+            field: 'id',
+            width: 100
+          },
+          {
+            headerName: 'Value',
+            field: 'value',
+            width: 100
+          },
+        ],
+
+        rowData: [...]
+      };
+    </textarea>
+
+
+  </dato-tabs>
+
+
+</dato-preview>

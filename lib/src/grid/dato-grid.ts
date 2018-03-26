@@ -1,15 +1,20 @@
-import { ColDef, ColGroupDef, DetailGridInfo, GridApi, GridOptions, RowNode } from 'ag-grid';
-import { coerceArray, toBoolean } from '@datorama/utils';
-import { AfterContentInit, AfterViewInit, ContentChild, OnInit, ViewChild } from '@angular/core';
-import { ToolbarAction } from './grid-toolbar/grid-toolbar';
-import { DatoGridComponent } from './grid/grid.component';
-import { Subject } from 'rxjs/Subject';
+import {ColDef, ColGroupDef, DetailGridInfo, GridApi, GridOptions, RowNode} from 'ag-grid';
+import {coerceArray, toBoolean} from '@datorama/utils';
+import {AfterContentInit, AfterViewInit, ContentChild, OnInit, QueryList, ViewChild} from '@angular/core';
+import {ToolbarAction} from './grid-toolbar/grid-toolbar';
+import {DatoGridComponent} from './grid/grid.component';
+import {Subject} from 'rxjs/Subject';
 
 export type GridColumns = (ColDef | ColGroupDef)[];
 
-export abstract class DatoGrid<T> implements OnInit, AfterViewInit, AfterContentInit {
-  @ViewChild(DatoGridComponent) gridViewChild: DatoGridComponent;
-  @ContentChild(DatoGridComponent) gridContentChild: DatoGridComponent;
+export abstract class DatoGrid<T> implements OnInit {
+  @ViewChild(DatoGridComponent) set gridViewChild( gridComponent: DatoGridComponent ) {
+    this.initialGridReady(gridComponent);
+  }
+
+  @ContentChild(DatoGridComponent) set gridContentChild( gridComponent: DatoGridComponent ) {
+    this.initialGridReady(gridComponent);
+  }
 
   options: GridOptions;
   toolbarActions: ToolbarAction[];
@@ -20,7 +25,7 @@ export abstract class DatoGrid<T> implements OnInit, AfterViewInit, AfterContent
     return this._gridApi;
   }
 
-  set gridApi(gridApi) {
+  set gridApi( gridApi ) {
     this._gridApi = gridApi;
   }
 
@@ -29,38 +34,30 @@ export abstract class DatoGrid<T> implements OnInit, AfterViewInit, AfterContent
   abstract getToolbarActions(): ToolbarAction[];
 
   ngOnInit() {
-    this.options = { columnDefs: this.getColumns() };
+    this.options = {columnDefs: this.getColumns()};
     this.toolbarActions = this.getToolbarActions();
-  }
-
-  ngAfterViewInit() {
-    this.initialGridReady(this.gridViewChild);
-  }
-
-  ngAfterContentInit() {
-    this.initialGridReady(this.gridContentChild);
   }
 
   /**
    *
    * @returns {T}
    */
-  getSelectedRows(onlyFirstRow: true): T & RowNode;
-  getSelectedRows(onlyFirstRow?: false): T[] & RowNode[];
-  getSelectedRows(onlyFirstRow: boolean): T[] & RowNode[] | T & RowNode;
-  getSelectedRows(onlyFirstRow = false): T[] & RowNode[] | T & RowNode {
+  getSelectedRows( onlyFirstRow: true ): T & RowNode;
+  getSelectedRows( onlyFirstRow?: false ): T[] & RowNode[];
+  getSelectedRows( onlyFirstRow: boolean ): T[] & RowNode[] | T & RowNode;
+  getSelectedRows( onlyFirstRow = false ): T[] & RowNode[] | T & RowNode {
     const rows = this.gridApi.getSelectedRows();
-    if (!onlyFirstRow) {
+    if ( ! onlyFirstRow ) {
       return rows;
     }
-    return rows.length ? rows[0] : null;
+    return rows.length ? rows[ 0 ] : null;
   }
 
   /**
    *
    * @param data
    */
-  setRows(data: T[]) {
+  setRows( data: T[] ) {
     this.gridApi.setRowData(data);
     this.gridApi.sizeColumnsToFit();
   }
@@ -71,12 +68,12 @@ export abstract class DatoGrid<T> implements OnInit, AfterViewInit, AfterContent
    * @param {number} index
    * @returns {RowNodeTransaction}
    */
-  addRows(row: T, index: number): any {
+  addRows( row: T, index: number ): any {
     const rows = coerceArray(row);
     let data: any = {
       add: rows
     };
-    if (toBoolean(index)) {
+    if ( toBoolean(index) ) {
       data.addIndex = index;
     }
     return this.gridApi.updateRowData(data);
@@ -87,7 +84,7 @@ export abstract class DatoGrid<T> implements OnInit, AfterViewInit, AfterContent
    * @param {T[]} row
    * @returns {RowNodeTransaction}
    */
-  updateRows(row: T[]): any {
+  updateRows( row: T[] ): any {
     const rows = coerceArray(row);
     return this.gridApi.updateRowData({
       update: rows
@@ -100,7 +97,7 @@ export abstract class DatoGrid<T> implements OnInit, AfterViewInit, AfterContent
    * @param {string} key
    * @param newValue
    */
-  updateRowValue(id: string, key: string, newValue: any) {
+  updateRowValue( id: string, key: string, newValue: any ) {
     const rowNode = this.gridApi.getRowNode(id);
     rowNode.setDataValue(key, newValue);
   }
@@ -110,7 +107,7 @@ export abstract class DatoGrid<T> implements OnInit, AfterViewInit, AfterContent
    * @param {RowNode | RowNode[]} row
    * @returns {RowNodeTransaction}
    */
-  removeRows(row: RowNode | RowNode[]): any {
+  removeRows( row: RowNode | RowNode[] ): any {
     const rows = coerceArray(row);
     return this.gridApi.updateRowData({
       remove: rows
@@ -137,9 +134,10 @@ export abstract class DatoGrid<T> implements OnInit, AfterViewInit, AfterContent
    * Initial the grid ready event
    * @param {DatoGridComponent} datoGrid
    */
-  private initialGridReady(datoGrid: DatoGridComponent) {
-    if (datoGrid) {
-      datoGrid.gridReady.subscribe((grid: DetailGridInfo) => {
+  private initialGridReady( datoGrid: DatoGridComponent ) {
+
+    if ( datoGrid ) {
+      datoGrid.gridReady.subscribe(( grid: DetailGridInfo ) => {
         this.gridApi = grid.api;
         this.datoGridReady.next(grid);
         this.datoGridReady.complete();

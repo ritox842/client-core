@@ -7,7 +7,7 @@
     <br> Checkout the source-code for more information.
   </dato-text>
 
-  <div>
+  <div *ngIf="data">
     <dato-grid-header [grid]="gridRef">Grid Title</dato-grid-header>
     <dato-grid-toolbar [grid]="gridRef" class="mb-10">
 
@@ -91,7 +91,7 @@
 
     <textarea datoHighlight="js">
     export class GridActionsPreviewComponent extends DatoGrid {
-      
+
       ngOnInit() {
         super.ngOnInit();
         this.datoGridReady.pipe(

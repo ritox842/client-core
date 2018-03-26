@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {timer} from "rxjs/observable/timer";
-import {concatMap, mapTo} from "rxjs/operators";
+import {concatMap, mapTo, tap} from "rxjs/operators";
 import {DatoGrid} from "../../../../../../../lib/src/grid/dato-grid";
 import {GridColumns, ToolbarAction} from "../../../../../../../lib";
 
@@ -9,13 +9,16 @@ import {GridColumns, ToolbarAction} from "../../../../../../../lib";
   templateUrl: './grid-basic-preview.component.html'
 })
 export class GridBasicPreviewComponent extends DatoGrid<any> {
+  data;
 
   ngOnInit() {
     super.ngOnInit();
-    this.datoGridReady.pipe(
-      concatMap(( grid ) => this.asyncRows())
+
+    this.asyncRows().pipe(
+      tap(( data ) => this.data = data),
+      concatMap(( grid ) => this.datoGridReady)
     ).subscribe(( rows ) => {
-      this.setRows(rows);
+      this.setRows(this.data);
     });
   }
 

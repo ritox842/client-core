@@ -141,8 +141,8 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
 
   actionClick(action: ToolbarAction) {
     if (action.click) {
-        const selectedRows = this.gridApi.getSelectedRows();
-        action.click(selectedRows);
+      const selectedRows = this.gridApi.getSelectedRows();
+      action.click(selectedRows);
     }
   }
 

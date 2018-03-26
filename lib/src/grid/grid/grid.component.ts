@@ -10,11 +10,11 @@ import {
 } from '@angular/core';
 import { ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
 import { DatoTranslateService } from '../../services/translate.service';
-import {IconRegistry} from "../../services/icon-registry";
+import { IconRegistry } from '../../services/icon-registry';
 
 export type ExtendedGridOptions = {
   onRowDataUpdated: (event) => void;
-}
+};
 export type DatoGridOptions = ExtendedGridOptions & GridOptions;
 
 @Component({
@@ -51,7 +51,6 @@ export class DatoGridComponent {
   @Input() enableSorting = true;
   @Input() enableFilter = true;
 
-
   @Input()
   set options(options: DatoGridOptions) {
     this.translateColumns(options);
@@ -66,10 +65,11 @@ export class DatoGridComponent {
 
   @Output() gridReady = new EventEmitter<GridReadyEvent>();
 
-  constructor(private translate: DatoTranslateService,
-              private element: ElementRef,
-              private iconRegistry: IconRegistry) {
-
+  constructor(
+    private translate: DatoTranslateService,
+    private element: ElementRef,
+    private iconRegistry: IconRegistry
+  ) {
     this.defaultGridOptions.icons = {
       sortAscending: `<span class="sort-icon">${iconRegistry.getSvg('sort-asc')}</span>`,
       sortDescending: `<span class="sort-icon">${iconRegistry.getSvg('sort-desc')}</span>`,

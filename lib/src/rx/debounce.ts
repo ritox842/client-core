@@ -19,7 +19,7 @@ export function optionalDebounce<T>(time = undefined): (source: Observable<T>) =
     if (toBoolean(time)) {
       return source.pipe(debounceTime(time));
     }
-    
+
     return source;
   };
 }

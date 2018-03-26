@@ -33,9 +33,11 @@ export class DatoIconComponent implements OnInit {
     return this.iconKey;
   }
 
-  constructor(private host: ElementRef,
+  constructor(
+    private host: ElementRef,
     private iconRegistry: IconRegistry,
-    private renderer: Renderer2) {}
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit() {
     // add standard attributes

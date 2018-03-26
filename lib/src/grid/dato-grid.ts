@@ -1,7 +1,7 @@
-import {ColDef, ColGroupDef, GridApi, GridOptions, RowNode} from 'ag-grid';
-import {coerceArray, toBoolean} from '@datorama/utils';
-import {OnInit} from '@angular/core';
-import {ToolbarAction} from './grid-toolbar/grid-toolbar';
+import { ColDef, ColGroupDef, GridApi, GridOptions, RowNode } from 'ag-grid';
+import { coerceArray, toBoolean } from '@datorama/utils';
+import { OnInit } from '@angular/core';
+import { ToolbarAction } from './grid-toolbar/grid-toolbar';
 
 export type GridColumns = (ColDef | ColGroupDef)[];
 
@@ -25,7 +25,7 @@ export abstract class DatoGrid<T> implements OnInit {
   abstract getRows(): Partial<T>[];
 
   ngOnInit() {
-    this.options = {columnDefs: this.getColumns()};
+    this.options = { columnDefs: this.getColumns() };
   }
 
   /**

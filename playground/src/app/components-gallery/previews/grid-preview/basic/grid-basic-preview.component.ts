@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {timer} from "rxjs/observable/timer";
-import {mapTo} from "rxjs/operators";
+import {concatMap, mapTo} from "rxjs/operators";
 import {DatoGrid} from "../../../../../../../lib/src/grid/dato-grid";
 import {GridColumns, ToolbarAction} from "../../../../../../../lib";
 
@@ -9,6 +9,15 @@ import {GridColumns, ToolbarAction} from "../../../../../../../lib";
   templateUrl: './grid-basic-preview.component.html'
 })
 export class GridBasicPreviewComponent extends DatoGrid<any> {
+
+  ngOnInit() {
+    super.ngOnInit();
+    this.datoGridReady.pipe(
+      concatMap(( grid ) => this.asyncRows())
+    ).subscribe(( rows ) => {
+      this.setRows(rows);
+    });
+  }
 
   getColumns(): GridColumns {
     return [
@@ -35,13 +44,6 @@ export class GridBasicPreviewComponent extends DatoGrid<any> {
     return [];
   }
 
-  ready(grid) {
-    this.gridApi = grid.api;
-    this.asyncRows().subscribe(data => {
-      this.setRows(data);
-    });
-  }
-
   asyncRows() {
     let rows = [];
     for ( let i = 0; i < 1000; i ++ ) {
@@ -51,7 +53,7 @@ export class GridBasicPreviewComponent extends DatoGrid<any> {
 
   }
 
-  myCustomLogic( selectedRows : any[] ) {
+  myCustomLogic( selectedRows: any[] ) {
     return selectedRows.some(( row ) => row.value === 5);
   }
 

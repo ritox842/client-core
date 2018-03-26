@@ -17,19 +17,26 @@
     <dato-grid-header [grid]="gridRef">Grid Title</dato-grid-header>
     <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
     </dato-grid-toolbar>
-    <dato-grid [options]="options" #gridRef (gridReady)="ready($event)" class="d-flex-column">
+    <dato-grid [options]="options" #gridRef class="d-flex-column">
     </dato-grid>
   </div>
 
   <dato-tabs show="html,js">
 
     <textarea datoHighlight="html">
-      <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
-      </dato-grid-toolbar>
+      <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions"></dato-grid-toolbar>
       <dato-grid [options]="options2" #gridRef></dato-grid>
     </textarea>
 
     <textarea datoHighlight="js">
+    export class GridActionsPreviewComponent extends DatoGrid {
+
+      ngOnInit() {
+        super.ngOnInit();
+        this.datoGridReady.subscribe(() => {
+          this.setRows(this.getRows());
+        });
+      }
 
       toolbarActions: ToolbarAction[] = [
         {
@@ -82,6 +89,8 @@
 
         rowData: [...]
       };
+      }
+
     </textarea>
 
 

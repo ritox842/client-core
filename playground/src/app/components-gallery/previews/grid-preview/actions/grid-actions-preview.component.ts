@@ -7,6 +7,13 @@ import {DatoGrid, GridColumns, RowSelectionType, ToolbarAction, ToolbarActionTyp
 })
 export class GridActionsPreviewComponent extends DatoGrid<any> {
 
+  ngOnInit() {
+    super.ngOnInit();
+    this.datoGridReady.subscribe(() => {
+      this.setRows(this.getRows());
+    });
+  }
+
   getColumns(): GridColumns {
     return [
       {
@@ -60,7 +67,7 @@ export class GridActionsPreviewComponent extends DatoGrid<any> {
   }
 
   getRows(): Partial<any>[] {
-    return [{
+    return [ {
       id: 1,
       value: 'one'
     },
@@ -71,12 +78,7 @@ export class GridActionsPreviewComponent extends DatoGrid<any> {
       {
         id: 3,
         value: 'three'
-      }];
-  }
-
-  ready(grid) {
-    this.gridApi = grid.api;
-    this.setRows(this.getRows());
+      } ];
   }
 
 }

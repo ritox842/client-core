@@ -43,7 +43,7 @@
 
     </dato-grid-toolbar>
     <div style="height: 450px">
-      <dato-grid [options]="options" #gridRef (gridReady)="ready($event)"></dato-grid>
+      <dato-grid [options]="options" #gridRef></dato-grid>
     </div>
   </div>
 
@@ -90,6 +90,16 @@
     </textarea>
 
     <textarea datoHighlight="js">
+    export class GridActionsPreviewComponent extends DatoGrid {
+      
+      ngOnInit() {
+        super.ngOnInit();
+        this.datoGridReady.pipe(
+           concatMap(( grid ) => this.asyncRows())
+          ).subscribe(( rows ) => {
+            this.setRows(rows);
+        });
+      }
 
       myCustomLogic( selectedRows : any[] ) {
         return selectedRows.some(( row ) => row.value === 5);
@@ -111,6 +121,8 @@
 
         rowData: [...]
       };
+      }
+
     </textarea>
 
 

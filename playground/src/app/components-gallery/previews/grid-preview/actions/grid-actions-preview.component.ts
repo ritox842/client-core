@@ -10,7 +10,18 @@ export class GridActionsPreviewComponent extends DatoGrid<any> {
   ngOnInit() {
     super.ngOnInit();
     this.datoGridReady.subscribe(() => {
-      this.setRows(this.getRows());
+      this.setRows([ {
+        id: 1,
+        value: 'one'
+      },
+        {
+          id: 2,
+          value: 'two'
+        },
+        {
+          id: 3,
+          value: 'three'
+        } ]);
     });
   }
 
@@ -29,7 +40,6 @@ export class GridActionsPreviewComponent extends DatoGrid<any> {
     ];
   }
 
-  toolbarActions = this.getToolbarActions();
 
   getToolbarActions(): ToolbarAction[] {
     return [
@@ -66,19 +76,5 @@ export class GridActionsPreviewComponent extends DatoGrid<any> {
     ];
   }
 
-  getRows(): Partial<any>[] {
-    return [ {
-      id: 1,
-      value: 'one'
-    },
-      {
-        id: 2,
-        value: 'two'
-      },
-      {
-        id: 3,
-        value: 'three'
-      } ];
-  }
 
 }

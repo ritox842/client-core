@@ -29,10 +29,9 @@ export abstract class DatoGrid<T> implements OnInit, AfterViewInit, AfterContent
 
   abstract getToolbarActions(): ToolbarAction[];
 
-  abstract getRows(): Partial<T>[];
-
   ngOnInit() {
     this.options = {columnDefs: this.getColumns()};
+    this.toolbarActions = this.getToolbarActions();
   }
 
   ngAfterViewInit() {

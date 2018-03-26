@@ -40,10 +40,6 @@ export class GridBasicPreviewComponent extends DatoGrid<any> {
     return [];
   }
 
-  getRows(): Partial<any>[] {
-    return [];
-  }
-
   asyncRows() {
     let rows = [];
     for ( let i = 0; i < 1000; i ++ ) {

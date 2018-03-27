@@ -71,10 +71,18 @@ export class DatoGridComponent {
     private iconRegistry: IconRegistry
   ) {
     this.defaultGridOptions.icons = {
-      sortAscending: `<span class="sort-icon">${iconRegistry.getSvg('sort-asc')}</span>`,
-      sortDescending: `<span class="sort-icon">${iconRegistry.getSvg('sort-desc')}</span>`,
-      filter: `<span class="sort-icon active">${iconRegistry.getSvg('filter')}</span>`,
-      menu: `<span class="sort-icon">${iconRegistry.getSvg('filter')}</span>`
+      sortAscending: `<span class="da-grid-icon sort-icon">${iconRegistry.getSvg(
+        'sort-asc'
+      )}</span>`,
+      sortDescending: `<span class="da-grid-icon sort-icon">${iconRegistry.getSvg(
+        'sort-desc'
+      )}</span>`,
+      filter: `<span class="da-grid-icon filter-icon active">${iconRegistry.getSvg(
+        'filter'
+      )}</span>`,
+      menu: `<span class="da-grid-icon menu-icon">${iconRegistry.getSvg('hamburger')}</span>`,
+      menuPin: `<span class="da-grid-icon menu-pin-icon">${iconRegistry.getSvg('pin')}</span>`,
+      columns: `<span class="da-grid-icon columns-icon">${iconRegistry.getSvg('grid')}</span>`
     };
 
     this.gridOptions = { ...this.defaultGridOptions };

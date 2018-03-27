@@ -24,6 +24,7 @@ import { DatoLoaderModule } from './loader/loader.module';
 import { DatoTranslateService } from './services/translate.service';
 import { DatoSortableModule } from './sortable/sortable.module';
 import { DatoAccordionModule } from './accordion/accordion.module';
+import { DatoCheckboxModule } from './checkbox/checkbox.module';
 
 const modules = [
   DatoDirectives,
@@ -38,7 +39,8 @@ const modules = [
   DatoDropdownModule,
   DatoLoaderModule,
   DatoSortableModule,
-  DatoAccordionModule
+  DatoAccordionModule,
+  DatoCheckboxModule
 ];
 
 const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService];

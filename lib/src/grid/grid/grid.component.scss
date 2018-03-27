@@ -32,12 +32,27 @@ dato-grid.grid-pagination {
     border-width: 0 4px 1px 4px;
   }
 
-  .sort-icon {
+  .da-grid-icon {
     display: inline-block;
     line-height: 31px;
+  }
+
+  // align the icon only in the context menu
+  .ag-menu .da-grid-icon svg {
+    vertical-align: middle;
+  }
+
+  // icons dimensions
+  .sort-icon svg {
+    width: 12px;
+    height: 14px;
+  }
+  .filter-icon svg {
+    width: 13px;
+  }
+  .menu-icon, .columns-icon, .menu-pin-icon {
     svg {
-      width: 12px;
-      height: 14px;
+      width: 14px;
     }
   }
 

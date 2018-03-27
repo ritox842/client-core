@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from "@angular/core";
+import { LicenseManager } from "ag-grid-enterprise";
 
 @Component({
   selector: "app",
@@ -18,3 +19,5 @@ export class AppComponent {
     });
   }
 }
+
+LicenseManager.setLicenseKey("YOUR_LICENCE_HERE");

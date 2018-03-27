@@ -42,4 +42,37 @@
     </textarea>
 
   </dato-tabs>
+</dato-preview>checkbox
+
+<dato-preview title="Checkbox">
+
+  <section>
+    <div style="margin-top: 20px">
+      <dato-checkbox [(ngModel)]="checked" class="mr-20">Checked</dato-checkbox>
+      <dato-checkbox [(ngModel)]="disabled">Disabled</dato-checkbox>
+    </div>
+    <div style="margin-top: 20px">
+      <dato-checkbox [(ngModel)]="checked" [disabled]="disabled">I'm {{checked ? 'on' : 'off'}}</dato-checkbox>
+    </div>
+
+  </section>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+       <div style="margin-top: 20px">
+        <dato-checkbox [(ngModel)]="checked" class="mr-20">Checked</dato-checkbox>
+        <dato-checkbox [(ngModel)]="disabled">Disabled</dato-checkbox>
+      </div>
+      <div style="margin-top: 20px">
+        <dato-checkbox [(ngModel)]="checked" [disabled]="disabled">I'm { {checked ? 'on' : 'off'} }</dato-checkbox>
+      </div>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      checked = false;
+      disabled = false;
+    </textarea>
+
+  </dato-tabs>
 </dato-preview>

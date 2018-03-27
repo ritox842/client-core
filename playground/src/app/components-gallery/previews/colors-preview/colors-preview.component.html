@@ -2,14 +2,14 @@
 
   <section>
 
-    <section class="d-flex flex-wrap">
+    <section class="d-flex d-flex-wrap">
       <div *ngFor="let color of group.primary">
         <span class="tag is-warning">{{color}}</span>
         <div class="{{color}}-background-color box"></div>
       </div>
     </section>
 
-    <section class="d-flex flex-wrap">
+    <section class="d-flex d-flex-wrap">
       <div *ngFor="let color of group.accent">
         <span class="tag is-warning">{{color}}</span>
         <div class="{{color}}-background-color box"></div>

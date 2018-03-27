@@ -1,0 +1,12 @@
+$navbar-height: 70px;
+:host {
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+
+  section {
+    padding-bottom: $navbar-height;
+    overflow-y: auto;
+    max-height: calc(100vh - #{$navbar-height});
+  }
+}

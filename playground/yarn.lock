@@ -6295,9 +6295,9 @@ ngc-webpack@^4.1.2:
     source-map "^0.5.6"
     ts-node "^3.2.0"
 
-ngx-take-until-destroy@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/ngx-take-until-destroy/-/ngx-take-until-destroy-2.1.1.tgz#341a16f27d7fd6aa640c1484e69d543319f1d964"
+ngx-take-until-destroy@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/ngx-take-until-destroy/-/ngx-take-until-destroy-2.2.1.tgz#d2768135c8ae6323a76665157c6fec3183e0e251"
 
 no-case@^2.2.0:
   version "2.3.2"

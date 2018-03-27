@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Datorama. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
+ */
+
 // import {ChangeDetectionStrategy, Component, Input, OnInit} from "@angular/core";
 // import {getDefaults, SnackbarOptions} from "./snackbar.types";
 // import {Subject} from "rxjs/Subject";

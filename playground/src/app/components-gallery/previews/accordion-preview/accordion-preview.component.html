@@ -1,0 +1,102 @@
+<dato-preview title="Accordion">
+
+  <dato-accordion [collapseOthers]="true">
+    <dato-accordion-group>
+      <dato-accordion-header>
+        <div class="header">Title 1</div>
+      </dato-accordion-header>
+      <dato-accordion-content>
+        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet blanditiis distinctio eius molestiae molestias nulla officiis perspiciatis! At, debitis ea ipsam iure magni maiores minus pariatur perspiciatis soluta vero, voluptate?</div>
+      </dato-accordion-content>
+    </dato-accordion-group>
+
+    <dato-accordion-group>
+      <dato-accordion-header>
+        <div class="header">Title 2</div>
+      </dato-accordion-header>
+      <dato-accordion-content>
+        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aut, beatae consectetur dolor ducimus eius, esse exercitationem id itaque libero magni maiores quaerat quibusdam quos repellendus sed sunt veritatis voluptatibus!</div>
+      </dato-accordion-content>
+    </dato-accordion-group>
+
+    <dato-accordion-group>
+      <dato-accordion-header>
+        <div class="header">Title 3</div>
+      </dato-accordion-header>
+      <dato-accordion-content>
+        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem dolore dolores labore minima quae. Ab aperiam consectetur deleniti, dolor dolorum eaque fugiat nam nisi numquam placeat possimus ratione tempore!</div>
+      </dato-accordion-content>
+    </dato-accordion-group>
+  </dato-accordion>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-accordion [collapseOthers]="true">
+
+       <dato-accordion-group>
+         <dato-accordion-header>
+           <div class="header">Title 1</div>
+         </dato-accordion-header>
+         <dato-accordion-content>
+           <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet blanditiis distinctio eius molestiae molestias nulla officiis perspiciatis! At, debitis ea ipsam iure magni maiores minus pariatur perspiciatis soluta vero, voluptate?</div>
+         </dato-accordion-content>
+       </dato-accordion-group>
+
+      </dato-accordion>
+
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>collapseOthers</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Whether to collapse the others</td>
+      </tr>
+      <tr>
+        <td>selectedIndex</td>
+        <td>number</td>
+        <td>0</td>
+        <td>The index of the initial group that is open</td>
+      </tr>
+      <tr>
+        <td>expandAll</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Whether to expand all</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table type="outputs">
+      <tr>
+        <td>expand</td>
+        <td>false</td>
+        <td>This event is on the <b>group</b> element</td>
+      </tr>
+
+      <tr>
+        <td>collapse</td>
+        <td>false</td>
+        <td>This event is on the <b>group</b> element</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

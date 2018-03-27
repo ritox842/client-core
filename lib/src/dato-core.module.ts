@@ -1,3 +1,11 @@
+/**
+ * @license
+ * Copyright Datorama. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
+ */
+
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { DatoButtonModule } from './button/button.module';
 import { DatoThemesModule } from './themes/themes.module';
@@ -15,6 +23,7 @@ import { DatoSnackbar } from './services/snackbar.service';
 import { DatoLoaderModule } from './loader/loader.module';
 import { DatoTranslateService } from './services/translate.service';
 import { DatoSortableModule } from './sortable/sortable.module';
+import { DatoAccordionModule } from './accordion/accordion.module';
 
 const modules = [
   DatoDirectives,
@@ -28,7 +37,8 @@ const modules = [
   DatoActionMenuModule,
   DatoDropdownModule,
   DatoLoaderModule,
-  DatoSortableModule
+  DatoSortableModule,
+  DatoAccordionModule
 ];
 
 const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService];

@@ -103,7 +103,7 @@
     "helpful-decorators": "^1.7.0",
     "http-server": "^0.11.1",
     "ie-shim": "^0.1.0",
-    "ngx-take-until-destroy": "^2.1.1",
+    "ngx-take-until-destroy": "^2.2.1",
     "popper.js": "^1.12.9",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^5.5.6",

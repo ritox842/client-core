@@ -10,7 +10,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "npm run format && gulp --gulpfile build-tools/gulpfile.js",
+    "build": "gulp --gulpfile build-tools/gulpfile.js",
     "format": "prettier --write --config .prettierrc src/*.ts src/**/*.ts src/**/**/**.ts",
     "watch": "gulp --gulpfile build-tools/gulpfile.js -- watch:themes"
   },

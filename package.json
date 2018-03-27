@@ -4,17 +4,25 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "gulp --gulpfile lib/build-tools/gulpfile.js",
     "commit": "git-cz",
     "commitmsg": "commitlint -e $GIT_PARAMS",
+    "precommit": "lint-staged",
     "start": "cd playground && npm start",
     "link-parent-bin": "link-parent-bin --child-directory-root .",
-    "watch": "cd lib && npm run watch",
+    "themes": "cd lib && npm run watch",
     "postinstall": "link-parent-bin"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^6.1.3",

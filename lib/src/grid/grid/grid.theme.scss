@@ -5,6 +5,13 @@
 @import "../../../../node_modules/ag-grid/src/styles/ag-theme-common";
 @import '../grid-header/grid-header.theme';
 
+@mixin colorful-icon($path, $icon, $color, $altColor) {
+  background-image: none;
+}
+@mixin icon-background($params, $icon) {
+  background-image: none;
+}
+
 $icons-path: "/node_modules/ag-grid/src/styles/icons/";
 
 // opacity values used for black values, taken from material spec

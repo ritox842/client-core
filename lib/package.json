@@ -20,7 +20,6 @@
   "module": "./esm5/datorama.es5.js",
   "typings": "./datorama.d.ts",
   "devDependencies": {
-    "@datorama/utils": "^1.0.1",
     "autoprefixer": "^8.1.0",
     "del": "^3.0.0",
     "fs": "0.0.1-security",
@@ -34,7 +33,6 @@
     "gulp-sass": "^3.1.0",
     "gulp-watch": "^5.0.0",
     "hex-to-rgba": "^1.0.1",
-    "ngx-take-until-destroy": "^2.1.1",
     "path": "^0.12.7",
     "postcss": "^6.0.19",
     "postcss-node-sass": "^2.1.4",

@@ -27,7 +27,7 @@ import { optionalDebounce } from '../rx/debounce';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => InputComponent),
+  useExisting: forwardRef(() => DatoInputComponent),
   multi: true
 };
 
@@ -59,7 +59,7 @@ const animations = [
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [valueAccessor]
 })
-export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class DatoInputComponent implements OnInit, OnDestroy, ControlValueAccessor {
   destroyed$: Observable<boolean>;
   showDelete = false;
 

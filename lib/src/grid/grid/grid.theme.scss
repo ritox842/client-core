@@ -177,11 +177,6 @@ $params: (
 
   @include ag-grid-theme($params);
 
-  .ag-root {
-    border-color: themify(primary-100);
-    border-style: solid;
-  }
-
   /* Header */
   .ag-header {
     border-bottom: solid 2px themify(primary-200);
@@ -199,6 +194,12 @@ $params: (
 
   }
 
+  /* Row */
+  .ag-row {
+    border-bottom: solid 1px #fff;
+  }
+
+  // custom icon
   .da-grid-icon {
     fill: themify(primary-300);
     &:hover {
@@ -206,6 +207,7 @@ $params: (
     }
   }
 
+  /* Cells */
   .ag-cell-highlight {
     background-color: $range-selection-highlight-color !important;
   }
@@ -247,6 +249,7 @@ $params: (
     border: none;
   }
 
+  /* Tool Panel */
   .ag-tool-panel {
     border-bottom: 0;
     border-right: 0;
@@ -261,13 +264,20 @@ $params: (
     }
   }
 
-  // Context Menu
+  /* Context Menu */
   .ag-menu-option-text {
     color: themify(primary-600);
     font-size: 14px;
   }
-  .ag-menu-separator {
+  .ag-menu .ag-menu-option-icon span {
+    margin-top: 0;
+  }
+  // menu-separator
+  .ag-menu .ag-menu-separator {
     border-top: solid 1px themify(primary-100);
+    .ag-menu-separator-cell {
+      height: 1px;
+    }
   }
   .ag-tab-selected .da-grid-icon {
     fill: themify(accent-400);
@@ -277,11 +287,11 @@ $params: (
     transition: border-color 0.25s;
   }
 
-  // filter
+  /* filter */
   .ag-filter {
 
     .ag-filter-body {
-      margin: 8px;
+      margin: 5px 10px;
     }
 
     .ag-filter-body input[type='text'],
@@ -296,12 +306,11 @@ $params: (
     }
 
     select.ag-filter-select {
-      -webkit-appearance: none;
-      -moz-appearance: none;
       appearance: none;
-
       line-height: 22px;
       background: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path fill-rule='evenodd' d='M9.392.92a.513.513 0 0 0-.923-.348l-3.59 3.733L1.29.572a.515.515 0 0 0-.738.718l4 4.102a.513.513 0 0 0 .738 0l4-4.102a.513.513 0 0 0 .103-.37z'/></svg>") 96% / 6% no-repeat currentColor;
+      margin: 5px 10px;
+      width: calc(100% - 20px);
     }
 
     /* CAUTION: IE hackery ahead */
@@ -314,17 +323,30 @@ $params: (
 
   $checkbox-size: 16px;
 
-  // columns-panel -> checkbox
+  /* columns-panel */
+
+  // override the default height
+  .ag-menu-column-select-wrapper {
+    height: auto;
+    max-height: 300px;
+  }
+
+  // checkbox
   .ag-column-select-panel .ag-column-select-column {
 
-    margin-left: 8px;
-    margin-bottom: 8px;
+    &:last-of-type {
+      margin-bottom: 5px;
+    }
+
+    margin: 5px 15px 10px 15px;
     height: $checkbox-size;
     line-height: $checkbox-size;
 
     .ag-column-select-checkbox {
 
-      margin-right: 0;
+      margin-right: 10px;
+      width: $checkbox-size;
+      overflow: hidden;
 
       > span {
         display: block;

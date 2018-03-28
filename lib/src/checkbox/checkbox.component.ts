@@ -7,6 +7,7 @@
  */
 
 import {
+  Attribute,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -72,14 +73,19 @@ export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAcc
   constructor(
     private renderer: Renderer2,
     private cdr: ChangeDetectorRef,
-    private host: ElementRef
-  ) {}
+    private host: ElementRef,
+    @Attribute('trueValue') public trueValue,
+    @Attribute('falseValue') public falseValue
+  ) {
+    this.trueValue = this.trueValue == null ? true : this.trueValue;
+    this.falseValue = this.falseValue == null ? false : this.falseValue;
+  }
 
   ngOnInit() {
     fromEvent(this.inpuElement, 'change')
       .pipe(pluck('target', 'checked'), takeUntil(this.destroyed$))
       .subscribe(val => {
-        this.onChange(val);
+        this.onChange(val ? this.trueValue : this.falseValue);
       });
   }
 
@@ -93,7 +99,7 @@ export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAcc
    * @param value
    */
   writeValue(value): void {
-    const normalizedValue = value == null ? false : value;
+    const normalizedValue = value === this.trueValue ? true : false;
     this.setInputValue(normalizedValue);
   }
 

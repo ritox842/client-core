@@ -26,6 +26,7 @@ $label-left-padding: 10px;
       left: 0;
       height: $checkbox-size;
       width: $checkbox-size;
+      transition: background 0.2s ease;
 
       /* Create the checkmark/indicator (hidden when not checked) */
       &:after {

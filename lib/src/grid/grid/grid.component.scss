@@ -28,13 +28,10 @@ dato-grid.grid-pagination {
   width: 100%;
   height: 100%;
 
-  .ag-root {
-    border-width: 0 4px 1px 4px;
-  }
-
   .da-grid-icon {
     display: inline-block;
     line-height: 31px;
+    vertical-align: middle;
   }
 
   // align the icon only in the context menu
@@ -42,10 +39,20 @@ dato-grid.grid-pagination {
     vertical-align: middle;
   }
 
+  .ag-header-cell-sortable {
+    .ag-sort-none-icon {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    &:hover .ag-sort-none-icon {
+      opacity: 1;
+    }
+  }
+
   // icons dimensions
   .sort-icon svg {
-    width: 12px;
-    height: 14px;
+    width: 14px;
+    height: 16px;
   }
   .filter-icon svg {
     width: 13px;

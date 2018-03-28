@@ -15,13 +15,14 @@ import {
   forwardRef,
   Input,
   OnInit,
-  Renderer2
+  Renderer2,
+  OnDestroy
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { pluck, takeUntil } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import { OnDestroy, TakeUntilDestroy } from 'ngx-take-until-destroy';
+import { pluck } from 'rxjs/operators';
+import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { toBoolean } from '@datorama/utils';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -39,8 +40,6 @@ const valueAccessor = {
   providers: [valueAccessor]
 })
 export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  destroyed$: Observable<boolean>;
-
   private _checked: boolean = false;
 
   /**
@@ -52,7 +51,7 @@ export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAcc
   }
 
   set checked(value: boolean) {
-    if (value != this.checked) {
+    if (value !== this.checked) {
       this._checked = value;
       this.cdr.markForCheck();
     }
@@ -77,13 +76,13 @@ export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAcc
     @Attribute('trueValue') public trueValue,
     @Attribute('falseValue') public falseValue
   ) {
-    this.trueValue = this.trueValue == null ? true : this.trueValue;
-    this.falseValue = this.falseValue == null ? false : this.falseValue;
+    this.trueValue = toBoolean(this.trueValue) ? this.trueValue : true;
+    this.falseValue = toBoolean(this.falseValue) ? this.falseValue : false;
   }
 
   ngOnInit() {
     fromEvent(this.inpuElement, 'change')
-      .pipe(pluck('target', 'checked'), takeUntil(this.destroyed$))
+      .pipe(pluck('target', 'checked'), untilDestroyed(this))
       .subscribe(val => {
         this.onChange(val ? this.trueValue : this.falseValue);
       });

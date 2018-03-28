@@ -1,0 +1,44 @@
+dato-checkbox {
+  label {
+    color: themify(primary-600);
+  }
+
+  .checkmark:after {
+    border: solid themify(primary-0);
+  }
+
+  // unchecked state
+  input:not(:checked) ~ .checkmark {
+    background-color: themify(primary-0);
+    border: solid 1px themify(primary-300);
+  }
+  &:hover input:not(:checked) ~ .checkmark {
+    border-color: themify(accent-500);
+  }
+  &:active input:not(:checked) ~ .checkmark {
+    border-color: themify(accent-600);
+  }
+
+  /* On mouse-over, add a grey background color */
+  &:hover input:checked ~ .checkmark {
+    background-color: themify(accent-500);
+  }
+  &:active input:checked ~ .checkmark {
+    background-color: themify(accent-600);
+  }
+  /* When the checkbox is checked, add a blue background */
+  input:checked ~ .checkmark {
+    background-color: themify(accent-400);
+  }
+
+  input:disabled ~ .checkmark {
+    background-color: rgba(156, 160, 160, 0.1) !important;
+    border-color: transparent !important;
+
+    &:after {
+      border-color: themify(primary-200);
+    }
+
+  }
+
+}

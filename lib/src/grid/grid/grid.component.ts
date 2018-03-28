@@ -19,6 +19,7 @@ import {
 import { ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
 import { DatoTranslateService } from '../../services/translate.service';
 import { IconRegistry } from '../../services/icon-registry';
+import { getGridIcons } from './grid-icons';
 
 export type ExtendedGridOptions = {
   onRowDataUpdated: (event) => void;
@@ -47,7 +48,8 @@ export class DatoGridComponent {
     },
     rowSelection: 'multiple',
     rowDeselection: true,
-    icons: {}
+    icons: {},
+    unSortIcon: true
   };
 
   gridApi: GridApi;
@@ -78,12 +80,7 @@ export class DatoGridComponent {
     private element: ElementRef,
     private iconRegistry: IconRegistry
   ) {
-    this.defaultGridOptions.icons = {
-      sortAscending: `<span class="sort-icon">${iconRegistry.getSvg('sort-asc')}</span>`,
-      sortDescending: `<span class="sort-icon">${iconRegistry.getSvg('sort-desc')}</span>`,
-      filter: `<span class="sort-icon active">${iconRegistry.getSvg('filter')}</span>`,
-      menu: `<span class="sort-icon">${iconRegistry.getSvg('filter')}</span>`
-    };
+    this.defaultGridOptions.icons = getGridIcons(iconRegistry);
 
     this.gridOptions = { ...this.defaultGridOptions };
   }

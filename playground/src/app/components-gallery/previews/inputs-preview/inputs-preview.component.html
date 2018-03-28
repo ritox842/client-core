@@ -6,9 +6,9 @@
     </div>
 
     <div class="d-flex" style="margin-top: 20px">
-      <dato-input placeholder="Hint" [formControl]="control" [debounceTime]="300"></dato-input>
+      <dato-input placeholder="Hint" [formControl]="inputControl" [debounceTime]="300"></dato-input>
       <code>
-        {{control.value}}
+        {{inputControl.value}}
       </code>
     </div>
 
@@ -31,7 +31,7 @@
 
     <textarea datoHighlight="html">
       <dato-input placeholder="Hint" datoSize="sm"></dato-input>
-      <dato-input placeholder="Hint" [formControl]="control" [debounceTime]="300"></dato-input>
+      <dato-input placeholder="Hint" [formControl]="inputControl" [debounceTime]="300"></dato-input>
       <dato-input placeholder="Hint" type="search" datoSize="lg"></dato-input>
       <dato-input placeholder="Hint" [disabled]="true"></dato-input>
       <dato-input placeholder="Hint" type="search"></dato-input>
@@ -39,6 +39,82 @@
 
     <textarea datoHighlight="js">
       control = new FormControl('initial value');
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="Checkbox">
+
+  <section>
+    <div style="margin-top: 20px">
+      <dato-checkbox [formControl]="checkboxCheckedControl" class="mr-20">Checked</dato-checkbox>
+      <dato-checkbox [formControl]="checkboxDisableControl">Disabled</dato-checkbox>
+    </div>
+    <div style="margin-top: 20px">
+      <dato-checkbox [formControl]="checkboxControl">I'm {{checkboxControl.value ? 'on' : 'off'}}</dato-checkbox>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-text>It's possible to replace the value of "true" and "false" with your own values:</dato-text>
+      <div>
+        <dato-checkbox [formControl]="checkboxCustomValueControl" trueValue="yep" falseValue="nope">
+          {{checkboxCustomValueControl.value}}
+        </dato-checkbox>
+      </div>
+    </div>
+
+  </section>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+      <div>
+        <dato-checkbox [formControl]="checkboxCheckedControl" class="mr-20">Checked</dato-checkbox>
+        <dato-checkbox [formControl]="checkboxDisableControl">Disabled</dato-checkbox>
+      </div>
+      <div>
+        <dato-checkbox [formControl]="checkboxControl">I'm {{checkboxControl.value ? 'on' : 'off'}}</dato-checkbox>
+      </div>
+
+      <div>
+        <dato-text>It's possible to replace the value of "true" and "false" with your own values:</dato-text>
+        <div>
+          <dato-checkbox [formControl]="checkboxCustomValueControl" trueValue="yep" falseValue="nope">
+            {{checkboxCustomValueControl.value}}
+          </dato-checkbox>
+        </div>
+      </div>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      inputControl = new FormControl("initial value");
+
+      checkboxControl = new FormControl(true);
+      checkboxCheckedControl = new FormControl(true);
+      checkboxDisableControl = new FormControl(false);
+
+      // custom checkbox value
+      checkboxCustomValueControl = new FormControl('yep');
+
+      ngOnInit() {
+
+        // enable/disable the checkbox
+        this.checkboxDisableControl.valueChanges
+          .pipe(untilDestroyed(this))
+          .subscribe((value) => {
+          value ? this.checkboxControl.disable() : this.checkboxControl.enable();
+        });
+
+        // checked/unchecked the checkbox
+        this.checkboxCheckedControl.valueChanges
+          .pipe(untilDestroyed(this))
+          .subscribe((value) => {
+            this.checkboxControl.patchValue(value);
+          });
+
+      }
+
     </textarea>
 
   </dato-tabs>

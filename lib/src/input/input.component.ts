@@ -15,19 +15,19 @@ import {
   forwardRef,
   Input,
   OnInit,
-  Renderer2
+  Renderer2,
+  OnDestroy
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { pluck, takeUntil, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import { OnDestroy, TakeUntilDestroy } from 'ngx-take-until-destroy';
+import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { optionalDebounce } from '../rx/debounce';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => InputComponent),
+  useExisting: forwardRef(() => DatoInputComponent),
   multi: true
 };
 
@@ -59,8 +59,7 @@ const animations = [
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [valueAccessor]
 })
-export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  destroyed$: Observable<boolean>;
+export class DatoInputComponent implements OnInit, OnDestroy, ControlValueAccessor {
   showDelete = false;
 
   @Input() placeholder = '';
@@ -83,7 +82,7 @@ export class InputComponent implements OnInit, OnDestroy, ControlValueAccessor {
         pluck('target', 'value'),
         tap(val => this.activateDeleteIcon(val)),
         optionalDebounce(this.debounceTime),
-        takeUntil(this.destroyed$)
+        untilDestroyed(this)
       )
       .subscribe(val => {
         this.onChange(val);

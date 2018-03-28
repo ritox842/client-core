@@ -45,11 +45,10 @@ $secondary-foreground-color: rgba(#333, $secondary-foreground-color-opacity) !de
 $disabled-foreground-color: rgba(black, $disabled-foreground-color-opacity) !default;
 $menu-option-active-color: $core-common-selected-color !default;
 
-$card-background-color: #f6f6f6 !default;
 // the $border-color doesn't supports themify. agGrid injecting the value to the SVG
 $border-color: transparent !default;
 
-$primary-color: black !default;
+$primary-color: themify(accent-400) !default;
 $accent-color: black !default;
 
 $background-color: themify(primary-50) !default;
@@ -68,7 +67,7 @@ $chip-background-color: #ecf0f1 !default;
 $range-selection-background-color: rgba(120, 120, 120, 0.4) !default;
 $range-selection-highlight-color: transparent !default;
 
-$hover-color: inherit !default;
+$hover-color: themify(primary-100) !default;
 
 $selected-color: $menu-option-active-color !default;
 
@@ -91,7 +90,10 @@ $row-stub-background-color: #f0f0f0 !default;
 
 // Misc
 $transition-speed: 120ms !default;
-$card-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+// Card (context-menu)
+$card-background-color: themify(primary-0) !default;
+$card-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
 $card-radius: 2px;
 
 // delta changes
@@ -169,12 +171,11 @@ $params: (
 
 .ag-dato-core {
 
-  @include ag-grid-theme($params);
-
-  .ag-root {
-    border-color: themify(primary-100);
-    border-style: solid;
+  %selected-tab {
+    border-bottom: 2px solid $primary-color;
   }
+
+  @include ag-grid-theme($params);
 
   /* Header */
   .ag-header {
@@ -187,15 +188,26 @@ $params: (
       @include typography(note-bold);
     }
 
-    .sort-icon {
-      fill: themify(primary-300);
-      &.active,
-      &:hover {
-        fill: themify(accent-400);
-      }
+    .da-grid-icon.active {
+      fill: themify(accent-400);
+    }
+
+  }
+
+  /* Row */
+  .ag-row {
+    border-bottom: solid 1px #fff;
+  }
+
+  // custom icon
+  .da-grid-icon {
+    fill: themify(primary-300);
+    &:hover {
+      fill: themify(accent-400);
     }
   }
 
+  /* Cells */
   .ag-cell-highlight {
     background-color: $range-selection-highlight-color !important;
   }
@@ -237,6 +249,7 @@ $params: (
     border: none;
   }
 
+  /* Tool Panel */
   .ag-tool-panel {
     border-bottom: 0;
     border-right: 0;
@@ -251,11 +264,34 @@ $params: (
     }
   }
 
-  // filter
+  /* Context Menu */
+  .ag-menu-option-text {
+    color: themify(primary-600);
+    font-size: 14px;
+  }
+  .ag-menu .ag-menu-option-icon span {
+    margin-top: 0;
+  }
+  // menu-separator
+  .ag-menu .ag-menu-separator {
+    border-top: solid 1px themify(primary-100);
+    .ag-menu-separator-cell {
+      height: 1px;
+    }
+  }
+  .ag-tab-selected .da-grid-icon {
+    fill: themify(accent-400);
+  }
+  .ag-tab-header .ag-tab {
+    border-bottom-color: themify(primary-100);
+    transition: border-color 0.25s;
+  }
+
+  /* filter */
   .ag-filter {
 
     .ag-filter-body {
-      margin: 8px;
+      margin: 5px 10px;
     }
 
     .ag-filter-body input[type='text'],
@@ -270,18 +306,105 @@ $params: (
     }
 
     select.ag-filter-select {
-      -webkit-appearance: none;
-      -moz-appearance: none;
       appearance: none;
-
       line-height: 22px;
       background: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path fill-rule='evenodd' d='M9.392.92a.513.513 0 0 0-.923-.348l-3.59 3.733L1.29.572a.515.515 0 0 0-.738.718l4 4.102a.513.513 0 0 0 .738 0l4-4.102a.513.513 0 0 0 .103-.37z'/></svg>") 96% / 6% no-repeat currentColor;
+      margin: 5px 10px;
+      width: calc(100% - 20px);
     }
 
     /* CAUTION: IE hackery ahead */
 
     select.ag-filter-select::-ms-expand {
       display: none; /* remove default arrow in IE 10 and 11 */
+    }
+
+  }
+
+  $checkbox-size: 16px;
+
+  /* columns-panel */
+
+  // override the default height
+  .ag-menu-column-select-wrapper {
+    height: auto;
+    max-height: 300px;
+  }
+
+  // checkbox
+  .ag-column-select-panel .ag-column-select-column {
+
+    &:last-of-type {
+      margin-bottom: 5px;
+    }
+
+    margin: 5px 15px 10px 15px;
+    height: $checkbox-size;
+    line-height: $checkbox-size;
+
+    .ag-column-select-checkbox {
+
+      margin-right: 10px;
+      width: $checkbox-size;
+      overflow: hidden;
+
+      > span {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        font-size: 22px;
+        user-select: none;
+        height: $checkbox-size;
+        width: $checkbox-size;
+
+        .ag-icon {
+          height: 100%;
+          width: 100%;
+          border-radius: 2px;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        .ag-icon:after {
+          content: "";
+          position: absolute;
+          display: none;
+          left: 6px;
+          top: 3px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+        }
+
+        // checked state
+        .ag-icon.ag-icon-checkbox-checked {
+          background-color: themify(accent-400);
+          &:hover {
+            background-color: themify(accent-500);
+          }
+          &:active {
+            background-color: themify(accent-600);
+          }
+
+          &:after {
+            display: block;
+          }
+        }
+        // unchecked state
+        .ag-icon.ag-icon-checkbox-unchecked {
+          background-color: themify(primary-0);
+          border: solid 1px themify(primary-300);
+          &:hover {
+            border-color: themify(accent-500);
+          }
+          &:active {
+            border-color: themify(accent-600);
+          }
+        }
+      }
     }
 
   }

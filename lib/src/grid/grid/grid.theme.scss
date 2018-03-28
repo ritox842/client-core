@@ -297,12 +297,22 @@ $params: (
   /* filter */
   .ag-filter {
 
+    .ag-filter-header-container {
+      margin: 5px 10px;
+    }
+
+    // filter items
+    .ag-virtual-list-container {
+      padding: 0 10px;
+    }
+
     .ag-filter-body {
       margin: 5px 10px;
     }
 
     .ag-filter-body input[type='text'],
     .ag-filter-body input[type='date'],
+    input[type='text'].ag-filter-filter,
     select.ag-filter-select {
 
       @include input-like(sm);
@@ -338,7 +348,7 @@ $params: (
     max-height: 300px;
   }
 
-  // checkbox
+  // columns - checkbox
   .ag-column-select-panel .ag-column-select-column {
 
     &:last-of-type {
@@ -349,7 +359,73 @@ $params: (
     height: $checkbox-size;
     line-height: $checkbox-size;
 
-    .ag-column-select-checkbox {
+  }
+
+  .ag-filter .ag-filter-checkbox {
+      display: block;
+      position: relative;
+      cursor: pointer;
+      font-size: 22px;
+      user-select: none;
+      height: $checkbox-size;
+      width: $checkbox-size;
+
+      .ag-icon {
+        height: 100%;
+        width: 100%;
+        border-radius: 2px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .ag-icon:after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 3px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        box-sizing: border-box;
+      }
+
+      // checked state
+      .ag-icon.ag-icon-checkbox-checked {
+        background-color: themify(accent-400);
+        &:hover {
+          background-color: themify(accent-500);
+        }
+        &:active {
+          background-color: themify(accent-600);
+        }
+
+        &:after {
+          display: block;
+        }
+      }
+      // unchecked state
+      .ag-icon.ag-icon-checkbox-unchecked {
+        background-color: themify(primary-0);
+        border: solid 1px themify(primary-300);
+        &:hover {
+          border-color: themify(accent-500);
+        }
+        &:active {
+          border-color: themify(accent-600);
+        }
+      }
+
+  }
+  .ag-filter .ag-filter-value {
+    height: $checkbox-size;
+    line-height: $checkbox-size;
+  }
+
+  .ag-column-select-panel .ag-column-select-column .ag-column-select-checkbox{
 
       margin-right: 10px;
       width: $checkbox-size;
@@ -384,6 +460,7 @@ $params: (
           border: solid white;
           border-width: 0 2px 2px 0;
           transform: rotate(45deg);
+          box-sizing: border-box;
         }
 
         // checked state
@@ -414,6 +491,6 @@ $params: (
       }
     }
 
-  }
+
 
 }

@@ -1,13 +1,14 @@
+/**
+ * @license
+ * Copyright Datorama. All Rights Reserved.
+ *
+ * Use of this source code is governed by an Apache License 2.0 license that can be
+ * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
+ */
+
 import { ColDef, ColGroupDef, DetailGridInfo, GridApi, GridOptions, RowNode } from 'ag-grid';
 import { coerceArray, toBoolean } from '@datorama/utils';
-import {
-  AfterContentInit,
-  AfterViewInit,
-  ContentChild,
-  OnInit,
-  QueryList,
-  ViewChild
-} from '@angular/core';
+import { ContentChild, OnInit, ViewChild } from '@angular/core';
 import { ToolbarAction } from './grid-toolbar/grid-toolbar';
 import { DatoGridComponent } from './grid/grid.component';
 import { Subject } from 'rxjs/Subject';

@@ -12,7 +12,8 @@
   "scripts": {
     "build": "gulp --gulpfile build-tools/gulpfile.js",
     "format": "prettier --write --config .prettierrc src/*.ts src/**/*.ts src/**/**/**.ts",
-    "watch": "gulp --gulpfile build-tools/gulpfile.js -- watch:themes"
+    "watch": "gulp --gulpfile build-tools/gulpfile.js -- watch:themes",
+    "pub": "npm run build && cd ../dist && npm publish --access public"
   },
   "main": "./bundles/datorama.umd.js",
   "es2015": "./esm2015/datorama.js",

@@ -60,6 +60,7 @@ export class DatoGridComponent {
 
   @Input() enableSorting = true;
   @Input() enableFilter = true;
+  @Input() enableColResize = true;
 
   @Input()
   set options(options: DatoGridOptions) {

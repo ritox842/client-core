@@ -1,0 +1,64 @@
+@import 'grid-helper';
+
+/* Filter Theme */
+
+@mixin filterTheme {
+
+  .ag-filter {
+
+    .ag-filter-header-container {
+      height: 30px;
+    }
+    .ag-filter-header-container,
+    .ag-filter-body {
+      margin: 5px 10px;
+    }
+
+    // filter items
+    .ag-virtual-list-container {
+      padding: 0 10px;
+    }
+    // disable the padding of the filters list
+    .ag-set-filter-list {
+      padding-top: 0;
+    }
+
+    .ag-filter-body input[type='text'],
+    .ag-filter-body input[type='date'],
+    input[type='text'].ag-filter-filter,
+    select.ag-filter-select {
+
+      @include input-like(sm);
+      @include input-like-theme();
+
+      // disable default bottom padding
+      padding-bottom: 0;
+    }
+
+    // override select icon
+    select.ag-filter-select {
+      appearance: none;
+      line-height: 22px;
+      background: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path fill-rule='evenodd' d='M9.392.92a.513.513 0 0 0-.923-.348l-3.59 3.733L1.29.572a.515.515 0 0 0-.738.718l4 4.102a.513.513 0 0 0 .738 0l4-4.102a.513.513 0 0 0 .103-.37z'/></svg>") 96% / 6% no-repeat currentColor;
+      margin: 5px 10px;
+      width: calc(100% - 20px);
+    }
+
+    /* CAUTION: IE hackery ahead */
+    select.ag-filter-select::-ms-expand {
+      display: none; /* remove default arrow in IE 10 and 11 */
+    }
+
+  }
+
+  // checkbox styles
+  .ag-filter .ag-filter-checkbox {
+    @include gridCheckbox;
+  }
+  // checkbox label
+  .ag-filter .ag-filter-value {
+    height: $checkbox-size;
+    line-height: $checkbox-size;
+  }
+
+}

@@ -1,0 +1,28 @@
+/* Context Menu Theme */
+
+@mixin menuTheme {
+
+  .ag-menu-option-text {
+    color: themify(primary-600);
+    @include typography(simple);
+  }
+  .ag-menu .ag-menu-option-icon span {
+    margin-top: 0;
+  }
+
+  // menu-separator
+  .ag-menu .ag-menu-separator {
+    border-top: solid 1px themify(primary-100);
+    .ag-menu-separator-cell {
+      height: 1px;
+    }
+  }
+  .ag-tab-selected .da-grid-icon {
+    fill: themify(accent-400);
+  }
+  .ag-tab-header .ag-tab {
+    border-bottom-color: themify(primary-100);
+    transition: border-color 0.25s;
+  }
+
+}

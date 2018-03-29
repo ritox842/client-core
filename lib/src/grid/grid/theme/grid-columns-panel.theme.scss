@@ -1,0 +1,37 @@
+@import 'grid-helper';
+
+/* Columns Panel Theme */
+
+@mixin columnsPanelTheme {
+
+  // override the default height
+  .ag-menu-column-select-wrapper {
+    height: auto;
+    max-height: 300px;
+  }
+
+  // columns - checkbox
+  .ag-column-select-panel .ag-column-select-column {
+
+    &:last-of-type {
+      margin-bottom: 5px;
+    }
+
+    margin: 5px 15px 10px 15px;
+    height: $checkbox-size;
+    line-height: $checkbox-size;
+  }
+
+  // checkbox styles
+  .ag-column-select-panel .ag-column-select-column .ag-column-select-checkbox{
+
+    margin-right: 10px;
+    width: $checkbox-size;
+    overflow: hidden;
+
+    > span {
+      @include gridCheckbox;
+    }
+  }
+
+}

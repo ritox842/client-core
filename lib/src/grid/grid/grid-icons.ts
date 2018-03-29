@@ -6,7 +6,9 @@ export function getGridIcons(iconRegistry: IconRegistry) {
     sortDescending: `<span class="da-grid-icon sort-icon">${iconRegistry.getSvg(
       'sort-desc'
     )}</span>`,
-    sortUnSort: `<span class="da-grid-icon sort-icon">${iconRegistry.getSvg('sort-desc')}</span>`,
+    sortUnSort: `<span class="da-grid-icon sort-icon">${iconRegistry.getSvg(
+      'expend-arrows'
+    )}</span>`,
     filter: `<span class="da-grid-icon filter-icon active">${iconRegistry.getSvg('filter')}</span>`,
     menu: `<span class="da-grid-icon menu-icon">${iconRegistry.getSvg('hamburger')}</span>`,
     menuPin: `<span class="da-grid-icon menu-pin-icon">${iconRegistry.getSvg('pin')}</span>`,

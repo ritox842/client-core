@@ -1,0 +1,35 @@
+
+/* Header Theme */
+
+@mixin headerTheme {
+
+  .ag-header {
+    border-bottom: solid 2px themify(primary-200);
+
+    .ag-header-cell-label {
+      color: themify(primary-300);
+    }
+    .ag-header-cell-label {
+      @include typography(note-bold);
+    }
+    .da-grid-icon.active {
+      fill: themify(accent-400);
+    }
+
+  }
+
+  /* Column Resize Handler */
+  .ag-header-cell-resize {
+    right: -($grid-size) + 1px;
+    opacity: 0;
+    &:hover {
+      opacity: 1;
+    }
+    &::after {
+      border-right: 1px solid #bdc3c761;
+      margin-top: 10px;
+      height: 14px;
+    }
+  }
+
+}

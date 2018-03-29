@@ -1,0 +1,19 @@
+
+/* Tool Panel Theme */
+
+@mixin toolPanelTheme {
+  .ag-tool-panel {
+    border-bottom: 0;
+    border-right: 0;
+    border-top: 0;
+
+    .ag-side-buttons button {
+      border: 0;
+      color: $secondary-foreground-color;
+      font-family: $secondary-font-family;
+      font-size: $secondary-font-size;
+      font-weight: $secondary-font-weight;
+    }
+  }
+
+}

@@ -1,0 +1,59 @@
+@mixin gridCheckbox {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+  height: $checkbox-size;
+  width: $checkbox-size;
+
+  .ag-icon {
+    height: 100%;
+    width: 100%;
+    border-radius: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .ag-icon:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    box-sizing: border-box;
+  }
+
+  // checked state
+  .ag-icon.ag-icon-checkbox-checked {
+    background-color: themify(accent-400);
+    &:hover {
+      background-color: themify(accent-500);
+    }
+    &:active {
+      background-color: themify(accent-600);
+    }
+
+    &:after {
+      display: block;
+    }
+  }
+  // unchecked state
+  .ag-icon.ag-icon-checkbox-unchecked,
+  .ag-icon.ag-icon-checkbox-indeterminate {
+    background-color: themify(primary-0);
+    border: solid 1px themify(primary-300);
+    &:hover {
+      border-color: themify(accent-500);
+    }
+    &:active {
+      border-color: themify(accent-600);
+    }
+  }
+}

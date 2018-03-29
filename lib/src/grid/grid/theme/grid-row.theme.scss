@@ -1,0 +1,49 @@
+
+/* Row & Cell Theme */
+
+@mixin rowTheme {
+
+  /* Rows */
+  .ag-row {
+    border-bottom: solid 1px themify(primary-0);
+  }
+
+  /* Cells */
+  .ag-cell-highlight {
+    background-color: $range-selection-highlight-color !important;
+  }
+
+  .ag-cell-highlight-animation {
+    transition: background-color 1s;
+  }
+
+  .ag-row-drag {
+    background-position-y: center;
+  }
+
+  .ag-column-drag {
+    background-position-y: center;
+  }
+
+  // we do not want to color the range color when the cell is also focused
+  .ag-cell-range-selected-1:not(.ag-cell-focus) {
+    background-color: $range-selection-background-color;
+  }
+
+  .ag-cell-range-selected-2:not(.ag-cell-focus) {
+    background-color: darken($range-selection-background-color, 4);
+  }
+
+  .ag-cell-range-selected-3:not(.ag-cell-focus) {
+    background-color: darken($range-selection-background-color, 8);
+  }
+
+  .ag-cell-range-selected-4:not(.ag-cell-focus) {
+    background-color: darken($range-selection-background-color, 12);
+  }
+
+  .ag-cell-focus {
+    border: none;
+  }
+
+}

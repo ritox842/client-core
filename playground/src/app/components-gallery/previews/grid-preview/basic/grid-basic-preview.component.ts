@@ -44,7 +44,16 @@ export class GridBasicPreviewComponent extends DatoGrid<any> {
 
           return `${id} ${value}`;
         },
-        headerName: "IdValue"
+        field: "idValue",
+        headerName: "ID & Value"
+      },
+      {
+        field: "updateTime",
+        valueFormatter({ value }) {
+          return value.toDateString();
+        },
+        headerName: "Update Time",
+        filter: "agDateColumnFilter"
       }
     ];
   }
@@ -56,7 +65,7 @@ export class GridBasicPreviewComponent extends DatoGrid<any> {
   asyncRows() {
     let rows = [];
     for (let i = 0; i < 1000; i++) {
-      rows.push({ id: i, value: i * 5 });
+      rows.push({ id: i, value: i * 5, updateTime: new Date() });
     }
     return timer(3000).pipe(mapTo(rows));
   }

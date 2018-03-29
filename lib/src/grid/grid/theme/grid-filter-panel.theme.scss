@@ -39,7 +39,7 @@
     select.ag-filter-select {
       appearance: none;
       line-height: 22px;
-      background: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'><path fill-rule='evenodd' d='M9.392.92a.513.513 0 0 0-.923-.348l-3.59 3.733L1.29.572a.515.515 0 0 0-.738.718l4 4.102a.513.513 0 0 0 .738 0l4-4.102a.513.513 0 0 0 .103-.37z'/></svg>") 96% / 6% no-repeat currentColor;
+      background: url("data:image/svg+xml;utf8, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6' fill='rgb(166, 166, 166)'><path fill-rule='evenodd' d='M9.392.92a.513.513 0 0 0-.923-.348l-3.59 3.733L1.29.572a.515.515 0 0 0-.738.718l4 4.102a.513.513 0 0 0 .738 0l4-4.102a.513.513 0 0 0 .103-.37z'/></svg>") 96% / 6% no-repeat;
       margin: 5px 10px;
       width: calc(100% - 20px);
     }
@@ -47,6 +47,11 @@
     /* CAUTION: IE hackery ahead */
     select.ag-filter-select::-ms-expand {
       display: none; /* remove default arrow in IE 10 and 11 */
+    }
+
+    // date-range
+    .ag-filter-date-to {
+      margin-top: 10px;
     }
 
   }

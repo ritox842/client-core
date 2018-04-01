@@ -8,8 +8,9 @@
 
 import { NgModule } from '@angular/core';
 import { DatoOriginDirective } from './origin.directive';
+import { DatoDraggableDirective } from './drag.directive';
 
-const directives = [DatoOriginDirective];
+const directives = [DatoOriginDirective, DatoDraggableDirective];
 
 @NgModule({
   declarations: directives,

@@ -7,3 +7,4 @@
  */
 
 export * from './origin.directive';
+export * from './drag.directive';

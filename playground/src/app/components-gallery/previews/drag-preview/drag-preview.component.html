@@ -1,0 +1,49 @@
+<dato-preview title="Draggable">
+  <div style="width: 200px; height: 200px; border: 1px solid lightgrey"
+       class="target"
+       datoDraggable [datoDragHandle]="h1"
+       datoDragTarget=".target">
+    <h1 class="handler" #h1>handler</h1>
+    content to drag
+  </div>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <div style="width: 200px; height: 200px; border: 1px solid lightgrey"
+           class="target"
+           datoDraggable [datoDragHandle]="h1"
+           datoDragTarget=".target">
+        <h1 class="handler" #h1>handler</h1>
+        content to drag
+      </div>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>datoDragHandle</td>
+        <td>selector/element</td>
+        <td>The directive host</td>
+        <td>The drag handler element</td>
+      </tr>
+      <tr>
+        <td>datoDragTarget</td>
+        <td>selector/element</td>
+        <td></td>
+        <td>The drag target element</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

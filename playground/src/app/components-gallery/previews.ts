@@ -9,6 +9,7 @@ import { SortablePreviewComponent } from "./previews/sortable-preview/sortable-p
 import { GridBasicPreviewComponent } from "./previews/grid-preview/basic/grid-basic-preview.component";
 import { GridActionsPreviewComponent } from "./previews/grid-preview/actions/grid-actions-preview.component";
 import { AccordionPreviewComponent } from "./previews/accordion-preview/accordion-preview.component";
+import { DragPreviewComponent } from "./previews/drag-preview/drag-preview.component";
 
 export const previews = [
   ButtonsPreviewComponent,
@@ -21,7 +22,8 @@ export const previews = [
   InputsPreviewComponent,
   ActionMenuPreviewComponent,
   SortablePreviewComponent,
-  AccordionPreviewComponent
+  AccordionPreviewComponent,
+  DragPreviewComponent
 ];
 
 export const routeToComponent = {
@@ -33,5 +35,6 @@ export const routeToComponent = {
   inputs: InputsPreviewComponent,
   menu: ActionMenuPreviewComponent,
   sortable: SortablePreviewComponent,
-  accordion: AccordionPreviewComponent
+  accordion: AccordionPreviewComponent,
+  drag: DragPreviewComponent
 };

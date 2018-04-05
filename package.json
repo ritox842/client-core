@@ -11,6 +11,7 @@
     "start": "cd playground && npm start",
     "link-bin": "link-parent-bin --child-directory-root .",
     "themes": "cd lib && npm run watch",
+    "test:ci": "CI=true karma start lib/config/karma.conf.js",
     "test": "karma start lib/config/karma.conf.js"
   },
   "config": {

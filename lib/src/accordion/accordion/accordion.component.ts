@@ -6,18 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import {
-  AfterContentInit,
-  Component,
-  ContentChildren,
-  forwardRef,
-  Inject,
-  Input,
-  OnDestroy,
-  Optional,
-  QueryList,
-  SkipSelf
-} from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, forwardRef, Inject, Input, OnDestroy, Optional, QueryList, SkipSelf } from '@angular/core';
 import { AccordionGroupComponent } from '../accordion-group/accordion-group.component';
 import { merge } from 'rxjs/observable/merge';
 import { mapTo } from 'rxjs/operators';
@@ -46,7 +35,8 @@ export class AccordionComponent implements AfterContentInit, OnDestroy {
     @Optional()
     @SkipSelf()
     @Inject(forwardRef(() => AccordionComponent))
-    private parent: AccordionComponent
+    private parent: AccordionComponent,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngAfterContentInit() {
@@ -78,6 +68,7 @@ export class AccordionComponent implements AfterContentInit, OnDestroy {
         }
 
         this.toggleGroupExpanding(group, !group.content.isExpanded);
+        this.cdr.detectChanges();
       });
   }
 

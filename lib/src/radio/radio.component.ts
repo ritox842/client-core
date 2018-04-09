@@ -6,71 +6,48 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit, Renderer2, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { pluck } from 'rxjs/operators';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
-import { toBoolean } from '@datorama/utils';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => DatoCheckboxComponent),
+  useExisting: forwardRef(() => DatoRadioComponent),
   multi: true
 };
 
 @TakeUntilDestroy()
 @Component({
-  selector: 'dato-checkbox',
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss'],
+  selector: 'dato-radio',
+  templateUrl: './radio.component.html',
+  styleUrls: ['./radio.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  exportAs: 'datoCheckbox',
+  exportAs: 'datoRadio',
   providers: [valueAccessor]
 })
-export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  private _checked: boolean = false;
+export class DatoRadioComponent implements OnInit, OnDestroy, ControlValueAccessor {
+  @Input() name;
+  @Input() value;
 
-  /**
-   * Whether the checkbox is checked.
-   */
-  get checked(): boolean {
-    return this._checked;
-  }
-
-  set checked(value: boolean) {
-    if (value !== this.checked) {
-      this._checked = value;
-      this.cdr.markForCheck();
-    }
-  }
-
-  /**
-   * Get the native input
-   */
   get inpuElement() {
     return this.host.nativeElement.querySelector('input');
   }
 
+  id = Math.random().toString();
+
   onChange = (_: any) => {};
   onTouched = () => {};
 
-  constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef, @Attribute('trueValue') public trueValue, @Attribute('falseValue') public falseValue) {
-    this.trueValue = toBoolean(this.trueValue) ? this.trueValue : true;
-    this.falseValue = toBoolean(this.falseValue) ? this.falseValue : false;
-  }
+  constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {}
 
   ngOnInit() {
     fromEvent(this.inpuElement, 'change')
-      .pipe(pluck('target', 'checked'), untilDestroyed(this))
+      .pipe(pluck('target', 'value'), untilDestroyed(this))
       .subscribe(val => {
-        this.onChange(val ? this.trueValue : this.falseValue);
+        this.onChange(val);
       });
-  }
-
-  /** Toggles the `checked` state of the checkbox. */
-  toggle(): void {
-    this.writeValue(!this.checked);
   }
 
   /**
@@ -78,8 +55,7 @@ export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAcc
    * @param value
    */
   writeValue(value): void {
-    const normalizedValue = value === this.trueValue ? true : false;
-    this.setInputValue(normalizedValue);
+    this.setInputValue(value === this.value);
   }
 
   /**

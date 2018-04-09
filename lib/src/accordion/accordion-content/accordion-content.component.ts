@@ -6,16 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import {
-  AfterContentInit,
-  Component,
-  forwardRef,
-  Inject,
-  Input,
-  OnDestroy,
-  Optional,
-  SkipSelf
-} from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, forwardRef, Inject, Input, OnDestroy, Optional, SkipSelf } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Subject } from 'rxjs/Subject';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
@@ -34,12 +25,7 @@ import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
     display: block;
   }`
   ],
-  animations: [
-    trigger('slideInOut', [
-      transition(':enter', [style({ height: '0px' }), animate('200ms', style({ height: '*' }))]),
-      transition(':leave', [style({ height: '*' }), animate('200ms', style({ height: '0px' }))])
-    ])
-  ]
+  animations: [trigger('slideInOut', [transition(':enter', [style({ height: '0px' }), animate('200ms', style({ height: '*' }))]), transition(':leave', [style({ height: '*' }), animate('200ms', style({ height: '0px' }))])])]
 })
 export class AccordionContentComponent implements AfterContentInit, OnDestroy {
   private _isExpanded;
@@ -59,7 +45,8 @@ export class AccordionContentComponent implements AfterContentInit, OnDestroy {
     @Optional()
     @SkipSelf()
     @Inject(forwardRef(() => AccordionContentComponent))
-    public parent: AccordionContentComponent
+    public parent: AccordionContentComponent,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngAfterContentInit() {
@@ -67,6 +54,7 @@ export class AccordionContentComponent implements AfterContentInit, OnDestroy {
       this.parent.expand$.pipe(untilDestroyed(this)).subscribe(isExpanded => {
         if (!isExpanded) {
           this.isExpanded = false;
+          this.cdr.detectChanges();
         }
       });
     }

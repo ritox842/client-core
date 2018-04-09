@@ -50,6 +50,7 @@
     <div style="margin-top: 20px">
       <dato-checkbox [formControl]="checkboxCheckedControl" class="mr-20">Checked</dato-checkbox>
       <dato-checkbox [formControl]="checkboxDisableControl">Disabled</dato-checkbox>
+      <code>Control value: {{checkboxCheckedControl.value}}</code>
     </div>
     <div style="margin-top: 20px">
       <dato-checkbox [formControl]="checkboxControl">I'm {{checkboxControl.value ? 'on' : 'off'}}</dato-checkbox>
@@ -61,6 +62,7 @@
         <dato-checkbox [formControl]="checkboxCustomValueControl" trueValue="yep" falseValue="nope">
           {{checkboxCustomValueControl.value}}
         </dato-checkbox>
+        <code>Control value: {{checkboxCustomValueControl.value}}</code>
       </div>
     </div>
 
@@ -115,6 +117,46 @@
 
       }
 
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="Radio">
+
+  <section>
+    <div style="margin-top: 20px">
+      <dato-radio [formControl]="radioControl" name="sex" value="male">Male</dato-radio>
+      <dato-radio [formControl]="radioControl" name="sex" value="female">Female</dato-radio>
+      <code>Control value: {{radioControl.value}}</code>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-radio [formControl]="radioControl2" name="car" value="volvo">Volvo</dato-radio>
+      <dato-radio [formControl]="radioControl2" name="car" value="fiat">Fiat</dato-radio>
+      <code>Control value: {{radioControl2.value}}</code>
+    </div>
+
+    <div style="margin-top: 20px">
+        <dato-radio [formControl]="radioDisableControl">Disabled</dato-radio>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-radio [formControl]="radioDynamic" *ngFor="let radio of radios" [value]="radio.value" name="pita">{{radio.title}}</dato-radio>
+      <code>Control value: {{radioDynamic.value}}</code>
+    </div>
+
+  </section>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+        <dato-radio [formControl]="radioControl" name="sex" value="male">Male</dato-radio>
+        <dato-radio [formControl]="radioControl" name="sex" value="female">Female</dato-radio>
+    </textarea>
+
+    <textarea datoHighlight="js">
+        radioControl = new FormControl("male");
     </textarea>
 
   </dato-tabs>

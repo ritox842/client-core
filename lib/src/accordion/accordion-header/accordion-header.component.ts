@@ -6,17 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import {
-  AfterContentInit,
-  Component,
-  ElementRef,
-  forwardRef,
-  HostBinding,
-  Inject,
-  OnDestroy,
-  Optional,
-  SkipSelf
-} from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, forwardRef, HostBinding, Inject, OnDestroy, Optional, SkipSelf } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { AccordionContentComponent } from '../accordion-content/accordion-content.component';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
@@ -51,7 +41,8 @@ export class AccordionHeaderComponent implements AfterContentInit, OnDestroy {
     @SkipSelf()
     @Inject(forwardRef(() => AccordionContentComponent))
     public parent: AccordionContentComponent,
-    public host: ElementRef
+    public host: ElementRef,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnDestroy() {
@@ -67,6 +58,7 @@ export class AccordionHeaderComponent implements AfterContentInit, OnDestroy {
       this.parent.expand$.pipe(untilDestroyed(this)).subscribe(isExpanded => {
         if (!isExpanded) {
           this.isExpanded = false;
+          this.cdr.detectChanges();
         }
       });
     }

@@ -17,6 +17,8 @@ export * from './action-menu/public_api';
 export * from './loader/public_api';
 export * from './sortable/public_api';
 export * from './accordion/public_api';
+export * from './checkbox/public_api';
+export * from './radio/public_api';
 
 export * from './shared/public_api';
 

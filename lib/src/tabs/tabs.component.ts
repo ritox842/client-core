@@ -1,4 +1,4 @@
-import { Component, Input, ContentChildren, QueryList, Directive, TemplateRef, ContentChild, AfterContentChecked, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ContentChildren, QueryList, Directive, TemplateRef, ContentChild, AfterContentChecked, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 let nextId = 0;
 
@@ -72,13 +72,12 @@ export interface DatoTabChangeEvent {
 
 @Component({
   selector: 'dato-tabset',
+  templateUrl: './tabs.component.html',
   exportAs: 'datoTabset',
   styleUrls: ['./tabs.component.scss'],
-  templateUrl: `./tabs.component.html`
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatoTabset implements AfterContentChecked {
-  justifyClass: string;
-
   @ContentChildren(DatoTab) tabs: QueryList<DatoTab>;
 
   /**
@@ -91,14 +90,12 @@ export class DatoTabset implements AfterContentChecked {
    */
   @Input() destroyOnHide = true;
 
-  type = 'tabs';
-
   /**
    * A tab change event fired right before the tab selection happens. See DatoTabChangeEvent for payload details
    */
   @Output() tabChange = new EventEmitter<DatoTabChangeEvent>();
 
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   /**
    * Selects the tab with the given id and shows its associated pane.
@@ -121,6 +118,7 @@ export class DatoTabset implements AfterContentChecked {
         this.activeId = selectedTab.id;
       }
     }
+    this.cdr.markForCheck();
   }
 
   ngAfterContentChecked() {

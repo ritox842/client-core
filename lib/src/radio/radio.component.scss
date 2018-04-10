@@ -1,7 +1,4 @@
-$color1: #ffffff;
-$color2: #00bee8;
-
-.radio {
+.dato-radio {
   margin: 0.5rem;
   label {
     cursor: pointer;
@@ -9,50 +6,30 @@ $color2: #00bee8;
   input[type="radio"] {
     position: absolute;
     opacity: 0;
-    + .radio-label {
+    +.radio-label {
       &:before {
         content: '';
-        background: $color1;
         border-radius: 100%;
-        border: 1px solid darken($color1, 25%);
         display: inline-block;
-        width: 1.4em;
-        height: 1.4em;
+        width: 16px;
+        height: 16px;
         position: relative;
-        top: -0.1em;
-        margin-right: 0.5em;
-        vertical-align: top;
+        top: -2px;
+        margin-right: 10px;
+        vertical-align: middle;
         cursor: pointer;
         text-align: center;
         transition: all 250ms ease;
       }
     }
-    &:checked {
-      + .radio-label {
-        &:before {
-          background-color: $color2;
-          box-shadow: inset 0 0 0 4px $color1;
-        }
-      }
-    }
     &:focus {
-      + .radio-label {
+      +.radio-label {
         &:before {
           outline: none;
-          border-color: $color2;
         }
       }
     }
-    &:disabled {
-      + .radio-label {
-        &:before {
-          box-shadow: inset 0 0 0 4px $color1;
-          border-color: darken($color1, 25%);
-          background: darken($color1, 25%);
-        }
-      }
-    }
-    + .radio-label {
+    +.radio-label {
       &:empty {
         &:before {
           margin-right: 0;

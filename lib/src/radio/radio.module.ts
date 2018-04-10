@@ -1,3 +1,4 @@
+import { DatoTextModule } from './../text/text.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DatoRadioComponent } from './radio.component';
@@ -5,7 +6,7 @@ import { DatoRadioComponent } from './radio.component';
 const declerations = [DatoRadioComponent];
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, DatoTextModule],
   declarations: [declerations],
   exports: [declerations]
 })

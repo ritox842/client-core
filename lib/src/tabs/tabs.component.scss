@@ -1,0 +1,12 @@
+:host {
+  ul {
+    display: flex;
+    margin: 0.5em;
+  }
+  li {
+    cursor: pointer;
+    width: 158px;
+    text-align: center;
+    padding-bottom: 0.4em;
+  }
+}

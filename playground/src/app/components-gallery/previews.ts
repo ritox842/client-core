@@ -1,3 +1,4 @@
+import { TabsPreviewComponent } from "./previews/tabs-preview/tabs-preview.component";
 import { ButtonsPreviewComponent } from "./previews/buttons-preview/buttons-preview.component";
 import { TypographyPreviewComponent } from "./previews/typography-preview/typography-preview.component";
 import { ColorsPreviewComponent } from "./previews/colors-preview/colors-preview.component";
@@ -23,7 +24,8 @@ export const previews = [
   ActionMenuPreviewComponent,
   SortablePreviewComponent,
   AccordionPreviewComponent,
-  DragPreviewComponent
+  DragPreviewComponent,
+  TabsPreviewComponent
 ];
 
 export const routeToComponent = {
@@ -36,5 +38,6 @@ export const routeToComponent = {
   menu: ActionMenuPreviewComponent,
   sortable: SortablePreviewComponent,
   accordion: AccordionPreviewComponent,
-  drag: DragPreviewComponent
+  drag: DragPreviewComponent,
+  tabs: TabsPreviewComponent
 };

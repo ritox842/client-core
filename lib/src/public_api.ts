@@ -19,7 +19,7 @@ export * from './sortable/public_api';
 export * from './accordion/public_api';
 export * from './checkbox/public_api';
 export * from './radio/public_api';
-
+export * from './tabs/public_api';
 export * from './shared/public_api';
 
 export * from './services/public_api';

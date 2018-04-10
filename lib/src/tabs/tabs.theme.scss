@@ -1,0 +1,12 @@
+.dato-tabs {
+  li a {
+    color: themify(primary-300);
+  }
+  .active {
+    a {
+      color: themify(accent-400);
+    }
+    border-bottom: 1px solid themify(accent-400);
+    background-color: transparent;
+  }
+}

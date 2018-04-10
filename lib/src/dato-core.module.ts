@@ -26,8 +26,9 @@ import { DatoSortableModule } from './sortable/sortable.module';
 import { DatoAccordionModule } from './accordion/accordion.module';
 import { DatoCheckboxModule } from './checkbox/checkbox.module';
 import { DatoRadioModule } from './radio/radio.module';
+import { DatoTabsModule } from './tabs/tabs.module';
 
-const modules = [DatoDirectives, DatoButtonModule, DatoThemesModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoGridModule, DatoActionMenuModule, DatoDropdownModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoCheckboxModule, DatoRadioModule];
+const modules = [DatoDirectives, DatoButtonModule, DatoThemesModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoActionMenuModule, DatoDropdownModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoCheckboxModule, DatoRadioModule];
 
 const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService];
 

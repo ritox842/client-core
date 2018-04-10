@@ -1,3 +1,4 @@
+import { TabsPreviewComponent } from "./previews/tabs-preview/tabs-preview.component";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SideNavComponent } from "./side-nav/side-nav.component";
@@ -29,7 +30,8 @@ import { ListItemComponent } from "./list-item/list-item.component";
     TabComponent,
     ApiTableComponent,
     previews,
-    ListItemComponent
+    ListItemComponent,
+    TabsPreviewComponent
   ]
 })
 export class ComponentsGalleryModule {}

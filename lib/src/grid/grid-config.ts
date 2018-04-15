@@ -19,7 +19,7 @@ export function setGridConfiguration(config: GridConfig) {
  * @return {{cacheKey: string}}
  */
 export function getGridConfiguration() {
-  return { ...{}, ...gridConfiguration };
+  return { ...gridConfiguration };
 }
 
 const StorageKey = 'GRID_STORE';

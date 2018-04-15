@@ -80,7 +80,7 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     }
 
     this.emitToggle(group);
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   private getChildAccordionsComponents() {

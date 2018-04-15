@@ -15,7 +15,7 @@ import { getGridIcons } from './grid-icons';
 export type ExtendedGridOptions = {
   onRowDataUpdated: (event) => void;
 };
-export type DatoGridOptions = ExtendedGridOptions & GridOptions & { toolPanelSuppressSideButtons?: boolean };
+export type DatoGridOptions = ExtendedGridOptions & GridOptions;
 
 @Component({
   selector: 'dato-grid',
@@ -98,7 +98,7 @@ export class DatoGridComponent {
    * call ag-grid's size all columns to fit to content
    */
   fitToContent(): void {
-    this.gridOptions.columnApi.autoSizeAllColumns();
+    this.gridOptions.columnApi.autoSizeAllColumns('api');
     const { width } = this.element.nativeElement.getBoundingClientRect();
     const agBody = this.element.nativeElement.querySelector('.ag-body-container');
     const bodyWidth: number = agBody ? agBody.clientWidth : 0;

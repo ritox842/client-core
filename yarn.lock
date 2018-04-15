@@ -358,9 +358,9 @@
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
 
-"@netbasal/spectator@0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@netbasal/spectator/-/spectator-0.5.2.tgz#4208e7f200144795dcff61d57ea3a29edbbd0d0b"
+"@netbasal/spectator@^1.3.4":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@netbasal/spectator/-/spectator-1.3.4.tgz#d5f15ed0d0913cac2b7999228266dc995210a047"
   dependencies:
     jquery "^3.3.1"
 
@@ -456,17 +456,17 @@ after@0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
 
-ag-grid-angular@^16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/ag-grid-angular/-/ag-grid-angular-16.0.0.tgz#de14f659c2da7f4e548a26953970133e1c97a125"
+ag-grid-angular@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-angular/-/ag-grid-angular-17.0.0.tgz#59e3ff0f1e62cb8c61ddc0397326cd0202148904"
 
-ag-grid-enterprise@^16.0.1:
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/ag-grid-enterprise/-/ag-grid-enterprise-16.0.1.tgz#b3621f88955340a3ca3b0446ed220046fff2c391"
+ag-grid-enterprise@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-enterprise/-/ag-grid-enterprise-17.0.0.tgz#760769c9400f6eb60213a06ca2c5fe91c92d9fd4"
 
-ag-grid@^16.0.1:
-  version "16.0.1"
-  resolved "https://registry.yarnpkg.com/ag-grid/-/ag-grid-16.0.1.tgz#f9b5562fff6c70b38a20ffb1708800006c902c1a"
+ag-grid@17.0.0:
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/ag-grid/-/ag-grid-17.0.0.tgz#b8c82268c1785e04425a3149ca53cc526376029b"
 
 agent-base@^4.1.0:
   version "4.2.0"

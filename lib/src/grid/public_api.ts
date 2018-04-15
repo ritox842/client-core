@@ -14,3 +14,4 @@ export * from './grid-toolbar/grid-toolbar';
 export * from './grid-header/grid-header.component';
 export * from './grid.module';
 export * from './dato-grid';
+export * from './grid-config';

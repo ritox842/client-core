@@ -6,16 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-  ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
 import { DatoTranslateService } from '../../services/translate.service';
 import { IconRegistry } from '../../services/icon-registry';
@@ -49,7 +40,9 @@ export class DatoGridComponent {
     rowSelection: 'multiple',
     rowDeselection: true,
     icons: {},
-    unSortIcon: true
+    unSortIcon: true,
+    toolPanelSuppressSideButtons: true,
+    showToolPanel: false
   };
 
   gridApi: GridApi;
@@ -76,11 +69,7 @@ export class DatoGridComponent {
 
   @Output() gridReady = new EventEmitter<GridReadyEvent>();
 
-  constructor(
-    private translate: DatoTranslateService,
-    private element: ElementRef,
-    private iconRegistry: IconRegistry
-  ) {
+  constructor(private translate: DatoTranslateService, private element: ElementRef, private iconRegistry: IconRegistry) {
     this.defaultGridOptions.icons = getGridIcons(iconRegistry);
 
     this.gridOptions = { ...this.defaultGridOptions };
@@ -109,7 +98,7 @@ export class DatoGridComponent {
    * call ag-grid's size all columns to fit to content
    */
   fitToContent(): void {
-    this.gridOptions.columnApi.autoSizeAllColumns();
+    this.gridOptions.columnApi.autoSizeAllColumns('api');
     const { width } = this.element.nativeElement.getBoundingClientRect();
     const agBody = this.element.nativeElement.querySelector('.ag-body-container');
     const bodyWidth: number = agBody ? agBody.clientWidth : 0;

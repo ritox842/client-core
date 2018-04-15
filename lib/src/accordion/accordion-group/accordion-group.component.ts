@@ -6,25 +6,23 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Component, ContentChild, EventEmitter, Output } from '@angular/core';
-import { AccordionContentComponent } from '../accordion-content/accordion-content.component';
-import { AccordionHeaderComponent } from '../accordion-header/accordion-header.component';
+import { Component, ContentChild, Output, EventEmitter } from '@angular/core';
+import { DatoAccordionContentComponent } from '../accordion-content/accordion-content.component';
+import { DatoAccordionHeaderComponent } from '../accordion-header/accordion-header.component';
 
 @Component({
   selector: 'dato-accordion-group',
-  template: `
-    <ng-content></ng-content>
-  `,
+  template: '<ng-content></ng-content>',
   styles: [
-    `:host {
-    display: block;
-  }`
+    `
+    :host {
+      display: block;
+    }`
   ]
 })
-export class AccordionGroupComponent {
-  @ContentChild(AccordionContentComponent) content: AccordionContentComponent;
-  @ContentChild(AccordionHeaderComponent) header: AccordionHeaderComponent;
+export class DatoAccordionGroupComponent {
+  @ContentChild(DatoAccordionContentComponent) content: DatoAccordionContentComponent;
+  @ContentChild(DatoAccordionHeaderComponent) header: DatoAccordionHeaderComponent;
 
-  @Output() collapse = new EventEmitter<boolean>();
-  @Output() expand = new EventEmitter<boolean>();
+  @Output() toggle = new EventEmitter<{ expanded: boolean }>();
 }

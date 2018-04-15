@@ -6,18 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import {
-  Attribute,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  forwardRef,
-  Input,
-  OnInit,
-  Renderer2,
-  OnDestroy
-} from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { pluck, takeUntil, tap } from 'rxjs/operators';
@@ -33,22 +22,7 @@ const valueAccessor = {
 
 const TIMING = 250;
 
-const animations = [
-  trigger('fromRight', [
-    transition(':enter', [
-      style({ transform: 'translateX(100px)' }),
-      animate(TIMING, style({ transform: 'translateX(0)' }))
-    ]),
-    transition(':leave', [animate(TIMING, style({ transform: 'translateX(100px)' }))])
-  ]),
-  trigger('fromUp', [
-    transition(':enter', [
-      style({ transform: 'translateY(100px)' }),
-      animate(TIMING, style({ transform: 'translateY(0)' }))
-    ]),
-    transition(':leave', [animate(TIMING, style({ transform: 'translateY(100px)' }))])
-  ])
-];
+const animations = [trigger('fromRight', [transition(':enter', [style({ transform: 'translateX(100px)' }), animate(TIMING, style({ transform: 'translateX(0)' }))]), transition(':leave', [animate(TIMING, style({ transform: 'translateX(100px)' }))])]), trigger('fromUp', [transition(':enter', [style({ transform: 'translateY(100px)' }), animate(TIMING, style({ transform: 'translateY(0)' }))]), transition(':leave', [animate(TIMING, style({ transform: 'translateY(100px)' }))])])];
 
 @TakeUntilDestroy()
 @Component({
@@ -69,23 +43,14 @@ export class DatoInputComponent implements OnInit, OnDestroy, ControlValueAccess
   onChange = (_: any) => {};
   onTouched = () => {};
 
-  constructor(
-    @Attribute('type') public type,
-    private renderer: Renderer2,
-    private cdr: ChangeDetectorRef,
-    private host: ElementRef
-  ) {}
+  constructor(@Attribute('type') public type, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {}
 
   ngOnInit() {
     fromEvent(this.inpuElement, 'input')
-      .pipe(
-        pluck('target', 'value'),
-        tap(val => this.activateDeleteIcon(val)),
-        optionalDebounce(this.debounceTime),
-        untilDestroyed(this)
-      )
+      .pipe(pluck('target', 'value'), tap(val => this.activateDeleteIcon(val)), optionalDebounce(this.debounceTime), untilDestroyed(this))
       .subscribe(val => {
         this.onChange(val);
+        this.cdr.markForCheck();
       });
   }
 

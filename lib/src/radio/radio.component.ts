@@ -47,6 +47,7 @@ export class DatoRadioComponent implements OnInit, OnDestroy, ControlValueAccess
       .pipe(pluck('target', 'value'), untilDestroyed(this))
       .subscribe(val => {
         this.onChange(val);
+        this.cdr.markForCheck();
       });
   }
 

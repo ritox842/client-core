@@ -65,6 +65,7 @@ export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAcc
       .pipe(pluck('target', 'checked'), untilDestroyed(this))
       .subscribe(val => {
         this.onChange(val ? this.trueValue : this.falseValue);
+        this.cdr.markForCheck();
       });
   }
 

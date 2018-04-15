@@ -6,61 +6,30 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, forwardRef, HostBinding, Inject, OnDestroy, Optional, SkipSelf } from '@angular/core';
+import { Component, ElementRef, HostBinding, Input } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { AccordionContentComponent } from '../accordion-content/accordion-content.component';
-import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/observable';
 
-@TakeUntilDestroy()
 @Component({
   selector: 'dato-accordion-header',
-  template: `
-    <ng-content></ng-content>`,
+  template: '<ng-content></ng-content>',
   styles: [
-    `:host {
-    display: block;
-  }`
+    `
+    :host {
+      display: block;
+    }`
   ]
 })
-export class AccordionHeaderComponent implements AfterContentInit, OnDestroy {
-  private _isExpanded = false;
+export class DatoAccordionHeaderComponent {
+  @HostBinding('class.dato-accordion-open')
+  @Input()
+  expanded;
+
   click$ = fromEvent(this.element, 'click');
 
-  @HostBinding('class.expanded')
-  set isExpanded(value: boolean) {
-    this._isExpanded = value;
-  }
-
-  get isExpanded(): boolean {
-    return this._isExpanded;
-  }
-
-  constructor(
-    @Optional()
-    @SkipSelf()
-    @Inject(forwardRef(() => AccordionContentComponent))
-    public parent: AccordionContentComponent,
-    public host: ElementRef,
-    private cdr: ChangeDetectorRef
-  ) {}
-
-  ngOnDestroy() {
-    // required for @TakeUntilDestroy()
-  }
+  constructor(public host: ElementRef) {}
 
   get element() {
     return this.host.nativeElement;
-  }
-
-  ngAfterContentInit() {
-    if (this.parent) {
-      this.parent.expand$.pipe(untilDestroyed(this)).subscribe(isExpanded => {
-        if (!isExpanded) {
-          this.isExpanded = false;
-          this.cdr.detectChanges();
-        }
-      });
-    }
   }
 }

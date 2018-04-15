@@ -6,18 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { AgGridEvent, ColumnApi, GridApi } from 'ag-grid';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
@@ -108,8 +97,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
    * @param {AgGridEvent} gridApi
    */
   private calcPagination(gridApi: AgGridEvent) {
-    this.showCollapseExpand =
-      gridApi.columnApi.isPivotMode() && this.agGridColumnApi.getRowGroupColumns().length > 1;
+    this.showCollapseExpand = gridApi.columnApi.isPivotMode() && this.agGridColumnApi.getRowGroupColumns().length > 1;
 
     // The length of the pages starting from 1
     this.totalPages = gridApi.api.paginationGetTotalPages();
@@ -203,13 +191,14 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
       // Add 1 because ag-grid API works with first index 0
       const displayNumber = pageNumber + 1;
       this.pageNumbersDisplay.currentPage = displayNumber;
-      // Set the displaying rows range
-      this.setRowsDisplayRange(pageNumber);
 
       if (this.pageNumbersDisplay.pages.length === 0 || !this.pagesFitView) {
         this.pageNumbersDisplay.pages = this.getPages(displayNumber);
       }
     }
+
+    // Set the displaying rows range
+    this.setRowsDisplayRange(pageNumber);
   }
 
   /**
@@ -272,9 +261,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
     const firstRowIndex = 1 + pageNumber * this.rowsPerPage;
     const lastRow = (pageNumber + 1) * this.rowsPerPage;
     const lastRowIndex = this.rowCount > lastRow ? lastRow : this.rowCount;
-    this.rowsRange = `${firstRowIndex} - ${lastRowIndex} ${this.translations.of} ${this.rowCount} ${
-      this.translations.items
-    }`;
+    this.rowsRange = `${firstRowIndex} - ${lastRowIndex} ${this.translations.of} ${this.rowCount} ${this.translations.items}`;
   }
 
   /**
@@ -288,10 +275,8 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
     // indicates rather the table has more pages than the display length, we add 1 because of
     // a logic that says that if your current view is 1 number away from the last page
     // display him as well.
-    this.pageNumbersDisplay.showLastPage =
-      !this.pagesFitView && anchor + this.pagesOnSides < this.totalPages;
-    this.pageNumbersDisplay.showFirstEllipsis =
-      !this.pagesFitView && anchor - this.pagesOnSides > 1;
+    this.pageNumbersDisplay.showLastPage = !this.pagesFitView && anchor + this.pagesOnSides < this.totalPages;
+    this.pageNumbersDisplay.showFirstEllipsis = !this.pagesFitView && anchor - this.pagesOnSides > 1;
 
     // set the first number to be displayed
     const firstNumber = this.getFirstPageNumber(anchor);

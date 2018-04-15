@@ -7,11 +7,12 @@
  */
 
 import { ColDef, ColGroupDef, DetailGridInfo, GridApi, GridOptions, RowNode } from 'ag-grid';
-import { coerceArray, toBoolean } from '@datorama/utils';
+import { coerceArray, getFunctionName, toBoolean } from '@datorama/utils';
 import { ContentChild, OnInit, ViewChild } from '@angular/core';
 import { ToolbarAction } from './grid-toolbar/grid-toolbar';
 import { DatoGridComponent } from './grid/grid.component';
 import { Subject } from 'rxjs/Subject';
+import { getGridModel, setGridModel } from './grid-config';
 
 export type GridColumns = (ColDef | ColGroupDef)[];
 
@@ -29,7 +30,10 @@ export abstract class DatoGrid<T> implements OnInit {
   options: GridOptions;
   toolbarActions: ToolbarAction[];
   datoGridReady = new Subject<DetailGridInfo>();
+
   private _gridApi: GridApi;
+  private onFilterSortChangedBind;
+  private gridName: string;
 
   get gridApi() {
     return this._gridApi;
@@ -39,9 +43,21 @@ export abstract class DatoGrid<T> implements OnInit {
     this._gridApi = gridApi;
   }
 
+  constructor() {
+    this.onFilterSortChangedBind = this.onFilterSortChanged.bind(this);
+    this.gridName = this.getGridName();
+  }
+
   abstract getColumns(): GridColumns;
 
   abstract getToolbarActions(): ToolbarAction[];
+
+  /**
+   * @return the name of this grid component. The name used to store filters & sort configuration.
+   */
+  protected getGridName(): string {
+    return getFunctionName(this.constructor);
+  }
 
   ngOnInit() {
     this.options = { columnDefs: this.getColumns() };
@@ -140,6 +156,44 @@ export abstract class DatoGrid<T> implements OnInit {
     this.setRows([]);
   }
 
+  private removeEventListeners() {
+    this.gridApi.removeEventListener('filterChanged', this.onFilterSortChangedBind);
+    this.gridApi.removeEventListener('sortChanged', this.onFilterSortChangedBind);
+  }
+
+  private regsiterEvents() {
+    this.removeEventListeners();
+    this.gridApi.addEventListener('filterChanged', this.onFilterSortChangedBind);
+    this.gridApi.addEventListener('sortChanged', this.onFilterSortChangedBind);
+  }
+
+  /**
+   * An event handler for saving filter & sorting upon change.
+   */
+  private onFilterSortChanged() {
+    const filter = this.gridApi.getFilterModel();
+    const sort = this.gridApi.getSortModel();
+
+    // save grid's configuration
+    setGridModel(this.gridName, {
+      filter,
+      sort
+    });
+  }
+
+  /**
+   * Save current filter & sorting models
+   */
+  private setSavedModel() {
+    const model = getGridModel(this.gridName);
+    if (model.sort) {
+      this.gridApi.setSortModel(model.sort);
+    }
+    if (model.filter) {
+      this.gridApi.setFilterModel(model.filter);
+    }
+  }
+
   /**
    * Initial the grid ready event
    * @param {DatoGridComponent} datoGrid
@@ -150,6 +204,11 @@ export abstract class DatoGrid<T> implements OnInit {
         this.gridApi = grid.api;
         this.datoGridReady.next(grid);
         this.datoGridReady.complete();
+
+        // load saved grid's model
+        this.setSavedModel();
+        // register to filter & sorting change
+        this.regsiterEvents();
       });
     }
   }

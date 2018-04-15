@@ -1,5 +1,3 @@
-import { get } from '@datorama/utils';
-
 export type GridConfig = {
   cacheKey: string;
 };
@@ -8,9 +6,18 @@ let gridConfiguration = {
   cacheKey: 'GLOBAL_GRID_KEY'
 };
 
+/**
+ * Override grid configuration
+ * @param {GridConfig} config
+ */
 export function setGridConfiguration(config: GridConfig) {
   gridConfiguration = { ...gridConfiguration, ...config };
 }
+
+/**
+ * Get current grid configuration
+ * @return {{cacheKey: string}}
+ */
 export function getGridConfiguration() {
   return { ...{}, ...gridConfiguration };
 }

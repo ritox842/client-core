@@ -36,6 +36,8 @@ export class DatoTab {
    */
   @Input() disabled = false;
 
+  @Input() className = '';
+
   titleTpl: DatoTabTitle | null;
   contentTpl: DatoTabContent | null;
 

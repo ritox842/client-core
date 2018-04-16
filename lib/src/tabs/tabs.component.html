@@ -1,5 +1,5 @@
 <ul role="tablist" class="dato-tabs">
-  <li class="nav-item" *ngFor="let tab of tabs" (click)="!!select(tab.id)" [class.active]="tab.id === activeId" [class.disabled]="tab.disabled">
+  <li class="nav-item {{tab.className}}" *ngFor="let tab of tabs" (click)="!!select(tab.id)" [class.active]="tab.id === activeId" [class.disabled]="tab.disabled">
     <a [id]="tab.id" class="nav-link" href role="tab" [attr.tabindex]="(tab.disabled ? '-1': undefined)" [attr.aria-controls]="(!destroyOnHide || tab.id === activeId ? tab.id + '-panel' : null)"
       [attr.aria-expanded]="tab.id === activeId" [attr.aria-disabled]="tab.disabled">
       {{tab.title}}

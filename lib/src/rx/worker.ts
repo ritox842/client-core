@@ -15,12 +15,9 @@ import { Observable } from 'rxjs/Observable';
  * @private
  */
 function createWorker(fn) {
-  const blob = new Blob(
-    [`self.cb = ${fn};self.onmessage = function (e) { self.postMessage(self.cb(e.data)) }`],
-    {
-      type: 'text/javascript'
-    }
-  );
+  const blob = new Blob([`self.cb = ${fn};self.onmessage = function (e) { self.postMessage(self.cb(e.data)) }`], {
+    type: 'text/javascript'
+  });
 
   const url = URL.createObjectURL(blob);
   return new Worker(url);

@@ -6,13 +6,13 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectorRef } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'dato-accordion-content',
   template: `
-    <div [@slideInOut] *ngIf="expanded">
+    <div [@slideInOut] *ngIf="_expanded">
       <ng-content></ng-content>
     </div>
   `,
@@ -28,5 +28,13 @@ import { trigger, style, animate, transition } from '@angular/animations';
   animations: [trigger('slideInOut', [transition(':enter', [style({ height: '0px' }), animate('200ms', style({ height: '*' }))]), transition(':leave', [style({ height: '*' }), animate('200ms', style({ height: '0px' }))])])]
 })
 export class DatoAccordionContentComponent {
-  @Input() expanded = false;
+  _expanded: boolean;
+
+  @Input()
+  set expanded(value) {
+    this._expanded = value;
+    this.cdr.markForCheck();
+  }
+
+  constructor(private cdr: ChangeDetectorRef) {}
 }

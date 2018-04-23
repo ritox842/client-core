@@ -35,12 +35,10 @@ export class DatoGridHeaderComponent implements OnDestroy {
   @Input()
   set grid(grid: DatoGridComponent) {
     if (!this.rowDataChanged) {
-      this.rowDataChanged = grid.rowDataChanged
-        .pipe(takeUntil(this.destroyed$))
-        .subscribe((grid: AgGridEvent) => {
-          this.rowCount = grid.api.getDisplayedRowCount();
-          this.cdr.detectChanges();
-        });
+      this.rowDataChanged = grid.rowDataChanged.pipe(takeUntil(this.destroyed$)).subscribe((grid: AgGridEvent) => {
+        this.rowCount = grid.api.getDisplayedRowCount();
+        this.cdr.detectChanges();
+      });
     }
   }
 

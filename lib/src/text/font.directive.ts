@@ -13,11 +13,7 @@ import { typographyType } from './font.config';
   selector: '[datoFont]'
 })
 export class DatoFontDirective implements OnInit {
-  constructor(
-    private renderer: Renderer2,
-    private element: ElementRef,
-    @Attribute('datoFont') private datoFont: typographyType
-  ) {}
+  constructor(private renderer: Renderer2, private element: ElementRef, @Attribute('datoFont') private datoFont: typographyType) {}
 
   ngOnInit(): void {
     this.injectTypographyClass();

@@ -6,14 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  Renderer2
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { kebabCase } from '@datorama/utils';
 import { IconRegistry } from '../services/icon-registry';
 
@@ -41,11 +34,7 @@ export class DatoIconComponent implements OnInit {
     return this.iconKey;
   }
 
-  constructor(
-    private host: ElementRef,
-    private iconRegistry: IconRegistry,
-    private renderer: Renderer2
-  ) {}
+  constructor(private host: ElementRef, private iconRegistry: IconRegistry, private renderer: Renderer2) {}
 
   ngOnInit() {
     // add standard attributes

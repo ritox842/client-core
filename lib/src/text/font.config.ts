@@ -6,12 +6,4 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-export type typographyType =
-  | 'headline'
-  | 'sub-headline'
-  | 'simple'
-  | 'simple-bold'
-  | 'simple-italic'
-  | 'note'
-  | 'note-bold'
-  | 'note-italic';
+export type typographyType = 'headline' | 'sub-headline' | 'simple' | 'simple-bold' | 'simple-italic' | 'note' | 'note-bold' | 'note-italic';

@@ -56,7 +56,7 @@ describe('DatoAccordionComponent', () => {
       host = createHost(simpleAccordion);
       const header = host.query<ElementRef>(DatoAccordionHeaderComponent, { read: ElementRef });
       host.click(header);
-      expect(header.nativeElement).toExist();
+      expect(host.query('dato-accordion-content div')).toExist();
       host.click(header);
       expect(host.query('dato-accordion-content div')).not.toExist();
     });
@@ -66,19 +66,19 @@ describe('DatoAccordionComponent', () => {
     it('should not open any group when activeIds is empty', () => {
       host = createHost(simpleAccordion);
       const contents = host.queryAll<DatoAccordionContentComponent>(DatoAccordionContentComponent);
-      expect(contents.every(c => c.expanded)).toBeFalsy();
+      expect(contents.every(c => c._expanded)).toBeFalsy();
     });
 
     it('should open the first group', () => {
       host = createHost(simpleAccordion, true, { activeIds: 0 });
       const contents = host.queryAll<DatoAccordionContentComponent>(DatoAccordionContentComponent);
-      expect(contents[0].expanded).toBeTruthy();
+      expect(contents[0]._expanded).toBeTruthy();
     });
 
     it('should open both', () => {
       host = createHost(simpleAccordion, true, { activeIds: [0, 1] });
       const contents = host.queryAll<DatoAccordionContentComponent>(DatoAccordionContentComponent);
-      expect(contents.every(c => c.expanded)).toBeTruthy();
+      expect(contents.every(c => c._expanded)).toBeTruthy();
     });
   });
 
@@ -89,8 +89,8 @@ describe('DatoAccordionComponent', () => {
       const contents = host.queryAll<DatoAccordionContentComponent>(DatoAccordionContentComponent);
       host.click(headers[0]);
       host.click(headers[1]);
-      expect(contents[0].expanded).toBeTruthy();
-      expect(contents[1].expanded).toBeTruthy();
+      expect(contents[0]._expanded).toBeTruthy();
+      expect(contents[1]._expanded).toBeTruthy();
     });
 
     it('should close the others', () => {
@@ -99,8 +99,8 @@ describe('DatoAccordionComponent', () => {
       const contents = host.queryAll<DatoAccordionContentComponent>(DatoAccordionContentComponent);
       host.click(headers[0]);
       host.click(headers[1]);
-      expect(contents[0].expanded).toBeFalsy();
-      expect(contents[1].expanded).toBeTruthy();
+      expect(contents[0]._expanded).toBeFalsy();
+      expect(contents[1]._expanded).toBeTruthy();
     });
   });
 });

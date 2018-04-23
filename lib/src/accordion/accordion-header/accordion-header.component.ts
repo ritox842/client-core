@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Component, ElementRef, HostBinding, Input } from '@angular/core';
+import { Component, ElementRef, HostBinding, Input, ChangeDetectorRef } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Observable } from 'rxjs/observable';
 
@@ -17,17 +17,21 @@ import { Observable } from 'rxjs/observable';
     `
     :host {
       display: block;
-    }`
+  }`
   ]
 })
 export class DatoAccordionHeaderComponent {
-  @HostBinding('class.dato-accordion-open')
+  @HostBinding('class.dato-accordion-open') _expanded = false;
+
   @Input()
-  expanded;
+  set expanded(value) {
+    this._expanded = value;
+    this.cdr.markForCheck();
+  }
 
   click$ = fromEvent(this.element, 'click');
 
-  constructor(public host: ElementRef) {}
+  constructor(public host: ElementRef, private cdr: ChangeDetectorRef) {}
 
   get element() {
     return this.host.nativeElement;

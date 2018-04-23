@@ -57,13 +57,14 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     if (this.groupsSubscription) {
       this.groupsSubscription.unsubscribe();
     }
+
     this.groupsSubscription = merge(...this.groups.map(group => group.header.click$.pipe(mapTo(group)))).subscribe((group: DatoAccordionGroupComponent) => {
       this.onGroupClick(group);
     });
   }
 
   private onGroupClick(group: DatoAccordionGroupComponent) {
-    if (this.closeOthers && !group.content.expanded) {
+    if (this.closeOthers && !group.content._expanded) {
       this.groups.forEach(g => {
         if (g !== group) {
           this.closeAndEmit(g);
@@ -71,7 +72,7 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
       });
     }
 
-    this.toggleGroup(group, !group.content.expanded);
+    this.toggleGroup(group, !group.content._expanded);
 
     const childes = this.getChildAccordionsComponents();
 
@@ -107,13 +108,13 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
 
   private emitToggle(group: DatoAccordionGroupComponent, value?: boolean) {
     if (group.toggle.observers.length) {
-      const expanded = value == null ? group.content.expanded : value;
+      const expanded = value == null ? group.content._expanded : value;
       group.toggle.next({ expanded });
     }
   }
 
   private closeAndEmit(group: DatoAccordionGroupComponent) {
-    if (group.content.expanded) {
+    if (group.content._expanded) {
       this.emitToggle(group, false);
     }
     this.toggleGroup(group, false);

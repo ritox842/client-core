@@ -19,9 +19,5 @@ export class DatoIconButtonComponent {
   @Input() disabled = false;
   @Input() datoIcon: string;
 
-  constructor(
-    @Attribute('datoSize') public datoSize,
-    @Attribute('datoType') public datoType,
-    @Attribute('datoCircle') public datoCircle
-  ) {}
+  constructor(@Attribute('datoSize') public datoSize, @Attribute('datoType') public datoType, @Attribute('datoCircle') public datoCircle) {}
 }

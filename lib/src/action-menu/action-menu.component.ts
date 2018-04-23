@@ -6,16 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import {
-  AfterContentInit,
-  ChangeDetectionStrategy,
-  Component,
-  ContentChild,
-  ElementRef,
-  Input,
-  Renderer2,
-  ViewEncapsulation
-} from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, ContentChild, ElementRef, Input, Renderer2, ViewEncapsulation } from '@angular/core';
 import { DatoOriginDirective } from '../directives/public_api';
 import Popper from 'popper.js';
 import { DatoDropdownComponent } from './../shared/dropdown/dropdown.component';

@@ -1,16 +1,4 @@
-import {
-  AfterContentInit,
-  ChangeDetectorRef,
-  Component,
-  ContentChildren,
-  ElementRef,
-  HostListener,
-  Input,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren
-} from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostListener, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { DatoGridToolbarItemDirective } from './grid-toolbar-item.directive';
 import { debounce, delay } from 'helpful-decorators';
 import { DatoGridComponent } from '../grid/grid.component';
@@ -18,13 +6,7 @@ import { Events, GridApi, GridReadyEvent } from 'ag-grid';
 import { first, takeUntil } from 'rxjs/operators';
 import { TakeUntilDestroy, OnDestroy } from 'ngx-take-until-destroy';
 import { Observable } from 'rxjs/Observable';
-import {
-  RowSelectionType,
-  showWhenFunc,
-  ToolbarAction,
-  ToolbarActionType,
-  ToolbarArea
-} from './grid-toolbar';
+import { RowSelectionType, showWhenFunc, ToolbarAction, ToolbarActionType, ToolbarArea } from './grid-toolbar';
 import { HashMap, isFunction } from '@datorama/utils';
 import { DatoTranslateService } from '../../services/translate.service';
 
@@ -57,12 +39,10 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
   set grid(grid: DatoGridComponent) {
     if (grid && !this.gridApi) {
       // get gridApi
-      grid.gridReady
-        .pipe(takeUntil(this.destroyed$), first())
-        .subscribe((event: GridReadyEvent) => {
-          this.gridApi = event.api;
-          this.onGridReady();
-        });
+      grid.gridReady.pipe(takeUntil(this.destroyed$), first()).subscribe((event: GridReadyEvent) => {
+        this.gridApi = event.api;
+        this.onGridReady();
+      });
     }
   }
 
@@ -135,8 +115,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
 
   ngOnDestroy() {
     // @TakeUntilDestroy()
-    this.gridApi &&
-      this.gridApi.removeEventListener(Events.EVENT_SELECTION_CHANGED, this.eventHandler);
+    this.gridApi && this.gridApi.removeEventListener(Events.EVENT_SELECTION_CHANGED, this.eventHandler);
   }
 
   actionClick(action: ToolbarAction) {
@@ -215,12 +194,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy, AfterContent
         if (isFunction(condition)) {
           return this._handleCustomFunction(condition, data);
         } else {
-          return (
-            this._isSingle(condition, rowsCount) ||
-            this._isMultiple(condition, rowsCount) ||
-            this._isNone(condition, rowsCount) ||
-            this._showAlways(condition)
-          );
+          return this._isSingle(condition, rowsCount) || this._isMultiple(condition, rowsCount) || this._isNone(condition, rowsCount) || this._showAlways(condition);
         }
       })
       .sort((a, b) => {

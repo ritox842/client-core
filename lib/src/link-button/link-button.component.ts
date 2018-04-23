@@ -6,15 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import {
-  AfterViewInit,
-  Attribute,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  Renderer2
-} from '@angular/core';
+import { AfterViewInit, Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'dato-link',
@@ -26,12 +18,7 @@ export class DatoLinkButtonComponent implements AfterViewInit {
   /** Whether the button is disabled */
   @Input() disabled = false;
 
-  constructor(
-    private renderer: Renderer2,
-    private host: ElementRef,
-    @Attribute('target') public target,
-    @Attribute('href') public href
-  ) {}
+  constructor(private renderer: Renderer2, private host: ElementRef, @Attribute('target') public target, @Attribute('href') public href) {}
 
   ngAfterViewInit() {
     if (this.target) {

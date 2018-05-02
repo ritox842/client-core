@@ -32,7 +32,7 @@ export class IconRegistry {
   private svgMap = new Map<string, SvgIconConfig>();
 
   private _XMLSerializer;
-  private get LazyXMLSerializer() {
+  private get lazyXMLSerializer() {
     if (!this._XMLSerializer) {
       this._XMLSerializer = new XMLSerializer();
     }
@@ -108,7 +108,7 @@ export class IconRegistry {
     let contents = svgElement.outerHTML;
     // handle IE11
     if (contents === undefined) {
-      contents = this.LazyXMLSerializer.serializeToString(svgElement);
+      contents = this.lazyXMLSerializer.serializeToString(svgElement);
     }
 
     return contents;

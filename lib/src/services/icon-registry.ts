@@ -31,6 +31,14 @@ class SvgIconConfig {
 export class IconRegistry {
   private svgMap = new Map<string, SvgIconConfig>();
 
+  private _XMLSerializer;
+  private get lazyXMLSerializer() {
+    if (!this._XMLSerializer) {
+      this._XMLSerializer = new XMLSerializer();
+    }
+    return this._XMLSerializer;
+  }
+
   constructor() {
     // register the core icons
     this.register(coreIcons);
@@ -92,8 +100,18 @@ export class IconRegistry {
   private applySvgAttibutes(config: SvgIconConfig) {
     const svg = this.svgElementFromString(config.contents);
     this.setSvgAttributes(svg);
-    config.contents = svg.outerHTML;
+    config.contents = this.getSvgContents(svg);
     config.appliedAttributes = true;
+  }
+
+  private getSvgContents(svgElement: SVGElement) {
+    let contents = svgElement.outerHTML;
+    // handle IE11
+    if (contents === undefined) {
+      contents = this.lazyXMLSerializer.serializeToString(svgElement);
+    }
+
+    return contents;
   }
 
   /**

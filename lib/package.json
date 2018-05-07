@@ -1,6 +1,6 @@
 {
   "name": "@datorama/core",
-  "version": "1.0.46-beta",
+  "version": "1.0.52-beta",
   "repository": {
     "type": "git",
     "url": "url"
@@ -10,38 +10,14 @@
   ],
   "license": "MIT",
   "scripts": {
-    "format": "prettier --write --config .prettierrc src/*.ts src/**/*.ts src/**/**/**.ts",
-    "watch": "gulp --gulpfile build-tools/gulpfile.js -- watch:themes"
+    "themify:dev": "gulp --gulpfile build-tools/gulpfile.js -- themify:dev",
+    "themify:prod": "gulp --gulpfile build-tools/gulpfile.js -- themify:prod",
+    "format": "prettier --write --config .prettierrc src/*.ts src/**/*.ts src/**/**/**.ts"
   },
   "main": "./bundles/datorama.umd.js",
   "es2015": "./esm2015/datorama.js",
   "module": "./esm5/datorama.es5.js",
   "typings": "./datorama.d.ts",
-  "devDependencies": {
-    "autoprefixer": "^8.1.0",
-    "del": "^3.0.0",
-    "fs": "0.0.1-security",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^5.0.0",
-    "gulp-clean-css": "^3.9.2",
-    "gulp-htmlmin": "^4.0.0",
-    "gulp-if": "^2.0.2",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.6.1",
-    "gulp-sass": "^3.1.0",
-    "gulp-watch": "^5.0.0",
-    "hex-to-rgba": "^1.0.1",
-    "path": "^0.12.7",
-    "postcss": "^6.0.19",
-    "postcss-node-sass": "^2.1.4",
-    "rimraf": "^2.6.2",
-    "rollup": "^0.54.0",
-    "run-sequence": "^2.2.1",
-    "sass-json-export": "^2.0.0",
-    "sorcery": "^0.10.0",
-    "sync-json": "^1.0.2",
-    "through2": "^2.0.3"
-  },
   "peerDependencies": {
     "@angular/common": "^5.0.0",
     "@angular/core": "^5.0.0",

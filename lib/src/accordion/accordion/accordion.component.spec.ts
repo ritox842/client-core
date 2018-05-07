@@ -118,9 +118,7 @@ class CustomHostComponent {
     this.dynamic = [...this.dynamic, { id: 1, title: 'three', text: 'text3' }];
   }
 
-  onToggle(event) {
-    console.log(event);
-  }
+  onToggle(event) {}
 }
 
 const dynamicAccordion = `

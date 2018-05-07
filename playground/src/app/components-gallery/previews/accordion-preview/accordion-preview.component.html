@@ -1,6 +1,6 @@
 <dato-preview title="Accordion">
-
-  <dato-accordion [closeOthers]="true">
+  <button (click)="accordion.toggle(1)">Toggle second</button>
+  <dato-accordion [closeOthers]="true" [activeIds]="[0]" #accordion="datoAccordion">
     <dato-accordion-group>
       <dato-accordion-header>
         <div class="header">Title 1</div>

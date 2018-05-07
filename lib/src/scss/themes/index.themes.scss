@@ -1,7 +1,12 @@
-@import '../../../../node_modules/sass-json-export/stylesheets/sass-json-export';
-@import "./vars.themes.scss";
-@import "./core.themes.scss";
-@import './class-generator.themes.scss';
+$PRESERVE_THEMIFY: true;
+@import '../../../../node_modules/@datorama/themify/themify.scss';
+
+$themeRules: (
+  'color', 'background-color', 'fill', 'stroke'
+);
+
+@include generateThemeHelpers($themeRules);
+
 /**
 Components Themes
  */

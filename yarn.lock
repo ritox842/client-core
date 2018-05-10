@@ -314,9 +314,9 @@
     plop "1.9.1"
     shelljs "^0.7.8"
 
-"@datorama/themify@^1.0.0-beta":
-  version "1.0.0-beta"
-  resolved "https://registry.yarnpkg.com/@datorama/themify/-/themify-1.0.0-beta.tgz#d0452adbffe11696556b12efb5e07bb13506a9e3"
+"@datorama/themify@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@datorama/themify/-/themify-1.0.1.tgz#7e79c9cd89627c66b28de538fe98d6ae382e43ad"
   dependencies:
     fs-extra "^5.0.0"
     hex-to-rgba "^1.0.1"

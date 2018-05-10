@@ -8,3 +8,4 @@
 
 export * from './origin.directive';
 export * from './drag.directive';
+export * from './auto-focus.directive';

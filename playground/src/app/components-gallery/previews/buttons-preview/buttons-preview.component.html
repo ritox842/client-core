@@ -17,8 +17,8 @@
   </div>
 
   <div class="mt-13 d-flex">
-    <dato-button class="mr-10" [disabled]="true">Disabled</dato-button>
-    <dato-button [disabled]="true">
+    <dato-button class="mr-10" [disabled]="true" (click)="yeah()">Disabled</dato-button>
+    <dato-button [disabled]="true" (click)="yeah()">
       <dato-icon datoIcon="fit-to-content"></dato-icon>
       Disabled
     </dato-button>

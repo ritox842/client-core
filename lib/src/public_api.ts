@@ -28,3 +28,4 @@ export * from './svg/svg';
 export * from './types/public_api';
 export * from './dato-core.module';
 export * from './rx/public_api';
+export * from './errors';

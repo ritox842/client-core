@@ -39,6 +39,7 @@ export class DatoInputComponent implements OnInit, OnDestroy, ControlValueAccess
   @Input() placeholder = '';
   @Input() disabled = false;
   @Input() debounceTime;
+  @Input() isFocused = false;
 
   onChange = (_: any) => {};
   onTouched = () => {};

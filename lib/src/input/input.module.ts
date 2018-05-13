@@ -11,9 +11,10 @@ import { CommonModule } from '@angular/common';
 import { DatoInputComponent } from './input.component';
 import { DatoThemesModule } from '../themes/themes.module';
 import { DatoIconModule } from '../icon/icon.module';
+import { DatoDirectivesModule } from '../directives/directives.module';
 
 @NgModule({
-  imports: [CommonModule, DatoIconModule, DatoThemesModule],
+  imports: [CommonModule, DatoIconModule, DatoThemesModule, DatoDirectivesModule],
   declarations: [DatoInputComponent],
   exports: [DatoInputComponent]
 })

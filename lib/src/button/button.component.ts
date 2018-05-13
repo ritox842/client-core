@@ -6,7 +6,8 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { toBoolean } from '@datorama/utils';
 
 @Component({
   selector: 'dato-button',
@@ -14,11 +15,15 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   styleUrls: ['./button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatoButtonComponent implements OnInit {
-  /** Whether the button is disabled */
-  @Input() disabled = false;
+export class DatoButtonComponent {
+  _disabled = false;
 
-  constructor() {}
-
-  ngOnInit() {}
+  /**
+   *
+   * @param value
+   */
+  @Input()
+  set disabled(value) {
+    this._disabled = toBoolean(value);
+  }
 }

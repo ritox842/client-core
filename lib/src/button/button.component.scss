@@ -28,7 +28,7 @@
 }
 
 /** Disabled **/
-:host button.disabled {
+:host button[disabled]{
   cursor: not-allowed;
 }
 

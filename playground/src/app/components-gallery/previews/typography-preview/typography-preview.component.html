@@ -1,58 +1,44 @@
 <dato-preview title="Typography - with components">
 
-  <dato-text type="simple">
+  <div datoFont="simple">
     You can use the <span datoFont="simple-bold">dato-text</span> component, to generate your text.
     The component adds a <span datoFont="simple-bold">p</span> tag and injects your content to it.
-  </dato-text>
+  </div>
 
-  <dato-text type="headline">headline</dato-text>
-  <dato-text type="sub-headline">sub-headline</dato-text>
-  <dato-text type="simple-bold">simple-bold</dato-text>
-  <dato-text type="simple">simple</dato-text>
-  <dato-text type="simple-italic">simple-italic</dato-text>
-  <dato-text type="note-bold">note-bold</dato-text>
-  <dato-text type="note">note</dato-text>
-  <dato-text type="note-italic">note-italic</dato-text>
+  <p datoFont="headline">headline</p>
+  <p datoFont="sub-headline">sub-headline</p>
+  <p datoFont="simple-bold">simple-bold</p>
+  <p datoFont="simple">simple</p>
+  <p datoFont="simple-italic">simple-italic</p>
+  <p datoFont="note-bold">note-bold</p>
+  <p datoFont="note">note</p>
+  <p datoFont="note-italic">note-italic</p>
 
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-        <dato-text type="headline">headline</dato-text>
-        <dato-text type="sub-headline">sub-headline</dato-text>
-        <dato-text type="simple-bold">simple-bold</dato-text>
-        <dato-text type="simple">simple</dato-text>
-        <dato-text type="simple-italic">simple-italic</dato-text>
-        <dato-text type="note-bold">note-bold</dato-text>
-        <dato-text type="note">note</dato-text>
-        <dato-text type="note-italic">note-italic</dato-text>
+      <div datoFont="simple">
+        You can use the <span datoFont="simple-bold">dato-text</span> component, to generate your text.
+        The component adds a <span datoFont="simple-bold">p</span> tag and injects your content to it.
+      </div>
+
+      <p datoFont="headline">headline</p>
+      <p datoFont="sub-headline">sub-headline</p>
+      <p datoFont="simple-bold">simple-bold</p>
+      <p datoFont="simple">simple</p>
+      <p datoFont="simple-italic">simple-italic</p>
+      <p datoFont="note-bold">note-bold</p>
+      <p datoFont="note">note</p>
+      <p datoFont="note-italic">note-italic</p>
     </textarea>
 
   </dato-tabs>
 
 </dato-preview>
-
-<dato-preview title="Typography - with directives">
-
-    <span datoFont="headline">The gardener</span>
-    <span datoFont="sub-headline">grows grain in the garden</span>,
-    <span datoFont="note-bold">good grain grows in the garden.</span>
-
-  <dato-tabs show="html">
-
-    <textarea datoHighlight="html">
-      <span datoFont="headline">The gardener</span>
-      <span datoFont="sub-headline">grows grain in the garden</span>,
-      <span datoFont="note-bold">good grain grows in the garden.</span>
-    </textarea>
-
-  </dato-tabs>
-
-</dato-preview>
-
 
 <dato-preview title="Typography - usage in SASS">
 
-  <dato-text type="simple">
+  <div datoFont="simple">
     The two methods above are considered the <span datoFont="simple-bold">best practice</span>
     for applying typography in your elements.<br>
     If you have to use it as part of your CSS, and you don't have an access to the HTML -
@@ -61,7 +47,7 @@
     you can leverage the <span datoFont="simple-bold">typography mixin</span>.
     The <span datoFont="simple-bold">typography mixin</span> recieved the name of the typography as a parameter,
     and generate the appropriate font properties:
-  </dato-text>
+  </div>
 
 
   <dato-tabs show="sass">

@@ -17,4 +17,4 @@ const directives = [DatoOriginDirective, DatoDraggableDirective, DatoAutoFocusDi
   declarations: directives,
   exports: directives
 })
-export class DatoDirectives {}
+export class DatoDirectivesModule {}

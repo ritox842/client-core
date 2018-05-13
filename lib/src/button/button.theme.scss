@@ -11,7 +11,7 @@ dato-button button:active {
   background-color: themify((light: accent-600, dark: accent-200));
 }
 
-dato-button button.disabled {
+dato-button button[disabled] {
   background-color: themify(primary-300, 0.1)!important;
   color: themify(primary-300, 0.5)!important;
 }
@@ -40,22 +40,22 @@ dato-button[datoType='secondary'] button:active {
 dato-button[datoType='none'] button {
   color: themify(primary-300);
 }
-dato-button[datoType='none'] button.disabled {
+dato-button[datoType='none'] button[disabled] {
   color: themify(primary-300, 0.3);
 }
 :root dato-button[datoType='none'] button,
-:root dato-button[datoType='none'] button.disabled {
+:root dato-button[datoType='none'] button[disabled] {
   background-color: transparent;
 }
 
-dato-button[datoType='none'] button:hover:not(.disabled) {
+dato-button[datoType='none'] button:hover:not([disabled]) {
   color: themify(accent-600);
 }
 :root dato-button[datoType='none'] button:hover {
   background-color: transparent;
 }
 
-dato-button[datoType='none'] button:active:not(.disabled) {
+dato-button[datoType='none'] button:active:not([disabled]) {
   color: themify(primary-600);
 }
 :root dato-button[datoType='none'] button:active {

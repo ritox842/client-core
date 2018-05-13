@@ -96,7 +96,7 @@
     "@angular/platform-browser-dynamic": "^5.2.7",
     "@angular/router": "^5.2.7",
     "@datorama/cli": "^1.2.4",
-    "@datorama/utils": "^1.14.0",
+    "@datorama/utils": "^1.16.3",
     "ag-grid": "17.0.0",
     "ag-grid-angular": "^17.0.0",
     "ag-grid-enterprise": "^17.0.0",

@@ -1,0 +1,12 @@
+<div style="display: flex; justify-content: space-between;">
+    <p>
+        <ng-content select=".dialog-title"></ng-content>
+    </p>
+    <button (click)="dismiss()">close</button>
+</div>
+<div>
+    <ng-content select=".dialog-content"></ng-content>
+</div>
+<div style="display: flex; justify-content: flex-end">
+    <ng-content select=".dialog-footer"></ng-content>
+</div>

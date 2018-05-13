@@ -1,4 +1,4 @@
-$PRESERVE_THEMIFY: true;
+$PRESERVE_THEMIFY: false;
 @import '../../../../node_modules/@datorama/themify/themify.scss';
 
 $themeRules: (
@@ -22,3 +22,4 @@ Components Themes
 @import '../../checkbox/checkbox.theme';
 @import '../../radio/radio.theme';
 @import '../../tabs/tabs.theme';
+@import '../../dialog/modal/dialog.theme';

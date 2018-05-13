@@ -27,13 +27,16 @@ import { DatoAccordionModule } from './accordion/accordion.module';
 import { DatoCheckboxModule } from './checkbox/checkbox.module';
 import { DatoRadioModule } from './radio/radio.module';
 import { DatoTabsModule } from './tabs/tabs.module';
+import { DatoDialogModule } from './dialog/dialog.module';
+import { DatoDialog } from './services/dialog.service';
+import { CommonModule } from '@angular/common';
 
-const modules = [DatoDirectives, DatoButtonModule, DatoThemesModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoActionMenuModule, DatoDropdownModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoCheckboxModule, DatoRadioModule];
+const modules = [DatoDirectives, DatoButtonModule, DatoThemesModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoActionMenuModule, DatoDropdownModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule];
 
-const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService];
+const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService, DatoDialog];
 
 @NgModule({
-  imports: [],
+  imports: [CommonModule],
   exports: [modules]
 })
 export class DatoCoreModule {

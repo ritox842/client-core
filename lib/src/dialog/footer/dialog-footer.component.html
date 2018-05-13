@@ -1,0 +1,9 @@
+<div style="display: flex; justify-content: flex-end">
+
+  <ng-container *ngIf="actions">
+    <button *ngFor="let action of actions;" (click)="callAction(action)">
+      {{action.title}}
+    </button>
+  </ng-container>
+
+</div>

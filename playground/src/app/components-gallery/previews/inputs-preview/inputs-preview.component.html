@@ -125,23 +125,23 @@
 <dato-preview title="Radio">
 
   <section>
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px" class="d-flex items-center">
       <dato-radio [formControl]="radioControl" name="sex" value="male">Male</dato-radio>
       <dato-radio [formControl]="radioControl" name="sex" value="female">Female</dato-radio>
       <code>Control value: {{radioControl.value}}</code>
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px" class="d-flex items-center">
       <dato-radio [formControl]="radioControl2" name="car" value="volvo">Volvo</dato-radio>
       <dato-radio [formControl]="radioControl2" name="car" value="fiat">Fiat</dato-radio>
       <code>Control value: {{radioControl2.value}}</code>
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px " class="d-flex items-center">
         <dato-radio [formControl]="radioDisableControl">Disabled</dato-radio>
     </div>
 
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px" class="d-flex items-center">
       <dato-radio [formControl]="radioDynamic" *ngFor="let radio of radios" [value]="radio.value" name="pita">{{radio.title}}</dato-radio>
       <code>Control value: {{radioDynamic.value}}</code>
     </div>
@@ -161,3 +161,37 @@
 
   </dato-tabs>
 </dato-preview>
+
+<dato-preview title="Toggler">
+
+  <section>
+    <div style="margin-top: 20px">
+      <dato-toggler [formControl]="togglerControl">Toggle me</dato-toggler>
+      <code>Control value: {{togglerControl.value}}</code>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-toggler [formControl]="togglerControl2">Toggle me</dato-toggler>
+      <code>Control value: {{togglerControl2.value}}</code>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-toggler [formControl]="togglerControl3">Toggle me</dato-toggler>
+    </div>
+
+  </section>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+      <dato-toggler [formControl]="togglerControl">Toggle me</dato-toggler>
+    </textarea>
+
+    <textarea datoHighlight="js">
+        togglerControl = new FormControl(false);
+        togglerControl2 = new FormControl(true);
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+

@@ -29,6 +29,7 @@ describe('DatoAccordionHeaderComponent', () => {
     host = createHost(`<dato-accordion-header [expanded]="true">Header</dato-accordion-header>`);
     expect(host.element).toHaveClass('dato-accordion-open');
     host.setInput('expanded', false);
+    host.hostFixture.detectChanges();
     expect(host.element).not.toHaveClass('dato-accordion-open');
   });
 

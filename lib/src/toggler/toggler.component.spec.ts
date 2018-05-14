@@ -1,23 +1,23 @@
-import { createHostComponentFactory, SpectatorWithHost } from '@netbasal/spectator';
-import { Component } from '@angular/core';
-import { DatoTogglerComponent } from './toggler.component';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {createHostComponentFactory, SpectatorWithHost} from '@netbasal/spectator';
+import {Component} from '@angular/core';
+import {DatoTogglerComponent} from "./toggler.component";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
 
 const rootElement = '.dato-toggle';
 const activeClass = 'dato-toggle--active';
 const disabledClass = 'dato-toggle--disabled';
 
-@Component({ selector: 'custom-host', template: '' })
+@Component({selector: 'custom-host', template: ''})
 class CustomHostComponent {
   control = new FormControl(false);
 }
 
-describe('DatoTogglerComponent', function() {
+describe('DatoTogglerComponent', function () {
   let host: SpectatorWithHost<DatoTogglerComponent, CustomHostComponent>;
 
   const createHost = createHostComponentFactory({
     component: DatoTogglerComponent,
-    imports: [ReactiveFormsModule],
+    imports: [ ReactiveFormsModule ],
     host: CustomHostComponent
   });
 
@@ -69,4 +69,5 @@ describe('DatoTogglerComponent', function() {
     expect(host.query(rootElement)).toHaveClass(disabledClass);
     expect(host.component.isActive).toBeFalsy();
   });
+
 });

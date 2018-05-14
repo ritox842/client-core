@@ -1,0 +1,41 @@
+:host {
+  .dato-toggle {
+    cursor: pointer;
+    display: inline-block;
+
+    &__rail {
+      border-radius: 3em;
+      height: 12px;
+      position: relative;
+      transition: background-color .4s;
+      width: 33px;
+    }
+
+    &__ball {
+      border-radius: 5em;
+      height: 15px;
+      left: 0;
+      position: absolute;
+      top: -2px;
+      transition: left .4s, background-color .4s;
+      width: 15px;
+    }
+
+    &--active, &--disabled {
+      .dato-toggle__ball {
+        left: 19px;
+      }
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+[datoFont] {
+  margin-left: 10px;
+}
+
+
+

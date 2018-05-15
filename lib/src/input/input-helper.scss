@@ -49,14 +49,17 @@ $inputsize: (
   &:hover {
     border-color: themify(primary-300);
   }
+
   &:focus {
-    border-color: themify(accent-400);
+    border-color: themify(accent-400) !important;
   }
+
   &[disabled] {
     background-color: themify(primary-300, 0.1);
     cursor: not-allowed;
     border: none;
   }
+
   &[disabled] ~ dato-icon path {
     fill: themify(primary-200);
   }

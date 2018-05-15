@@ -12,6 +12,7 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { pluck } from 'rxjs/operators';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { toBoolean } from '@datorama/utils';
+import { BaseCustomControl } from '../internal/base-custom-control';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -28,7 +29,7 @@ const valueAccessor = {
   exportAs: 'datoCheckbox',
   providers: [valueAccessor]
 })
-export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class DatoCheckboxComponent extends BaseCustomControl implements OnInit, OnDestroy, ControlValueAccessor {
   private _checked: boolean = false;
 
   /**
@@ -52,10 +53,8 @@ export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAcc
     return this.host.nativeElement.querySelector('input');
   }
 
-  onChange = (_: any) => {};
-  onTouched = () => {};
-
   constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef, @Attribute('trueValue') public trueValue, @Attribute('falseValue') public falseValue) {
+    super();
     this.trueValue = toBoolean(this.trueValue) ? this.trueValue : true;
     this.falseValue = toBoolean(this.falseValue) ? this.falseValue : false;
   }
@@ -81,22 +80,6 @@ export class DatoCheckboxComponent implements OnInit, OnDestroy, ControlValueAcc
   writeValue(value): void {
     const normalizedValue = value === this.trueValue ? true : false;
     this.setInputValue(normalizedValue);
-  }
-
-  /**
-   *
-   * @param {(_: any) => void} fn
-   */
-  registerOnChange(fn: (_: any) => void): void {
-    this.onChange = fn;
-  }
-
-  /**
-   *
-   * @param {() => void} fn
-   */
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
   }
 
   /**

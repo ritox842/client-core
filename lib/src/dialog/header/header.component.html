@@ -1,6 +1,8 @@
 <div style="display: flex; justify-content: space-between;">
-  <p>
+  <p class="sub-headline">
     <ng-content></ng-content>
   </p>
-  <button (click)="dismiss()">close</button>
+  <dato-icon-button class="x-button" datoDialogClose *ngIf="enableClose"
+                    datoSize="md" datoType="none" datoIcon="close">
+  </dato-icon-button>
 </div>

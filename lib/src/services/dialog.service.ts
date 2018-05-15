@@ -2,7 +2,7 @@ import { ApplicationRef, ComponentFactoryResolver, EmbeddedViewRef, Injectable, 
 import { filter, takeUntil } from 'rxjs/operators';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { merge } from 'rxjs/observable/merge';
-import { DatoDialogComponent } from '../dialog/modal/dialog.component';
+import { DatoDialogComponent } from '../dialog/dialog/dialog.component';
 import { DatoDialogRef } from '../dialog/dialog-ref';
 import { ContentType, DatoDialogOptions, getDefaultOptions } from '../dialog/dialog.options';
 import { createGUID, HashMap, toBoolean } from '@datorama/utils';
@@ -10,8 +10,8 @@ import { DialogConfig } from '../dialog/dialog.config';
 
 @Injectable()
 export class DatoDialog {
-  private dialogs: HashMap<DialogConfig> = {};
-  private dialogsStuck: DialogConfig[] = [];
+  private dialogs = new Map<string, DialogConfig>();
+  private dialogsStack: DialogConfig[] = [];
 
   private lastZIndex = 10000;
 
@@ -29,7 +29,7 @@ export class DatoDialog {
 
     const config = new DialogConfig(dialogRef);
 
-    if (this.dialogs.hasOwnProperty(mergedOptions.id)) {
+    if (this.dialogs.has(mergedOptions.id)) {
       throw new Error(`A dialog with the key '${mergedOptions.id}' already exist.`);
     }
 
@@ -38,8 +38,8 @@ export class DatoDialog {
     this.injectToDOM(mergedOptions.container, config);
     this.registerEvents(config);
 
-    this.dialogs[mergedOptions.id] = config;
-    this.dialogsStuck.push(config);
+    this.dialogs.set(mergedOptions.id, config);
+    this.dialogsStack.push(config);
 
     return dialogRef;
   }
@@ -55,8 +55,8 @@ export class DatoDialog {
   }
 
   private getLastOpenedDialog() {
-    if (this.dialogsStuck.length) {
-      return this.dialogsStuck[this.dialogsStuck.length - 1];
+    if (this.dialogsStack.length) {
+      return this.dialogsStack[this.dialogsStack.length - 1];
     }
     return null;
   }
@@ -102,6 +102,7 @@ export class DatoDialog {
     const element = config.componentRef.location.nativeElement;
     const dialogElement = container.appendChild(element);
     config.dialogElement = dialogElement;
+    config.viewRef.detectChanges();
   }
 
   /**
@@ -157,10 +158,10 @@ export class DatoDialog {
     document.body.removeChild(config.dialogElement);
 
     const id = config.dialogRef.options.id;
-    if (this.dialogs.hasOwnProperty(id)) {
-      delete this.dialogs[id];
+    if (this.dialogs.has(id)) {
+      this.dialogs.delete(id);
       // filter-out the item
-      this.dialogsStuck = this.dialogsStuck.filter(d => d !== config);
+      this.dialogsStack = this.dialogsStack.filter(d => d !== config);
     }
   }
 

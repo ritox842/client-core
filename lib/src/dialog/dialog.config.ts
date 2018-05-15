@@ -1,6 +1,6 @@
 import { ComponentRef } from '@angular/core';
 import { DatoDialogRef } from './dialog-ref';
-import { DatoDialogComponent } from './modal/dialog.component';
+import { DatoDialogComponent } from './dialog/dialog.component';
 import { ViewRef } from '@angular/core/src/linker/view_ref';
 
 export class DialogConfig {

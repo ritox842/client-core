@@ -1,4 +1,14 @@
-:host {
-  padding: 0 30px;
+dato-dialog-header {
+  padding: 18px 30px 10px;
   display: block;
+
+  dato-icon-button.x-button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+
+    .dato-icon-close {
+      padding: 0 !important;
+    }
+  }
 }

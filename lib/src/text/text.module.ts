@@ -8,14 +8,13 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DatoTextComponent } from './text.component';
 import { DatoFontDirective } from './font.directive';
 
-export const declarations = [DatoTextComponent, DatoFontDirective];
+export const publicApi = [DatoFontDirective];
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [...declarations],
-  exports: [...declarations]
+  declarations: [publicApi],
+  exports: [publicApi]
 })
 export class DatoTextModule {}

@@ -1,0 +1,25 @@
+<dato-preview title="Custom Dialog">
+
+  <section class="d-flex-column">
+    <div class="d-flex-row">
+      <dato-input placeholder="What's your name" datoSize="sm" [formControl]="nameControl"></dato-input>
+      <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Choose..</dato-button>
+    </div>
+    <span *ngIf="animal">
+      Your favorite animal is: <span datoFont="note-bold">{{animal}}</span>
+    </span>
+  </section>
+
+  <dato-tabs>
+
+    <textarea datoHighlight="html">
+
+
+    </textarea>
+
+    <textarea datoHighlight="css">
+
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>

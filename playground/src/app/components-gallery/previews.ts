@@ -12,7 +12,7 @@ import { GridActionsPreviewComponent } from "./previews/grid-preview/actions/gri
 import { AccordionPreviewComponent } from "./previews/accordion-preview/accordion-preview.component";
 import { DragPreviewComponent } from "./previews/drag-preview/drag-preview.component";
 import { DialogPreviewComponent } from "./previews/dialog-preview/dialog-preview.component";
-import { CustomModalComponent } from "./previews/dialog-preview/custom-modal/custom-modal.component";
+import { dialogPreviewComponents } from "./previews/dialog-preview/dialog-preview.providers";
 
 export const previews = [
   ButtonsPreviewComponent,
@@ -28,8 +28,7 @@ export const previews = [
   AccordionPreviewComponent,
   DragPreviewComponent,
   TabsPreviewComponent,
-  DialogPreviewComponent,
-  CustomModalComponent
+  ...dialogPreviewComponents
 ];
 
 export const routeToComponent = {

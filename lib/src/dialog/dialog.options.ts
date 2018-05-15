@@ -14,11 +14,6 @@ export type DatoDialogOptions = {
   container?: Element;
 
   /**
-   * Size of a new modal window.
-   */
-  size?: 'md' | 'lg';
-
-  /**
    * Custom class to append to the modal window
    */
   windowClass?: string;
@@ -38,7 +33,6 @@ export function getDefaultOptions(): DatoDialogOptions {
     id: null,
     backdrop: true,
     container: document.body,
-    size: 'md',
     windowClass: '',
     enableClose: true
   };

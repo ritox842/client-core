@@ -8,22 +8,22 @@
       height: 12px;
       position: relative;
       transition: background-color .4s;
-      width: 33px;
+      width: 22px;
     }
 
     &__ball {
       border-radius: 5em;
-      height: 15px;
-      left: 0;
+      height: 8px;
+      left: 2px;
+      top: 2px;
       position: absolute;
-      top: -2px;
       transition: left .4s, background-color .4s;
-      width: 15px;
+      width: 8px;
     }
 
     &--active, &--disabled {
       .dato-toggle__ball {
-        left: 19px;
+        left: 11px;
       }
     }
 
@@ -35,6 +35,7 @@
 
 [datoFont] {
   margin-left: 10px;
+  cursor: default;
 }
 
 

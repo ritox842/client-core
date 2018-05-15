@@ -12,10 +12,6 @@ import { IconRegistry } from '../services/icon-registry';
 import { setDimensions } from '../internal/custom-dimensions';
 import { DatoCoreError } from '../errors';
 
-function assertIconExists(datoIcon) {
-  throw new DatoCoreError(`${datoIcon} Icon - does not exists, did you misspell it?`);
-}
-
 @Component({
   selector: 'dato-icon',
   template: '',
@@ -67,7 +63,7 @@ export class DatoIconComponent implements OnInit {
       this.lastIconClass = this.getIconClass();
       this.renderer.addClass(this.element, this.lastIconClass);
     } else {
-      assertIconExists(this.datoIcon);
+      throw new DatoCoreError(`${this.datoIcon} Icon - does not exists, did you misspell it?`);
     }
   }
 

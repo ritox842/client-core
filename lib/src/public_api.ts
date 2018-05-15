@@ -20,6 +20,7 @@ export * from './accordion/public_api';
 export * from './checkbox/public_api';
 export * from './radio/public_api';
 export * from './toggler/public_api';
+export * from './editable-header/public_api';
 export * from './tabs/public_api';
 export * from './shared/public_api';
 

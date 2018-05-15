@@ -14,6 +14,7 @@ import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { optionalDebounce } from '../rx/debounce';
 import { BaseCustomControl } from '../internal/base-custom-control';
+import { setDimensions } from '../internal/custom-dimensions';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -38,15 +39,19 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
   showDelete = false;
 
   @Input() placeholder = '';
+  /** @deprecated - use isDisabled */
   @Input() disabled = false;
+  @Input() isDisabled = false;
   @Input() debounceTime;
   @Input() isFocused = false;
 
-  constructor(@Attribute('type') public type, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {
+  constructor(@Attribute('type') public type, @Attribute('width') public width, @Attribute('height') public height, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {
     super();
   }
 
   ngOnInit() {
+    setDimensions(this.width, this.height, this.inpuElement, this.renderer);
+
     fromEvent(this.inpuElement, 'input')
       .pipe(pluck('target', 'value'), tap(val => this.activateDeleteIcon(val)), optionalDebounce(this.debounceTime), untilDestroyed(this))
       .subscribe(val => {

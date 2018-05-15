@@ -6,11 +6,10 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {DatoTogglerComponent} from './toggler.component';
-import {DatoTextModule} from "../text/text.module";
-
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DatoTogglerComponent } from './toggler.component';
+import { DatoTextModule } from '../text/text.module';
 
 const publicApi = [DatoTogglerComponent];
 
@@ -20,5 +19,4 @@ const publicApi = [DatoTogglerComponent];
   exports: [publicApi],
   entryComponents: [publicApi]
 })
-export class DatoTogglerModule {
-}
+export class DatoTogglerModule {}

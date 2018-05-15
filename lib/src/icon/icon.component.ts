@@ -9,6 +9,12 @@
 import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { kebabCase } from '@datorama/utils';
 import { IconRegistry } from '../services/icon-registry';
+import { setDimensions } from '../internal/custom-dimensions';
+import { DatoCoreError } from '../errors';
+
+function assertIconExists(datoIcon) {
+  throw new DatoCoreError(`${datoIcon} Icon - does not exists, did you misspell it?`);
+}
 
 @Component({
   selector: 'dato-icon',
@@ -18,13 +24,13 @@ import { IconRegistry } from '../services/icon-registry';
 })
 export class DatoIconComponent implements OnInit {
   private iconKey: string;
+  private lastIconClass: string;
 
   @Input()
   set datoIcon(iconKey: string) {
     const iconChanged = this.iconKey && this.iconKey !== iconKey;
     this.iconKey = iconKey;
-
-    // inject the changed icon
+    /** inject the changed icon */
     if (iconChanged) {
       this.injectSvg();
     }
@@ -37,15 +43,10 @@ export class DatoIconComponent implements OnInit {
   constructor(private host: ElementRef, private iconRegistry: IconRegistry, private renderer: Renderer2, @Attribute('width') public width, @Attribute('height') public height) {}
 
   ngOnInit() {
-    // add standard attributes
+    /** Add standard attributes */
     this.renderer.setAttribute(this.element, 'role', 'img');
 
-    if (this.width) {
-      this.renderer.setStyle(this.element, 'width', this.width);
-    }
-    if (this.height) {
-      this.renderer.setStyle(this.element, 'height', this.height);
-    }
+    setDimensions(this.width, this.height, this.element, this.renderer);
 
     this.injectSvg();
   }
@@ -57,12 +58,16 @@ export class DatoIconComponent implements OnInit {
   private injectSvg() {
     if (this.datoIcon && this.iconRegistry.hasSvg(this.datoIcon)) {
       const svg = this.iconRegistry.getSvg(this.datoIcon);
-      this.element.innerHTML = svg;
 
-      // append a CSS class, so developers can apply different styles to the icon
-      this.renderer.addClass(this.element, this.getIconClass());
+      this.element.innerHTML = svg;
+      if (this.lastIconClass) {
+        this.renderer.removeClass(this.element, this.lastIconClass);
+      }
+      /** append a CSS class, so developers can apply different styles to the icon */
+      this.lastIconClass = this.getIconClass();
+      this.renderer.addClass(this.element, this.lastIconClass);
     } else {
-      console.error(`'${this.datoIcon}' Icon - does not exists, did you misspell it?`);
+      assertIconExists(this.datoIcon);
     }
   }
 

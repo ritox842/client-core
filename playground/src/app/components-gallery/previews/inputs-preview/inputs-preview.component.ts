@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 import { TakeUntilDestroy, untilDestroyed } from "ngx-take-until-destroy";
 
 @TakeUntilDestroy()
@@ -20,6 +20,9 @@ export class InputsPreviewComponent implements OnInit, OnDestroy {
   radioDynamic = new FormControl();
   // custom checkbox value
   checkboxCustomValueControl = new FormControl("yep");
+  togglerControl = new FormControl(false);
+  togglerControl2 = new FormControl(true);
+  togglerControl3 = new FormControl({ disabled: true, value: false });
 
   radios = [
     { title: "With ngFor one", value: "one" },

@@ -6,13 +6,15 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit, Renderer2, OnDestroy } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { pluck, takeUntil, tap } from 'rxjs/operators';
+import { pluck, tap } from 'rxjs/operators';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { optionalDebounce } from '../rx/debounce';
+import { BaseCustomControl } from '../internal/base-custom-control';
+import { setDimensions } from '../internal/custom-dimensions';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -33,20 +35,23 @@ const animations = [trigger('fromRight', [transition(':enter', [style({ transfor
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [valueAccessor]
 })
-export class DatoInputComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class DatoInputComponent extends BaseCustomControl implements OnInit, OnDestroy, ControlValueAccessor {
   showDelete = false;
 
   @Input() placeholder = '';
+  /** @deprecated - use isDisabled */
   @Input() disabled = false;
+  @Input() isDisabled = false;
   @Input() debounceTime;
   @Input() isFocused = false;
 
-  onChange = (_: any) => {};
-  onTouched = () => {};
-
-  constructor(@Attribute('type') public type, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {}
+  constructor(@Attribute('type') public type, @Attribute('width') public width, @Attribute('height') public height, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {
+    super();
+  }
 
   ngOnInit() {
+    setDimensions(this.width, this.height, this.inpuElement, this.renderer);
+
     fromEvent(this.inpuElement, 'input')
       .pipe(pluck('target', 'value'), tap(val => this.activateDeleteIcon(val)), optionalDebounce(this.debounceTime), untilDestroyed(this))
       .subscribe(val => {
@@ -90,22 +95,6 @@ export class DatoInputComponent implements OnInit, OnDestroy, ControlValueAccess
     const normalizedValue = value == null ? '' : value;
     this.activateDeleteIcon(normalizedValue);
     this.setInputValue(normalizedValue);
-  }
-
-  /**
-   *
-   * @param {(_: any) => void} fn
-   */
-  registerOnChange(fn: (_: any) => void): void {
-    this.onChange = fn;
-  }
-
-  /**
-   *
-   * @param {() => void} fn
-   */
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
   }
 
   /**

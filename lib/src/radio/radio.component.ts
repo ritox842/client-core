@@ -11,6 +11,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { pluck } from 'rxjs/operators';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { BaseCustomControl } from '../internal/base-custom-control';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -27,7 +28,7 @@ const valueAccessor = {
   exportAs: 'datoRadio',
   providers: [valueAccessor]
 })
-export class DatoRadioComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class DatoRadioComponent extends BaseCustomControl implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() name;
   @Input() value;
 
@@ -37,10 +38,9 @@ export class DatoRadioComponent implements OnInit, OnDestroy, ControlValueAccess
 
   id = Math.random().toString();
 
-  onChange = (_: any) => {};
-  onTouched = () => {};
-
-  constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {}
+  constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {
+    super();
+  }
 
   ngOnInit() {
     fromEvent(this.inpuElement, 'change')
@@ -57,22 +57,6 @@ export class DatoRadioComponent implements OnInit, OnDestroy, ControlValueAccess
    */
   writeValue(value): void {
     this.setInputValue(value === this.value);
-  }
-
-  /**
-   *
-   * @param {(_: any) => void} fn
-   */
-  registerOnChange(fn: (_: any) => void): void {
-    this.onChange = fn;
-  }
-
-  /**
-   *
-   * @param {() => void} fn
-   */
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
   }
 
   /**

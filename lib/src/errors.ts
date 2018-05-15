@@ -3,3 +3,9 @@ export class DatoCoreError extends Error {
     super(message);
   }
 }
+
+export function assertString(value, context?) {
+  if (typeof value !== 'string') {
+    throw new DatoCoreError(`${context} expecting string but got ${typeof value}`);
+  }
+}

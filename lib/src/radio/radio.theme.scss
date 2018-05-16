@@ -1,72 +1,41 @@
-$color1: themify(primary-0);
-$color2: themify(accent-400);
-$color3: themify(accent-300);
-$color4: themify(accent-500);
-$color5: themify(primary-100);
-$color6: themify(primary-300);
-
 .dato-radio {
   input[type="radio"] {
     + .radio-label {
       &:before {
-        background: $color1;
-        border: 1px solid $color6;
+        background: themify(primary-0);
+        border: 1px solid themify(primary-300);
       }
     }
     &:checked {
       + .radio-label {
         &:before {
-          background-color: $color2;
-          border: 1px solid $color2;
-          box-shadow: inset 0 0 0 3px $color1;
+          background-color: themify(accent-400);
+          border: 1px solid themify(accent-400);
+          box-shadow: inset 0 0 0 2px themify(primary-0);
         }
       }
       &:hover {
         + .radio-label {
           &:before {
-            background-color: $color3;
-            border: 1px solid $color3;
-            box-shadow: inset 0 0 0 3px $color1;
+            background-color: themify((light: accent-500, dark: accent-350));
+            border: 1px solid themify((light: accent-500, dark: accent-350));
           }
         }
       }
       &:active {
         + .radio-label {
           &:before {
-            background-color: $color4;
-            border: 1px solid $color4;
-            box-shadow: inset 0 0 0 3px $color1;
+            background-color: themify((light: accent-600, dark: accent-300));
+            border: 1px solid themify((light: accent-600, dark: accent-300));
           }
-        }
-      }
-    }
-    &:focus {
-      + .radio-label {
-        &:before {
-          border-color: $color2;
-        }
-      }
-    }
-    &:hover {
-      + .radio-label {
-        &:before {
-          border-color: $color3;
-        }
-      }
-    }
-    &:active {
-      + .radio-label {
-        &:before {
-          border-color: $color4;
         }
       }
     }
     &:disabled {
       + .radio-label {
         &:before {
-          border-color: $color5;
-          background-color: $color5;
-          box-shadow: inset 0 0 0 3px $color1;
+          background-color: themify(primary-300, 0.5);
+          box-shadow: inset 0 0 0 2px themify(primary-100);
         }
       }
     }

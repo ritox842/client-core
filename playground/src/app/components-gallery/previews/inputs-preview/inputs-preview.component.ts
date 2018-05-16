@@ -14,7 +14,7 @@ export class InputsPreviewComponent implements OnInit, OnDestroy {
   checkboxControl = new FormControl(true);
   radioControl = new FormControl("female");
   radioControl2 = new FormControl();
-  radioDisableControl = new FormControl();
+  radioDisableControl = new FormControl(true);
   checkboxCheckedControl = new FormControl(true);
   checkboxDisableControl = new FormControl(false);
   radioDynamic = new FormControl();

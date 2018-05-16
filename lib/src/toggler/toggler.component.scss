@@ -8,7 +8,7 @@
       height: 12px;
       position: relative;
       transition: background-color .4s;
-      width: 22px;
+      width: 26px;
     }
 
     &__ball {
@@ -23,7 +23,7 @@
 
     &--active, &--disabled {
       .dato-toggle__ball {
-        left: 11px;
+        left: 16px;
       }
     }
 

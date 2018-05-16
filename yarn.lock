@@ -329,9 +329,9 @@
     fs-extra "^5.0.0"
     hex-to-rgba "^1.0.1"
 
-"@datorama/utils@^1.16.3":
-  version "1.16.3"
-  resolved "https://registry.yarnpkg.com/@datorama/utils/-/utils-1.16.3.tgz#098cf04599751959f3d3dd2bee3bb9faa11e1631"
+"@datorama/utils@^1.17":
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/@datorama/utils/-/utils-1.17.0.tgz#a6e718fb88c2875ab32331eedd02657836b7b51a"
   dependencies:
     deep-equal "^1.0.1"
     lodash.clonedeep "^4.5.0"
@@ -367,6 +367,7 @@
     lodash.transform "^4.6.0"
     lodash.unescape "^4.0.1"
     lodash.union "^4.6.0"
+    lodash.uniqby "^4.7.0"
     lodash.values "^4.3.0"
 
 "@marionebl/sander@^0.6.0":
@@ -5665,6 +5666,10 @@ lodash.union@^4.6.0:
 lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
+
+lodash.uniqby@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/lodash.uniqby/-/lodash.uniqby-4.7.0.tgz#d99c07a669e9e6d24e1362dfe266c67616af1302"
 
 lodash.upperfirst@4.3.1:
   version "4.3.1"

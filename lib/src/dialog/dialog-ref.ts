@@ -3,12 +3,14 @@ import { DatoDialogOptions } from './dialog.options';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { take } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 
 export class DatoDialogRef {
   /** Listeners **/
   private _beforeClose = new ReplaySubject();
   private _afterClose = new Subject();
   private _destroy: () => void;
+  private _onClose;
 
   private _destroySubject = new Subject();
 
@@ -77,11 +79,25 @@ export class DatoDialogRef {
     this._destroySubject.complete();
   }
 
+  private canClose(result) {
+    if (this._onClose) {
+      const retValue = this._onClose(result);
+      if (retValue === false) {
+        return of(false);
+      } else if (retValue instanceof Observable) {
+      }
+    }
+  }
+
   _setData(data) {
     this._data = data;
   }
 
   _onDestroy(destroyFn: () => void) {
     this._destroy = destroyFn;
+  }
+
+  onClose(param: () => any) {
+    this._onClose = param;
   }
 }

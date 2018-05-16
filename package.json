@@ -98,7 +98,7 @@
     "@angular/router": "^5.2.7",
     "@datorama/cli": "^1.2.4",
     "@datorama/themify": "1.0.2",
-    "@datorama/utils": "^1.16.3",
+    "@datorama/utils": "^1.17",
     "ag-grid": "17.0.0",
     "ag-grid-angular": "^17.0.0",
     "ag-grid-enterprise": "^17.0.0",

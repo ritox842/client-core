@@ -5,7 +5,7 @@ import { merge } from 'rxjs/observable/merge';
 import { DatoDialogComponent } from '../dialog/dialog/dialog.component';
 import { DatoDialogRef } from '../dialog/dialog-ref';
 import { ContentType, DatoDialogOptions, getDefaultOptions } from '../dialog/dialog.options';
-import { createGUID, HashMap, toBoolean } from '@datorama/utils';
+import { createGUID, toBoolean } from '@datorama/utils';
 import { DialogConfig } from '../dialog/dialog.config';
 
 @Injectable()

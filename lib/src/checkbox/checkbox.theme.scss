@@ -4,7 +4,7 @@ dato-checkbox {
   }
 
   .checkmark:after {
-    border: solid themify(primary-0);
+    border: solid themify((light: primary-0, dark: primary-700));
   }
 
   // unchecked state

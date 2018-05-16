@@ -208,7 +208,7 @@
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@datorama/atomic/-/atomic-1.4.0.tgz#30445402d021ab7ed46c6a56a4894031bdea9302"
 
-"@datorama/utils@^1.17":
+"@datorama/utils@^1.17.0":
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/@datorama/utils/-/utils-1.17.0.tgz#a6e718fb88c2875ab32331eedd02657836b7b51a"
   dependencies:
@@ -5795,6 +5795,10 @@ module-deps@^4.0.8:
     subarg "^1.0.0"
     through2 "^2.0.0"
     xtend "^4.0.0"
+
+moment@^2.22.1:
+  version "2.22.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.1.tgz#529a2e9bf973f259c9643d237fda84de3a26e8ad"
 
 morgan@^1.6.1:
   version "1.9.0"

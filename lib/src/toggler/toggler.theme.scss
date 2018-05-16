@@ -1,7 +1,7 @@
 dato-toggler {
   .dato-toggle {
     &__rail {
-      background-color: themify((light: primary-400, dark: primary-200));
+      background-color: themify(primary-300, 0.5);
     }
 
     &__ball {
@@ -15,12 +15,8 @@ dato-toggler {
     }
 
     &--disabled {
-      .dato-toggle__ball {
-        background-color: themify(primary-200);
-      }
-
-      .dato-toggle__rail {
-        background-color: themify(primary-300, 0.1);
+      .dato-toggle__ball, .dato-toggle__rail {
+        background-color: themify(primary-300, 0.35);
       }
     }
   }

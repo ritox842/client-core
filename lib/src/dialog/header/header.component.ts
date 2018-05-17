@@ -1,6 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { DatoDialog } from '../../services/dialog.service';
+import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { DatoDialogRef } from '../dialog-ref';
+import { DatoDialog } from '../../services/dialog.service';
 
 @Component({
   selector: 'dato-dialog-header',
@@ -8,14 +8,20 @@ import { DatoDialogRef } from '../dialog-ref';
   styleUrls: ['./header.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DatoDialogHeaderComponent {
+export class DatoDialogHeaderComponent implements OnInit {
+  draggableDialogElement: HTMLElement;
+  draggableEnabled = false;
+
   get enableClose() {
     return this.dialogRef.options.enableClose;
   }
 
-  constructor(private dialogRef: DatoDialogRef) {}
+  constructor(private dialog: DatoDialog, private dialogRef: DatoDialogRef, public element: ElementRef) {}
 
-  dismiss() {
-    this.dialogRef.dismiss();
+  ngOnInit(): void {
+    if (this.dialogRef.options.draggable) {
+      this.draggableEnabled = true;
+      this.draggableDialogElement = this.dialog.getClosestDialogElement(this.element.nativeElement);
+    }
   }
 }

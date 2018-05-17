@@ -1,9 +1,17 @@
 import { DialogPreviewComponent } from "./dialog-preview.component";
-import { DialogPreviewAComponent } from "./preview-a/dialog-preview-a.component";
-import { CustomModalComponent } from "./preview-a/custom-modal/custom-modal.component";
+import { DatoDialogCustomPreviewComponent } from "./custom/dialog-custom-preview.component";
+import { CustomDialogComponent } from "./custom/custom-dialog/custom-dialog.component";
+import { DatoDialogConfirmationPreviewComponent } from "./confirmation/dialog-confirmation-preview.component";
+import { DatoDialogMultiplePreviewComponent } from "./multiple-dialogs/dialog-multiple-preview.component";
+import { MyCustomDialogComponent } from "./multiple-dialogs/custom-dialog/custom-dialog.component";
+import { DatoDialogDraggablePreviewComponent } from "./draggable/dialog-draggable-preview.component";
 
 export const dialogPreviewComponents = [
   DialogPreviewComponent,
-  DialogPreviewAComponent,
-  CustomModalComponent
+  DatoDialogCustomPreviewComponent,
+  CustomDialogComponent,
+  DatoDialogConfirmationPreviewComponent,
+  DatoDialogMultiplePreviewComponent,
+  MyCustomDialogComponent,
+  DatoDialogDraggablePreviewComponent
 ];

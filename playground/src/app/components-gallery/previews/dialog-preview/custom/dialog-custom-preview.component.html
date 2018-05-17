@@ -1,0 +1,51 @@
+<dato-preview title="Custom Dialog Example">
+
+  <section class="d-flex-column">
+    <div class="d-flex-row" style="max-width: 300px">
+      <dato-input placeholder="What's your name" datoSize="sm" [formControl]="nameControl"></dato-input>
+      <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Choose..</dato-button>
+    </div>
+    <span *ngIf="animal">
+      Your favorite animal is: <span datoFont="note-bold">{{animal}}</span>
+    </span>
+  </section>
+
+  <dato-tabs>
+
+    <textarea datoHighlight="html">
+      <dato-input placeholder="What's your name" datoSize="sm" [formControl]="nameControl"></dato-input>
+      <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Choose..</dato-button>
+
+      <span *ngIf="animal">
+        Your favorite animal is: <span datoFont="note-bold">{{animal}}</span>
+      </span>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      @Component({
+        selector: "dato-dialog-example",
+        templateUrl: "./dialog-example.component.html"
+      })
+      export class DatoDialogExampleComponent {
+        nameControl = new FormControl("");
+        animal: string;
+
+        constructor(private dialog: DatoDialog) {}
+
+        openDialog() {
+          this.dialog
+            .open(CustomDialogComponent, {
+              data: {
+                name: this.nameControl.value
+              }
+            })
+            .afterClose()
+            .subscribe((result: string) => {
+              this.animal = result;
+            });
+        }
+      }
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>

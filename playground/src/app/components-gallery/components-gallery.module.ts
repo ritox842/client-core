@@ -1,4 +1,3 @@
-import { TabsPreviewComponent } from "./previews/tabs-preview/tabs-preview.component";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SideNavComponent } from "./side-nav/side-nav.component";
@@ -15,7 +14,6 @@ import { ApiTableComponent } from "./api-table/api-table.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DatoCoreModule } from "../../../../lib";
 import { ListItemComponent } from "./list-item/list-item.component";
-import { DialogPreviewComponent } from "./previews/dialog-preview/dialog-preview.component";
 
 @NgModule({
   imports: [CommonModule, RouterModule, DatoCoreModule, ReactiveFormsModule],
@@ -30,10 +28,8 @@ import { DialogPreviewComponent } from "./previews/dialog-preview/dialog-preview
     TabsComponent,
     TabComponent,
     ApiTableComponent,
-    previews,
     ListItemComponent,
-    TabsPreviewComponent,
-    DialogPreviewComponent
+    previews
   ]
 })
 export class ComponentsGalleryModule {}

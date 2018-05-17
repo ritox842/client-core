@@ -4,9 +4,11 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { merge } from 'rxjs/observable/merge';
 import { DatoDialogComponent } from '../dialog/dialog/dialog.component';
 import { DatoDialogRef } from '../dialog/dialog-ref';
-import { ContentType, DatoDialogOptions, getDefaultOptions } from '../dialog/dialog.options';
+import { ContentType, DatoDialogOptions, getDefaultOptions } from '../dialog/config/dialog.options';
 import { createGUID, toBoolean } from '@datorama/utils';
-import { DialogConfig } from '../dialog/dialog.config';
+import { DialogConfig } from '../dialog/config/dialog.config';
+import { DatoConfirmationOptions, getDefaultConfirmationOptions } from '../dialog/config/dialog-confirmation.options';
+import { DatoConfirmationDialogComponent } from '../dialog/confirmation/confirmation-dialog.component';
 
 @Injectable()
 export class DatoDialog {
@@ -18,7 +20,7 @@ export class DatoDialog {
   constructor(private resolver: ComponentFactoryResolver, private applicationRef: ApplicationRef, private injector: Injector) {}
 
   /**
-   *
+   * Creates and open a new dialog
    * @param {ContentType} content
    * @param {Partial<DatoDialogOptions>} options
    * @returns {Observable<any>}
@@ -26,6 +28,8 @@ export class DatoDialog {
   open<T>(content: ContentType, options: Partial<DatoDialogOptions> = {}) {
     const mergedOptions = { ...getDefaultOptions(), ...options };
     const dialogRef = this.createDialogRef(mergedOptions);
+    const container = mergedOptions.container;
+    mergedOptions.container = null;
 
     const config = new DialogConfig(dialogRef);
 
@@ -35,7 +39,7 @@ export class DatoDialog {
 
     dialogRef._onDestroy(this.onDestroy.bind(this, config));
     this.createModalComponent(content, config);
-    this.injectToDOM(mergedOptions.container, config);
+    this.injectToDOM(container, config);
     this.registerEvents(config);
 
     this.dialogs.set(mergedOptions.id, config);
@@ -44,21 +48,31 @@ export class DatoDialog {
     return dialogRef;
   }
 
-  close(result?: any) {
-    const config = this.getLastOpenedDialog();
-    config && config.dialogRef.close(result);
+  /**
+   * Creates and open a new confirmation dialog.
+   * @param {ContentType} content
+   * @param {Partial<DatoDialogOptions>} options
+   * @returns {Observable<any>}
+   */
+  confirm<T>(options: Partial<DatoConfirmationOptions> = {}) {
+    const mergedOptions = { ...getDefaultConfirmationOptions(), ...options };
+
+    return this.open(DatoConfirmationDialogComponent, mergedOptions as DatoDialogOptions);
   }
 
-  dismiss(reason?: any) {
-    const config = this.getLastOpenedDialog();
-    config && config.dialogRef.dismiss(reason);
-  }
+  /**
+   * Finds the closest dialog to an element by looking at the DOM.
+   * @param {HTMLElement} element
+   * @return {HTMLElement}
+   */
+  getClosestDialogElement(element: HTMLElement): HTMLElement {
+    let parent: HTMLElement | null = element.parentElement;
 
-  private getLastOpenedDialog() {
-    if (this.dialogsStack.length) {
-      return this.dialogsStack[this.dialogsStack.length - 1];
+    while (parent && !parent.classList.contains('dato-dialog-projection')) {
+      parent = parent.parentElement;
     }
-    return null;
+
+    return parent;
   }
 
   /**
@@ -85,9 +99,10 @@ export class DatoDialog {
     /** Todo: Move to Angular Utils file - createDynamicComponent(component, injector, contentRef): ComponentRef */
     const factory = this.resolver.resolveComponentFactory(DatoDialogComponent);
     const dialogRef = config.dialogRef;
-    const ngContent = this.generateNgContent(config, content, this.resolver, this.createInjector(dialogRef.options.viewContainerRef, dialogRef), dialogRef);
+    const injector = this.createInjector(dialogRef);
+    const ngContent = this.generateNgContent(config, content, this.resolver, injector, dialogRef);
 
-    const componentRef = factory.create(this.injector, ngContent);
+    const componentRef = factory.create(injector, ngContent);
     componentRef.instance.options = dialogRef.options;
     componentRef.changeDetectorRef.detectChanges();
 
@@ -110,9 +125,9 @@ export class DatoDialog {
    * @param {ViewContainerRef} viewContainerRef
    * @returns {Injector}
    */
-  private createInjector(viewContainerRef: ViewContainerRef, dialogRef: DatoDialogRef) {
+  private createInjector(dialogRef: DatoDialogRef) {
     return Injector.create({
-      parent: viewContainerRef ? viewContainerRef.injector : this.injector,
+      parent: dialogRef.options.viewContainerRef ? dialogRef.options.viewContainerRef.injector : this.injector,
       providers: [
         {
           provide: DatoDialogRef,

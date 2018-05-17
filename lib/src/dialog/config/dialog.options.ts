@@ -26,6 +26,21 @@ export type DatoDialogOptions = {
    * Whether the user can use escape or clicking outside to close a modal.
    */
   enableClose: boolean;
+
+  /**
+   * Custom dialog width
+   */
+  width: string;
+
+  /**
+   * Custom dialog height
+   */
+  height: string;
+
+  /**
+   * Whether the dialog can be drag. Defaults false.
+   */
+  draggable: boolean;
 };
 
 export function getDefaultOptions(): DatoDialogOptions {
@@ -34,7 +49,10 @@ export function getDefaultOptions(): DatoDialogOptions {
     backdrop: true,
     container: document.body,
     windowClass: '',
-    enableClose: true
+    enableClose: true,
+    width: null,
+    height: null,
+    draggable: false
   };
 }
 

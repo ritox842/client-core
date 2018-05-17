@@ -1,0 +1,34 @@
+<p datoFont="headline">Draggable Dialog</p>
+<br/>
+
+<p>
+  A dialog can be draggable. Set the <code>draggable</code> option to <code>true</code>.
+  <br/>
+</p>
+
+<dato-preview title="Draggable Dialog Example">
+
+  <section class="d-flex-column">
+    <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Show Draggable Confirmation</dato-button>
+  </section>
+
+  <dato-tabs>
+
+    <textarea datoHighlight="html">
+      <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Show Draggable Confirmation</dato-button>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      openDialog() {
+        this.modalService
+          .confirm( {
+            draggable: true,
+            title: "Drag Me",
+            content: 'This dialog is draggable :-)'
+          });
+
+      }
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>

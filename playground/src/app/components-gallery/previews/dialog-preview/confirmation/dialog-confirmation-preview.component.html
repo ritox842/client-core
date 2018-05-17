@@ -1,0 +1,75 @@
+
+<dato-preview title="Confirmation - With Text Content">
+
+  <section class="d-flex-column">
+    <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Show Confirmation</dato-button>
+  </section>
+
+  <dato-tabs>
+
+    <textarea datoHighlight="html">
+      <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Show Confirmation</dato-button>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      openDialog() {
+        this.modalService
+          .confirm( {
+            title: "Delete",
+            content: 'Are you sure you want to delete the entity?'
+          })
+          .afterClose()
+          .subscribe((result: DatoActionType) => {
+            console.log(result);
+          });
+      }
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="Confirmation - With Template">
+
+  <section class="d-flex-column">
+
+    <ng-template #templateRef>
+      <div>
+        Hello from the template!
+      </div>
+    </ng-template>
+
+    <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithTemplate()">Show Confirmation</dato-button>
+  </section>
+
+  <dato-tabs>
+
+    <textarea datoHighlight="html">
+      <ng-template #templateRef>
+        <div>
+          Hello from the template!
+        </div>
+      </ng-template>
+
+      <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithTemplate()">Show Confirmation</dato-button>
+      </textarea>
+
+    <textarea datoHighlight="js">
+
+      @ViewChild('templateRef')
+      private dialogTpl: TemplateRef<any>;
+
+      openDialogWithTemplate() {
+        this.modalService
+          .confirm({
+            title: "Delete",
+            content: this.dialogTpl
+          })
+          .afterClose()
+          .subscribe((result: DatoActionType) => {
+            console.log(result);
+          });
+      }
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>

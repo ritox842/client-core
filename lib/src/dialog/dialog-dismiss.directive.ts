@@ -2,19 +2,19 @@ import { Directive, Input, Optional } from '@angular/core';
 import { DatoDialogRef } from './dialog-ref';
 
 @Directive({
-  selector: '[datoDialogClose]',
+  selector: '[datoDialogDismiss]',
   host: {
     '(click)': 'close()',
     type: 'button' // Prevents accidental form submits.
   }
 })
-export class DialogCloseDirective {
-  /** Dialog close input. */
-  @Input('datoDialogClose') dialogResult: any;
+export class DialogDismissDirective {
+  /** Dialog dismiss input. */
+  @Input('datoDialogDismiss') dialogResult: any;
 
   constructor(@Optional() private dialogRef: DatoDialogRef) {}
 
   close() {
-    this.dialogRef.close(this.dialogResult);
+    this.dialogRef.dismiss(this.dialogResult);
   }
 }

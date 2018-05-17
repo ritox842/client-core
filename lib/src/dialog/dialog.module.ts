@@ -7,12 +7,19 @@ import { DialogContentComponent } from './content/dialog-content.component';
 import { DatoDialogFooterComponent } from './footer/dialog-footer.component';
 import { DialogCloseDirective } from './dialog-close.directive';
 import { DatoIconButtonModule } from '../icon-button/icon-button.module';
+import { DatoConfirmationDialogComponent } from './confirmation/confirmation-dialog.component';
+import { DatoButtonModule } from '../button/button.module';
+import { DatoDynamicContentModule } from '../dynamic-content/dynamic-content.module';
+import { DialogDismissDirective } from './dialog-dismiss.directive';
+import { DatoDirectivesModule } from '../directives/directives.module';
+
+const declarations = [DatoDialogComponent, DatoDialogHeaderComponent, DialogContentComponent, DatoDialogFooterComponent, DialogCloseDirective, DialogDismissDirective, DatoConfirmationDialogComponent];
 
 @NgModule({
-  imports: [CommonModule, DatoIconButtonModule],
+  imports: [CommonModule, DatoButtonModule, DatoIconButtonModule, DatoDynamicContentModule, DatoDirectivesModule],
   providers: [DatoDialogRef],
-  declarations: [DatoDialogComponent, DatoDialogHeaderComponent, DialogContentComponent, DatoDialogFooterComponent, DialogCloseDirective],
-  exports: [DatoDialogComponent, DatoDialogHeaderComponent, DialogContentComponent, DatoDialogFooterComponent, DialogCloseDirective],
-  entryComponents: [DatoDialogComponent]
+  declarations: [declarations],
+  exports: [declarations],
+  entryComponents: [DatoDialogComponent, DatoConfirmationDialogComponent]
 })
 export class DatoDialogModule {}

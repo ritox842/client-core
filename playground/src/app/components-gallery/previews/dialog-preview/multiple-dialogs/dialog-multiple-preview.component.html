@@ -1,0 +1,57 @@
+<p datoFont="headline">Multiple Dialogs</p>
+<br/>
+
+<p>
+  You can open multiple dialogs, one on top of the other.
+  <br/>
+
+</p>
+
+<dato-preview title="Multiple Dialogs">
+
+  <section class="d-flex-column">
+    <div class="d-flex-row" style="max-width: 300px">
+      <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Open First Dialog</dato-button>
+    </div>
+  </section>
+
+  <dato-tabs>
+
+    <textarea datoHighlight="html">
+      <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Open First Dialog</dato-button>
+
+      /* MyCustomDialogComponent */
+      <dato-dialog-header>Title</dato-dialog-header>
+      <dato-dialog-content>
+        <div class="d-flex-column">
+          This is just an example that let you opened a confirmation dialog, on top if this dialog.
+        </div>
+      </dato-dialog-content>
+      <dato-dialog-footer>
+        <dato-button class="mr-10" (click)="closeDialog()">Close</dato-button>
+      </dato-dialog-footer>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      openDialog() {
+        this.dialog
+          .open(MyCustomDialogComponent, {})
+          .afterClosed()
+          .subscribe(() => {
+            console.log('dialog closes');
+          });
+      }
+
+      /* MyCustomDialogComponent */
+      closeDialog() {
+        this.dialog.confirm({
+          title: "Close",
+          content: 'Are you sure you want to close the dialog?'
+        }).afterClosed().subscribe(() => {
+          this.dialogRef.close();
+        })
+      }
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>

@@ -107,7 +107,8 @@
   background-color: #303030;
 }
 
-.code {
+.code, code {
+  color: initial;
   background-color: #f5f5f5;
   padding: 4px 8px;
 }

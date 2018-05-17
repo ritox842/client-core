@@ -1,16 +1,16 @@
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { DatoDialogOptions } from './dialog.options';
+import { DatoDialogOptions } from './config/dialog.options';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { take } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 
 export class DatoDialogRef {
-  /** Listeners **/
+  /**
+   * Will be used for disable the closing in the future
+   */
   private _beforeClose = new ReplaySubject();
   private _afterClose = new Subject();
   private _destroy: () => void;
-  private _onClose;
 
   private _destroySubject = new Subject();
 
@@ -39,38 +39,32 @@ export class DatoDialogRef {
    * Closing the modal dialog, passing an optional result.
    */
   close(result?: any): void {
-    this._beforeClose.next(result);
-    this._beforeClose.complete();
-
-    this.destroy();
-
-    this._afterClose.next(result);
-    this._afterClose.complete();
+    this.singalClose(true, result);
   }
 
   /**
    * Dismiss the modal dialog, passing an optional reason.
    */
   dismiss(reason?: any): void {
-    this._beforeClose.error(reason);
+    this.singalClose(true, reason);
+  }
+
+  /**
+   * Gets an observable that is notified when the dialog is finished closing.
+   */
+  afterClosed(): Observable<{}> {
+    return this._afterClose.asObservable().pipe(take(1));
+  }
+
+  private singalClose(isError: boolean, result) {
+    isError ? this._beforeClose.error(result) : this._beforeClose.next(result);
+
+    this._beforeClose.complete();
 
     this.destroy();
 
-    this._afterClose.error(reason);
-  }
-
-  /**
-   * Gets an observable that is notified when the dialog is finished closing.
-   */
-  beforeClose(): Observable<{}> {
-    return this._beforeClose.asObservable().pipe(take(1));
-  }
-
-  /**
-   * Gets an observable that is notified when the dialog is finished closing.
-   */
-  afterClose(): Observable<{}> {
-    return this._afterClose.asObservable().pipe(take(1));
+    isError ? this._afterClose.error(result) : this._beforeClose.next(result);
+    this._afterClose.complete();
   }
 
   private destroy() {
@@ -79,25 +73,11 @@ export class DatoDialogRef {
     this._destroySubject.complete();
   }
 
-  private canClose(result) {
-    if (this._onClose) {
-      const retValue = this._onClose(result);
-      if (retValue === false) {
-        return of(false);
-      } else if (retValue instanceof Observable) {
-      }
-    }
-  }
-
   _setData(data) {
     this._data = data;
   }
 
   _onDestroy(destroyFn: () => void) {
     this._destroy = destroyFn;
-  }
-
-  onClose(param: () => any) {
-    this._onClose = param;
   }
 }

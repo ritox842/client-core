@@ -3,11 +3,11 @@ import { DatoDialogRef } from "../../../../../../../../lib/src/dialog/dialog-ref
 import { FormControl } from "@angular/forms";
 
 @Component({
-  selector: "dato-custom-modal",
-  templateUrl: "./custom-modal.component.html",
+  selector: "dato-custom-dialog",
+  templateUrl: "./custom-dialog.component.html",
   encapsulation: ViewEncapsulation.None
 })
-export class CustomModalComponent implements OnInit {
+export class CustomDialogComponent implements OnInit {
   name: string;
 
   animalControl = new FormControl("");

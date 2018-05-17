@@ -1,0 +1,9 @@
+<ng-container [ngSwitch]="renderMethod">
+    <div *ngSwitchCase="'Text'">{{content}}</div>
+    <ng-container *ngSwitchCase="'Template'">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'Component'">
+        <ng-container *ngComponentOutlet="content"></ng-container>
+    </ng-container>
+</ng-container>

@@ -1,0 +1,35 @@
+<dato-preview title="Snackbar">
+
+  <button (click)="snack()">Click here</button>
+  <ng-template #msg>Hello from <b>Template</b></ng-template>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <button (click)="snack()">Click here</button>
+    </textarea>
+
+    <textarea datoHighlight="js">
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>datoSize</td>
+        <td>lg, md, sm</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

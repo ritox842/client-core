@@ -36,13 +36,17 @@ export class DatoIconComponent implements OnInit {
     return this.iconKey;
   }
 
-  constructor(private host: ElementRef, private iconRegistry: IconRegistry, private renderer: Renderer2, @Attribute('width') public width, @Attribute('height') public height) {}
+  constructor(private host: ElementRef, private iconRegistry: IconRegistry, private renderer: Renderer2, @Attribute('width') public width, @Attribute('removeCursor') public removeCursor, @Attribute('height') public height) {}
 
   ngOnInit() {
     /** Add standard attributes */
     this.renderer.setAttribute(this.element, 'role', 'img');
 
     setDimensions(this.width, this.height, this.element, this.renderer);
+
+    if (this.removeCursor) {
+      this.renderer.setStyle(this.element, 'cursor', 'default');
+    }
 
     this.injectSvg();
   }

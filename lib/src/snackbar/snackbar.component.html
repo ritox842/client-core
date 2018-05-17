@@ -1,8 +1,10 @@
-<div>
-  <span></span>
-  <ng-content></ng-content>
-  details/undo
-  <button *ngIf="detailsFunction" (click)="detailsFunction()">Details</button>
-  <button *ngIf="undoFunction" (click)="undoFunction()">Undo</button>
-  <span *ngIf="dismissible" (click)="onClose()">x</span>
+<div class="d-flex items-center">
+  <div class="dato-snackbar-circle mr-7 d-flex justify-center align-center" *ngIf="showLeftIcon">
+    <dato-icon [datoIcon]="icon" removeCursor="true"></dato-icon>
+  </div>
+  <span datoColor="primary-0">
+    <ng-content></ng-content>
+  </span>
 </div>
+
+<dato-icon datoIcon="close" *ngIf="dismissible" (click)="onClose()"></dato-icon>

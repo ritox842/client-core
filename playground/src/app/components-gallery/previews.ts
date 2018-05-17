@@ -12,6 +12,7 @@ import { GridActionsPreviewComponent } from "./previews/grid-preview/actions/gri
 import { AccordionPreviewComponent } from "./previews/accordion-preview/accordion-preview.component";
 import { DragPreviewComponent } from "./previews/drag-preview/drag-preview.component";
 import { LayoutPreviewComponent } from "./previews/layout-preview/layout-preview.component";
+import { SnackbarPreviewComponent } from "./previews/snackbar-preview/snackbar-preview.component";
 
 export const previews = [
   ButtonsPreviewComponent,
@@ -27,7 +28,8 @@ export const previews = [
   AccordionPreviewComponent,
   DragPreviewComponent,
   TabsPreviewComponent,
-  LayoutPreviewComponent
+  LayoutPreviewComponent,
+  SnackbarPreviewComponent
 ];
 
 export const routeToComponent = {
@@ -42,5 +44,6 @@ export const routeToComponent = {
   accordion: AccordionPreviewComponent,
   drag: DragPreviewComponent,
   tabs: TabsPreviewComponent,
-  layout: LayoutPreviewComponent
+  layout: LayoutPreviewComponent,
+  snackbar: SnackbarPreviewComponent
 };

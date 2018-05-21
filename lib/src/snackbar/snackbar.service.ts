@@ -9,13 +9,16 @@
 import { ApplicationRef, ComponentFactoryResolver, ComponentRef, Inject, Injectable, Injector, TemplateRef } from '@angular/core';
 import { SnackbarType } from '../snackbar/snackbar.types';
 import { DatoTranslateService } from '../services/translate.service';
-import { ContentRef, createComponent, ngContentResolver } from '../angular/dynamic-components';
+import { ContentRef, ContentType, createComponent, ngContentResolver } from '../angular/dynamic-components';
 import { DatoSnackbarComponent } from './snackbar.component';
 import { DOCUMENT } from '@angular/common';
 import { getDefaults, SnackbarOptions } from './snackbar.types';
 import { SnackbarRef } from './snackbar-ref';
+import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { isString } from '@datorama/utils';
 
 @Injectable()
+@TakeUntilDestroy('destroy')
 export class DatoSnackbar {
   private contentRef: ContentRef;
   private component: ComponentRef<any>;
@@ -30,7 +33,7 @@ export class DatoSnackbar {
    * @param {Partial<SnackbarOptions>} options
    * @returns {SnackbarRef}
    */
-  snack(content: string | TemplateRef<any>, type: SnackbarType = SnackbarType.INFO, options: Partial<SnackbarOptions> = {}) {
+  snack(content: ContentType, type: SnackbarType = SnackbarType.INFO, options: Partial<SnackbarOptions> = {}) {
     this.destroy();
     const mergedOptions = { ...getDefaults(), ...options };
 
@@ -38,7 +41,7 @@ export class DatoSnackbar {
       applicationRef: this.appRef,
       injector: this.injector,
       resolver: this.resolver,
-      content
+      content: isString(content) ? this.translate.transform(content) : content
     });
 
     this.component = createComponent<DatoSnackbarComponent>({
@@ -56,7 +59,7 @@ export class DatoSnackbar {
 
     instance.options = mergedOptions;
     instance.type = type;
-    instance.close.subscribe(() => this.destroy());
+    instance.close.pipe(untilDestroyed(this)).subscribe(() => this.destroy());
 
     changeDetectorRef.detectChanges();
 
@@ -65,7 +68,47 @@ export class DatoSnackbar {
     return snackbarRef;
   }
 
-  destroy() {
+  /**
+   *
+   * @param {ContentType} msg
+   */
+  info(msg: ContentType, options: Partial<SnackbarOptions> = {}) {
+    return this.snack(msg, SnackbarType.INFO, options);
+  }
+
+  /**
+   *
+   * @param {ContentType} msg
+   */
+  success(msg: ContentType, options: Partial<SnackbarOptions> = {}) {
+    return this.snack(msg, SnackbarType.SUCCESS, options);
+  }
+
+  /**
+   *
+   * @param {ContentType} msg
+   */
+  error(msg: ContentType, options: Partial<SnackbarOptions> = {}) {
+    return this.snack(msg, SnackbarType.ERROR, options);
+  }
+
+  /**
+   *
+   * @param {ContentType} msg
+   */
+  dramaticSuccess(msg: ContentType, options: Partial<SnackbarOptions> = {}) {
+    return this.snack(msg, SnackbarType.DRAMATIC_SUCCESS, options);
+  }
+
+  /**
+   *
+   * @param {ContentType} msg
+   */
+  dramaticError(msg: ContentType, options: Partial<SnackbarOptions> = {}) {
+    return this.snack(msg, SnackbarType.DRAMATIC_ERROR, options);
+  }
+
+  private destroy() {
     if (this.nativeElement) {
       this.contentRef.destroy(this.appRef);
       this.component.destroy();

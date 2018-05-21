@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { DatoSnackbar, SnackbarType } from "../../../../../../lib";
+import { DatoSnackbar } from "../../../../../../lib";
 
 @Component({
   selector: "dato-snackbar-preview",
@@ -15,13 +15,29 @@ export class SnackbarPreviewComponent implements OnInit {
 
   snack() {
     this.snackbar
-      .snack(this.msg, SnackbarType.SUCCESS, {
+      .info("hello", {
         dismissible: true
       })
       .afterDismissed.subscribe(console.log);
+  }
 
-    // this.snackbar.snack("hello", SnackbarType.DRAMATIC_ERROR, {
-    //   dismissible: true
-    // }).afterDismissed.subscribe(console.log);
+  info() {
+    this.snackbar.info(this.msg).afterDismissed.subscribe(console.log);
+  }
+
+  error() {
+    this.snackbar.error(this.msg);
+  }
+
+  success() {
+    this.snackbar.success(this.msg);
+  }
+
+  dramaticSuccess() {
+    this.snackbar.dramaticSuccess(this.msg);
+  }
+
+  dramaticError() {
+    this.snackbar.dramaticError(this.msg);
   }
 }

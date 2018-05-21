@@ -63,7 +63,7 @@ export class DatoIconComponent implements OnInit {
       this.lastIconClass = this.getIconClass();
       this.renderer.addClass(this.element, this.lastIconClass);
     } else {
-      throw new DatoCoreError(`${this.datoIcon} Icon - does not exists, did you misspell it?`);
+      console.log(`%cMISSING ICONS, ${this.datoIcon}, ADD THEM PLEASE! 💩 🖕", "color: hotpink; font-size:100px;`);
     }
   }
 

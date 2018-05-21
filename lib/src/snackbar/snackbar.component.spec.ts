@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DatoSnackbar } from './snackbar.service';
-import { createTestComponentFactory } from '@netbasal/spectator';
+import { createTestComponentFactory, query } from '@netbasal/spectator';
 import { DatoSnackbarComponent } from './snackbar.component';
 import { DatoTranslateService, stubs } from '../services/public_api';
 import { DatoIconModule } from '../icon/icon.module';
@@ -9,10 +9,6 @@ import { IconRegistry } from '../services/icon-registry';
 @Component({ selector: 'custom-host', template: '' })
 class TestComponent {
   constructor(public snackbar: DatoSnackbar) {}
-}
-
-function query(selector) {
-  return document.querySelector(selector);
 }
 
 describe('DatoSnackbar', () => {

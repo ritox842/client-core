@@ -28,12 +28,12 @@ export type ContentResolverParams = {
 /**
  * Create dynamic component
  *
- *   const component = createComponent<DatoSnackbarComponent>({
- *     component: DatoSnackbarComponent,
- *     projectableNodes: contentRef.nodes,
- *     injector: this.injector,
- *     resolver: this.resolver
- *   });
+ * const component = createComponent<DatoSnackbarComponent>({
+ *   component: DatoSnackbarComponent,
+ *   projectableNodes: contentRef.nodes,
+ *   injector: this.injector,
+ *   resolver: this.resolver
+ * });
  *
  * @param {ComponentFactoryResolver} resolver
  * @param {Type<any>} component
@@ -66,14 +66,14 @@ export class ContentRef {
 
 /**
  *
- *  Resolves ng content from a String/TemplateRef/Component
+ * Resolves ng content from a String/TemplateRef/Component
  *
- *  const contentRef = ngContentResolver({
- *     applicationRef: this.appRef,
- *     injector: this.injector,
- *     resolver: this.resolver,
- *     content
- *  });
+ * const contentRef = ngContentResolver({
+ *    applicationRef: this.appRef,
+ *    injector: this.injector,
+ *    resolver: this.resolver,
+ *    content
+ * });
  *
  * @param {ContentType} content
  * @param {ComponentFactoryResolver} resolver

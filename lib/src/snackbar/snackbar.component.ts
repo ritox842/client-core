@@ -49,11 +49,6 @@ export class DatoSnackbarComponent implements OnInit {
     return this.host.nativeElement;
   }
 
-  onClose() {
-    this.animate(`snackbarOut 0.5s`);
-    this.closedByAction = true;
-  }
-
   constructor(private renderer: Renderer2, private host: ElementRef) {}
 
   ngOnInit() {
@@ -67,6 +62,11 @@ export class DatoSnackbarComponent implements OnInit {
     } else {
       this.animate(`snackbarIn 0.5s, snackbarOut 0.5s ${this.duration}ms`);
     }
+  }
+
+  onClose() {
+    this.animate(`snackbarOut 0.5s`);
+    this.closedByAction = true;
   }
 
   /**

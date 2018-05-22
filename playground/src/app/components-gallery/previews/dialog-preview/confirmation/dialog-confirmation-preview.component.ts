@@ -5,7 +5,8 @@ import {
   TemplateRef,
   ViewChild
 } from "@angular/core";
-import { DatoDialog } from "../../../../../../../lib/src/services/dialog.service";
+import { DatoDialog } from "../../../../../../../lib/src/dialog/dialog.service";
+import { ConfirmationType } from "../../../../../../../lib/src/dialog/config/dialog-confirmation.options";
 
 @Component({
   selector: "dato-dialog-confirmation-preview",
@@ -18,12 +19,26 @@ export class DatoDialogConfirmationPreviewComponent implements OnInit {
 
   ngOnInit() {}
 
-  openDialog() {
+  openDialog(isDisruptive = false) {
+    const options = {
+      [ConfirmationType.WARNING]: {
+        title: "Remove Mickey From Disney?",
+        content:
+          "Are you sure you want yo remove Mickey Mouse from Disney?<br/>Caution: This cannot be undone."
+      },
+      [ConfirmationType.DISRUPTIVE_WARNING]: {
+        title: "Delete All Selected Data?",
+        content: "Deleting data is irreversible. Would you like to proceed?",
+        confirmationType: ConfirmationType.DISRUPTIVE_WARNING
+      }
+    };
+
     this.modalService
-      .confirm({
-        title: "Delete",
-        content: "Are you sure you want to delete the entity?"
-      })
+      .confirm(
+        isDisruptive
+          ? options[ConfirmationType.DISRUPTIVE_WARNING]
+          : options[ConfirmationType.WARNING]
+      )
       .afterClosed()
       .subscribe((result: string) => {});
   }

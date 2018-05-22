@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { DatoDialogRef } from '../dialog-ref';
-import { DatoDialog } from '../../services/dialog.service';
+import { DatoDialog } from '../dialog.service';
 
 @Component({
   selector: 'dato-dialog-header',

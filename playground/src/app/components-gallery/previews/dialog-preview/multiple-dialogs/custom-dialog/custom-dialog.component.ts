@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { DatoDialogRef } from "../../../../../../../../lib/src/dialog/dialog-ref";
-import { DatoDialog } from "../../../../../../../../lib/src/services/dialog.service";
+import { DatoDialog } from "../../../../../../../../lib/src/dialog/dialog.service";
 
 @Component({
   selector: "dato-my-custom-dialog",

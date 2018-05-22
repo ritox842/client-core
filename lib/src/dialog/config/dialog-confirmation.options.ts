@@ -10,6 +10,11 @@ export type DatoDialogAction = {
   caption?: string;
 };
 
+export enum ConfirmationType {
+  WARNING = 'warning',
+  DISRUPTIVE_WARNING = 'disruptive_warning'
+}
+
 export type DatoConfirmationOptions = DatoDialogOptions & {
   /**
    * The dialog title
@@ -23,6 +28,11 @@ export type DatoConfirmationOptions = DatoDialogOptions & {
    * An array of actions that will be displayed in the footer
    */
   actions: DatoDialogAction[];
+
+  /**
+   * The type of the confirmation
+   */
+  confirmationType: ConfirmationType;
 };
 
 const defaultActions = [
@@ -40,7 +50,8 @@ export function getDefaultConfirmationOptions(): DatoConfirmationOptions {
   const confirmationOptions = {
     title: '',
     content: '',
-    actions: [...defaultActions]
+    actions: [...defaultActions],
+    confirmationType: ConfirmationType.WARNING
   };
   return { ...getDefaultOptions(), ...confirmationOptions };
 }

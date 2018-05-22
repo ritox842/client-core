@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { CustomDialogComponent } from "./custom-dialog/custom-dialog.component";
 import { FormControl } from "@angular/forms";
-import { DatoDialog } from "../../../../../../../lib/src/services/dialog.service";
+import { DatoDialog } from "../../../../../../../lib/src/dialog/dialog.service";
 
 @Component({
   selector: "dato-dialog-custom-preview",

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DatoDialog } from "../../../../../../../lib/src/services/dialog.service";
+import { DatoDialog } from "../../../../../../../lib/src/dialog/dialog.service";
 import { MyCustomDialogComponent } from "./custom-dialog/custom-dialog.component";
 
 @Component({

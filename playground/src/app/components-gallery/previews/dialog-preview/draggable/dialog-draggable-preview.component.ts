@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { DatoDialog } from "../../../../../../../lib/src/services/dialog.service";
+import { DatoDialog } from "../../../../../../../lib/src/dialog/dialog.service";
 
 @Component({
   selector: "dato-dialog-draggable-preview",

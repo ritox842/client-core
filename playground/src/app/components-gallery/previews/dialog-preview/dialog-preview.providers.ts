@@ -5,6 +5,7 @@ import { DatoDialogConfirmationPreviewComponent } from "./confirmation/dialog-co
 import { DatoDialogMultiplePreviewComponent } from "./multiple-dialogs/dialog-multiple-preview.component";
 import { MyCustomDialogComponent } from "./multiple-dialogs/custom-dialog/custom-dialog.component";
 import { DatoDialogDraggablePreviewComponent } from "./draggable/dialog-draggable-preview.component";
+import { DatoDirtyDialogComponent } from "./dirty-dialog/dirty-dialog.component";
 
 export const dialogPreviewComponents = [
   DialogPreviewComponent,
@@ -13,5 +14,6 @@ export const dialogPreviewComponents = [
   DatoDialogConfirmationPreviewComponent,
   DatoDialogMultiplePreviewComponent,
   MyCustomDialogComponent,
-  DatoDialogDraggablePreviewComponent
+  DatoDialogDraggablePreviewComponent,
+  DatoDirtyDialogComponent
 ];

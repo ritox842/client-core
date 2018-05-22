@@ -170,8 +170,8 @@
         Some scrollable content...
       </dato-dialog-content>
       <dato-dialog-footer>
-        <dato-button class="mr-10" datoType="secondary" datoDialogDismiss>No Thanks</dato-button>
-        <dato-button class="mr-10" [datoDialogClose]="animalControl.value">Yes</dato-button>
+        <dato-button datoType="secondary" datoDialogDismiss>No Thanks</dato-button>
+        <dato-button [datoDialogClose]="animalControl.value">Yes</dato-button>
       </dato-dialog-footer>
   </textarea>
 
@@ -198,6 +198,52 @@
         <span class="mx-8">height:</span> <dato-input width="200px" placeholder="choose a height" datoSize="sm" [formControl]="dialogHeightControl"></dato-input>
       </div>
       <dato-button class="mt-10" datoSize="sm" (click)="openDialogWithSize()">Open the dialog</dato-button>
+    </section>
+
+    <dato-tabs>
+
+      <textarea datoHighlight="html">
+        <dato-input placeholder="choose a width" datoSize="sm" [formControl]="dialogWidthControl"></dato-input>
+        <dato-input placeholder="choose a height" datoSize="sm" [formControl]="dialogHeightControl"></dato-input>
+        <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithSize()">Open the dialog</dato-button>
+      </textarea>
+      <textarea datoHighlight="js">
+
+        dialogWidthControl = new FormControl("400px");
+        dialogHeightControl = new FormControl("500px");
+
+        openDialogWithSize() {
+          this.dialog
+            .confirm( {
+              width: this.dialogWidthControl.value,
+              height: this.dialogHeightControl.value,
+              content: 'hey there!'
+            });
+        }
+      </textarea>
+
+    </dato-tabs>
+  </dato-preview>
+
+
+  <br/>
+  <p datoFont="sub-headline">The <code>beforeClosed</code> event</p>
+  <br/>
+
+  <p>
+    You can lavarege the <code>beforeClosed</code> event, when you need more control when your dialog can be closed.
+    <br/>
+    For example, if the form inside the dialog is dirty, yoy may want to ask the user if he wants
+    to close the dialog anyway and discard all the changes, or he wants to stay.
+    <br/>
+    Consider the following example:
+  </p>
+  <br/>
+
+  <dato-preview title="Show a Dirty Confirmation">
+
+    <section class="d-flex-column">
+      <dato-button class="mt-10" datoSize="sm" (click)="openDialogWithDirtyCheck()">Open the dialog</dato-button>
     </section>
 
     <dato-tabs>

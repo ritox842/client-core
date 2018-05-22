@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { DatoDialog } from "../../../../../../lib/src/services/dialog.service";
+import { DatoDialog } from "../../../../../../lib/src/dialog/dialog.service";
+import { DatoDirtyDialogComponent } from "./dirty-dialog/dirty-dialog.component";
 
 @Component({
   selector: "dato-dialog-preview",
@@ -21,5 +22,9 @@ export class DialogPreviewComponent implements OnInit {
       title: "Greeting from Dialog",
       content: "hi there!"
     });
+  }
+
+  openDialogWithDirtyCheck() {
+    this.dialog.open(DatoDirtyDialogComponent, {});
   }
 }

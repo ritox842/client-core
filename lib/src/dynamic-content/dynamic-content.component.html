@@ -1,5 +1,5 @@
 <ng-container [ngSwitch]="renderMethod">
-    <div *ngSwitchCase="'Text'">{{content}}</div>
+    <div *ngSwitchCase="'Text'" [innerHTML]="content"></div>
     <ng-container *ngSwitchCase="'Template'">
         <ng-container *ngTemplateOutlet="content"></ng-container>
     </ng-container>

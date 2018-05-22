@@ -20,7 +20,7 @@ export enum RenderMethod {
   templateUrl: './dynamic-content.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatoDynamicContentComponent implements OnInit {
+export class DatoDynamicContentComponent {
   private _content: ContentType;
 
   @Input()
@@ -35,8 +35,6 @@ export class DatoDynamicContentComponent implements OnInit {
   renderMethod = RenderMethod.Text;
 
   constructor() {}
-
-  ngOnInit() {}
 
   private setRenderMethod() {
     if (typeof this.content === 'string') {

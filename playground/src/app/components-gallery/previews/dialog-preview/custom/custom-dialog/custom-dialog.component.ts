@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation } from "@angular/core";
 import { DatoDialogRef } from "../../../../../../../../lib/src/dialog/dialog-ref";
 import { FormControl } from "@angular/forms";
 
@@ -7,7 +7,7 @@ import { FormControl } from "@angular/forms";
   templateUrl: "./custom-dialog.component.html",
   encapsulation: ViewEncapsulation.None
 })
-export class CustomDialogComponent implements OnInit {
+export class CustomDialogComponent {
   name: string;
 
   animalControl = new FormControl("");
@@ -15,6 +15,4 @@ export class CustomDialogComponent implements OnInit {
   constructor(private dialogRef: DatoDialogRef) {
     this.name = dialogRef.data.name;
   }
-
-  ngOnInit() {}
 }

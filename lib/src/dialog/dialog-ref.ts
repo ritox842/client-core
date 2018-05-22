@@ -1,14 +1,18 @@
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { DatoDialogOptions } from './config/dialog.options';
 import { Subject } from 'rxjs/Subject';
+import { take, map } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+import { forkJoin } from 'rxjs/observable/forkJoin';
+import { toBoolean } from '@datorama/utils';
 import { Observable } from 'rxjs/Observable';
-import { take } from 'rxjs/operators';
+
+export type beforeClosedDelegate = (reason: any) => boolean | Observable<boolean>;
 
 export class DatoDialogRef {
   /**
    * Will be used for disable the closing in the future
    */
-  private _beforeClose = new ReplaySubject();
+  private _beforeClose: beforeClosedDelegate[] = [];
   private _afterClose = new Subject();
   private _destroy: () => void;
 
@@ -29,6 +33,7 @@ export class DatoDialogRef {
   set options(options: DatoDialogOptions) {
     this._dialogOptions = options;
   }
+
   get options(): DatoDialogOptions {
     return this._dialogOptions;
   }
@@ -39,35 +44,68 @@ export class DatoDialogRef {
    * Closing the modal dialog, passing an optional result.
    */
   close(result?: any): void {
-    this.singalClose(true, result);
+    this.tryClose(false, result);
   }
 
   /**
    * Dismiss the modal dialog, passing an optional reason.
    */
   dismiss(reason?: any): void {
-    this.singalClose(true, reason);
+    this.tryClose(true, reason);
+  }
+
+  /**
+   * Register a handler function to be invoked just before the dialog dismissed.
+   * The handler should return a boolean indicate if the dialog can be closed.
+   * @param {beforeClosedDelegate} fn
+   */
+  beforeClosed(fn: beforeClosedDelegate) {
+    this._beforeClose.push(fn);
   }
 
   /**
    * Gets an observable that is notified when the dialog is finished closing.
    */
-  afterClosed(): Observable<{}> {
+  afterClosed(): Observable<any> {
     return this._afterClose.asObservable().pipe(take(1));
   }
 
-  private singalClose(isError: boolean, result) {
-    isError ? this._beforeClose.error(result) : this._beforeClose.next(result);
+  private tryClose(isError: boolean, result: any) {
+    this.canClose(result).subscribe(canClose => {
+      if (!canClose) {
+        return;
+      }
 
-    this._beforeClose.complete();
+      this.destroy();
 
-    this.destroy();
+      isError ? this._afterClose.error(result) : this._afterClose.next(result);
+      this._afterClose.complete();
+    });
+  }
 
-    isError ? this._afterClose.error(result) : this._beforeClose.next(result);
-    this._afterClose.complete();
+  private canClose(result: any): Observable<boolean> {
+    if (!this._beforeClose.length) {
+      return of(true);
+    }
+
+    const observers$ = [];
+    this._beforeClose.forEach(handler => {
+      let obs$ = handler(result);
+      if (typeof obs$ === 'boolean') {
+        obs$ = of(obs$);
+      }
+      observers$.push(obs$);
+    });
+
+    return forkJoin(observers$).pipe(
+      map(resultArr => {
+        return resultArr.some(res => !toBoolean(res));
+      })
+    );
   }
 
   private destroy() {
+    this._beforeClose = [];
     this._destroy();
     this._destroySubject.next();
     this._destroySubject.complete();

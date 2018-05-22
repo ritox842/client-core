@@ -2,13 +2,15 @@ import { ApplicationRef, ComponentFactoryResolver, EmbeddedViewRef, Injectable, 
 import { filter, takeUntil } from 'rxjs/operators';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { merge } from 'rxjs/observable/merge';
-import { DatoDialogComponent } from '../dialog/dialog/dialog.component';
-import { DatoDialogRef } from '../dialog/dialog-ref';
-import { ContentType, DatoDialogOptions, getDefaultOptions } from '../dialog/config/dialog.options';
+import { DatoDialogComponent } from './dialog/dialog.component';
+import { DatoDialogRef } from './dialog-ref';
+import { ContentType, DatoDialogOptions, getDefaultOptions } from './config/dialog.options';
 import { createGUID, toBoolean } from '@datorama/utils';
-import { DialogConfig } from '../dialog/config/dialog.config';
-import { DatoConfirmationOptions, getDefaultConfirmationOptions } from '../dialog/config/dialog-confirmation.options';
-import { DatoConfirmationDialogComponent } from '../dialog/confirmation/confirmation-dialog.component';
+import { DialogConfig } from './config/dialog.config';
+import { DatoConfirmationOptions, getDefaultConfirmationOptions } from './config/dialog-confirmation.options';
+import { DatoConfirmationDialogComponent } from './confirmation/confirmation-dialog.component';
+import { DatoCoreError } from '../errors';
+import { DatoTranslateService } from '../services/translate.service';
 
 @Injectable()
 export class DatoDialog {
@@ -17,7 +19,7 @@ export class DatoDialog {
 
   private lastZIndex = 10000;
 
-  constructor(private resolver: ComponentFactoryResolver, private applicationRef: ApplicationRef, private injector: Injector) {}
+  constructor(private resolver: ComponentFactoryResolver, private applicationRef: ApplicationRef, private injector: Injector, private translate: DatoTranslateService) {}
 
   /**
    * Creates and open a new dialog
@@ -34,7 +36,7 @@ export class DatoDialog {
     const config = new DialogConfig(dialogRef);
 
     if (this.dialogs.has(mergedOptions.id)) {
-      throw new Error(`A dialog with the key '${mergedOptions.id}' already exist.`);
+      throw new DatoCoreError(`A dialog with the key '${mergedOptions.id}' already exist.`);
     }
 
     dialogRef._onDestroy(this.onDestroy.bind(this, config));
@@ -125,7 +127,7 @@ export class DatoDialog {
    * @param {ViewContainerRef} viewContainerRef
    * @returns {Injector}
    */
-  private createInjector(dialogRef: DatoDialogRef) {
+  private createInjector(dialogRef: DatoDialogRef): Injector {
     return Injector.create({
       parent: dialogRef.options.viewContainerRef ? dialogRef.options.viewContainerRef.injector : this.injector,
       providers: [
@@ -191,7 +193,7 @@ export class DatoDialog {
   private generateNgContent(config: DialogConfig, content: ContentType, resolver: ComponentFactoryResolver, injector: Injector, context = {}) {
     if (typeof content === 'string') {
       const element = document.createElement('text');
-      element.textContent = content;
+      element.textContent = this.translate.transform(content);
       return [[element]];
     }
 

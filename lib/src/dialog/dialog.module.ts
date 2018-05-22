@@ -12,12 +12,15 @@ import { DatoButtonModule } from '../button/button.module';
 import { DatoDynamicContentModule } from '../dynamic-content/dynamic-content.module';
 import { DialogDismissDirective } from './dialog-dismiss.directive';
 import { DatoDirectivesModule } from '../directives/directives.module';
+import { DatoIconModule } from '../icon/icon.module';
+import { DatoThemesModule } from '../themes/themes.module';
+import { DatoDialog } from './dialog.service';
 
 const declarations = [DatoDialogComponent, DatoDialogHeaderComponent, DialogContentComponent, DatoDialogFooterComponent, DialogCloseDirective, DialogDismissDirective, DatoConfirmationDialogComponent];
 
 @NgModule({
-  imports: [CommonModule, DatoButtonModule, DatoIconButtonModule, DatoDynamicContentModule, DatoDirectivesModule],
-  providers: [DatoDialogRef],
+  imports: [CommonModule, DatoButtonModule, DatoIconModule, DatoIconButtonModule, DatoDynamicContentModule, DatoDirectivesModule, DatoThemesModule],
+  providers: [DatoDialog, DatoDialogRef],
   declarations: [declarations],
   exports: [declarations],
   entryComponents: [DatoDialogComponent, DatoConfirmationDialogComponent]

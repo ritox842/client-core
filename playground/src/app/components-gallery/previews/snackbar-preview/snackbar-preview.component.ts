@@ -38,6 +38,6 @@ export class SnackbarPreviewComponent implements OnInit {
   }
 
   dramaticError() {
-    this.snackbar.dramaticError(this.msg);
+    this.snackbar.dramaticError(this.msg, { dismissible: true });
   }
 }

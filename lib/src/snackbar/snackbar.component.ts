@@ -21,7 +21,7 @@ export class DatoSnackbarComponent implements OnInit {
   @Input() options: SnackbarOptions;
   @Input() type: SnackbarType;
 
-  icon: 'checkmark' | 'info';
+  icon: 'checkmark' | 'close';
   showLeftIcon = false;
   close = new EventEmitter<SnackbarRefDismiss>();
 
@@ -94,7 +94,7 @@ export class DatoSnackbarComponent implements OnInit {
    */
   private resolveIcon(type: SnackbarType) {
     if (!this.isInfo(type)) {
-      return this.isSuccess(type) ? 'checkmark' : 'info';
+      return this.isSuccess(type) ? 'checkmark' : 'close';
     }
   }
 }

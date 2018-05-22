@@ -11,15 +11,19 @@ dato-snackbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  .dato-icon-close {
+    cursor: pointer;
+  }
   .dato-snackbar-circle {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    svg {
-      width: 10.5px;
-      height: 7.5px;
+
+    dato-icon:not(.dato-icon-close) {
+      svg {
+        width: 10.5px;
+        height: 7.5px;
+      }
     }
+
+    border-radius: 50%;
   }
 
 }

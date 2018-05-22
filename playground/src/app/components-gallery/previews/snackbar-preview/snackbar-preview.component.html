@@ -1,23 +1,23 @@
 <dato-preview title="Snackbar">
 
-  <button (click)="info()">Info</button>
-  <button (click)="snack()">Dismisiable</button>
-  <button (click)="success()">Success</button>
-  <button (click)="error()">Error</button>
-  <button (click)="dramaticError()">Dramatic Error</button>
-  <button (click)="dramaticSuccess()">Dramatic Success</button>
+  <dato-button (click)="info()">Info</dato-button>
+  <dato-button (click)="snack()">Dismissible</dato-button>
+  <dato-button (click)="success()">Success</dato-button>
+  <dato-button (click)="error()">Error</dato-button>
+  <dato-button (click)="dramaticError()">Dramatic Error</dato-button>
+  <dato-button (click)="dramaticSuccess()">Dramatic Success</dato-button>
 
   <ng-template #msg>Hello from <b>Template</b></ng-template>
 
   <dato-tabs show="html,js">
 
     <textarea datoHighlight="html">
-      <button (click)="info()">Info</button>
-      <button (click)="snack()">Dismissible</button>
-      <button (click)="success()">Success</button>
-      <button (click)="error()">Error</button>
-      <button (click)="dramaticError()">Dramatic Error</button>
-      <button (click)="dramaticSuccess()">Dramatic Success</button>
+      <dato-button (click)="info()">Info</dato-button>
+      <dato-button (click)="snack()">Dismissible</dato-button>
+      <dato-button (click)="success()">Success</dato-button>
+      <dato-button (click)="error()">Error</dato-button>
+      <dato-button (click)="dramaticError()">Dramatic Error</dato-button>
+      <dato-button (click)="dramaticSuccess()">Dramatic Success</dato-button>
 
       <ng-template #msg>Hello from <b>Template</b></ng-template>
     </textarea>

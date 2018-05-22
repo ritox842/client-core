@@ -1,4 +1,5 @@
 import { TemplateRef, Type, ViewContainerRef } from '@angular/core';
+import { Dimensions } from '../../types/public_api';
 
 export type DatoDialogOptions = {
   id: string;
@@ -18,6 +19,9 @@ export type DatoDialogOptions = {
    */
   windowClass?: string;
 
+  /**
+   * Custom data
+   */
   data?: any;
 
   viewContainerRef?: ViewContainerRef;
@@ -38,6 +42,11 @@ export type DatoDialogOptions = {
   height: string;
 
   /**
+   * Dialog size
+   */
+  size: Dimensions;
+
+  /**
    * Whether the dialog can be drag. Defaults false.
    */
   draggable: boolean;
@@ -52,8 +61,28 @@ export function getDefaultOptions(): DatoDialogOptions {
     enableClose: true,
     width: null,
     height: null,
+    size: Dimensions.SM,
     draggable: false
   };
 }
 
 export type ContentType<T = any> = TemplateRef<T> | Type<T> | string;
+
+export const dialogSizePreset = {
+  [Dimensions.SM]: ['400px', '200px'],
+  [Dimensions.MD]: ['560px', '280px'],
+  [Dimensions.LG]: ['800px', '350px']
+};
+
+export enum DialogResultType {
+  SUCCESS = 'SUCCESS',
+  CANCEL = 'CANCEL'
+}
+
+/**
+ * The dialog result received from afterClosed
+ */
+export type DatoDialogResult<T = any> = {
+  type: DialogResultType;
+  data: T;
+};

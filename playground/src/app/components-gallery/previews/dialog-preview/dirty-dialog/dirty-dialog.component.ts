@@ -4,6 +4,10 @@ import { DatoDialog } from "../../../../../../../lib/src/dialog/dialog.service";
 import { switchMap } from "rxjs/operators";
 import { of } from "rxjs/observable/of";
 import { Observable } from "rxjs/Observable";
+import {
+  DatoDialogResult,
+  DialogResultType
+} from "../../../../../../../lib/src/dialog/config/dialog.options";
 
 @Component({
   selector: "dato-dirty-dialog",
@@ -14,18 +18,17 @@ export class DatoDirtyDialogComponent {
     dialogRef.beforeClosed(this.showConfirmation.bind(this));
   }
 
-  showConfirmation(result): Observable<boolean> {
-    const a = this.dialog
+  showConfirmation(result: DatoDialogResult): Observable<boolean> {
+    return this.dialog
       .confirm({
         title: "Close",
         content: "Are you sure you want to close the dialog?"
       })
-      .afterClosed();
-
-    return a.pipe(
-      switchMap(a => {
-        return of(true);
-      })
-    );
+      .afterClosed()
+      .pipe(
+        switchMap((confirmResult: DatoDialogResult) => {
+          return of(confirmResult.type === DialogResultType.SUCCESS);
+        })
+      );
   }
 }

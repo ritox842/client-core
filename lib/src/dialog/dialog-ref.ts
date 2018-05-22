@@ -1,4 +1,4 @@
-import { DatoDialogOptions } from './config/dialog.options';
+import { DatoDialogOptions, DatoDialogResult, DialogResultType } from './config/dialog.options';
 import { Subject } from 'rxjs/Subject';
 import { take, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
@@ -13,7 +13,7 @@ export class DatoDialogRef {
    * Will be used for disable the closing in the future
    */
   private _beforeClose: beforeClosedDelegate[] = [];
-  private _afterClose = new Subject();
+  private _afterClose = new Subject<DatoDialogResult>();
   private _destroy: () => void;
 
   private _destroySubject = new Subject();
@@ -44,14 +44,20 @@ export class DatoDialogRef {
    * Closing the modal dialog, passing an optional result.
    */
   close(result?: any): void {
-    this.tryClose(false, result);
+    this.tryClose({
+      type: DialogResultType.SUCCESS,
+      data: result
+    });
   }
 
   /**
    * Dismiss the modal dialog, passing an optional reason.
    */
   dismiss(reason?: any): void {
-    this.tryClose(true, reason);
+    this.tryClose({
+      type: DialogResultType.CANCEL,
+      data: reason
+    });
   }
 
   /**
@@ -70,7 +76,11 @@ export class DatoDialogRef {
     return this._afterClose.asObservable().pipe(take(1));
   }
 
-  private tryClose(isError: boolean, result: any) {
+  /**
+   * Check and close the dialog
+   * @param {DatoDialogResult} result
+   */
+  private tryClose(result: DatoDialogResult) {
     this.canClose(result).subscribe(canClose => {
       if (!canClose) {
         return;
@@ -78,11 +88,16 @@ export class DatoDialogRef {
 
       this.destroy();
 
-      isError ? this._afterClose.error(result) : this._afterClose.next(result);
+      this._afterClose.next(result);
       this._afterClose.complete();
     });
   }
 
+  /**
+   * Check if the dialog can be closed
+   * @param result
+   * @return {Observable<boolean>}
+   */
   private canClose(result: any): Observable<boolean> {
     if (!this._beforeClose.length) {
       return of(true);
@@ -99,7 +114,7 @@ export class DatoDialogRef {
 
     return forkJoin(observers$).pipe(
       map(resultArr => {
-        return resultArr.some(res => !toBoolean(res));
+        return !resultArr.some(res => !toBoolean(res));
       })
     );
   }

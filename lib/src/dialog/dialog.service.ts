@@ -59,6 +59,12 @@ export class DatoDialog {
   confirm<T>(options: Partial<DatoConfirmationOptions> = {}) {
     const mergedOptions = { ...getDefaultConfirmationOptions(), ...options };
 
+    // translate
+    mergedOptions.title = mergedOptions.title ? this.translate.transform(mergedOptions.title) : '';
+    mergedOptions.actions.forEach(action => {
+      action.caption = action.caption ? this.translate.transform(action.caption) : '';
+    });
+
     return this.open(DatoConfirmationDialogComponent, mergedOptions as DatoDialogOptions);
   }
 

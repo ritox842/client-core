@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { DatoDialog } from "../../../../../../../lib/src/dialog/dialog.service";
 import { ConfirmationType } from "../../../../../../../lib/src/dialog/config/dialog-confirmation.options";
+import { DatoDialogResult } from "../../../../../../../lib/src/dialog/config/dialog.options";
 
 @Component({
   selector: "dato-dialog-confirmation-preview",
@@ -40,7 +41,7 @@ export class DatoDialogConfirmationPreviewComponent implements OnInit {
           : options[ConfirmationType.WARNING]
       )
       .afterClosed()
-      .subscribe((result: string) => {});
+      .subscribe((result: DatoDialogResult) => {});
   }
 
   openDialogWithTemplate() {
@@ -50,6 +51,6 @@ export class DatoDialogConfirmationPreviewComponent implements OnInit {
         content: this.dialogTpl
       })
       .afterClosed()
-      .subscribe((result: string) => {});
+      .subscribe((result: DatoDialogResult) => {});
   }
 }

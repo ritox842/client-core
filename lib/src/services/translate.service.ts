@@ -15,7 +15,7 @@ export class DatoTranslateService {
   private delegate: Translate;
 
   constructor(private injector: Injector) {
-    this.delegate = mockInDev(MockService.TRANSLATE, APP_TRANSLATE, injector);
+    this.delegate = injector.get(APP_TRANSLATE);
   }
 
   /**

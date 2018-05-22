@@ -6,9 +6,10 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Attribute, Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Attribute, Directive, ElementRef, OnInit, Optional, Renderer2 } from '@angular/core';
 import { typographyType } from './font.types';
 import { DatoCoreError } from '../errors';
+import { ColorDirective } from '../themes/color.directive';
 
 /**
  *
@@ -25,8 +26,12 @@ function assertClassName(klass: string) {
   selector: '[datoFont]'
 })
 export class DatoFontDirective implements OnInit {
-  constructor(private renderer: Renderer2, private element: ElementRef, @Attribute('datoFont') private datoFont: typographyType) {
+  constructor(private renderer: Renderer2, private host: ElementRef, @Attribute('datoFont') private datoFont: typographyType, @Optional() public datoColor: ColorDirective) {
     this.datoFont = datoFont || 'simple';
+    if (this.datoColor) {
+      /** Allow override the color */
+      this.renderer.removeAttribute(this.host.nativeElement, 'datofont');
+    }
     assertClassName(this.datoFont);
   }
 
@@ -35,6 +40,6 @@ export class DatoFontDirective implements OnInit {
   }
 
   private injectTypographyClass() {
-    this.renderer.addClass(this.element.nativeElement, this.datoFont);
+    this.renderer.addClass(this.host.nativeElement, this.datoFont);
   }
 }

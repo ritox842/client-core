@@ -32,12 +32,6 @@ describe('With Custom Host Component', () => {
     expect(host.element).toHaveAttr({ attr: 'role', val: 'img' });
   });
 
-  it('should throw when icon doesnt exists', () => {
-    expect(function() {
-      host = createHost(`<dato-icon datoIcon="arrow-not-exists"></dato-icon>`);
-    }).toThrow(new DatoCoreError(`arrow-not-exists Icon - does not exists, did you misspell it?`));
-  });
-
   it('should change icons ', () => {
     host = createHost(`<dato-icon datoIcon="arrow-left"></dato-icon>`);
     spyOn(host.component as any, 'injectSvg').and.callThrough();

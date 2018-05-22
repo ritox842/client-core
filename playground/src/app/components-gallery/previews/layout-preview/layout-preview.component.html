@@ -16,6 +16,24 @@
 
 </dato-preview>
 
+<dato-preview title="Editable Header - Standalone">
+
+  <dato-editable-header [formControl]="header" standalone="true"></dato-editable-header>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-editable-header [formControl]="header" standalone="true"></dato-editable-header>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      header = new FormControl("Header Text");
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
 <!--<div class="panel mt-4">-->
 
   <!--<div class="panel-heading">-->

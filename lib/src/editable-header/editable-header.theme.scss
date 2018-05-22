@@ -1,9 +1,8 @@
+dato-editable-header:not(.standalone) {
+  border-bottom: 2px solid themify(primary-200);
+}
+
 dato-editable-header {
-
-  section {
-    border-bottom: 2px solid themify(primary-200);
-  }
-
   input {
     @include input-like-theme();
   }

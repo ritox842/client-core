@@ -6,10 +6,11 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Renderer2 } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, Component, ElementRef, forwardRef, OnInit, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { assertString } from '../errors';
+import { toBoolean } from '@datorama/utils';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -24,12 +25,18 @@ const valueAccessor = {
   providers: [valueAccessor],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatoEditableHeaderComponent extends BaseCustomControl implements ControlValueAccessor {
+export class DatoEditableHeaderComponent extends BaseCustomControl implements OnInit, ControlValueAccessor {
   private initialValue = '';
   private value = '';
 
-  constructor(private renderer: Renderer2, private host: ElementRef) {
+  constructor(private renderer: Renderer2, private host: ElementRef, @Attribute('standalone') public standalone) {
     super();
+  }
+
+  ngOnInit() {
+    if (toBoolean(this.standalone)) {
+      this.renderer.addClass(this.host.nativeElement, 'standalone');
+    }
   }
 
   get isValueChanged() {

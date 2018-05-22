@@ -1,0 +1,79 @@
+<dato-preview title="Snackbar">
+
+  <button (click)="info()">Info</button>
+  <button (click)="snack()">Dismisiable</button>
+  <button (click)="success()">Success</button>
+  <button (click)="error()">Error</button>
+  <button (click)="dramaticError()">Dramatic Error</button>
+  <button (click)="dramaticSuccess()">Dramatic Success</button>
+
+  <ng-template #msg>Hello from <b>Template</b></ng-template>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <button (click)="info()">Info</button>
+      <button (click)="snack()">Dismissible</button>
+      <button (click)="success()">Success</button>
+      <button (click)="error()">Error</button>
+      <button (click)="dramaticError()">Dramatic Error</button>
+      <button (click)="dramaticSuccess()">Dramatic Success</button>
+
+      <ng-template #msg>Hello from <b>Template</b></ng-template>
+    </textarea>
+
+    <textarea datoHighlight="js">
+        @ViewChild('msg') msg: TemplateRef<any>;
+
+        constructor( private snackbar: DatoSnackbar ) {}
+
+        snack() {
+          this.snackbar.info('hello', {
+            dismissible: true,
+            duration: 5000
+          }).afterDismissed.subscribe(console.log);
+        }
+
+        info() {
+          this.snackbar.info(this.msg).afterDismissed.subscribe(console.log);
+        }
+
+        error() {
+          this.snackbar.error(this.msg);
+        }
+
+        success() {
+          this.snackbar.success(this.msg);
+        }
+
+        dramaticSuccess() {
+          this.snackbar.dramaticSuccess(this.msg);
+        }
+
+        dramaticError() {
+          this.snackbar.dramaticError(this.msg);
+        }
+
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>Options</td>
+        <td><span class="code">duration: 4000, dismissible: false</span></td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

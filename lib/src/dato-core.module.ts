@@ -19,7 +19,6 @@ import { DatoGridModule } from './grid/grid.module';
 import { DatoDirectivesModule } from './directives/directives.module';
 import { DatoActionMenuModule } from './action-menu/action-menu.module';
 import { DatoDropdownModule } from './shared/dropdown/dropdown.module';
-import { DatoSnackbar } from './services/snackbar.service';
 import { DatoLoaderModule } from './loader/loader.module';
 import { DatoTranslateService } from './services/translate.service';
 import { DatoSortableModule } from './sortable/sortable.module';
@@ -29,8 +28,10 @@ import { DatoRadioModule } from './radio/radio.module';
 import { DatoTabsModule } from './tabs/tabs.module';
 import { DatoTogglerModule } from './toggler/toggler.module';
 import { DatoEditableHeaderModule } from './editable-header/editable-header.module';
+import { DatoSnackbar } from './snackbar/snackbar.service';
+import { DatoSnackbarModule } from './snackbar/snackbar.module';
 
-const modules = [DatoDirectivesModule, DatoButtonModule, DatoThemesModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoActionMenuModule, DatoDropdownModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule];
+const modules = [DatoDirectivesModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoActionMenuModule, DatoDropdownModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule];
 
 const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService];
 

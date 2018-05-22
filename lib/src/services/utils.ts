@@ -7,7 +7,7 @@
  */
 
 import { InjectionToken, Injector } from '@angular/core';
-import { APP_TRANSLATE } from './tokens';
+import * as tokens from './tokens';
 
 export enum MockService {
   TRANSLATE = 'translate'
@@ -38,6 +38,6 @@ export function mockInDev(service: MockService, token: InjectionToken<any>, inje
 
 export const stubs = {
   translate() {
-    return { provide: APP_TRANSLATE, useValue: mocks.translate };
+    return { provide: tokens.APP_TRANSLATE, useValue: mocks.translate };
   }
 };

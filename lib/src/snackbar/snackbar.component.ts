@@ -94,10 +94,7 @@ export class DatoSnackbarComponent implements OnInit {
    */
   private resolveIcon(type: SnackbarType) {
     if (!this.isInfo(type)) {
-      if (this.isSuccess(type)) {
-        return 'checkmark';
-      }
-      return 'info';
+      return this.isSuccess(type) ? 'checkmark' : 'info';
     }
   }
 }

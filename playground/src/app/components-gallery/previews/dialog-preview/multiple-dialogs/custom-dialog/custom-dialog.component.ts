@@ -3,7 +3,7 @@ import { DatoDialogRef } from "../../../../../../../../lib/src/dialog/dialog-ref
 import { DatoDialog } from "../../../../../../../../lib/src/dialog/dialog.service";
 import {
   DatoDialogResult,
-  DialogResultType
+  DialogResultStatus
 } from "../../../../../../../../lib/src/dialog/config/dialog.options";
 
 @Component({
@@ -22,7 +22,7 @@ export class MyCustomDialogComponent {
       })
       .afterClosed()
       .subscribe((result: DatoDialogResult) => {
-        if (result.type === DialogResultType.SUCCESS) {
+        if (result.status === DialogResultStatus.SUCCESS) {
           this.dialogRef.close();
         }
       });

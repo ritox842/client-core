@@ -1,6 +1,10 @@
 <dato-preview title="Custom Dialog Example">
 
   <section class="d-flex-column">
+    <div class="d-flex-row mb-10" style="max-width: 300px">
+      <dato-checkbox [formControl]="enableCloseControl" class="mr-20">Enable Close</dato-checkbox>
+      <dato-checkbox [formControl]="backdropControl" class="mr-20">Backdrop</dato-checkbox>
+    </div>
     <div class="d-flex-row" style="max-width: 300px">
       <dato-input placeholder="What's your name" datoSize="sm" [formControl]="nameControl"></dato-input>
       <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Choose..</dato-button>
@@ -10,7 +14,7 @@
     </span>
   </section>
 
-  <dato-tabs>
+  <dato-tabs show="html,js">
 
     <textarea datoHighlight="html">
       <dato-input placeholder="What's your name" datoSize="sm" [formControl]="nameControl"></dato-input>
@@ -39,9 +43,9 @@
                 name: this.nameControl.value
               }
             })
-            .afterClose()
-            .subscribe((result: string) => {
-              this.animal = result;
+            .afterClosed()
+            .subscribe((result: DatoDialogResult<string>) => {
+              this.animal = result.data;
             });
         }
       }

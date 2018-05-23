@@ -6,7 +6,7 @@
     <dato-button class="mx-10" datoSize="sm" (click)="openDialog(true)">Show Disruptive Confirmation</dato-button>
   </section>
 
-  <dato-tabs>
+  <dato-tabs show="html,js">
 
     <textarea datoHighlight="html">
       <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Show Confirmation</dato-button>
@@ -20,8 +20,8 @@
             content: 'Are you sure you want to delete the entity?'
           })
           .afterClose()
-          .subscribe((result: DatoActionType) => {
-            console.log(result);
+          .subscribe((result: DatoDialogResult) => {
+            console.log(result.status);
           });
       }
     </textarea>
@@ -66,8 +66,8 @@
             content: this.dialogTpl
           })
           .afterClose()
-          .subscribe((result: DatoActionType) => {
-            console.log(result);
+          .subscribe((result: DatoDialogResult) => {
+            console.log(result.status);
           });
       }
     </textarea>

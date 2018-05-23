@@ -1,7 +1,12 @@
-import { ContentType, DatoDialogOptions, DialogResultType, getDefaultOptions } from './dialog.options';
+import { ContentType, DatoDialogOptions, DialogResultStatus, getDefaultOptions } from './dialog.options';
+
+export enum DatoActionType {
+  SUCCESS = 'SUCCESS',
+  DISMISSED = 'DISMISSED'
+}
 
 export type DatoDialogAction = {
-  type: DialogResultType;
+  type: DatoActionType;
   caption?: string;
 };
 
@@ -32,11 +37,11 @@ export type DatoConfirmationOptions = DatoDialogOptions & {
 
 const defaultActions = [
   {
-    type: DialogResultType.CANCEL,
+    type: DatoActionType.DISMISSED,
     caption: 'general.cancel'
   },
   {
-    type: DialogResultType.SUCCESS,
+    type: DatoActionType.SUCCESS,
     caption: 'general.ok'
   }
 ];

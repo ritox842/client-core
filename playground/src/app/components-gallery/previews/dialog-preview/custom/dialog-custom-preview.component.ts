@@ -9,6 +9,9 @@ import { DatoDialogResult } from "../../../../../../../lib/src/dialog/config/dia
   templateUrl: "./dialog-custom-preview.component.html"
 })
 export class DatoDialogCustomPreviewComponent {
+  enableCloseControl = new FormControl(true);
+  backdropControl = new FormControl(true);
+
   nameControl = new FormControl("");
   animal: string;
 
@@ -19,7 +22,9 @@ export class DatoDialogCustomPreviewComponent {
       .open(CustomDialogComponent, {
         data: {
           name: this.nameControl.value
-        }
+        },
+        enableClose: this.enableCloseControl.value,
+        backdrop: this.backdropControl.value
       })
       .afterClosed()
       .subscribe((result: DatoDialogResult<string>) => {

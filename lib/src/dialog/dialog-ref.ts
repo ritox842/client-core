@@ -1,4 +1,4 @@
-import { DatoDialogOptions, DatoDialogResult, DialogResultType } from './config/dialog.options';
+import { DatoDialogOptions, DatoDialogResult, DialogResultStatus } from './config/dialog.options';
 import { Subject } from 'rxjs/Subject';
 import { take, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
@@ -45,7 +45,7 @@ export class DatoDialogRef {
    */
   close(result?: any): void {
     this.tryClose({
-      type: DialogResultType.SUCCESS,
+      status: DialogResultStatus.SUCCESS,
       data: result
     });
   }
@@ -55,7 +55,7 @@ export class DatoDialogRef {
    */
   dismiss(reason?: any): void {
     this.tryClose({
-      type: DialogResultType.CANCEL,
+      status: DialogResultStatus.DISMISSED,
       data: reason
     });
   }

@@ -74,15 +74,15 @@ export const dialogSizePreset = {
   [Dimensions.LG]: ['800px', '350px']
 };
 
-export enum DialogResultType {
+export enum DialogResultStatus {
   SUCCESS = 'SUCCESS',
-  CANCEL = 'CANCEL'
+  DISMISSED = 'DISMISSED'
 }
 
 /**
  * The dialog result received from afterClosed
  */
 export type DatoDialogResult<T = any> = {
-  type: DialogResultType;
+  status: DialogResultStatus;
   data: T;
 };

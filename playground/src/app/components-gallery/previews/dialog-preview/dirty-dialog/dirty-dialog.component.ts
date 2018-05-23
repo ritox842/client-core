@@ -6,7 +6,7 @@ import { of } from "rxjs/observable/of";
 import { Observable } from "rxjs/Observable";
 import {
   DatoDialogResult,
-  DialogResultType
+  DialogResultStatus
 } from "../../../../../../../lib/src/dialog/config/dialog.options";
 
 @Component({
@@ -27,7 +27,7 @@ export class DatoDirtyDialogComponent {
       .afterClosed()
       .pipe(
         switchMap((confirmResult: DatoDialogResult) => {
-          return of(confirmResult.type === DialogResultType.SUCCESS);
+          return of(confirmResult.status === DialogResultStatus.SUCCESS);
         })
       );
   }

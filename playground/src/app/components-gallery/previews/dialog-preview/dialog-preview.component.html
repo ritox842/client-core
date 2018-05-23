@@ -27,8 +27,8 @@
 
   <br/>
   <textarea datoHighlight="js">
-  dialogRef.afterClosed().subscribe(result => {
-    console.log(`Dialog result: ${result}`); /* Pizza! */
+  dialogRef.afterClosed().subscribe((result: DatoDialogResult) => {
+    console.log(`Dialog result: ${result.data}`); /* Pizza! */
   });
 
   dialogRef.close('Pizza!');
@@ -38,15 +38,16 @@
   <br/>
   <p>
     When the user clicks on the backdrop, the ESC key or the cancel button, the dialog will be dismissed rather than
-    closed.
+    closed.<br/>
+    The <code>DatoDialogResult</code> contains a <code>status</code> property to indicate if the dialog has been dismissed or not.
   </p>
 
   <br/>
   <textarea datoHighlight="js">
-  dialogRef.afterClosed().subscribe(result => {
-    ...
-  }, dismissReason => {
-      console.log(`Dialog has been dismissed: ${dismissReason}`); /* Leave me alone! */
+  dialogRef.afterClosed().subscribe((result: DatoDialogResult) => {
+      if (result.status === DialogResultStatus.DISMISSED){
+        console.log(`Dialog has been dismissed: ${result.data}`); /* Leave me alone! */
+      }
     });
 
   dialogRef.dismiss('Leave me alone!');
@@ -176,10 +177,67 @@
   </textarea>
 
   <br/><br/>
-  <p datoFont="sub-headline">Set a Custom Size for Your Dialog</p>
+  <p datoFont="sub-headline">Dialog Size</p>
   <br/>
 
-  <p>By default, the dialog stretch according to his content. You can set a custom width and height:</p>
+  <p>There are three predefined sizes for the dialog: Small, Medium and Large.</p>
+  <p>The dialog size can be changed via the <code>size</code> property. Default to <code>SMALL</code>.</p>
+
+  <br/>
+  <table class="table is-fullwidth is-bordered mt-4 is-striped">
+    <thead>
+    <tr>
+      <th><span class="code">Size</span></th>
+      <th><span class="code">width</span></th>
+      <th><span class="code">min-height</span></th>
+    </tr>
+    </thead>
+    <tr>
+      <td>small</td>
+      <td>400px</td>
+      <td>200px</td>
+    </tr>
+    <tr>
+      <td>medium</td>
+      <td>560px</td>
+      <td>280px</td>
+    </tr>
+    <tr>
+      <td>large</td>
+      <td>800px</td>
+      <td>350px</td>
+    </tr>
+  </table>
+
+
+  <dato-preview title="A Dialog with different sizes">
+
+    <section class="d-flex-row">
+      <dato-button class="mr-10" datoSize="sm" (click)="openDialogWithSize('sm')">Small Size (default)</dato-button>
+      <dato-button class="mr-10" datoSize="sm" (click)="openDialogWithSize('md')">Medium Size</dato-button>
+      <dato-button class="mr-10" datoSize="sm" (click)="openDialogWithSize('lg')">Large Size (default)</dato-button>
+    </section>
+
+    <dato-tabs show="html,js">
+
+      <textarea datoHighlight="html">
+        <dato-button class="mt-10" datoSize="sm" (click)="openDialogWithSize('sm')">Small Size (default)</dato-button>
+        <dato-button class="mt-10" datoSize="sm" (click)="openDialogWithSize('md')">Medium Size</dato-button>
+        <dato-button class="mt-10" datoSize="sm" (click)="openDialogWithSize('lg')">Large Size (default)</dato-button>
+      </textarea>
+      <textarea datoHighlight="js">
+        this.dialog.confirm({
+          size: size,
+          title: "Greeting from Dialog",
+          content: `I'm the <strong>${size}</strong> size!`
+        });
+      </textarea>
+
+    </dato-tabs>
+  </dato-preview>
+
+  <br/>
+  <p>You can set a custom width and height as well:</p>
   <br/>
 
   <textarea datoHighlight="js">
@@ -197,15 +255,15 @@
         <span class="mr-8">width:</span> <dato-input width="200px" placeholder="choose a width" datoSize="sm" [formControl]="dialogWidthControl"></dato-input>
         <span class="mx-8">height:</span> <dato-input width="200px" placeholder="choose a height" datoSize="sm" [formControl]="dialogHeightControl"></dato-input>
       </div>
-      <dato-button class="mt-10" datoSize="sm" (click)="openDialogWithSize()">Open the dialog</dato-button>
+      <dato-button class="mt-10" datoSize="sm" (click)="openDialogWithCustomSize()">Open the dialog</dato-button>
     </section>
 
-    <dato-tabs>
+    <dato-tabs show="html,js">
 
       <textarea datoHighlight="html">
         <dato-input placeholder="choose a width" datoSize="sm" [formControl]="dialogWidthControl"></dato-input>
         <dato-input placeholder="choose a height" datoSize="sm" [formControl]="dialogHeightControl"></dato-input>
-        <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithSize()">Open the dialog</dato-button>
+        <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithCustomSize()">Open the dialog</dato-button>
       </textarea>
       <textarea datoHighlight="js">
 
@@ -231,10 +289,10 @@
   <br/>
 
   <p>
-    You can lavarege the <code>beforeClosed</code> event, when you need more control when your dialog can be closed.
+    You can leverage the <code>beforeClosed</code> event, when you need more control when your dialog can be closed.
     <br/>
-    For example, if the form inside the dialog is dirty, yoy may want to ask the user if he wants
-    to close the dialog anyway and discard all the changes, or he wants to stay.
+    For example, if the form inside the dialog is dirty, you may want to ask the user if he wants
+    to close the dialog and discard all the changes, or to stay.
     <br/>
     Consider the following example:
   </p>
@@ -246,12 +304,12 @@
       <dato-button class="mt-10" datoSize="sm" (click)="openDialogWithDirtyCheck()">Open the dialog</dato-button>
     </section>
 
-    <dato-tabs>
+    <dato-tabs show="html,js">
 
       <textarea datoHighlight="html">
         <dato-input placeholder="choose a width" datoSize="sm" [formControl]="dialogWidthControl"></dato-input>
         <dato-input placeholder="choose a height" datoSize="sm" [formControl]="dialogHeightControl"></dato-input>
-        <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithSize()">Open the dialog</dato-button>
+        <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithCustomSize()">Open the dialog</dato-button>
       </textarea>
       <textarea datoHighlight="js">
 
@@ -278,13 +336,13 @@
     When you want to display a confirmation message to the user, or a simple alert,
     you should use the <code>confirm</code> function from <code>DatoDialog</code>.
     <br/>
-
+    There are two types of confirmation messages: <code>warning</code> (default) and <code>distruptive warning</code>.
+    <br/> Use <code>distruptive warning</code> when you want more attention from the user.
   </p>
 
 </div>
 
 <dato-dialog-confirmation-preview></dato-dialog-confirmation-preview>
-
 
 <dato-dialog-multiple-preview></dato-dialog-multiple-preview>
 
@@ -295,7 +353,15 @@
 
 <br/>
 <p datoFont="sub-headline">DatoDialogOptions</p>
-<dato-api-table>
+<table class="table is-fullwidth is-bordered mt-4 is-striped">
+  <thead>
+  <tr>
+    <th><span class="code">Property</span></th>
+    <th><span class="code">type</span></th>
+    <th><span class="code">Default</span></th>
+    <th><span class="code">Description</span></th>
+  </tr>
+  </thead>
   <tr>
     <td>id</td>
     <td>string</td>
@@ -324,25 +390,54 @@
     <td>enableClose</td>
     <td>boolean</td>
     <td>true</td>
-    <td>Whether the user can use escape or clicking outside to close a modal.</td>
+    <td>Whether the user can use escape or clicking outside to close a modal</td>
+  </tr>
+  <tr>
+    <td>size</td>
+    <td>Dimensions</td>
+    <td>Small (<code>Dimensions.SM</code>)</td>
+    <td>Dialog size</td>
   </tr>
   <tr>
     <td>width</td>
     <td>string</td>
     <td>auto</td>
-    <td>The dialog width</td>
+    <td>The dialog width. This will override the default height defined by the <code>size</code> property.</td>
   </tr>
   <tr>
     <td>height</td>
     <td>string</td>
     <td>auto</td>
-    <td>The dialog height</td>
+    <td>The dialog height. This will override the default height defined by the <code>size</code> property</td>
   </tr>
   <tr>
     <td>draggable</td>
     <td>boolean</td>
     <td>false</td>
     <td>Whether the dialog is draggable</td>
+  </tr>
+</table>
+
+<br/>
+<p datoFont="sub-headline">DatoConfirmationOptions (<code>extends DatoDialogOptions</code>)</p>
+<dato-api-table>
+  <tr>
+    <td>title</td>
+    <td>string</td>
+    <td>null</td>
+    <td>The dialog title</td>
+  </tr>
+  <tr>
+    <td>content</td>
+    <td>TemplateRef | Component | string</td>
+    <td>null</td>
+    <td>The content of the dialog. Can be a component, template or a simple string</td>
+  </tr>
+  <tr>
+    <td>actions</td>
+    <td>DatoDialogAction[]</td>
+    <td>An array of cancel and ok buttons</td>
+    <td>An array of actions that will be displayed in the footer</td>
   </tr>
 </dato-api-table>
 
@@ -382,36 +477,13 @@
 </dato-api-table>
 
 <br/>
-<p datoFont="sub-headline">DatoConfirmationOptions (<code>extends DatoDialogOptions</code>)</p>
-<dato-api-table>
-  <tr>
-    <td>title</td>
-    <td>string</td>
-    <td>null</td>
-    <td>The dialog title</td>
-  </tr>
-  <tr>
-    <td>content</td>
-    <td>TemplateRef | Component | string</td>
-    <td>null</td>
-    <td>The content of the dialog. Can be a component, template or a simple string</td>
-  </tr>
-  <tr>
-    <td>actions</td>
-    <td>DatoDialogAction[]</td>
-    <td>An array of cancel and ok buttons</td>
-    <td>An array of actions that will be displayed in the footer</td>
-  </tr>
-</dato-api-table>
-
-<br/>
 <p datoFont="sub-headline">DatoDialogAction</p>
 <dato-api-table>
   <tr>
     <td>type</td>
-    <td>DatoActionType</td>
+    <td>DialogResultStatus</td>
     <td>null</td>
-    <td>The type of the action: <span style="color:green">SUCCESS</span> or <span style="color:red">CANCEL</span></td>
+    <td>The type of the action: <span style="color:green">SUCCESS</span> or <span style="color:red">DISMISSED</span></td>
   </tr>
   <tr>
     <td>caption</td>

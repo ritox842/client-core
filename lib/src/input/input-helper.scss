@@ -40,7 +40,8 @@ $inputsize: (
 @mixin input-like-theme() {
 
   background-color: themify(primary-0);
-  border: 1px solid themify(primary-200);
+  border: themify(primary-200) 1px solid;
+
   color: themify(primary-600);
   @include placeholder() {
     color: themify(primary-300);

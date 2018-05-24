@@ -35,9 +35,6 @@ export default {
             <use xlink:href="#search"/>
         </mask>
         <use xlink:href="#search"/>
-        <g mask="url(#searchb)">
-            <rect width="30" height="30" rx="2" transform="translate(-3 -3)"/>
-        </g>
     </g>
 </svg>`,
   close: `  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 24 24">
@@ -49,9 +46,6 @@ export default {
             <use xlink:href="#close"/>
         </mask>
         <use  xlink:href="#close"/>
-        <g mask="url(#closeb)">
-            <rect width="30" height="30" rx="2" transform="translate(-3 -3)"/>
-        </g>
     </g>
 </svg>`,
   'sort-asc': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 14"><path d="M2.91,5.37a0.45,0.45,0,0,0,.67,0L5.47,3.62V8.5a0.5,0.5,0,0,0,1,0V3.67L8.38,5.4a0.52,0.52,0,0,0,.73,0,0.5,0.5,0,0,0,0-.71L6.45,2.22A0.49,0.49,0,0,0,6,2H6a0.5,0.5,0,0,0-.34.13L2.94,4.67A0.5,0.5,0,0,0,2.91,5.37Z"/><path d="M6,12.3a1,1,0,1,1,1-1,1,1,0,0,1-1,1"/></svg>',

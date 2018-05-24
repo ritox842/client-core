@@ -6,7 +6,4 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-export * from './snackbar.component';
-export * from './snackbar.module';
-export * from './snackbar.types';
-export * from './snackbar.service';
+export * from './dynamic-components';

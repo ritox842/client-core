@@ -378,9 +378,9 @@
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
 
-"@netbasal/spectator@^1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@netbasal/spectator/-/spectator-1.5.2.tgz#e3c932d558ad1ab18ff466607707de86aa4e05cf"
+"@netbasal/spectator@^1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@netbasal/spectator/-/spectator-1.6.1.tgz#6242fa259f3131008be60cc42b243909b33b30df"
   dependencies:
     jquery "^3.3.1"
 

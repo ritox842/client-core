@@ -12,6 +12,7 @@ import { GridActionsPreviewComponent } from "./previews/grid-preview/actions/gri
 import { AccordionPreviewComponent } from "./previews/accordion-preview/accordion-preview.component";
 import { DragPreviewComponent } from "./previews/drag-preview/drag-preview.component";
 import { LayoutPreviewComponent } from "./previews/layout-preview/layout-preview.component";
+import { SnackbarPreviewComponent } from "./previews/snackbar-preview/snackbar-preview.component";
 import { DialogPreviewComponent } from "./previews/dialog-preview/dialog-preview.component";
 import { dialogPreviewComponents } from "./previews/dialog-preview/dialog-preview.providers";
 
@@ -30,6 +31,7 @@ export const previews = [
   DragPreviewComponent,
   TabsPreviewComponent,
   LayoutPreviewComponent,
+  SnackbarPreviewComponent,
   ...dialogPreviewComponents
 ];
 
@@ -46,5 +48,6 @@ export const routeToComponent = {
   drag: DragPreviewComponent,
   tabs: TabsPreviewComponent,
   layout: LayoutPreviewComponent,
+  snackbar: SnackbarPreviewComponent,
   dialog: DialogPreviewComponent
 };

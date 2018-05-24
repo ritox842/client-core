@@ -16,6 +16,34 @@
       </div>
     </section>
 
+    <section class="d-flex d-flex-wrap">
+      <div *ngFor="let color of group.green">
+        <span class="tag is-warning">{{color}}</span>
+        <div class="{{color}}-background-color box"></div>
+      </div>
+    </section>
+
+    <section class="d-flex d-flex-wrap">
+      <div *ngFor="let color of group.yellow">
+        <span class="tag is-warning">{{color}}</span>
+        <div class="{{color}}-background-color box"></div>
+      </div>
+    </section>
+
+    <section class="d-flex d-flex-wrap">
+      <div *ngFor="let color of group.red">
+        <span class="tag is-warning">{{color}}</span>
+        <div class="{{color}}-background-color box"></div>
+      </div>
+    </section>
+
+    <section class="d-flex d-flex-wrap">
+      <div *ngFor="let color of group.orange">
+        <span class="tag is-warning">{{color}}</span>
+        <div class="{{color}}-background-color box"></div>
+      </div>
+    </section>
+
   </section>
 
   <dato-tabs>

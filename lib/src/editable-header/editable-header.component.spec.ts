@@ -68,3 +68,16 @@ describe('DatoEditableHeaderComponent', () => {
     expect(host.hostComponent.control.value).toBe('Title');
   });
 });
+
+describe('Standalone', () => {
+  const createHost = createHostComponentFactory({
+    component: DatoEditableHeaderComponent,
+    imports: [ReactiveFormsModule],
+    host: CustomHostComponent
+  });
+
+  it('should support standalone', () => {
+    const { element } = createHost(`<dato-editable-header [formControl]="control" standalone="true"></dato-editable-header>`);
+    expect(element).toHaveClass('standalone');
+  });
+});

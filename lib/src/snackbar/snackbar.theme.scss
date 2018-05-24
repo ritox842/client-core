@@ -1,7 +1,81 @@
 dato-snackbar {
-  background-color: themify(primary-500);
-}
 
-dato-snackbar .action-button {
-  color: var(--primary-000);
+  /**
+   INFO TYPE BG
+  */
+  background-color: themify(primary-500, 0.9);
+
+  /**
+    X BUTTON COLOR
+  */
+  .dato-icon-close {
+    color: themify(primary-300);
+  }
+
+  /**
+    ERROR TYPE
+   */
+  &.dato-snackbar-error {
+    .dato-snackbar-circle {
+      /**
+        CIRCLE BG COLOR
+      */
+      background-color: themify(red-400);
+      svg {
+        /**
+         ICON COLOR
+       */
+        fill: themify((light: primary-0, dark: primary-700));
+      }
+    }
+  }
+
+  /**
+   SUCCESS TYPE
+ */
+  &.dato-snackbar-success {
+    .dato-snackbar-circle {
+      background-color: themify(green-400);
+      svg {
+        fill: themify((light: primary-0, dark: primary-700));
+      }
+    }
+  }
+
+  /**
+   DRAMATIC ERROR  TYPE
+  */
+  &.dato-snackbar-dramatic-error {
+    background-color: themify(red-400, 0.9);
+
+    .dato-icon-close {
+      color: themify(red-200);
+    }
+
+    .dato-snackbar-circle {
+      background-color: themify(primary-0);
+      svg {
+        fill: themify(red-400);
+      }
+    }
+  }
+
+  /**
+   DRAMATIC SUCCESS TYPE
+  */
+  &.dato-snackbar-dramatic-success {
+    background-color: themify(green-400, 0.9);
+
+    .dato-icon-close {
+      color: themify(green-200);
+    }
+
+    .dato-snackbar-circle {
+      background-color: themify(primary-0);
+      svg {
+        fill: themify(green-400);
+      }
+    }
+  }
+
 }

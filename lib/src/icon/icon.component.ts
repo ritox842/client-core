@@ -10,7 +10,6 @@ import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, OnIni
 import { kebabCase } from '@datorama/utils';
 import { IconRegistry } from '../services/icon-registry';
 import { setDimensions } from '../internal/custom-dimensions';
-import { DatoCoreError } from '../errors';
 
 @Component({
   selector: 'dato-icon',
@@ -63,7 +62,8 @@ export class DatoIconComponent implements OnInit {
       this.lastIconClass = this.getIconClass();
       this.renderer.addClass(this.element, this.lastIconClass);
     } else {
-      throw new DatoCoreError(`${this.datoIcon} Icon - does not exists, did you misspell it?`);
+      console.log(this.datoIcon);
+      console.log('%c MISSING ICONS, ADD THEM PLEASE! 💩 🖕 ', 'color: hotpink; font-size:80px;');
     }
   }
 

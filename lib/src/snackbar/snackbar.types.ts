@@ -6,26 +6,26 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-/**
- * Snackbar messages types
- */
 export enum SnackbarType {
-  INFO,
-  SUCCESS,
-  ERROR,
-  DRAMATIC_SUCCESS,
-  DRAMATIC_ERROR
+  INFO = 'info',
+  SUCCESS = 'success',
+  ERROR = 'error',
+  DRAMATIC_SUCCESS = 'dramatic-success',
+  DRAMATIC_ERROR = 'dramatic-error'
 }
 
 /**
  * Snackbar Options
  */
 export type SnackbarOptions = {
-  text: string;
-  type: SnackbarType;
+  /**
+   * The length of time in milliseconds to wait before automatically dismissing the snack bar.
+   */
+  duration: number;
+  /**
+   * Whether to allow the X button
+   */
   dismissible: boolean;
-  undoFunction: Function | null;
-  detailsFunction: Function | null;
 };
 
 /**
@@ -34,10 +34,7 @@ export type SnackbarOptions = {
  */
 export function getDefaults(): SnackbarOptions {
   return {
-    text: '',
-    type: SnackbarType.INFO,
-    dismissible: false,
-    undoFunction: null,
-    detailsFunction: null
+    duration: 4000,
+    dismissible: false
   };
 }

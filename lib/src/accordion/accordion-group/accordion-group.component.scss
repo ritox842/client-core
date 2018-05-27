@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+:host ::ng-deep dato-accordion-header {
+  cursor: pointer;
+}
+
+:host(.dato-accordion-disabled) ::ng-deep dato-accordion-header {
+  cursor: not-allowed;
+}

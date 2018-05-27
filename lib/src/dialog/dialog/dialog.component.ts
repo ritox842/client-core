@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DatoDialogOptions, dialogSizePreset } from '../config/dialog.options';
 import { takeUntil } from 'rxjs/operators';
 import { fromEvent } from 'rxjs/observable/fromEvent';
@@ -22,7 +22,7 @@ export class DatoDialogComponent implements OnInit, OnDestroy {
   destroyed$: Observable<boolean>;
   @Input() options: DatoDialogOptions;
 
-  constructor(private element: ElementRef, private dialogRef: DatoDialogRef, private renderer: Renderer2) {}
+  constructor(private element: ElementRef, private dialogRef: DatoDialogRef) {}
 
   ngOnInit(): void {
     const projectionElement = this.element.nativeElement.querySelector('.dato-dialog-projection');
@@ -38,8 +38,8 @@ export class DatoDialogComponent implements OnInit, OnDestroy {
     width = width || preset[0];
     height = height || preset[1];
 
-    setDimensions(width, null, projectionElement, this.renderer);
-    setMinDimensions(null, height, projectionElement, this.renderer);
+    setDimensions(width, null, projectionElement);
+    setMinDimensions(null, height, projectionElement);
   }
 
   ngOnDestroy(): void {}

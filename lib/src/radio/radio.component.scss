@@ -1,5 +1,10 @@
+:host {
+  display: block;
+}
+
 .dato-radio {
   margin: 0.5rem;
+  display: inline-block;
   label {
     cursor: pointer;
   }

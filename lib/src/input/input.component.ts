@@ -50,8 +50,8 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
   }
 
   ngOnInit() {
-    setDimensions(this.width, this.height, this.host.nativeElement, this.renderer);
-    setDimensions(this.width, this.height, this.inpuElement, this.renderer);
+    setDimensions(this.width, this.height, this.host.nativeElement);
+    setDimensions(this.width, this.height, this.inpuElement);
 
     fromEvent(this.inpuElement, 'input')
       .pipe(pluck('target', 'value'), tap(val => this.activateDeleteIcon(val)), optionalDebounce(this.debounceTime), untilDestroyed(this))

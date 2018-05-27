@@ -28,7 +28,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
   animations: [trigger('slideInOut', [transition(':enter', [style({ height: '0px' }), animate('200ms', style({ height: '*' }))]), transition(':leave', [style({ height: '*' }), animate('200ms', style({ height: '0px' }))])])]
 })
 export class DatoAccordionContentComponent {
-  _expanded: boolean;
+  _expanded: boolean = false;
 
   @Input()
   set expanded(value) {

@@ -1,12 +1,14 @@
-.dato-tabs {
-  li a {
-    color: themify(primary-300);
-  }
-  .active {
-    a {
-      color: themify(accent-400);
+dato-tabset {
+  .dato-tabs:not(.dato-tabs--clean) {
+    li a {
+      color: themify(primary-300);
     }
-    border-bottom: 2px solid themify(accent-400);
-    background-color: transparent;
+    .active {
+      a {
+        color: themify(accent-400);
+      }
+      border-bottom: 2px solid themify(accent-400);
+      background-color: transparent;
+    }
   }
 }

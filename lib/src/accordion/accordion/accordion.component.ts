@@ -17,9 +17,9 @@ import { mapTo } from 'rxjs/operators';
   exportAs: 'datoAccordion',
   styles: [
     `
-    :host {
-      display: block;
-    }`
+      :host {
+        display: block;
+      }`
   ]
 })
 export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
@@ -28,6 +28,7 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
   childAccordion: QueryList<DatoAccordionComponent>;
 
   @Input() closeOthers = false;
+  @Input() expandAll = false;
   @Input() activeIds: number | number[] = [];
 
   groupsSubscription;
@@ -64,6 +65,10 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
   }
 
   private onGroupClick(group: DatoAccordionGroupComponent) {
+    if (group._disabled) {
+      return;
+    }
+
     if (this.closeOthers && !group.content._expanded) {
       this.groups.forEach(g => {
         if (g !== group) {
@@ -98,7 +103,7 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
   }
 
   private initialOpen(activeIds: number | number[]) {
-    const toArray = this.coerceArray<number>(activeIds);
+    const toArray = this.expandAll ? this.groups.toArray().map((_, i) => i) : this.coerceArray<number>(activeIds);
     toArray.forEach(index => {
       if (!this.parent) {
         this.toggleGroup(this.groups.toArray()[index]);

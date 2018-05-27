@@ -1,6 +1,7 @@
 <dato-preview title="Buttons - Basic">
 
   <div class="d-flex">
+    <dato-button class="mr-10" width="200px">Custom width</dato-button>
     <dato-button class="mr-10">Primary</dato-button>
     <dato-button>
       <dato-icon datoIcon="fit-to-content"></dato-icon>
@@ -43,7 +44,7 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-
+      <dato-button class="mr-10" width="200px">Custom width</dato-button>
       <dato-button class="mr-10">Primary</dato-button>
       <dato-button>
         <dato-icon datoIcon="fit-to-content"></dato-icon>
@@ -162,6 +163,7 @@
 </dato-preview>
 
 <dato-preview title="Buttons - Icons">
+  <p datoFont class="mb-20">datoType <span class="code">none</span> supports custom width and height</p>
 
   <div class="d-flex-row align-start-center">
 
@@ -183,7 +185,6 @@
   </div>
 
   <div class="d-flex-row align-start-center mt-8">
-
     <div class="mr-10">
       <dato-icon-button [disabled]="true" datoIcon="edit" datoType="none">
       </dato-icon-button>
@@ -195,8 +196,7 @@
     </div>
 
     <div class="mr-10">
-      <dato-icon-button datoSize="md" datoIcon="edit" datoType="none">
-      </dato-icon-button>
+      <dato-icon-button datoIcon="edit" datoType="none" width="40px" height="40px"></dato-icon-button>
     </div>
 
   </div>
@@ -219,9 +219,9 @@
         </dato-icon-button>
       </div>
 
-      <div>
-          <dato-icon-button [disabled]="true" datoIcon="edit" datoType="none">
-          </dato-icon-button>
+
+<div>      <dato-icon-button [disabled]="true" datoIcon="edit" datoType="none">
+      </dato-icon-button>
 
           <dato-icon-button datoSize="lg" datoIcon="edit" datoType="none">
           </dato-icon-button>
@@ -229,9 +229,7 @@
           <dato-icon-button datoSize="md" datoIcon="edit" datoType="none">
           </dato-icon-button>
 
-          <dato-icon-button datoSize="sm" datoIcon="plus" datoType="none">
-          </dato-icon-button>
-      </div>
+      <dato-icon-button datoIcon="edit" datoType="none" width="40px" height="40px"></dato-icon-button>
 
     </textarea>
 
@@ -257,7 +255,7 @@
       </tr>
       <tr>
         <td>datoType</td>
-        <td>primary, secondary</td>
+        <td>primary, secondary, none</td>
         <td>primary</td>
         <td>Wheteher it's primary or secondary</td>
       </tr>
@@ -272,6 +270,18 @@
         <td>as attribute</td>
         <td></td>
         <td>Wheteher it should be circle</td>
+      </tr>
+      <tr>
+        <td>width</td>
+        <td></td>
+        <td></td>
+        <td>Custom width</td>
+      </tr>
+      <tr>
+        <td>height</td>
+        <td></td>
+        <td></td>
+        <td>Custom height</td>
       </tr>
     </dato-api-table>
 

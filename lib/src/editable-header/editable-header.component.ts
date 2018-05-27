@@ -11,6 +11,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { assertString } from '../errors';
 import { toBoolean } from '@datorama/utils';
+import { query, setStyle } from '../internal/helpers';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -29,7 +30,7 @@ export class DatoEditableHeaderComponent extends BaseCustomControl implements On
   private initialValue = '';
   private value = '';
 
-  constructor(private renderer: Renderer2, private host: ElementRef, @Attribute('standalone') public standalone) {
+  constructor(private renderer: Renderer2, private host: ElementRef, @Attribute('fontSize') public fontSize, @Attribute('standalone') public standalone) {
     super();
   }
 
@@ -37,6 +38,9 @@ export class DatoEditableHeaderComponent extends BaseCustomControl implements On
     if (toBoolean(this.standalone)) {
       this.renderer.addClass(this.host.nativeElement, 'standalone');
     }
+
+    const input = query('input[type="text"]', this.host.nativeElement);
+    setStyle(input, 'fontSize', this.fontSize);
   }
 
   get isValueChanged() {

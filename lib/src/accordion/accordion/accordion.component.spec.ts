@@ -102,6 +102,13 @@ describe('DatoAccordionComponent', () => {
       expect(contents[0]._expanded).toBeFalsy();
       expect(contents[1]._expanded).toBeTruthy();
     });
+
+    it('should expand all', () => {
+      host = createHost(simpleAccordion, true, { expandAll: true });
+      const contents = host.queryAll<DatoAccordionContentComponent>(DatoAccordionContentComponent);
+      expect(contents[0]._expanded).toBeTruthy();
+      expect(contents[1]._expanded).toBeTruthy();
+    });
   });
 });
 
@@ -183,5 +190,66 @@ describe('DatoAccordionComponent - Dynamic Content', () => {
     expect(host.hostComponent.onToggle).toHaveBeenCalledWith({ expanded: true });
     host.click(header);
     expect(host.hostComponent.onToggle).toHaveBeenCalledWith({ expanded: false });
+  });
+});
+
+@Component({
+  template: ``
+})
+class CustomHostDisabledComponent {
+  dynamic = [{ id: 1, title: 'one', text: 'text1', disabled: true }, { id: 1, title: 'two', text: 'text2', disabled: false }];
+}
+
+const dynamicAccordionDisabled = `
+  <dato-accordion>
+    <dato-accordion-group *ngFor="let group of dynamic; index as index" [disabled]="group.disabled">
+      <dato-accordion-header>
+        <div class="header">{{group.title}}</div>
+      </dato-accordion-header>
+      <dato-accordion-content>
+        <div class="content">{{group.text}}</div>
+      </dato-accordion-content>
+    </dato-accordion-group>
+  </dato-accordion>
+`;
+
+describe('DatoAccordionComponent - Disabled', () => {
+  let host: SpectatorWithHost<DatoAccordionComponent, CustomHostDisabledComponent>;
+
+  const createHost = createHostComponentFactory<DatoAccordionComponent, CustomHostDisabledComponent>({
+    declarations,
+    component: DatoAccordionComponent,
+    host: CustomHostDisabledComponent
+  });
+
+  beforeEach(() => {
+    host = createHost(dynamicAccordionDisabled);
+  });
+
+  it('should be disabled', () => {
+    const groups = host.queryAll<DatoAccordionGroupComponent>(DatoAccordionGroupComponent);
+    expect(groups[0]._disabled).toEqual(true);
+    expect(groups[1]._disabled).toEqual(false);
+  });
+
+  it('should do anything on header click', () => {
+    const groups = host.queryAll<DatoAccordionGroupComponent>(DatoAccordionGroupComponent);
+    const header = host.query<ElementRef>(DatoAccordionHeaderComponent, { read: ElementRef });
+    host.click(header);
+    expect(groups[0].content._expanded).toEqual(false);
+  });
+
+  it('should NOT be disable', () => {
+    host.hostComponent.dynamic[0].disabled = false;
+    host.detectChanges();
+    const groups = host.queryAll<DatoAccordionGroupComponent>(DatoAccordionGroupComponent);
+    const header = host.query<ElementRef>(DatoAccordionHeaderComponent, { read: ElementRef });
+    host.click(header);
+    expect(groups[0].content._expanded).toEqual(true);
+  });
+
+  it('should add disable class to group', () => {
+    const group = host.query<ElementRef>(DatoAccordionGroupComponent, { read: ElementRef });
+    expect(group.nativeElement).toHaveClass('dato-accordion-disabled');
   });
 });

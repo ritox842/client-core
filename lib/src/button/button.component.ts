@@ -6,8 +6,10 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input } from '@angular/core';
 import { toBoolean } from '@datorama/utils';
+import { setDimensions } from '../internal/custom-dimensions';
+import { query } from '../internal/helpers';
 
 @Component({
   selector: 'dato-button',
@@ -18,6 +20,8 @@ import { toBoolean } from '@datorama/utils';
 export class DatoButtonComponent {
   _disabled = false;
 
+  constructor(private host: ElementRef, @Attribute('width') public width, @Attribute('height') public height) {}
+
   /**
    *
    * @param value
@@ -25,5 +29,10 @@ export class DatoButtonComponent {
   @Input()
   set disabled(value) {
     this._disabled = toBoolean(value);
+  }
+
+  ngOnInit() {
+    const button = query('button', this.host.nativeElement);
+    setDimensions(this.width, this.height, button);
   }
 }

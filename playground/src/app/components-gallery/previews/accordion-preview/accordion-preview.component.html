@@ -1,5 +1,5 @@
 <dato-preview title="Accordion">
-  <button (click)="accordion.toggle(1)">Toggle second</button>
+  <button (click)="accordion.toggle(2)">Toggle third</button>
   <dato-accordion [closeOthers]="true" [activeIds]="[0]" #accordion="datoAccordion">
     <dato-accordion-group>
       <dato-accordion-header>
@@ -10,9 +10,9 @@
       </dato-accordion-content>
     </dato-accordion-group>
 
-    <dato-accordion-group>
+    <dato-accordion-group [disabled]="true">
       <dato-accordion-header>
-        <div class="header">Title 2</div>
+        <div class="header">I'm disabled</div>
       </dato-accordion-header>
       <dato-accordion-content>
         <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aut, beatae consectetur dolor ducimus eius, esse exercitationem id itaque libero magni maiores quaerat quibusdam quos repellendus sed sunt veritatis voluptatibus!</div>
@@ -67,8 +67,8 @@
         <td>Whether to collapse the others</td>
       </tr>
       <tr>
-        <td>selectedIndex</td>
-        <td>number</td>
+        <td>activeIds</td>
+        <td>number | number[]</td>
         <td>0</td>
         <td>The index of the initial group that is open</td>
       </tr>
@@ -78,6 +78,12 @@
         <td>false</td>
         <td>Whether to expand all</td>
       </tr>
+      <tr>
+        <td>disabled</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Whether the group is disabled - This input is on the <b>group</b> element</td>
+      </tr>
     </dato-api-table>
 
   </div>
@@ -86,16 +92,11 @@
 
     <dato-api-table type="outputs">
       <tr>
-        <td>expand</td>
-        <td>false</td>
+        <td>toggle</td>
+        <td ngNonBindable>event object: {{ expanded: boolean }}</td>
         <td>This event is on the <b>group</b> element</td>
       </tr>
 
-      <tr>
-        <td>collapse</td>
-        <td>false</td>
-        <td>This event is on the <b>group</b> element</td>
-      </tr>
     </dato-api-table>
 
   </div>

@@ -5,6 +5,7 @@ dato-editable-header:not(.standalone) {
 dato-editable-header {
   input {
     @include input-like-theme();
+    background-color: transparent;
   }
 
   .initial input[type=text] {

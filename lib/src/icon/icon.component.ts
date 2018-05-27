@@ -41,7 +41,7 @@ export class DatoIconComponent implements OnInit {
     /** Add standard attributes */
     this.renderer.setAttribute(this.element, 'role', 'img');
 
-    setDimensions(this.width, this.height, this.element, this.renderer);
+    setDimensions(this.width, this.height, this.element);
 
     this.injectSvg();
   }

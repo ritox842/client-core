@@ -1,4 +1,5 @@
-import { Component, Input, ContentChildren, QueryList, Directive, TemplateRef, ContentChild, AfterContentChecked, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { AfterContentChecked, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Directive, ElementRef, EventEmitter, Input, Output, QueryList, TemplateRef } from '@angular/core';
+import { addClass } from '../internal/helpers';
 
 let nextId = 0;
 
@@ -97,7 +98,10 @@ export class DatoTabset implements AfterContentChecked {
    */
   @Output() tabChange = new EventEmitter<DatoTabChangeEvent>();
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private host: ElementRef, @Attribute('datoVertical') public datoVertical, @Attribute('datoNakedActive') public datoNakedActive) {
+    this.datoVertical && addClass(this.host.nativeElement, 'dato-tabs--vertical');
+    this.datoNakedActive && addClass(this.host.nativeElement, 'dato-tabs--clean');
+  }
 
   /**
    * Selects the tab with the given id and shows its associated pane.

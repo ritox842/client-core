@@ -1,0 +1,15 @@
+dato-dialog-header {
+  display: block;
+  min-height: 55px;
+  padding: 18px 40px 10px 30px;
+
+  dato-icon-button.x-button {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+
+    .dato-icon-close {
+      padding: 0 !important;
+    }
+  }
+}

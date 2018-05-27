@@ -1,5 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Input, NgZone, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { AfterViewInit, Directive, ElementRef, Input, NgZone, OnDestroy, Renderer2 } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { takeUntil, map, switchMap } from 'rxjs/operators';
@@ -10,6 +9,7 @@ import { takeUntil, map, switchMap } from 'rxjs/operators';
 export class DatoDraggableDirective implements AfterViewInit, OnDestroy {
   @Input() datoDragHandle: string | Element;
   @Input() datoDragTarget: string | Element;
+  @Input() datoDragEnabled: boolean = true;
 
   // Element to be dragged
   private target: Element;
@@ -20,14 +20,23 @@ export class DatoDraggableDirective implements AfterViewInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private host: ElementRef, private zone: NgZone) {}
+  constructor(private host: ElementRef, private zone: NgZone, private renderer: Renderer2) {}
 
   public ngAfterViewInit(): void {
+    if (!this.datoDragEnabled) {
+      return;
+    }
+
     if (!this.datoDragTarget) {
       throw 'You need to specify the drag target';
     }
 
-    this.handle = this.datoDragHandle instanceof Element ? this.datoDragHandle : typeof this.datoDragHandle === 'string' ? document.querySelector(this.datoDragHandle as string) : this.host.nativeElement;
+    this.handle = this.datoDragHandle instanceof Element ? this.datoDragHandle : typeof this.datoDragHandle === 'string' && this.datoDragHandle ? document.querySelector(this.datoDragHandle as string) : this.host.nativeElement;
+
+    // add the move cursor
+    if (this.handle) {
+      this.renderer.setStyle(this.handle, 'cursor', 'move');
+    }
 
     this.target = this.datoDragTarget instanceof Element ? this.datoDragTarget : document.querySelector(this.datoDragTarget as string);
 

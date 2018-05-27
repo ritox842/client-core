@@ -1,4 +1,4 @@
-$PRESERVE_THEMIFY: true;
+$PRESERVE_THEMIFY: false;
 @import '../../../../node_modules/@datorama/themify/themify.scss';
 
 $themeRules: (
@@ -25,3 +25,6 @@ Components Themes
 @import '../../snackbar/snackbar.theme';
 @import '../../editable-header/editable-header.theme';
 @import '../../tabs/tabs.theme';
+@import '../../dialog/dialog/dialog.theme';
+@import '../../dialog/footer/dialog-footer.theme';
+@import '../../dialog/confirmation/confirmation-dialog.theme';

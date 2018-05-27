@@ -13,6 +13,8 @@ import { AccordionPreviewComponent } from "./previews/accordion-preview/accordio
 import { DragPreviewComponent } from "./previews/drag-preview/drag-preview.component";
 import { LayoutPreviewComponent } from "./previews/layout-preview/layout-preview.component";
 import { SnackbarPreviewComponent } from "./previews/snackbar-preview/snackbar-preview.component";
+import { DialogPreviewComponent } from "./previews/dialog-preview/dialog-preview.component";
+import { dialogPreviewComponents } from "./previews/dialog-preview/dialog-preview.providers";
 
 export const previews = [
   ButtonsPreviewComponent,
@@ -29,7 +31,8 @@ export const previews = [
   DragPreviewComponent,
   TabsPreviewComponent,
   LayoutPreviewComponent,
-  SnackbarPreviewComponent
+  SnackbarPreviewComponent,
+  ...dialogPreviewComponents
 ];
 
 export const routeToComponent = {
@@ -45,5 +48,6 @@ export const routeToComponent = {
   drag: DragPreviewComponent,
   tabs: TabsPreviewComponent,
   layout: LayoutPreviewComponent,
-  snackbar: SnackbarPreviewComponent
+  snackbar: SnackbarPreviewComponent,
+  dialog: DialogPreviewComponent
 };

@@ -4,13 +4,13 @@ dato-checkbox {
   }
 
   .checkmark:after {
-    border: solid themify((light: primary-0, dark: primary-700));
+    border: themify((light: primary-0, dark: primary-700)) solid;
   }
 
   // unchecked state
   input:not(:checked) ~ .checkmark {
     background-color: themify(primary-0);
-    border: solid 1px themify(primary-300);
+    border: themify(primary-300) solid 1px;
   }
   &:hover input:not(:checked) ~ .checkmark {
     border-color: themify(accent-500);

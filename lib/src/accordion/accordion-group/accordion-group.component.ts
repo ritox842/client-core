@@ -13,20 +13,7 @@ import { DatoAccordionHeaderComponent } from '../accordion-header/accordion-head
 @Component({
   selector: 'dato-accordion-group',
   template: '<ng-content></ng-content>',
-  styles: [
-    `
-    :host {
-      display: block;
-    }
-    
-    :host ::ng-deep dato-accordion-header {
-      cursor: pointer;
-    }
-    
-    :host(.dato-accordion-disabled) ::ng-deep dato-accordion-header {
-        cursor: not-allowed;
-    } `
-  ]
+  styleUrls: [`./accordion-group.component.scss`]
 })
 export class DatoAccordionGroupComponent {
   @ContentChild(DatoAccordionContentComponent) content: DatoAccordionContentComponent;

@@ -1,5 +1,5 @@
-dato-tabset {
-  .dato-tabs:not(.dato-tabs--clean) {
+dato-tabset:not(.dato-tabs--clean) {
+  .dato-tabs {
     li a {
       color: themify(primary-300);
     }

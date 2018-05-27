@@ -5,4 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './dialog-content.component.html',
   styleUrls: ['./dialog-content.component.scss']
 })
-export class DialogContentComponent {}
+export class DatoDialogContentComponent {}

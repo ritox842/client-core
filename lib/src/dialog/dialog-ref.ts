@@ -41,7 +41,7 @@ export class DatoDialogRef {
   constructor() {}
 
   /**
-   * Closing the modal dialog, passing an optional result.
+   * Closing the dialog, passing an optional result.
    */
   close(result?: any): void {
     this.tryClose({
@@ -51,7 +51,7 @@ export class DatoDialogRef {
   }
 
   /**
-   * Dismiss the modal dialog, passing an optional reason.
+   * Dismiss the dialog, passing an optional reason.
    */
   dismiss(reason?: any): void {
     this.tryClose({

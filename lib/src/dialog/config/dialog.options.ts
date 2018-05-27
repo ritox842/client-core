@@ -1,4 +1,4 @@
-import { TemplateRef, Type, ViewContainerRef } from '@angular/core';
+import { ViewContainerRef } from '@angular/core';
 import { Dimensions } from '../../types/public_api';
 
 export type DatoDialogOptions = {
@@ -65,8 +65,6 @@ export function getDefaultOptions(): DatoDialogOptions {
     draggable: false
   };
 }
-
-export type ContentType<T = any> = TemplateRef<T> | Type<T> | string;
 
 export const dialogSizePreset = {
   [Dimensions.SM]: ['400px', '200px'],

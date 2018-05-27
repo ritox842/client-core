@@ -7,8 +7,7 @@
  */
 
 import { ApplicationRef, ComponentFactoryResolver, ComponentRef, Injector, TemplateRef, Type, ViewRef } from '@angular/core';
-
-export type ContentType<T = any> = TemplateRef<T> | Type<T> | string;
+import { ContentType } from '../dynamic-content/dynamic-content.types';
 
 export type NewComponentParams = {
   resolver: ComponentFactoryResolver;

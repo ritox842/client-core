@@ -1,4 +1,5 @@
-import { ContentType, DatoDialogOptions, DialogResultStatus, getDefaultOptions } from './dialog.options';
+import { DatoDialogOptions, getDefaultOptions } from './dialog.options';
+import { ContentType } from '../../dynamic-content/dynamic-content.types';
 
 export enum DatoActionType {
   SUCCESS = 'SUCCESS',
@@ -35,7 +36,7 @@ export type DatoConfirmationOptions = DatoDialogOptions & {
   confirmationType: ConfirmationType;
 };
 
-const defaultActions = [
+const defaultActions: DatoDialogAction[] = [
   {
     type: DatoActionType.DISMISSED,
     caption: 'general.cancel'

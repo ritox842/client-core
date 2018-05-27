@@ -6,8 +6,8 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, EmbeddedViewRef, Input, OnInit, TemplateRef } from '@angular/core';
-import { ContentType } from '../dialog/config/dialog.options';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
+import { ContentType } from './dynamic-content.types';
 
 export enum RenderMethod {
   Component = 'Component',

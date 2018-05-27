@@ -1,12 +1,10 @@
-import { Directive, HostBinding, HostListener, Input, Optional } from '@angular/core';
+import { Directive, HostListener, Input, Optional } from '@angular/core';
 import { DatoDialogRef } from './dialog-ref';
 
 @Directive({
   selector: '[datoDialogClose]'
 })
-export class DialogCloseDirective {
-  @HostBinding('attr.type') buttonType = 'button';
-
+export class DatoDialogCloseDirective {
   @HostListener('click')
   onClick() {
     this.dialogRef.close(this.dialogResult);

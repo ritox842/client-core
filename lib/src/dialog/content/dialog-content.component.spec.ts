@@ -1,26 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { DatoDialogContentComponent } from './dialog-content.component';
+import { DatoTranslateService, stubs } from '../../services/public_api';
+import { createHostComponentFactory, query, SpectatorWithHost } from '@netbasal/spectator';
 
-import { DialogContentComponent } from './dialog-content.component';
+describe('DialogContentComponent', () => {
+  let host: SpectatorWithHost<DatoDialogContentComponent>;
 
-describe('ModalContentComponent', () => {
-  let component: DialogContentComponent;
-  let fixture: ComponentFixture<DialogContentComponent>;
-
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [DialogContentComponent]
-      }).compileComponents();
-    })
-  );
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DialogContentComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  const createHost = createHostComponentFactory({
+    component: DatoDialogContentComponent,
+    imports: [],
+    providers: [DatoTranslateService, stubs.translate()],
+    entryComponents: []
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should display the title', () => {
+    host = createHost(`<dato-dialog-content>Content</dato-dialog-content>`);
+    expect(query('dato-dialog-content')).toHaveText('Content');
   });
 });

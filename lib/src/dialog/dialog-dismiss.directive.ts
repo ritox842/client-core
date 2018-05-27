@@ -1,12 +1,10 @@
-import { Directive, HostBinding, HostListener, Input, Optional } from '@angular/core';
+import { Directive, HostListener, Input, Optional } from '@angular/core';
 import { DatoDialogRef } from './dialog-ref';
 
 @Directive({
   selector: '[datoDialogDismiss]'
 })
-export class DialogDismissDirective {
-  @HostBinding('attr.type') buttonType = 'button';
-
+export class DatoDialogDismissDirective {
   @HostListener('click')
   onClick() {
     this.dialogRef.dismiss(this.dialogResult);

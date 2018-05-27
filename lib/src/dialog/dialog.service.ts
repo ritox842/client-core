@@ -4,13 +4,14 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { merge } from 'rxjs/observable/merge';
 import { DatoDialogComponent } from './dialog/dialog.component';
 import { DatoDialogRef } from './dialog-ref';
-import { ContentType, DatoDialogOptions, getDefaultOptions } from './config/dialog.options';
+import { DatoDialogOptions, getDefaultOptions } from './config/dialog.options';
 import { createGUID, toBoolean } from '@datorama/utils';
 import { DialogConfig } from './config/dialog.config';
 import { DatoConfirmationOptions, getDefaultConfirmationOptions } from './config/dialog-confirmation.options';
 import { DatoConfirmationDialogComponent } from './confirmation/confirmation-dialog.component';
 import { DatoCoreError } from '../errors';
 import { DatoTranslateService } from '../services/translate.service';
+import { ContentType } from '../dynamic-content/dynamic-content.types';
 
 @Injectable()
 export class DatoDialog {
@@ -27,7 +28,7 @@ export class DatoDialog {
    * @param {Partial<DatoDialogOptions>} options
    * @returns {Observable<any>}
    */
-  open<T>(content: ContentType, options: Partial<DatoDialogOptions> = {}) {
+  open<T>(content: ContentType, options: Partial<DatoDialogOptions> = {}): DatoDialogRef {
     const mergedOptions = { ...getDefaultOptions(), ...options };
     const dialogRef = this.createDialogRef(mergedOptions);
     const container = mergedOptions.container;
@@ -40,7 +41,7 @@ export class DatoDialog {
     }
 
     dialogRef._onDestroy(this.onDestroy.bind(this, config));
-    this.createModalComponent(content, config);
+    this.createDialogComponent(content, config);
     this.injectToDOM(container, config);
     this.registerEvents(config);
 
@@ -56,7 +57,7 @@ export class DatoDialog {
    * @param {Partial<DatoDialogOptions>} options
    * @returns {Observable<any>}
    */
-  confirm<T>(options: Partial<DatoConfirmationOptions> = {}) {
+  confirm<T>(options: Partial<DatoConfirmationOptions> = {}): DatoDialogRef {
     const mergedOptions = { ...getDefaultConfirmationOptions(), ...options };
 
     // translate
@@ -66,6 +67,26 @@ export class DatoDialog {
     });
 
     return this.open(DatoConfirmationDialogComponent, mergedOptions as DatoDialogOptions);
+  }
+
+  /**
+   * Closing all the open dialogs, passing an optional result.
+   * @param result
+   */
+  closeAll(result?: any) {
+    this.dialogsStack.forEach(dialog => {
+      dialog.dialogRef.close(result);
+    });
+  }
+
+  /**
+   * Dismiss all the open dialogs, passing an optional reason.
+   * @param result
+   */
+  dismissAll(reason?: any) {
+    this.dialogsStack.forEach(dialog => {
+      dialog.dialogRef.dismiss(reason);
+    });
   }
 
   /**
@@ -103,7 +124,7 @@ export class DatoDialog {
    * @param {ContentType} content
    * @param {DatoDialogOptions} options
    */
-  private createModalComponent(content: ContentType, config: DialogConfig) {
+  private createDialogComponent(content: ContentType, config: DialogConfig) {
     /** Todo: Move to Angular Utils file - createDynamicComponent(component, injector, contentRef): ComponentRef */
     const factory = this.resolver.resolveComponentFactory(DatoDialogComponent);
     const dialogRef = config.dialogRef;
@@ -125,7 +146,9 @@ export class DatoDialog {
     const element = config.componentRef.location.nativeElement;
     const dialogElement = container.appendChild(element);
     config.dialogElement = dialogElement;
-    config.viewRef.detectChanges();
+    if (config.viewRef) {
+      config.viewRef.detectChanges();
+    }
   }
 
   /**

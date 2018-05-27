@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import { DatoDialogRef } from '../dialog-ref';
 import { DatoDialog } from '../dialog.service';
+import { DatoDialogOptions } from '../config/dialog.options';
 
 @Component({
   selector: 'dato-dialog-header',
@@ -13,13 +14,17 @@ export class DatoDialogHeaderComponent implements OnInit {
   draggableEnabled = false;
 
   get enableClose() {
-    return this.dialogRef.options.enableClose;
+    return this.options.enableClose;
+  }
+
+  get options(): DatoDialogOptions {
+    return this.dialogRef.options || ({} as DatoDialogOptions);
   }
 
   constructor(private dialog: DatoDialog, private dialogRef: DatoDialogRef, public element: ElementRef) {}
 
   ngOnInit(): void {
-    if (this.dialogRef.options.draggable) {
+    if (this.options.draggable) {
       this.draggableEnabled = true;
       this.draggableDialogElement = this.dialog.getClosestDialogElement(this.element.nativeElement);
     }

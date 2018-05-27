@@ -1,0 +1,22 @@
+<dato-dialog-header>
+  <div class="d-flex-row">
+    <dato-icon datoIcon="alert" class="title-icon mr-15"></dato-icon>
+    {{options.title}}
+  </div>
+</dato-dialog-header>
+<dato-dialog-content>
+  <dato-dynamic-content [content]="options.content"></dato-dynamic-content>
+</dato-dialog-content>
+<dato-dialog-footer>
+  <ng-container *ngFor="let action of options.actions">
+    <dato-button datoType="primary"
+                 [datoDialogClose]="action.type" *ngIf="action.type === 'SUCCESS'; else cancelBtn">
+      {{action.caption}}
+    </dato-button>
+    <ng-template #cancelBtn>
+      <dato-button datoType="secondary" [datoDialogDismiss]="action.type">
+        {{action.caption}}
+      </dato-button>
+    </ng-template>
+  </ng-container>
+</dato-dialog-footer>

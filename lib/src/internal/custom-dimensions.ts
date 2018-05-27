@@ -7,11 +7,19 @@
  */
 import { setStyle } from './helpers';
 
-export function setDimensions(width: string, height: string, element: Element) {
+export function setDimensions(width: string, height: string, element: Element, prefix: 'min-' | 'max-' | '' = '') {
   if (width) {
-    setStyle(element, 'width', width);
+    setStyle(element, `${prefix}width`, width);
   }
   if (height) {
-    setStyle(element, 'height', height);
+    setStyle(element, `${prefix}height`, height);
   }
+}
+
+export function setMinDimensions(width: string, height: string, element: Element) {
+  setDimensions(width, height, element, 'min-');
+}
+
+export function setMaxDimensions(width: string, height: string, element: Element) {
+  setDimensions(width, height, element, 'max-');
 }

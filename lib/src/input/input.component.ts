@@ -50,6 +50,7 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
   }
 
   ngOnInit() {
+    setDimensions(this.width, this.height, this.host.nativeElement);
     setDimensions(this.width, this.height, this.inpuElement);
 
     fromEvent(this.inpuElement, 'input')

@@ -1,0 +1,12 @@
+<dato-dialog-header>Title</dato-dialog-header>
+<dato-dialog-content>
+  <div class="d-flex-column">
+    <p>Hi {{name}}!</p>
+    <p>What's your favorite animal?</p>
+    <dato-input class="d-flex-row" datoSize="sm" [formControl]="animalControl" [datoAutoFocus]="true"></dato-input>
+  </div>
+</dato-dialog-content>
+<dato-dialog-footer>
+  <dato-button datoType="secondary" datoDialogDismiss>No Thanks</dato-button>
+  <dato-button [datoDialogClose]="animalControl.value">OK</dato-button>
+</dato-dialog-footer>

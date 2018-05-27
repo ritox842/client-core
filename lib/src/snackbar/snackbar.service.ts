@@ -9,13 +9,14 @@
 import { ApplicationRef, ComponentFactoryResolver, ComponentRef, Inject, Injectable, Injector, TemplateRef } from '@angular/core';
 import { SnackbarType } from '../snackbar/snackbar.types';
 import { DatoTranslateService } from '../services/translate.service';
-import { ContentRef, ContentType, createComponent, ngContentResolver } from '../angular/dynamic-components';
+import { ContentRef, createComponent, ngContentResolver } from '../angular/dynamic-components';
 import { DatoSnackbarComponent } from './snackbar.component';
 import { DOCUMENT } from '@angular/common';
 import { getDefaults, SnackbarOptions } from './snackbar.types';
 import { SnackbarRef } from './snackbar-ref';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { isString } from '@datorama/utils';
+import { ContentType } from '../dynamic-content/dynamic-content.types';
 
 @Injectable()
 @TakeUntilDestroy('destroy')

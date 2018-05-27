@@ -30,6 +30,7 @@ describe('DatoInputComponent', () => {
 
     it('should support custom height', function() {
       host = createHost(`<dato-input [formControl]="control" height="50px"></dato-input>`);
+      expect(host.element).toHaveStyle({ height: '50px' });
       expect(host.query('input')).toHaveStyle({ height: '50px' });
     });
   });

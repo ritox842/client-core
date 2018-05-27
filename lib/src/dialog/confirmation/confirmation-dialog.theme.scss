@@ -1,0 +1,27 @@
+dato-confirmation-dialog {
+
+  .title-icon {
+    color: themify(primary-400);
+  }
+
+  &.disruptive {
+
+    .title-icon {
+      color: themify(orange-400);
+    }
+
+    dato-button[datotype='primary'] {
+      button {
+        background-color: themify(orange-400);
+      }
+
+      button:hover {
+        background-color: themify(orange-500);
+      }
+
+      button:active {
+        background-color: themify(orange-600);
+      }
+    }
+  }
+}

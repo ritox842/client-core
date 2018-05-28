@@ -8,11 +8,14 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DatoDropdownComponent } from './dropdown.component';
+import { DatoSelectComponent } from './select.component';
+
+const publicApi = [DatoSelectComponent];
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [DatoDropdownComponent],
-  exports: [DatoDropdownComponent]
+  declarations: [publicApi],
+  exports: [publicApi],
+  entryComponents: [publicApi]
 })
-export class DatoDropdownModule {}
+export class DatoSelectModule {}

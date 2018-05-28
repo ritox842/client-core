@@ -5,7 +5,6 @@ import { ColorsPreviewComponent } from "./previews/colors-preview/colors-preview
 import { IconsPreviewComponent } from "./previews/icons-preview/icons-preview.component";
 import { GridPreviewComponent } from "./previews/grid-preview/grid-preview.component";
 import { InputsPreviewComponent } from "./previews/inputs-preview/inputs-preview.component";
-import { ActionMenuPreviewComponent } from "./previews/action-menu-preview/action-menu-preview.component";
 import { SortablePreviewComponent } from "./previews/sortable-preview/sortable-preview.component";
 import { GridBasicPreviewComponent } from "./previews/grid-preview/basic/grid-basic-preview.component";
 import { GridActionsPreviewComponent } from "./previews/grid-preview/actions/grid-actions-preview.component";
@@ -15,6 +14,7 @@ import { LayoutPreviewComponent } from "./previews/layout-preview/layout-preview
 import { SnackbarPreviewComponent } from "./previews/snackbar-preview/snackbar-preview.component";
 import { DialogPreviewComponent } from "./previews/dialog-preview/dialog-preview.component";
 import { dialogPreviewComponents } from "./previews/dialog-preview/dialog-preview.providers";
+import { SelectPreviewComponent } from "./previews/select-preview/select-preview.component";
 
 export const previews = [
   ButtonsPreviewComponent,
@@ -25,13 +25,13 @@ export const previews = [
   GridBasicPreviewComponent,
   GridActionsPreviewComponent,
   InputsPreviewComponent,
-  ActionMenuPreviewComponent,
   SortablePreviewComponent,
   AccordionPreviewComponent,
   DragPreviewComponent,
   TabsPreviewComponent,
   LayoutPreviewComponent,
   SnackbarPreviewComponent,
+  SelectPreviewComponent,
   ...dialogPreviewComponents
 ];
 
@@ -42,12 +42,12 @@ export const routeToComponent = {
   icons: IconsPreviewComponent,
   grid: GridPreviewComponent,
   inputs: InputsPreviewComponent,
-  menu: ActionMenuPreviewComponent,
   sortable: SortablePreviewComponent,
   accordion: AccordionPreviewComponent,
   drag: DragPreviewComponent,
   tabs: TabsPreviewComponent,
   layout: LayoutPreviewComponent,
   snackbar: SnackbarPreviewComponent,
-  dialog: DialogPreviewComponent
+  dialog: DialogPreviewComponent,
+  select: SelectPreviewComponent
 };

@@ -6,5 +6,6 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-export * from './dropdown/dropdown.component';
-export * from './dropdown/dropdown.module';
+export * from './select.component';
+export * from './select.module';
+export * from './select.types';

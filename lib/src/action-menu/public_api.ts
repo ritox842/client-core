@@ -6,6 +6,6 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-export * from './action-menu.component';
-export * from './action-menu-item.component';
-export * from './action-menu.module';
+//export * from './action-menu.component';
+//export * from './action-menu-item.component';
+//export * from './action-menu.module';

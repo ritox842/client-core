@@ -13,7 +13,7 @@ export * from './link-button/public_api';
 export * from './text/public_api';
 export * from './icon-button/public_api';
 export * from './grid/public_api';
-export * from './action-menu/public_api';
+//export * from './action-menu/public_api';
 export * from './loader/public_api';
 export * from './sortable/public_api';
 export * from './accordion/public_api';
@@ -22,8 +22,8 @@ export * from './radio/public_api';
 export * from './toggler/public_api';
 export * from './snackbar/public_api';
 export * from './editable-header/public_api';
+export * from './select/public_api';
 export * from './tabs/public_api';
-export * from './shared/public_api';
 export * from './angular/public_api';
 
 export * from './services/public_api';

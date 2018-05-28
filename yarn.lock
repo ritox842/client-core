@@ -322,12 +322,11 @@
     node-sass "4.9.0"
     postcss "^6.0.22"
 
-"@datorama/themify@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@datorama/themify/-/themify-1.0.2.tgz#86aa6eff4d4f94fa308403da48967fa65c4a3f6b"
+"@datorama/themify@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@datorama/themify/-/themify-1.0.5.tgz#4626a8436493b4b1acf98b39a51d2d59eb97b2bd"
   dependencies:
     fs-extra "^5.0.0"
-    hex-to-rgba "^1.0.1"
 
 "@datorama/utils@^1.17":
   version "1.17.0"
@@ -378,9 +377,9 @@
     mkdirp "^0.5.1"
     rimraf "^2.5.2"
 
-"@netbasal/spectator@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@netbasal/spectator/-/spectator-1.6.1.tgz#6242fa259f3131008be60cc42b243909b33b30df"
+"@netbasal/spectator@^1.7.3":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@netbasal/spectator/-/spectator-1.8.0.tgz#a5d17860d9134c0fcc25566c1a6d1d47b0c15c55"
   dependencies:
     jquery "^3.3.1"
 
@@ -6923,9 +6922,9 @@ pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
 
-popper.js@^1.12.9:
-  version "1.12.9"
-  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.9.tgz#0dfbc2dff96c451bb332edcfcfaaf566d331d5b3"
+popper.js@^1.14.3:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.3.tgz#1438f98d046acf7b4d78cd502bf418ac64d4f095"
 
 portfinder@^1.0.9, portfinder@~1.0.12:
   version "1.0.13"

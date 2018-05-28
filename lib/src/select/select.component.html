@@ -1,9 +1,20 @@
-<section>
-
-  <p #origin>origin</p>
-
-  <section class="dropdown" #dropdown>
-    dropdown
-  </section>
-
+{{open}}
+<section cdkOverlayOrigin (click)="click($event)" class="dato-select__trigger">
+  <dato-input placeholder="Select Item.." *ngIf="open" [placeholder]="placeholder" [isFocused]="focus"></dato-input>
+  <dato-trigger-single [active]="active" [model]="model" *ngIf="!open" [placeholder]="placeholder"></dato-trigger-single>
 </section>
+
+<ng-template #dropdown>
+
+  <div class="dato-select__dropdown">
+
+    <div *ngFor="let datoOption of options;"
+         (click)="select($event, datoOption.option)"
+         [class.dato-option--active]="isActive(datoOption.option)"
+         class="dato-select__option">
+      <ng-template [ngTemplateOutlet]="datoOption.tpl"></ng-template>
+    </div>
+
+  </div>
+
+</ng-template>

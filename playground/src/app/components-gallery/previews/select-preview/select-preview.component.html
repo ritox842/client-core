@@ -1,8 +1,24 @@
 <dato-preview title="Select">
 
-  <dato-select [formControl]="control">
+  <div style="width: 250px;">
 
-  </dato-select>
+    <dato-select [formControl]="control" placeholder="Select items">
+
+      <ng-container *datoActive="let active">
+        {{active?.label}}
+      </ng-container>
+
+      <ng-container *ngFor="let item of options;">
+        <ng-container *datoOption="item">
+          {{item.label}}
+        </ng-container>
+      </ng-container>
+
+    </dato-select>
+
+
+  </div>
+
 
   <dato-tabs show="html">
 

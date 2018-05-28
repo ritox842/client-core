@@ -85,6 +85,7 @@
   },
   "dependencies": {
     "@angular/animations": "^5.2.7",
+    "@angular/cdk": "5.2.5",
     "@angular/cli": "1.6.5",
     "@angular/common": "^5.2.7",
     "@angular/compiler": "^5.2.7",

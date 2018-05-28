@@ -9,3 +9,6 @@
 export * from './select.component';
 export * from './select.module';
 export * from './select.types';
+export * from './select-option.directive';
+export * from './select-active.directive';
+export * from './trigger-single/trigger-single.component';

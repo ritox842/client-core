@@ -1,3 +1,16 @@
-dato-select .dropdown {
+.dato-select__dropdown {
   background-color: themify(primary-0);
+}
+
+.dato-option--active {
+  background-color: themify(accent-200);
+  font-weight: 500;
+}
+
+.dato-select__option:not(.dato-option--active):hover {
+  background-color: themify(primary-100);
+}
+
+.dato-select__placeholder {
+  color: themify(primary-300);
 }

@@ -1,7 +1,40 @@
-:host {
+dato-select {
+  display: block;
+}
 
-  .dropdown {
-    box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
-  }
+.dato-select__trigger {
+  height: 30px;
+}
 
+.dato-select__dropdown {
+  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dato-select__option {
+  height: 35px;
+  line-height: 35px;
+  padding: 0 13px 0 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+.cdk-overlay-pane.dato-select {
+  position: absolute;
+  pointer-events: auto;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.cdk-overlay-backdrop.dato-select {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0;
 }

@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  dato-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+  }
+}

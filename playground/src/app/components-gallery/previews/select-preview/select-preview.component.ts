@@ -9,6 +9,8 @@ import { FormControl } from "@angular/forms";
 export class SelectPreviewComponent implements OnInit {
   control = new FormControl();
 
+  options = [{ label: "Netanel", id: 1 }, { label: "Moshe", id: 2 }];
+
   constructor() {}
 
   ngOnInit() {}

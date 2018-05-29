@@ -7,10 +7,26 @@
   font-weight: 500;
 }
 
-.dato-select__option:not(.dato-option--active):hover {
+.dato-select__option:not(.dato-option--active):not(.dato-select__not-found):hover {
   background-color: themify(primary-100);
 }
 
-.dato-select__placeholder {
+.dato-select__placeholder, .dato-select__option--disabled, dato-select__not-found {
   color: themify(primary-300);
+}
+
+.dato-select--disabled {
+  pointer-events: none;
+
+  dato-trigger-single {
+    @include input-disabled();
+  }
+
+  .dato-select__placeholder{
+    color: themify(primary-200);
+  }
+
+  dato-trigger-single dato-icon path {
+    fill: themify(primary-200);
+  }
 }

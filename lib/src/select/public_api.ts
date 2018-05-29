@@ -12,3 +12,6 @@ export * from './select.types';
 export * from './select-option.directive';
 export * from './select-active.directive';
 export * from './trigger-single/trigger-single.component';
+export * from './select-loading.component';
+export * from './select-empty.component';
+export * from './filter.pipe';

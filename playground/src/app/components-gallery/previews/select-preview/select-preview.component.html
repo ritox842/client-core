@@ -1,23 +1,120 @@
 <dato-preview title="Select">
 
-  <div style="width: 250px;">
+  <section class="d-flex">
+    <div style="width: 250px; margin-right: 30px;">
+      <p datoFont>Searchable</p>
 
-    <dato-select [formControl]="control" placeholder="Select items">
+      <dato-select [formControl]="control" placeholder="Select items">
 
-      <ng-container *datoActive="let active">
-        {{active?.label}}
-      </ng-container>
-
-      <ng-container *ngFor="let item of options;">
-        <ng-container *datoOption="item">
-          {{item.label}}
+        <ng-container *datoActive="let active">
+          {{active?.label}}
         </ng-container>
-      </ng-container>
 
-    </dato-select>
+        <ng-container *ngFor="let item of (options$ | async); index as index">
+          <ng-container *datoOption="item; disabled: index === 1">
+            {{item.label}}
+          </ng-container>
+        </ng-container>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{control.value}}</span></p>
+
+    </div>
+
+    <div style="width: 250px; margin-right: 30px;">
+      <p datoFont>With Icon</p>
+
+      <dato-select [formControl]="control" placeholder="Select items">
+
+        <ng-container *datoActive="let active">
+          <div class="d-flex items-center">
+            <dato-icon datoIcon="pin" datoSize="md" width="15px" class="mr-5" datoColor="green-400"></dato-icon> {{active?.label}}
+          </div>
+        </ng-container>
+
+        <ng-container *ngFor="let item of (options$ | async); index as index">
+          <ng-container *datoOption="item; disabled: index === 1">
+            <div class="d-flex items-center">
+              <dato-icon datoIcon="pin" datoSize="md" width="15px" class="mr-5"></dato-icon> {{item.label}}
+            </div>
+          </ng-container>
+        </ng-container>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{control.value}}</span></p>
+
+    </div>
+
+    <div style="width: 250px; margin-right: 30px;">
+
+      <p datoFont>Without Search</p>
+
+      <dato-select [formControl]="control2" placeholder="Select items" [isCombo]="false">
+
+        <ng-container *datoActive="let active">
+          {{active?.label}}
+        </ng-container>
+
+        <ng-container *ngFor="let item of options;">
+          <ng-container *datoOption="item">
+            {{item.label}}
+          </ng-container>
+        </ng-container>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{control2.value}}</span></p>
+
+    </div>
+
+    <div style="width: 250px; margin-right: 30px;">
+
+      <p datoFont>With Initial Value</p>
+
+      <dato-select [formControl]="control3" placeholder="Select items">
+
+        <ng-container *datoActive="let active">
+          {{active?.label}}
+        </ng-container>
+
+        <ng-container *ngFor="let item of options;">
+          <ng-container *datoOption="item">
+            {{item.label}}
+          </ng-container>
+        </ng-container>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{control3.value}}</span></p>
+
+    </div>
 
 
-  </div>
+    <div style="width: 250px;">
+
+      <p datoFont>Disable</p>
+
+      <dato-select [formControl]="control4" placeholder="Select items">
+
+        <ng-container *datoActive="let active">
+          {{active?.label}}
+        </ng-container>
+
+        <ng-container *ngFor="let item of options;">
+          <ng-container *datoOption="item">
+            {{item.label}}
+          </ng-container>
+        </ng-container>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{control4.value}}</span></p>
+      <dato-button (click)="toggleDisableEnable()" datoSize="sm">Toggle Disable/enable</dato-button>
+    </div>
+
+  </section>
 
 
   <dato-tabs show="html">

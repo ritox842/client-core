@@ -1,7 +1,7 @@
 dato-trigger-single {
   @include input-like();
   @include input-like-theme();
-  dato-icon path {
+  .dato-icon-arrow-down path {
     fill: themify(primary-300);
   }
 }

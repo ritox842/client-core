@@ -1,19 +1,39 @@
-{{open}}
-<section cdkOverlayOrigin (click)="click($event)" class="dato-select__trigger">
-  <dato-input placeholder="Select Item.." *ngIf="open" [placeholder]="placeholder" [isFocused]="focus"></dato-input>
-  <dato-trigger-single [active]="active" [model]="model" *ngIf="!open" [placeholder]="placeholder"></dato-trigger-single>
+<section cdkOverlayOrigin class="dato-select__trigger" [class.dato-select--disabled]="disabled">
+
+  <dato-input placeholder="Choose.."
+              *ngIf="open && isCombo"
+              [placeholder]="placeholder"
+              [isFocused]="focus"
+              [formControl]="searchControl"
+              type="search"></dato-input>
+
+  <dato-trigger-single [active]="active"
+                       [context]="context"
+                       *ngIf="!open || !isCombo"
+                       [placeholder]="placeholder"
+                       class="ontop-overlay"
+                       (click)="click($event)"></dato-trigger-single>
 </section>
 
 <ng-template #dropdown>
 
   <div class="dato-select__dropdown">
 
-    <div *ngFor="let datoOption of options;"
-         (click)="select($event, datoOption.option)"
-         [class.dato-option--active]="isActive(datoOption.option)"
-         class="dato-select__option">
-      <ng-template [ngTemplateOutlet]="datoOption.tpl"></ng-template>
-    </div>
+    <ng-container *ngIf="(options | selectFilter:internalSearch:isCombo:labelKey:searchValue) as result">
+
+      <dato-select-loading [show]="false"></dato-select-loading>
+
+      <div *ngFor="let datoOption of result;"
+           (click)="select($event, datoOption.option)"
+           [class.dato-option--active]="isActive(datoOption.option)"
+           [class.dato-select__option--disabled]="datoOption._disabled"
+           class="dato-select__option">
+        <ng-template [ngTemplateOutlet]="datoOption.tpl"></ng-template>
+      </div>
+
+      <dato-select-empty [show]="!result.length">{{noItemsLabel}}</dato-select-empty>
+
+    </ng-container>
 
   </div>
 

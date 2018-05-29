@@ -1,23 +1,44 @@
+$select-md-height: 35;
+
 dato-select {
   display: block;
 }
 
+.ontop-overlay {
+  /** Be greater than the cdk overlay */
+  //z-index: 1001;
+}
+
 .dato-select__trigger {
   height: 30px;
+  &[disabled] {
+    pointer-events: none;
+  }
 }
 
 .dato-select__dropdown {
+  //z-index: 1003;
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+  max-height: $select-md-height * 4px;
+  overflow-y: auto;
 }
 
 .dato-select__option {
-  height: 35px;
-  line-height: 35px;
+  height: $select-md-height * 1px;
+  line-height: $select-md-height * 1px;
   padding: 0 13px 0 10px;
   font-size: 14px;
   cursor: pointer;
+
+  &--disabled {
+    pointer-events: none;
+  }
 }
 
+.dato-select__not-found {
+  font-style: italic;
+  cursor: default;
+}
 
 .cdk-overlay-pane.dato-select {
   position: absolute;

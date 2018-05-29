@@ -35,6 +35,7 @@
 
 :host .dato-icon-close {
   cursor: pointer;
+  z-index: 1002;
 }
 
 @include size(input, sm) {

@@ -11,18 +11,22 @@ import { CommonModule } from '@angular/common';
 import { DatoSelectComponent } from './select.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
-import { DatoOptioneDirective } from './select-option.directive';
+import { DatoOptionDirective } from './select-option.directive';
 import { DatoIconModule } from '../icon/icon.module';
 import { DatoInputModule } from '../input/input.module';
 import { DatoTriggerSingle } from './trigger-single/trigger-single.component';
 import { DatoSelectActiveDirective } from './select-active.directive';
+import { FilterPipe } from './filter.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DatoSelectEmptyComponent } from './select-empty.component';
+import { DatoSelectLoadingComponent } from './select-loading.component';
 
-const publicApi = [DatoSelectComponent, DatoTriggerSingle];
-const directives = [DatoOptioneDirective, DatoSelectActiveDirective];
+const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectLoadingComponent];
+const directives = [DatoOptionDirective, DatoSelectActiveDirective];
 
 @NgModule({
-  imports: [CommonModule, OverlayModule, PortalModule, DatoInputModule, DatoIconModule],
-  declarations: [publicApi, directives],
+  imports: [CommonModule, OverlayModule, PortalModule, DatoInputModule, DatoIconModule, ReactiveFormsModule],
+  declarations: [publicApi, directives, FilterPipe],
   exports: [publicApi, directives],
   entryComponents: [publicApi]
 })

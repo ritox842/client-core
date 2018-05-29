@@ -20,10 +20,8 @@ export class DatoTriggerSingle {
   @Input() placeholder = '';
 
   @Input()
-  set model(value) {
-    if (value.length) {
-      this._model = { $implicit: value[0] };
-    }
+  set context(value) {
+    this._model = { $implicit: value };
     //this.cdr.detectChanges();
   }
 
@@ -33,5 +31,5 @@ export class DatoTriggerSingle {
 
   _model;
 
-  //constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {}
 }

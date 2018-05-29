@@ -56,12 +56,17 @@ $inputsize: (
   }
 
   &[disabled] {
-    background-color: themify(primary-300, 0.1);
-    cursor: not-allowed;
-    border: none;
+    @include input-disabled();
   }
 
   &[disabled] ~ dato-icon path {
     fill: themify(primary-200);
   }
+}
+
+@mixin input-disabled() {
+  background-color: themify(primary-300, 0.1);
+  cursor: not-allowed;
+  border: 1px solid transparent;
+  color: themify(primary-200);
 }

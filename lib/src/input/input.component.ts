@@ -31,7 +31,6 @@ const animations = [trigger('fromRight', [transition(':enter', [style({ transfor
   selector: 'dato-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
-  animations,
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [valueAccessor]
 })
@@ -85,6 +84,7 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
       this.activateDeleteIcon(value);
       this.setInputValue(value);
       this.onChange(value);
+      this.focus();
     }
   }
 
@@ -104,6 +104,10 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
    */
   setDisabledState(isDisabled: boolean): void {
     this.renderer.setProperty(this.inpuElement, 'disabled', isDisabled);
+  }
+
+  focus() {
+    this.inpuElement.focus();
   }
 
   ngOnDestroy(): void {}

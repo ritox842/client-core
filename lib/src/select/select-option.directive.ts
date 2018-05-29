@@ -6,13 +6,21 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Directive, Input, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Directive, Input, TemplateRef } from '@angular/core';
 
 @Directive({
   selector: '[datoOption]'
 })
-export class DatoOptioneDirective {
+export class DatoOptionDirective {
   @Input('datoOption') option;
 
-  constructor(public tpl: TemplateRef<any>) {}
+  @Input()
+  set datoOptionDisabled(value: boolean) {
+    this._disabled = value;
+    this.cdr.markForCheck();
+  }
+
+  _disabled;
+
+  constructor(public tpl: TemplateRef<any>, private cdr: ChangeDetectorRef) {}
 }

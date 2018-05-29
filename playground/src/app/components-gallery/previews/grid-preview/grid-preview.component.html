@@ -1,24 +1,297 @@
-<script src="../../../../../../../Downloads/tx.ts"></script>
-<dato-preview title="Introduction">
-  <p>
-    dato-grid component, is a wrapper around AgGrid, with predefined configuration,
-    built-in functionality (such as the pagination component) and opinionated graphic design.<br>
-    dato-toolbar component, integrates with dato-grid and provides easy, opinionated way to interact with the grid.
 
-    <br><br>
-    The toolbar component, can received any ng-template element in the HTML markup,<br>
-    or an array of actions (see the full <a href="/gallery/grid#toolbar_api">API</a> below).
+<p datoFont="headline">Overview</p>
+<br/>
 
-    <br><br>
-    This page does not include how to work with AgGrid API. You can see AgGrid API <a
-    href="https://www.ag-grid.com/javascript-grid-reference-overview/" target="_blank">here</a>.
-  </p>
-</dato-preview>
+<div>
+  <code>dato-grid</code> component, is a wrapper around AgGrid, with predefined configuration,
+  built-in functionality (such as the pagination and toolbar) and opinionated graphic design.
 
+  <br><br>
+  This documentation does not include how to work with AgGrid API. You can see AgGrid API <a
+  href="https://www.ag-grid.com/javascript-grid-reference-overview/" target="_blank">here</a>.
+</div>
 
 <dato-grid-basic-preview></dato-grid-basic-preview>
 
-<dato-grid-actions-preview></dato-grid-actions-preview>
+<p datoFont="sub-headline">DatoGrid Base Class</p>
+<br/>
+
+<div>
+    The abstract <code>DatoGrid</code> class, provides an abstraction around the grid API
+    and full integration to <code>dato-grid</code> component.
+    <br/>
+    When building your grid, you should always <code>extends</code> from <code>DatoGrid</code>.
+    <br/>
+    <code>DatoGrid</code> will let you know when the grid is ready through the <code>datoGridReady</code> event.
+
+    <br/><br/>
+
+    <textarea datoHighlight="js">
+    @Component({/* ... */})
+    export class YourGrid extends DatoGrid< any > {
+      constructor() { }
+
+      ngOnInit() {
+        super.ngOnInit();
+
+        this.datoGridReady.subscribe(() => {
+          console.log("The grid is ready for use!");
+        });
+      }
+    }
+    </textarea>
+
+</div>
+
+<br/><br/>
+<p datoFont="sub-headline">Add Columns</p>
+<br/>
+
+<div>
+  Adding columns to your grid can be done through the abstract function: <code>getColumns</code>.
+  <br/>
+  You should return an array of column definition (<code>(ColDef | ColGroupDef)[]</code>).
+  <br/>
+  For the full API, see AgGrid official docs.
+
+  <br/><br/>
+
+  <textarea datoHighlight="js">
+    @Component({/* ... */})
+    export class YourGrid extends DatoGrid< any > {
+      constructor() { }
+
+      ngOnInit() {
+        ...
+      }
+
+      getColumns(): GridColumns {
+        return [
+          {
+            headerName: "ID",
+            field: "id",
+            width: 100,
+            filter: "agNumberColumnFilter"
+          },
+          {
+            headerName: "Value",
+            field: "value",
+            width: 100,
+            filter: "agTextColumnFilter"
+          }
+        ];
+      }
+    }
+    </textarea>
+
+</div>
+
+<br/><br/>
+<p datoFont="sub-headline">Set Rows</p>
+<br/>
+
+<div>
+  Set the grid data can be done through <code>setRows</code> function.
+  <br/>
+  Adding new rows can be done only after the grid has been rendered.
+
+  <br/><br/>
+
+  <textarea datoHighlight="js">
+    @Component({/* ... */})
+    export class YourGrid extends DatoGrid< any > {
+      constructor() { }
+
+      ngOnInit() {
+        super.ngOnInit();
+
+        /* waiting for the grid to be ready... */
+        this.datoGridReady.subscribe(() => {
+          /* set the rows for the first time */
+          this.setRows([{
+            id: 1,
+            value: 'row 1'
+          }]);
+        });
+      }
+
+    }
+    </textarea>
+
+</div>
+
+<br/><br/>
+<p datoFont="sub-headline">Set Rows Asynchronously</p>
+<br/>
+
+<div>
+  A common behaviour is to load the data in an asynchronous manner, by sending a request to the server for example.
+  <br/>
+  <dato-grid-async-preview></dato-grid-async-preview>
+</div>
+
+
+<p datoFont="headline">Grid Toolbar</p>
+<br/>
+
+<div>
+  <code>dato-toolbar</code> component, fully integrates with <code>dato-grid</code>
+  and provides an easy way to interact with the grid.
+  <br/>
+  The toolbar is a set of buttons (by default) that can be displayed when a user selects one or multiple rows.
+  <br/>
+  Implement the <code>getToolbarActions</code> function, and return an array of <code>ToolbarAction</code>.
+  (see the full <a href="/gallery/grid#toolbar_api">API</a> below)
+  <br/>
+  Consider the following example:
+  <br/>
+
+  <dato-grid-basic-toolbar-preview></dato-grid-basic-toolbar-preview>
+
+  <p datoFont="sub-headline">Working with ngTemplate</p>
+  <br/>
+
+  Besides working with the <code>getToolbarActions</code> function from the previous example,
+  it's possible to work with <code>ng-template</code> directly in the HTML markup.
+  <br/>
+  In the following example, we're adding custom templates as the toolbar content:
+  <br/><br/>
+
+  <textarea datoHighlight="html">
+    <dato-grid-toolbar [grid]="gridRef">
+      <ng-template datoGridToolbarItem showWhen="none">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          Show when no row selected
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem showWhen="always">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          Always show
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem showWhen="single">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          A single row
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem showWhen="multiple">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          A single or multiple rows
+        </dato-button>
+      </ng-template>
+
+      <ng-template datoGridToolbarItem [showWhen]="myCustomLogic">
+        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
+          Only when one of the values equal to 5
+        </dato-button>
+      </ng-template>
+    </dato-grid-toolbar>
+    <dato-grid [options]="options" #gridRef></dato-grid>
+  </textarea>
+
+  <br/>
+  <p datoFont="sub-headline">Dialog Integration</p>
+  <br/>
+
+  <p>
+    The toolbar has build-in integration with <code>DatoDialog</code>.
+    <br/>
+    This will allow you to confirm the user before deleting a row or you can open your own dialog upon toolbar action.
+    <br/>
+    <br/>
+    The easiest way to open a confirmation dialog is to use the built-in <code>ToolbarConfirmation</code>,
+    as part of <code>getToolbarActions</code>:
+    <br/><br/>
+  </p>
+<textarea datoHighlight="js">
+getToolbarActions(): ToolbarAction[] {
+  return [
+    {
+      text: 'Click Me!',
+      click: new ToolbarConfirmation({
+        dialogOptions: {
+          title: 'Dialog Title',
+          content: 'Are you sure you want to write to console.log?'
+        }
+        afterClosed: (result: ToolbarConfirmationHandlerResult) => {
+          if (result.dialogResult.status === DialogResultStatus.SUCCESS) {
+            console.log(`Yeah!);
+          }
+        }
+      })
+    }
+  ];
+}
+</textarea>
+
+  <br/>
+  <p>
+    But what if you just want a simple delete confirmation message?
+    <br/>
+    In this case you can leverage the <code>ToolbarDeleteConfirmation</code>:
+    <br/><br/>
+  </p>
+
+  <textarea datoHighlight="js">
+  getToolbarActions(): ToolbarAction[] {
+    return [
+      {
+        actionType: ToolbarActionType.Delete,
+        click: new ToolbarDeleteConfirmation({
+          afterClosed: (result: ToolbarConfirmationHandlerResult) => {
+            if (result.dialogResult.status === DialogResultStatus.SUCCESS) {
+              console.log(`The row has been deleted!);
+            }
+          }
+        })
+      }
+    ];
+  }
+  </textarea>
+
+  <br/>
+  <p>
+    When using <code>ToolbarDeleteConfirmation</code> the row will be deleted from the grid upon success dialog result.
+    <br/>
+    By default, <code>ToolbarDeleteConfirmation</code> will open the confirmation dialog with default title and content.
+    You can override any properties you wish, through the <code>dialogOptions</code>.
+    <br/>
+    Consider the following example, which illustrate all the available options for dialog integrations:
+  </p>
+
+  <br/>
+
+  <dato-grid-toolbar-dialog-preview></dato-grid-toolbar-dialog-preview>
+
+  <br/>
+
+</div>
+
+<p datoFont="headline">Reactive Form Support</p>
+<br/>
+
+<div>
+  <code>DatoGrid</code> has built-in support in reactive form that let you bind the selected rows to a <code>FormControl</code>.
+</div>
+
+<dato-grid-form-control-preview></dato-grid-form-control-preview>
+
+<p datoFont="headline">Grid Header Component</p>
+<br/>
+
+<dato-grid-advanced-preview></dato-grid-advanced-preview>
+
+<p datoFont="headline">Rows Grouping</p>
+<br/>
+
+<dato-grid-grouping-preview></dato-grid-grouping-preview>
+
+<br/><br/>
+<p datoFont="headline">Grid API</p>
+<br/>
 
 <div class="panel mt-4">
 

@@ -58,8 +58,17 @@ dato-grid.grid-pagination {
   }
   .menu-icon, .columns-icon, .menu-pin-icon {
     svg {
-      width: 14px;
+      width: 4px;
+      height: 14px;
     }
+  }
+
+  .group-expanded-icon,
+  .group-contracted-icon {
+    width: 7px;
+  }
+  .group-expanded-icon {
+    transform: rotate(90deg);
   }
 
 }

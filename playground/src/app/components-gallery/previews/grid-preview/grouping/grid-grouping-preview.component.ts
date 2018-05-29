@@ -6,21 +6,39 @@ import {
 import { ToolbarAction } from "../../../../../../../lib/src/grid/grid-toolbar/grid-toolbar.types";
 
 @Component({
-  selector: "dato-grid-basic-preview",
-  templateUrl: "./grid-basic-preview.component.html"
+  selector: "dato-grid-grouping-preview",
+  templateUrl: "./grid-grouping-preview.component.html"
 })
-export class GridBasicPreviewComponent extends DatoGrid<any> {
+export class GridGroupingPreviewComponent extends DatoGrid<any> {
   data = [
     {
       id: 1,
+      group: "Group A",
       value: "Item one"
     },
     {
       id: 2,
+      group: "Group A",
       value: "Item two"
     },
     {
       id: 3,
+      group: "Group A",
+      value: "Item three"
+    },
+    {
+      id: 4,
+      group: "Group B",
+      value: "Item three"
+    },
+    {
+      id: 5,
+      group: "Group B",
+      value: "Item three"
+    },
+    {
+      id: 6,
+      group: "Group C",
       value: "Item three"
     }
   ];
@@ -35,6 +53,12 @@ export class GridBasicPreviewComponent extends DatoGrid<any> {
 
   getColumns(): GridColumns {
     return [
+      {
+        headerName: "Group",
+        field: "group",
+        rowGroup: true,
+        hide: true
+      },
       {
         headerName: "ID",
         field: "id",

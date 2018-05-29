@@ -1,0 +1,62 @@
+<dato-preview title="Grid">
+
+  <div *ngIf="data">
+    <dato-grid-header [grid]="gridRef">My Custom Grid Title</dato-grid-header>
+    <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
+    </dato-grid-toolbar>
+    <div style="height: 450px">
+      <dato-grid [options]="options" #gridRef></dato-grid>
+    </div>
+  </div>
+
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-grid-header [grid]="gridRef">My Custom Grid Title</dato-grid-header>
+      <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
+      </dato-grid-toolbar>
+      <dato-grid [options]="options" #gridRef></dato-grid>
+    </textarea>
+
+    <textarea datoHighlight="js">
+    export class GridActionsPreviewComponent extends DatoGrid {
+
+      ngOnInit() {
+        super.ngOnInit();
+        this.datoGridReady.pipe(
+           concatMap(( grid ) => this.asyncRows())
+          ).subscribe(( rows ) => {
+            this.setRows(rows);
+        });
+      }
+
+      myCustomLogic( selectedRows : any[] ) {
+        return selectedRows.some(( row ) => row.value === 5);
+      }
+
+      options: GridOptions = {
+        columnDefs: [
+          {
+            headerName: 'ID',
+            field: 'id',
+            width: 100
+          },
+          {
+            headerName: 'Value',
+            field: 'value',
+            width: 100
+          },
+        ],
+
+        rowData: [...]
+      };
+      }
+
+    </textarea>
+
+
+  </dato-tabs>
+
+
+</dato-preview>

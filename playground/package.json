@@ -95,9 +95,6 @@
     "@angular/router": "^5.2.6",
     "@datorama/atomic": "^1.4.1",
     "@datorama/utils": "^1.17.0",
-    "ag-grid": "17.0.0",
-    "ag-grid-angular": "17.0.0",
-    "ag-grid-enterprise": "17.0.0",
     "angular-sortablejs": "^2.5.2",
     "core-js": "^2.4.1",
     "helpful-decorators": "^1.7.0",
@@ -108,7 +105,10 @@
     "reflect-metadata": "^0.1.12",
     "rxjs": "^5.5.6",
     "sortablejs": "^1.7.0",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.19",
+    "ag-grid": "17.1.1",
+    "ag-grid-angular": "^17.1.0",
+    "ag-grid-enterprise": "^17.1.1"
   },
   "devDependencies": {
     "@angular/cli": "^1.7.1",

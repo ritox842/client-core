@@ -1,15 +1,13 @@
 import { Component } from "@angular/core";
-import {
-  DatoGrid,
-  GridColumns
-} from "../../../../../../../lib/src/grid/dato-grid";
-import { ToolbarAction } from "../../../../../../../lib/src/grid/grid-toolbar/grid-toolbar.types";
+import { DatoGrid } from "../../../../../../../lib/src/grid/dato-grid";
+import { GridColumns, ToolbarAction } from "../../../../../../../lib";
+import { FormControl } from "@angular/forms";
 
 @Component({
-  selector: "dato-grid-basic-preview",
-  templateUrl: "./grid-basic-preview.component.html"
+  selector: "dato-grid-form-control-preview",
+  templateUrl: "./grid-form-control-preview.component.html"
 })
-export class GridBasicPreviewComponent extends DatoGrid<any> {
+export class GridFormControlPreviewComponent extends DatoGrid<any> {
   data = [
     {
       id: 1,
@@ -24,6 +22,8 @@ export class GridBasicPreviewComponent extends DatoGrid<any> {
       value: "Item three"
     }
   ];
+
+  selectedRowsControl = new FormControl([this.data[0]]);
 
   ngOnInit() {
     super.ngOnInit();

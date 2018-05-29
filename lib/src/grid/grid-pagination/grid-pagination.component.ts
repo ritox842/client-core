@@ -195,10 +195,10 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
       if (this.pageNumbersDisplay.pages.length === 0 || !this.pagesFitView) {
         this.pageNumbersDisplay.pages = this.getPages(displayNumber);
       }
-    }
 
-    // Set the displaying rows range
-    this.setRowsDisplayRange(pageNumber);
+      // Set the displaying rows range
+      this.setRowsDisplayRange(pageNumber);
+    }
   }
 
   /**

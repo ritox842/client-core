@@ -24,8 +24,7 @@ $inputsize: (
   @include input-size($defaultSize);
 
   border-radius: 2px;
-  padding-left: 10px;
-  padding-right: 25px;
+  padding: 0 25px 0 10px;
   min-width: 0;
 
   &:focus {

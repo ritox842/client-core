@@ -2,6 +2,7 @@
 
 /* Columns Panel Theme */
 
+$default-spacing: 10px;
 @mixin columnsPanelTheme {
 
   // override the default height
@@ -10,27 +11,63 @@
     max-height: 300px;
   }
 
-  // columns - checkbox
-  .ag-column-select-panel .ag-column-select-column {
+  .ag-column-select-panel {
 
-    &:last-of-type {
-      margin-bottom: 5px;
+    padding: 0 10px;
+
+    // header
+    .ag-column-select-header {
+
+      display: flex;
+      flex: 1;
+      align-items: center;
+
+      // filter input
+      .ag-filter-body {
+        margin-left: $default-spacing;
+        .ag-column-name-filter {
+          @include input-like();
+          @include input-like-theme();
+        }
+      }
+
+      // left checkbox
+      .ag-column-tool-panel {
+        @include gridCheckbox;
+      }
     }
 
-    margin: 5px 15px 10px 15px;
-    height: $checkbox-size;
-    line-height: $checkbox-size;
-  }
+    // represents the columns list
+    .ag-column-container {
 
-  // checkbox styles
-  .ag-column-select-panel .ag-column-select-column .ag-column-select-checkbox{
+      padding-top: 20px;
+      height: auto;
+      max-height: 150px;
 
-    margin-right: 10px;
-    width: $checkbox-size;
-    overflow: hidden;
+      // columns - checkbox
+      .ag-column-select-column {
 
-    > span {
-      @include gridCheckbox;
+        margin-bottom: 10px;
+        &:last-of-type {
+          margin-bottom: 5px;
+        }
+
+        height: $checkbox-size;
+        line-height: $checkbox-size;
+      }
+
+      // checkbox styles
+      .ag-column-select-column .ag-column-select-checkbox {
+
+        margin-left: 0;
+        margin-right: 10px;
+        width: $checkbox-size;
+        overflow: hidden;
+
+        > span {
+          @include gridCheckbox;
+        }
+      }
     }
   }
 

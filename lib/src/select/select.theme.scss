@@ -7,12 +7,16 @@
   font-weight: 500;
 }
 
-.dato-select__option:not(.dato-option--active):not(.dato-select__not-found):hover {
+.dato-select__option--hover:not(.dato-option--active):hover {
   background-color: themify(primary-100);
 }
 
-.dato-select__placeholder, .dato-select__option--disabled, dato-select__not-found {
+.dato-select__placeholder, .dato-select__option--disabled, dato-select__not-found, .dato-select__group {
   color: themify(primary-300);
+}
+
+.dato-select__group-container:not(:first-child) .dato-select__group {
+  border-top: themify(primary-200) 1px solid;
 }
 
 .dato-select--disabled {

@@ -20,13 +20,15 @@ import { FilterPipe } from './filter.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatoSelectEmptyComponent } from './select-empty.component';
 import { DatoSelectLoadingComponent } from './select-loading.component';
+import { DatoSelectOptionComponent } from './select-option.component';
+import { GroupFilterPipe } from './group.pipe';
 
-const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectLoadingComponent];
+const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectLoadingComponent, DatoSelectOptionComponent];
 const directives = [DatoOptionDirective, DatoSelectActiveDirective];
 
 @NgModule({
   imports: [CommonModule, OverlayModule, PortalModule, DatoInputModule, DatoIconModule, ReactiveFormsModule],
-  declarations: [publicApi, directives, FilterPipe],
+  declarations: [publicApi, directives, FilterPipe, GroupFilterPipe],
   exports: [publicApi, directives],
   entryComponents: [publicApi]
 })

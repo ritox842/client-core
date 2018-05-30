@@ -127,6 +127,27 @@
 
 </dato-preview>
 
+<dato-preview title="Groups">
+
+  <div style="width: 250px;">
+    <dato-select [formControl]="control5" placeholder="Select items" [isGroup]="true">
+
+      <ng-container *datoActive="let active">
+        {{active?.label}}
+      </ng-container>
+
+      <ng-container *ngFor="let item of grouped;">
+        <ng-container *datoOption="item">
+          {{item.label}}
+        </ng-container>
+      </ng-container>
+
+    </dato-select>
+  </div>
+
+
+</dato-preview>
+
 <div class="panel mt-4">
 
   <div class="panel-heading">

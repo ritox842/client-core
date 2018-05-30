@@ -15,3 +15,4 @@ export * from './trigger-single/trigger-single.component';
 export * from './select-loading.component';
 export * from './select-empty.component';
 export * from './filter.pipe';
+export * from './select-option.component';

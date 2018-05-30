@@ -15,6 +15,7 @@ export class SelectPreviewComponent implements OnInit {
   control2 = new FormControl();
   control3 = new FormControl(2);
   control4 = new FormControl();
+  control5 = new FormControl();
   subject = new Subject();
   options$ = this.subject.asObservable();
   options = [];
@@ -53,6 +54,14 @@ export class SelectPreviewComponent implements OnInit {
       this.options = res;
     });
   }
+
+  grouped = [
+    { id: 1, label: "abc", group: "A" },
+    { id: 2, label: "efg", group: "A" },
+    { id: 3, label: "hij", group: "A" },
+    { id: 4, label: "klm", group: "B" },
+    { id: 5, label: "nop", group: "C" }
+  ];
 
   optionsFromServer = [
     { id: 1, label: "abc" },

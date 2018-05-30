@@ -19,21 +19,60 @@
 
   <div class="dato-select__dropdown">
 
-    <ng-container *ngIf="(options | selectFilter:internalSearch:isCombo:labelKey:searchValue) as result">
+    <!--  SINGLE TEMPLATE  -->
 
-      <dato-select-loading [show]="false"></dato-select-loading>
+    <ng-container *ngIf="!isGroup">
 
-      <div *ngFor="let datoOption of result;"
-           (click)="select($event, datoOption.option)"
-           [class.dato-option--active]="isActive(datoOption.option)"
-           [class.dato-select__option--disabled]="datoOption._disabled"
-           class="dato-select__option">
-        <ng-template [ngTemplateOutlet]="datoOption.tpl"></ng-template>
-      </div>
+      <ng-container *ngIf="(options | selectFilter:internalSearch:isCombo:labelKey:searchValue) as result">
 
-      <dato-select-empty [show]="!result.length">{{noItemsLabel}}</dato-select-empty>
+        <dato-select-loading [show]="false"></dato-select-loading>
+
+        <div *ngFor="let datoOption of result;"
+             (click)="select($event, datoOption.option)"
+             [class.dato-option--active]="isActive(datoOption.option)"
+             [class.dato-select__option--disabled]="datoOption._disabled"
+             class="dato-select__option dato-select__option--hover">
+          <ng-template [ngTemplateOutlet]="datoOption.tpl"></ng-template>
+        </div>
+
+        <dato-select-empty [show]="!result.length">{{noItemsLabel}}</dato-select-empty>
+
+      </ng-container>
 
     </ng-container>
+
+    <!--  END SINGLE TEMPLATE  -->
+
+    <!--  GROUP TEMPLATE  -->
+
+    <ng-container *ngIf="isGroup">
+
+      <ng-container *ngIf="(options | groupFilter:internalSearch:isCombo:groupByKey:searchValue) as groups">
+
+        <dato-select-loading [show]="false"></dato-select-loading>
+
+        <div *ngFor="let group of groups;" class="dato-select__group-container">
+          <div class="dato-select__option dato-select__group">{{group[groupByKey]}}</div>
+
+          <div *ngFor="let datoOption of group.children;"
+               (click)="select($event, datoOption.option)"
+               [class.dato-option--active]="isActive(datoOption.option)"
+               [class.dato-select__option--disabled]="datoOption._disabled"
+               class="dato-select__option dato-select__option--hover">
+            <ng-template [ngTemplateOutlet]="datoOption.tpl"></ng-template>
+          </div>
+
+          <!--<dato-select-empty [show]="!result.length">{{noItemsLabel}}</dato-select-empty>-->
+
+        </div>
+
+      </ng-container>
+
+    </ng-container>
+
+    <!--  END GROUP TEMPLATE  -->
+
+
 
   </div>
 

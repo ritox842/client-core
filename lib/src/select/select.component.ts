@@ -17,6 +17,7 @@ import { coerceArray } from '@datorama/utils';
 import { SelectType } from './select.types';
 import { delay } from 'helpful-decorators';
 import { Subscription } from 'rxjs/Subscription';
+import { DatoSelectOptionComponent } from './select-option.component';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -42,7 +43,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   @Input() idKey = 'id';
   @Input() placeholder = '';
   @Input() isCombo = true;
+  @Input() isGroup = false;
   @Input() labelKey = 'label';
+  @Input() groupByKey = 'group';
   @Input() internalSearch = true;
   @Input() type: SelectType = SelectType.SINGLE;
   @Input() noItemsLabel = 'No items found';
@@ -149,6 +152,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   close() {
     this.overlayRef && this.overlayRef.dispose();
     this.toggle();
+    //this.searchControl.patchValue('');
   }
 
   canOpen(element: HTMLElement) {

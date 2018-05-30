@@ -35,9 +35,17 @@ dato-select {
   }
 }
 
-.dato-select__not-found {
+.dato-select__group-container .dato-select__option:not(.dato-select__group) {
+  padding-left: 20px;
+}
+
+.dato-select__not-found, .dato-select__group {
   font-style: italic;
   cursor: default;
+}
+
+.dato-select__group {
+  padding-left: 10px;
 }
 
 .cdk-overlay-pane.dato-select {

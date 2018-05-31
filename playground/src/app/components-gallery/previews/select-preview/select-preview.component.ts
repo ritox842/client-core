@@ -3,6 +3,8 @@ import { FormControl } from "@angular/forms";
 import { timer } from "rxjs/observable/timer";
 import { mapTo } from "rxjs/operators";
 import { Subject } from "rxjs/Subject";
+import { SnackbarRef } from "../../../../../../lib/src/snackbar/snackbar-ref";
+import { DatoSnackbar } from "../../../../../../lib";
 
 @Component({
   selector: "dato-select-preview",
@@ -20,12 +22,13 @@ export class SelectPreviewComponent implements OnInit {
   groupControl = new FormControl();
   serverSideControl = new FormControl();
   multiControl = new FormControl();
+  withActionsControl = new FormControl();
 
   options$ = this.subject.asObservable();
   options = [];
   optionsFromServer;
 
-  constructor() {
+  constructor(private snackbar: DatoSnackbar) {
     for (var i = 0, len = 15; i < len; i++) {
       this.options.push({
         label: `Item ${i + 1}`,
@@ -103,5 +106,9 @@ export class SelectPreviewComponent implements OnInit {
     return timer(500).pipe(
       mapTo(this._optionsFromServer.filter(item => item.label.includes(term)))
     );
+  }
+
+  onSave() {
+    this.snackbar.success("Success!!!");
   }
 }

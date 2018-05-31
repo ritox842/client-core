@@ -97,7 +97,11 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this._dataIsDirty = true;
   }
 
+  /** Emit search value when internal search is false */
   @Output() search = new EventEmitter<string>();
+
+  /** Emit when [withActions] is true and the user clicks save */
+  @Output() save = new EventEmitter<string>();
 
   /**
    * Getters and Setters
@@ -189,11 +193,15 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Indication if we need to set the initial control value as actives */
   _initialOpen = true;
 
+  /** Whether generate cancel/save footer */
+  _withActions = false;
+
   constructor(private overlay: Overlay, private viewContainerRef: ViewContainerRef, private cdr: ChangeDetectorRef) {
     super();
   }
 
   ngOnInit() {
+    this._withActions = this.save.observers.length === 1;
     this.listenToSearch();
   }
 

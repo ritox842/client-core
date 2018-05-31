@@ -22,12 +22,14 @@ import { DatoSelectGroupComponent } from './select-group.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoCheckboxModule } from '../checkbox/checkbox.module';
+import { DatoButtonModule } from '../button/button.module';
+import { DatoLinkButtonModule } from '../link-button/link-button.module';
 
 const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectOptionComponent, DatoSelectGroupComponent, DatoSelectMultiOptionComponent];
 const directives = [DatoSelectActiveDirective];
 
 @NgModule({
-  imports: [CommonModule, OverlayModule, PortalModule, ScrollDispatchModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule],
+  imports: [CommonModule, OverlayModule, PortalModule, ScrollDispatchModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule, DatoButtonModule, DatoLinkButtonModule],
   declarations: [publicApi, directives],
   exports: [publicApi, directives],
   entryComponents: [publicApi]

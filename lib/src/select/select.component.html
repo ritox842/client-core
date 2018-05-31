@@ -17,12 +17,21 @@
 
 <ng-template #dropdown>
 
-  <div class="dato-select__dropdown">
+  <section class="dato-select__dropdown-container">
+
+    <div class="dato-select__dropdown">
 
       <ng-content></ng-content>
 
       <dato-select-empty [show]="showEmptyResults">{{noItemsLabel}}</dato-select-empty>
 
-  </div>
+    </div>
+
+    <footer class="dato-select__footer d-flex" *ngIf="_withActions">
+      <dato-link class="mr-20" datoType="secondary" (click)="close()">Cancel</dato-link>
+      <dato-button datoSize="sm" (click)="save.emit(); close();">Save</dato-button>
+    </footer>
+
+  </section>
 
 </ng-template>

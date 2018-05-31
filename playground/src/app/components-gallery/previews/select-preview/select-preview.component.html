@@ -5,7 +5,7 @@
 
       <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple>
 
-        <dato-option *ngFor="let option of datoSelectSimple.data" [option]="option">
+        <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option" [disabled]="index === 1">
           {{option.label}}
         </dato-option>
 
@@ -171,6 +171,29 @@
   </section>
 
 </dato-preview>
+
+
+<dato-preview title="Select Multi - With Footer">
+
+  <section class="d-flex">
+    <div class="select-preview">
+
+      <dato-select [formControl]="withActionsControl" [dataSet]="options" #datoSelectFooter (save)="onSave()" type="multi">
+
+        <dato-option *ngFor="let option of datoSelectFooter.data" [option]="option" multi>
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{withActionsControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+</dato-preview>
+
 
 
 <dato-preview title="Select Multi - With Search">

@@ -1,4 +1,4 @@
-.dato-select__dropdown {
+.dato-select__dropdown-container {
   background-color: themify(primary-0);
 }
 
@@ -33,4 +33,14 @@
   dato-trigger-single dato-icon path {
     fill: themify(primary-200);
   }
+}
+
+.dato-select__footer {
+  background-color: themify(primary-0);
+  height: 50px;
+  border-top: 1px solid #f2f2f4;
+  padding-right: 30px;
+  line-height: 50px;
+  align-items: center;
+  justify-content: flex-end;
 }

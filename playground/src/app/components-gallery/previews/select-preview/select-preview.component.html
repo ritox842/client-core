@@ -1,167 +1,173 @@
-<dato-preview title="Select">
+<dato-preview title="Select Single - No Search">
 
   <section class="d-flex">
-    <div style="width: 250px; margin-right: 30px;">
-      <p datoFont>Searchable</p>
+    <div class="select-preview">
 
-      <dato-select [formControl]="control" placeholder="Select items">
+      <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple>
 
-        <ng-container *datoActive="let active">
-          {{active?.label}}
-        </ng-container>
-
-        <ng-container *ngFor="let item of (options$ | async); index as index">
-          <ng-container *datoOption="item; disabled: index === 1">
-            {{item.label}}
-          </ng-container>
-        </ng-container>
+        <dato-option *ngFor="let option of datoSelectSimple.data" [option]="option">
+          {{option.label}}
+        </dato-option>
 
       </dato-select>
 
-      <p datoFont class="mt-10">Control value: <span class="code">{{control.value}}</span></p>
+      <p datoFont class="mt-10">Control value: <span class="code">{{simpleControl.value | json}}</span></p>
 
-    </div>
-
-    <div style="width: 250px; margin-right: 30px;">
-      <p datoFont>With Icon</p>
-
-      <dato-select [formControl]="control" placeholder="Select items">
-
-        <ng-container *datoActive="let active">
-          <div class="d-flex items-center">
-            <dato-icon datoIcon="pin" datoSize="md" width="15px" class="mr-5" datoColor="green-400"></dato-icon> {{active?.label}}
-          </div>
-        </ng-container>
-
-        <ng-container *ngFor="let item of (options$ | async); index as index">
-          <ng-container *datoOption="item; disabled: index === 1">
-            <div class="d-flex items-center">
-              <dato-icon datoIcon="pin" datoSize="md" width="15px" class="mr-5"></dato-icon> {{item.label}}
-            </div>
-          </ng-container>
-        </ng-container>
-
-      </dato-select>
-
-      <p datoFont class="mt-10">Control value: <span class="code">{{control.value}}</span></p>
-
-    </div>
-
-    <div style="width: 250px; margin-right: 30px;">
-
-      <p datoFont>Without Search</p>
-
-      <dato-select [formControl]="control2" placeholder="Select items" [isCombo]="false">
-
-        <ng-container *datoActive="let active">
-          {{active?.label}}
-        </ng-container>
-
-        <ng-container *ngFor="let item of options;">
-          <ng-container *datoOption="item">
-            {{item.label}}
-          </ng-container>
-        </ng-container>
-
-      </dato-select>
-
-      <p datoFont class="mt-10">Control value: <span class="code">{{control2.value}}</span></p>
-
-    </div>
-
-    <div style="width: 250px; margin-right: 30px;">
-
-      <p datoFont>With Initial Value</p>
-
-      <dato-select [formControl]="control3" placeholder="Select items">
-
-        <ng-container *datoActive="let active">
-          {{active?.label}}
-        </ng-container>
-
-        <ng-container *ngFor="let item of options;">
-          <ng-container *datoOption="item">
-            {{item.label}}
-          </ng-container>
-        </ng-container>
-
-      </dato-select>
-
-      <p datoFont class="mt-10">Control value: <span class="code">{{control3.value}}</span></p>
-
-    </div>
-
-
-    <div style="width: 250px;">
-
-      <p datoFont>Disable</p>
-
-      <dato-select [formControl]="control4" placeholder="Select items">
-
-        <ng-container *datoActive="let active">
-          {{active?.label}}
-        </ng-container>
-
-        <ng-container *ngFor="let item of options;">
-          <ng-container *datoOption="item">
-            {{item.label}}
-          </ng-container>
-        </ng-container>
-
-      </dato-select>
-
-      <p datoFont class="mt-10">Control value: <span class="code">{{control4.value}}</span></p>
-      <dato-button (click)="toggleDisableEnable()" datoSize="sm">Toggle Disable/enable</dato-button>
     </div>
 
   </section>
 
+</dato-preview>
 
-  <dato-tabs show="html">
 
-    <textarea datoHighlight="html">
-      <dato-select></dato-select>
-    </textarea>
+<dato-preview title="Select Single - Async Pipe">
 
-  </dato-tabs>
+  <section class="d-flex">
+    <div class="select-preview">
+
+      <dato-select [formControl]="asyncControl" [dataSet]="options$ | async" #datoSelectAsync>
+
+        <dato-option *ngFor="let option of datoSelectAsync.data" [option]="option">
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{asyncControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
 
 </dato-preview>
 
-<dato-preview title="Groups">
 
-  <div style="width: 250px;">
-    <dato-select [formControl]="control5" placeholder="Select items" [isGroup]="true">
+<dato-preview title="Select Single - With Search">
 
-      <ng-container *datoActive="let active">
-        {{active?.label}}
-      </ng-container>
+  <section class="d-flex">
+    <div class="select-preview">
 
-      <ng-container *ngFor="let item of grouped;">
-        <ng-container *datoOption="item">
-          {{item.label}}
+      <dato-select [formControl]="simpleControlSearch" [dataSet]="options" #datoSelectSearch>
+
+        <dato-option *ngFor="let option of datoSelectSearch.data" [option]="option">
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{simpleControlSearch.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+</dato-preview>
+
+
+<dato-preview title="Select Single - Server Side Search">
+
+  <section class="d-flex">
+    <div class="select-preview">
+
+      <dato-select [formControl]="serverSideControl" [dataSet]="optionsFromServer"
+                   (search)="onSearch($event)"
+                   [isLoading]="isLoading"
+                   [internalSearch]="false"
+                   #datoSelectServer>
+
+        <dato-option *ngFor="let option of datoSelectServer.data" [option]="option">
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{serverSideControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+</dato-preview>
+
+
+
+<dato-preview title="Select Single - Disabled">
+
+  <section class="d-flex">
+    <div class="select-preview">
+
+      <dato-select [formControl]="controlDisabled" [dataSet]="options$ | async" #datoSelectDisabled>
+
+        <dato-option *ngFor="let option of datoSelectDisabled.data" [option]="option">
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <dato-button (click)="toggleDisableEnable()" datoSize="sm" class="mt-10">Toggle Disable/enable</dato-button>
+      <p datoFont class="mt-10">Control value: <span class="code">{{controlDisabled.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+</dato-preview>
+
+
+<dato-preview title="Select Single - Custom Template">
+
+  <section class="d-flex">
+    <div class="select-preview">
+
+      <dato-select [formControl]="activeTplControl" [dataSet]="options" #datoSelectActiveTpl>
+
+        <ng-container *datoActive="let active">
+          <div class="d-flex items-center">
+            <dato-icon datoIcon="pin" datoSize="md" width="15px" class="mr-5" datoColor="green-400"></dato-icon>
+            {{active?.label}}
+          </div>
         </ng-container>
-      </ng-container>
 
-    </dato-select>
-  </div>
+        <dato-option *ngFor="let option of datoSelectActiveTpl.data" [option]="option">
+          <div class="d-flex items-center">
+            <dato-icon datoIcon="pin" datoSize="md" class="mr-5" width="15px"></dato-icon>
+            {{option.label}}
+          </div>
+        </dato-option>
 
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{activeTplControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
 
 </dato-preview>
 
-<div class="panel mt-4">
 
-  <div class="panel-heading">
-    API
-  </div>
+<dato-preview title="Group - Single">
 
-  <div class="panel-block">
+  <section class="d-flex">
+    <div class="select-preview">
 
-    <dato-api-table>
-      <tr>
-        <td>datoSize</td>
-        <td>lg, md, sm</td>
-      </tr>
-    </dato-api-table>
+      <dato-select [formControl]="groupControl" [dataSet]="grouped" #datoSelectGroup>
 
-  </div>
-</div>
+        <dato-group *ngFor="let group of datoSelectGroup.data">
+          <div groupLabel>{{group.label}}</div>
+
+          <dato-option *ngFor="let option of group.children" [option]="option">
+            {{option.label}}
+          </dato-option>
+
+        </dato-group>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{groupControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+</dato-preview>

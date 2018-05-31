@@ -1,5 +1,6 @@
 <div>
   <input [placeholder]="placeholder" [disabled]="disabled || isDisabled" class="dato-input" [datoAutoFocus]="isFocused">
-  <dato-icon datoIcon="close" datoSize="md" (click)="delete()" *ngIf="showDelete"></dato-icon>
-  <dato-icon datoIcon="search" datoSize="md" *ngIf="showSearch" datoColor="primary-300"></dato-icon>
+  <dato-icon datoIcon="close" datoSize="md" (click)="delete()" *ngIf="showDelete && !isLoading"></dato-icon>
+  <dato-icon datoIcon="search" datoSize="md" *ngIf="showSearch && !isLoading" datoColor="primary-300"></dato-icon>
+  <span class="dato-input__spinner" *ngIf="isLoading"></span>
 </div>

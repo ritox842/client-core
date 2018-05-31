@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { timer } from "rxjs/observable/timer";
 import { mapTo } from "rxjs/operators";
-import { debounce } from "helpful-decorators";
 import { Subject } from "rxjs/Subject";
 
 @Component({
@@ -11,59 +10,83 @@ import { Subject } from "rxjs/Subject";
   styleUrls: ["./select-preview.component.scss"]
 })
 export class SelectPreviewComponent implements OnInit {
-  control = new FormControl();
-  control2 = new FormControl();
-  control3 = new FormControl(2);
-  control4 = new FormControl();
-  control5 = new FormControl();
-  subject = new Subject();
+  private subject = new Subject();
+
+  simpleControl = new FormControl({ id: 1, label: "Item 1" });
+  simpleControlSearch = new FormControl();
+  asyncControl = new FormControl();
+  controlDisabled = new FormControl();
+  activeTplControl = new FormControl();
+  groupControl = new FormControl();
+  serverSideControl = new FormControl();
+
   options$ = this.subject.asObservable();
   options = [];
+  optionsFromServer;
 
   constructor() {
-    for (var i = 0, len = 30; i < len; i++) {
+    for (var i = 0, len = 15; i < len; i++) {
       this.options.push({
         label: `Item ${i + 1}`,
         id: i + 1
       });
     }
 
-    const async = [
-      { id: 1, label: "abc" },
-      { id: 2, label: "efg" },
-      { id: 3, label: "hij" },
-      { id: 4, label: "klm" },
-      { id: 5, label: "nop" }
-    ];
     setTimeout(() => {
-      this.subject.next(async);
+      this.subject.next(this.options);
     }, 500);
+
+    this.optionsFromServer = this.options.slice();
   }
 
+  dynamic;
+
   ngOnInit() {
-    this.control4.disable();
+    this.controlDisabled.disable();
+
+    this.dynamic = [
+      {
+        options: this.options.slice()
+      },
+      {
+        options: this.options.slice()
+      }
+    ];
   }
 
   toggleDisableEnable() {
-    this.control4.enabled ? this.control4.disable() : this.control4.enable();
+    this.controlDisabled.enabled
+      ? this.controlDisabled.disable()
+      : this.controlDisabled.enable();
   }
 
-  //@debounce(500)
   onSearch(term: string) {
     this.getNewItems(term).subscribe(res => {
-      this.options = res;
+      this.optionsFromServer = res;
+      this.isLoading = false;
     });
   }
 
   grouped = [
-    { id: 1, label: "abc", group: "A" },
-    { id: 2, label: "efg", group: "A" },
-    { id: 3, label: "hij", group: "A" },
-    { id: 4, label: "klm", group: "B" },
-    { id: 5, label: "nop", group: "C" }
+    {
+      label: "A",
+      children: [
+        { id: 1, label: "abc" },
+        { id: 2, label: "efg" },
+        { id: 3, label: "hij" }
+      ]
+    },
+    {
+      label: "B",
+      children: [{ id: 4, label: "klm" }]
+    },
+    {
+      label: "C",
+      children: [{ id: 5, label: "nop" }]
+    }
   ];
 
-  optionsFromServer = [
+  _optionsFromServer = [
     { id: 1, label: "abc" },
     { id: 2, label: "efg" },
     { id: 3, label: "hij" },
@@ -71,9 +94,13 @@ export class SelectPreviewComponent implements OnInit {
     { id: 5, label: "nop" }
   ];
 
+  isLoading;
+
   getNewItems(term) {
-    return timer(400).pipe(
-      mapTo(this.optionsFromServer.filter(item => item.label.includes(term)))
+    this.isLoading = true;
+
+    return timer(500).pipe(
+      mapTo(this._optionsFromServer.filter(item => item.label.includes(term)))
     );
   }
 }

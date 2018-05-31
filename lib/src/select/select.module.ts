@@ -22,12 +22,15 @@ import { DatoSelectEmptyComponent } from './select-empty.component';
 import { DatoSelectLoadingComponent } from './select-loading.component';
 import { DatoSelectOptionComponent } from './select-option.component';
 import { GroupFilterPipe } from './group.pipe';
+import { DatoSelectDropdownDirective } from './select-dropdown.directive';
+import { DatoSelectGroupComponent } from './select-group.component';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
-const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectLoadingComponent, DatoSelectOptionComponent];
-const directives = [DatoOptionDirective, DatoSelectActiveDirective];
+const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectLoadingComponent, DatoSelectOptionComponent, DatoSelectGroupComponent];
+const directives = [DatoOptionDirective, DatoSelectActiveDirective, DatoSelectDropdownDirective];
 
 @NgModule({
-  imports: [CommonModule, OverlayModule, PortalModule, DatoInputModule, DatoIconModule, ReactiveFormsModule],
+  imports: [CommonModule, OverlayModule, PortalModule, ScrollDispatchModule, DatoInputModule, DatoIconModule, ReactiveFormsModule],
   declarations: [publicApi, directives, FilterPipe, GroupFilterPipe],
   exports: [publicApi, directives],
   entryComponents: [publicApi]

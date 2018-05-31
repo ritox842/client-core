@@ -13,3 +13,27 @@ dato-input dato-icon path {
 dato-input:hover dato-icon path {
   fill: themify(primary-400);
 }
+
+.dato-input__spinner {
+  display: flex;
+  margin: auto;
+  border: themify(primary-300) 2px solid;
+  border-top-color: transparent;
+  min-width: 15px;
+  max-width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  position: absolute;
+  right: 8px;
+  top: 7px;
+  animation: loader-rotate 0.5s linear infinite;
+}
+
+@keyframes loader-rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

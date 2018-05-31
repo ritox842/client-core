@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { DatoSelectActiveDirective } from '../select-active.directive';
 
 @Component({
@@ -15,14 +15,14 @@ import { DatoSelectActiveDirective } from '../select-active.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [`./trigger-single.component.scss`]
 })
-export class DatoTriggerSingle {
+export class DatoTriggerSingle implements OnInit {
   @Input() active: DatoSelectActiveDirective;
   @Input() placeholder = '';
 
   @Input()
   set context(value) {
     this._model = { $implicit: value };
-    //this.cdr.detectChanges();
+    this.cdr.detectChanges();
   }
 
   get hidePlaceholder() {
@@ -32,4 +32,8 @@ export class DatoTriggerSingle {
   _model;
 
   constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    this.cdr.detach();
+  }
 }

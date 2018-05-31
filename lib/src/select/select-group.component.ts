@@ -6,26 +6,19 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'dato-select-empty',
+  selector: 'dato-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="dato-select__option dato-select__not-found primary-300-color" *ngIf="_show">
-      <ng-content></ng-content>
+    <div class="dato-select__option dato-select__group">
+      <ng-content select="[groupLabel]"></ng-content>
     </div>
+    <ng-content></ng-content>
   `
 })
-export class DatoSelectEmptyComponent {
-  @Input()
-  set show(value) {
-    this._show = value;
-    this.cdr.detectChanges();
-  }
-
-  _show = false;
-
+export class DatoSelectGroupComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {

@@ -43,6 +43,7 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
   @Input() isDisabled = false;
   @Input() debounceTime;
   @Input() isFocused = false;
+  @Input() isLoading = false;
 
   constructor(@Attribute('type') public type, @Attribute('width') public width, @Attribute('height') public height, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {
     super();
@@ -84,7 +85,6 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
       this.activateDeleteIcon(value);
       this.setInputValue(value);
       this.onChange(value);
-      this.focus();
     }
   }
 

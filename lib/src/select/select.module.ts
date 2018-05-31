@@ -11,27 +11,24 @@ import { CommonModule } from '@angular/common';
 import { DatoSelectComponent } from './select.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
-import { DatoOptionDirective } from './select-option.directive';
 import { DatoIconModule } from '../icon/icon.module';
 import { DatoInputModule } from '../input/input.module';
 import { DatoTriggerSingle } from './trigger-single/trigger-single.component';
-import { DatoSelectActiveDirective } from './select-active.directive';
-import { FilterPipe } from './filter.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatoSelectEmptyComponent } from './select-empty.component';
-import { DatoSelectLoadingComponent } from './select-loading.component';
+import { DatoSelectMultiOptionComponent } from './select-multi-option.component';
 import { DatoSelectOptionComponent } from './select-option.component';
-import { GroupFilterPipe } from './group.pipe';
-import { DatoSelectDropdownDirective } from './select-dropdown.directive';
 import { DatoSelectGroupComponent } from './select-group.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { DatoSelectActiveDirective } from './select-active.directive';
+import { DatoCheckboxModule } from '../checkbox/checkbox.module';
 
-const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectLoadingComponent, DatoSelectOptionComponent, DatoSelectGroupComponent];
-const directives = [DatoOptionDirective, DatoSelectActiveDirective, DatoSelectDropdownDirective];
+const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectOptionComponent, DatoSelectGroupComponent, DatoSelectMultiOptionComponent];
+const directives = [DatoSelectActiveDirective];
 
 @NgModule({
-  imports: [CommonModule, OverlayModule, PortalModule, ScrollDispatchModule, DatoInputModule, DatoIconModule, ReactiveFormsModule],
-  declarations: [publicApi, directives, FilterPipe, GroupFilterPipe],
+  imports: [CommonModule, OverlayModule, PortalModule, ScrollDispatchModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule],
+  declarations: [publicApi, directives],
   exports: [publicApi, directives],
   entryComponents: [publicApi]
 })

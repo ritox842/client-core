@@ -171,3 +171,25 @@
   </section>
 
 </dato-preview>
+
+
+<dato-preview title="Select Multi - With Search">
+
+  <section class="d-flex">
+    <div class="select-preview">
+
+      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti type="multi">
+
+        <dato-option *ngFor="let option of datoSelectMulti.data" [option]="option" multi>
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{multiControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+</dato-preview>

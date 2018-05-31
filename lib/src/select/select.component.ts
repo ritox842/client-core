@@ -11,12 +11,12 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { ConnectedPositionStrategy, Overlay, OverlayConfig, OverlayOrigin, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { DatoSelectActiveDirective } from './select-active.directive';
 import { coerceArray } from '@datorama/utils';
 import { SelectType } from './select.types';
 import { DatoSelectOptionComponent } from './select-option.component';
 import { merge } from 'rxjs/observable/merge';
 import { debounceTime, mapTo } from 'rxjs/operators';
+import { DatoSelectActiveDirective } from './select-active.directive';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -89,7 +89,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   set dataSet(data: any[]) {
     this._data = data;
 
-    /** If it's async updates, create micro task in order to re-subscrive to clicks */
+    /** If it's async updates, create micro task in order to re-subscribe to clicks */
     if (this._dataIsDirty) {
       Promise.resolve().then(() => this.subscribeToOptionClick(this.options));
     }
@@ -141,6 +141,10 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   get isAutoComplete() {
     return this.type === SelectType.AUTO_COMPLETE;
+  }
+
+  get showEmptyResults() {
+    return (!this.hasResults || !this._data.length) && !this.isGroup;
   }
 
   /** FormControl which listens for search value changes */
@@ -349,27 +353,41 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this._clicksSubscription = merge(...clicks$).subscribe((datoOption: DatoSelectOptionComponent) => {
       if (datoOption.disabled) return;
 
-      if (datoOption.active) {
-        this.close();
-        return;
-      }
-
-      this.options.forEach(datoOption => (datoOption.active = false));
-      datoOption.active = true;
-      this.select(datoOption);
+      this.isSingle ? this.handleSingleClick(datoOption) : this.handleMultiClick(datoOption);
     });
   }
 
   /**
    *
-   * @param {DatoSelectOptionComponent} option
+   * @param {DatoSelectOptionComponent} datoOption
    */
-  private select({ option }: DatoSelectOptionComponent) {
-    if (this.isSingle) {
-      this._model = [option];
-      this.onChange(option);
+  private handleSingleClick(datoOption: DatoSelectOptionComponent) {
+    if (datoOption.active) {
+      this.close();
+    } else {
+      this.options.forEach(datoOption => (datoOption.active = false));
+      datoOption.active = true;
     }
+
+    const rawOption = datoOption.option;
+    this._model = [rawOption];
+    this.onChange(rawOption);
     this.close();
+  }
+
+  /**
+   *
+   * @param {DatoSelectOptionComponent} datoOption
+   */
+  private handleMultiClick(datoOption: DatoSelectOptionComponent) {
+    datoOption.active = !datoOption.active;
+    const rawOption = datoOption.option;
+    if (datoOption.active) {
+      this._model.push(rawOption);
+    } else {
+      this._model = this._model.filter(current => current !== rawOption);
+    }
+    this.onChange(this._model);
   }
 
   /**

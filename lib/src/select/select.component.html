@@ -17,11 +17,11 @@
 
 <ng-template #dropdown>
 
-  <div class="dato-select__dropdown" cdk-scrollable>
+  <div class="dato-select__dropdown">
 
       <ng-content></ng-content>
 
-      <dato-select-empty [show]="(!hasResults || !_data.length) && !isGroup">{{noItemsLabel}}</dato-select-empty>
+      <dato-select-empty [show]="showEmptyResults">{{noItemsLabel}}</dato-select-empty>
 
   </div>
 

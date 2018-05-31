@@ -10,17 +10,29 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inpu
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Observable } from 'rxjs/Observable';
 
-@Component({
-  selector: 'dato-option',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+export function getMultiTemplate() {
+  return `
+    <div class="d-flex">
+      <dato-checkbox style="position: relative; top: 10px;" [checked]="_active"></dato-checkbox><ng-content></ng-content>
+    </div>
+  `;
+}
+
+export function getOptionTemplate(isMulti = false) {
+  return `
     <div class="dato-select__option dato-select__option--hover"
          [class.force-hide]="_hide"
-         [class.dato-option--active]="_active"
+         ${isMulti ? '' : '[class.dato-option--active]="_active"'}
          [class.dato-select__option--disabled]="_disabled">
-      <ng-content></ng-content>
+      ${isMulti ? getMultiTemplate() : '<ng-content></ng-content>'} 
     </div>
-  `
+  `;
+}
+
+@Component({
+  selector: 'dato-option:not([multi])',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: getOptionTemplate()
 })
 export class DatoSelectOptionComponent implements OnInit {
   get option() {
@@ -78,7 +90,7 @@ export class DatoSelectOptionComponent implements OnInit {
 
   click$ = fromEvent(this.element, 'click');
 
-  constructor(private cdr: ChangeDetectorRef, private host: ElementRef) {}
+  constructor(protected cdr: ChangeDetectorRef, protected host: ElementRef) {}
 
   ngOnInit() {
     this.cdr.detach();

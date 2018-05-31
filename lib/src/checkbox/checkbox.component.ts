@@ -39,9 +39,11 @@ export class DatoCheckboxComponent extends BaseCustomControl implements OnInit, 
     return this._checked;
   }
 
+  @Input()
   set checked(value: boolean) {
     if (value !== this.checked) {
       this._checked = value;
+      this.setInputValue(value);
       this.cdr.markForCheck();
     }
   }

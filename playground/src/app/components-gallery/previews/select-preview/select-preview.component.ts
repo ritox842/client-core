@@ -19,6 +19,7 @@ export class SelectPreviewComponent implements OnInit {
   activeTplControl = new FormControl();
   groupControl = new FormControl();
   serverSideControl = new FormControl();
+  multiControl = new FormControl();
 
   options$ = this.subject.asObservable();
   options = [];

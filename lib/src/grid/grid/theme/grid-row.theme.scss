@@ -31,6 +31,17 @@
   }
 
   /* Cells */
+  .ag-cell {
+    .ag-selection-checkbox {
+      @include gridCheckbox;
+
+      display: inline-block;
+      vertical-align: middle;
+      margin-top: -4px;
+      margin-right: 4px;
+    }
+  }
+
   .ag-cell-highlight {
     background-color: $range-selection-highlight-color !important;
   }

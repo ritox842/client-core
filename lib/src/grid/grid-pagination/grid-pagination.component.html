@@ -1,10 +1,10 @@
 <div class="d-flex-row d-flex-auto d-flex-wrap">
-  <div *ngIf="totalPages > 1" #navigation
+  <div *ngIf="totalPages > 1 || hasInfinitePagination" #navigation
        class="navigation d-flex-row d-flex-0-0-auto align-center"
        [ngClass]="{'small': smallVersion}">
 
     <!-- First Page -->
-    <dato-icon-button *ngIf="!disableButtons"
+    <dato-icon-button *ngIf="!disableButtons && !hasInfinitePagination"
                       class="mr-4"
                       datoIcon="arrow-left-double"
                       datoType="secondary"
@@ -16,7 +16,7 @@
     <!-- Previous Page -->
     <dato-icon-button datoIcon="arrow-left" datoType="secondary" datoSize="md"
                       [disabled]="prevPageDisabled"
-                      (click)="navigatePage(pageNumbersDisplay.currentPage - 2)">
+                      (click)="navigatePrevPage()">
     </dato-icon-button>
 
 
@@ -46,12 +46,12 @@
 
     <!-- Next Page -->
     <dato-icon-button datoIcon="arrow-right" datoType="secondary" datoSize="md"
-                      (click)="navigatePage(pageNumbersDisplay.currentPage)"
+                      (click)="navigateNextPage(pageNumbersDisplay.currentPage)"
                       [disabled]="nextPageDisabled">
     </dato-icon-button>
 
     <!-- Last Page -->
-    <dato-icon-button *ngIf="!disableButtons"
+    <dato-icon-button *ngIf="!disableButtons && !hasInfinitePagination"
                       class="ml-4" datoIcon="arrow-right-double"
                       datoType="secondary" datoSize="md"
                       [disabled]="nextPageDisabled"

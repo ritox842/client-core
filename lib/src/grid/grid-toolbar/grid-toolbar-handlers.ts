@@ -61,10 +61,8 @@ export class ToolbarDeleteConfirmation extends ToolbarConfirmation {
   beforeHandle(result: ToolbarConfirmationHandlerResult) {
     this.options.dialogOptions = {
       ...this.options.dialogOptions,
-      ...{
-        title: this.title,
-        content: this.content
-      }
+      title: this.title,
+      content: this.content
     };
     super.beforeHandle(result);
   }

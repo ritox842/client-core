@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostBinding, Input, Output, ViewEncapsulation } from '@angular/core';
-import { ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
+import { ColumnApi, GridOptions, GridReadyEvent } from 'ag-grid';
 import { DatoTranslateService } from '../../services/translate.service';
 import { IconRegistry } from '../../services/icon-registry';
 import { getGridIcons } from './grid-icons';
@@ -15,9 +15,8 @@ import { BaseCustomControl } from '../../internal/base-custom-control';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { coerceArray } from '@datorama/utils';
 import { DatoGridAPI } from '../dato-grid-api';
-import { forkJoin } from 'rxjs/observable/forkJoin';
 import { combineLatest } from 'rxjs/observable/combineLatest';
-import { first } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 export type ExtendedGridOptions = {
   onRowDataUpdated: (event) => void;
@@ -64,6 +63,8 @@ export class DatoGridComponent extends BaseCustomControl implements ControlValue
     animateRows: true
   };
 
+  private hasInfinitePagination = false;
+
   api: DatoGridAPI<any>;
   gridColumnApi: ColumnApi;
   gridOptions: DatoGridOptions;
@@ -80,6 +81,7 @@ export class DatoGridComponent extends BaseCustomControl implements ControlValue
     this.gridOptions = { ...this.defaultGridOptions, ...options };
     // check if we got a pagination
     this.hasPagination = this.gridOptions.pagination;
+    this.hasInfinitePagination = this.gridOptions.rowModelType === 'infinite';
   }
 
   get options(): DatoGridOptions {
@@ -137,7 +139,7 @@ export class DatoGridComponent extends BaseCustomControl implements ControlValue
     } else {
       // wait for the grid to be ready and the data has been set
       combineLatest(this.rowDataChanged, this.gridReady)
-        .pipe(first())
+        .pipe(take(1))
         .subscribe(() => {
           this.api.setSelectedRows(rows);
         });

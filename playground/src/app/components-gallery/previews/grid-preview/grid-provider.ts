@@ -8,6 +8,9 @@ import { GridToolbarDialogPreviewComponent } from "./toolbar-dialog/grid-toolbar
 import { GridToolbarDialogCustomComponent } from "./toolbar-dialog/grid-toolbar-dialog-custom.component";
 import { GridFormControlPreviewComponent } from "./form-control/grid-form-control-preview.component";
 import { GridGroupingPreviewComponent } from "./grouping/grid-grouping-preview.component";
+import { GridFormControlCheckboxPreviewComponent } from "./form-control-checkbox/grid-form-control-checkbox-preview.component";
+import { GridServerSidePreviewComponent } from "./server-side/grid-server-side-preview.component";
+import { GridToolbarContentPreviewComponent } from "./toolbar-with-content/grid-toolbar-content-preview.component";
 
 export const gridProviders = [
   GridPreviewComponent,
@@ -19,5 +22,8 @@ export const gridProviders = [
   GridToolbarDialogPreviewComponent,
   GridToolbarDialogCustomComponent,
   GridFormControlPreviewComponent,
-  GridGroupingPreviewComponent
+  GridGroupingPreviewComponent,
+  GridFormControlCheckboxPreviewComponent,
+  GridServerSidePreviewComponent,
+  GridToolbarContentPreviewComponent
 ];

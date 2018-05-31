@@ -8,6 +8,13 @@
 
     .ag-header-cell {
       line-height: 27px;
+
+      // header checkbox
+      .ag-header-select-all {
+        @include gridCheckbox;
+        margin-top: 6px;
+      }
+
     }
     .ag-header-cell-label {
       color: themify(primary-300);

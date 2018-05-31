@@ -5,6 +5,7 @@ import { GridApi } from 'ag-grid';
 import { DatoDialogResult } from '../../dialog/config/dialog.options';
 import { ToolbarConfirmation, ToolbarConfirmationHandlerResult, ToolbarHandler, ToolbarHandlerResult } from './grid-toolbar-handlers';
 import { DatoGridAPI } from '../dato-grid-api';
+import { isFunction } from '@datorama/utils';
 
 @Injectable()
 export class GridToolbarService {
@@ -23,7 +24,7 @@ export class GridToolbarService {
         selectedRows
       };
       this.executeHandler(action.click, arg);
-    } else if (typeof action.click === 'function') {
+    } else if (isFunction(action.click)) {
       action.click(selectedRows);
     }
   }

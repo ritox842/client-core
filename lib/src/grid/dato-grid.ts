@@ -56,8 +56,16 @@ export abstract class DatoGrid<T> extends DatoGridAPI<T> implements OnInit {
     return getFunctionName(this.constructor);
   }
 
+  /**
+   * Extend GridOptions
+   * @return {GridOptions}
+   */
+  protected getOptions(): GridOptions {
+    return {};
+  }
+
   ngOnInit() {
-    this.options = { columnDefs: this.getColumns() };
+    this.options = { columnDefs: this.getColumns(), ...this.getOptions() };
     this.toolbarActions = this.getToolbarActions();
   }
 

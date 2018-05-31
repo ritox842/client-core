@@ -226,6 +226,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
     if (this.hasInfinitePagination) {
       this.agGridApi.paginationGoToPreviousPage();
     } else {
+      // ag-grid API works with first index 0 so we need to reduce 2 instead of one
       this.navigatePage(this.pageNumbersDisplay.currentPage - 2);
     }
   }

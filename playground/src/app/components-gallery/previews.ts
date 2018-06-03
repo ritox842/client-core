@@ -7,23 +7,19 @@ import { GridPreviewComponent } from "./previews/grid-preview/grid-preview.compo
 import { InputsPreviewComponent } from "./previews/inputs-preview/inputs-preview.component";
 import { ActionMenuPreviewComponent } from "./previews/action-menu-preview/action-menu-preview.component";
 import { SortablePreviewComponent } from "./previews/sortable-preview/sortable-preview.component";
-import { GridBasicPreviewComponent } from "./previews/grid-preview/basic/grid-basic-preview.component";
-import { GridActionsPreviewComponent } from "./previews/grid-preview/actions/grid-actions-preview.component";
 import { AccordionPreviewComponent } from "./previews/accordion-preview/accordion-preview.component";
 import { DragPreviewComponent } from "./previews/drag-preview/drag-preview.component";
 import { LayoutPreviewComponent } from "./previews/layout-preview/layout-preview.component";
 import { SnackbarPreviewComponent } from "./previews/snackbar-preview/snackbar-preview.component";
 import { DialogPreviewComponent } from "./previews/dialog-preview/dialog-preview.component";
 import { dialogPreviewComponents } from "./previews/dialog-preview/dialog-preview.providers";
+import { gridProviders } from "./previews/grid-preview/grid-provider";
 
 export const previews = [
   ButtonsPreviewComponent,
   TypographyPreviewComponent,
   ColorsPreviewComponent,
   IconsPreviewComponent,
-  GridPreviewComponent,
-  GridBasicPreviewComponent,
-  GridActionsPreviewComponent,
   InputsPreviewComponent,
   ActionMenuPreviewComponent,
   SortablePreviewComponent,
@@ -32,7 +28,8 @@ export const previews = [
   TabsPreviewComponent,
   LayoutPreviewComponent,
   SnackbarPreviewComponent,
-  ...dialogPreviewComponents
+  ...dialogPreviewComponents,
+  ...gridProviders
 ];
 
 export const routeToComponent = {

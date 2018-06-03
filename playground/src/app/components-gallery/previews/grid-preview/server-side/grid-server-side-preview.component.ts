@@ -1,0 +1,213 @@
+import { Component } from "@angular/core";
+import { timer } from "rxjs/observable/timer";
+import { mapTo } from "rxjs/operators";
+import { DatoGrid } from "../../../../../../../lib/src/grid/dato-grid";
+import { GridColumns, ToolbarAction } from "../../../../../../../lib";
+import { GridOptions, IDatasource, IGetRowsParams } from "ag-grid";
+import { Observable } from "rxjs/Observable";
+
+export type RowModel = {
+  id: number;
+  athlete: string;
+  age: number;
+};
+
+export type AsyncResponse = {
+  rows: RowModel[];
+  total: number;
+};
+
+@Component({
+  selector: "dato-grid-server-side-preview",
+  templateUrl: "./grid-server-side-preview.component.html"
+})
+export class GridServerSidePreviewComponent extends DatoGrid<RowModel> {
+  /**
+   * Fake data
+   */
+  private asyncData: RowModel[] = [];
+
+  /**
+   * AgGrid data source
+   */
+  private dataSource: IDatasource = {
+    rowCount: null,
+    getRows: this.getRows.bind(this)
+  };
+
+  constructor() {
+    super();
+
+    this.prepareFakeData();
+  }
+
+  ngOnInit() {
+    super.ngOnInit();
+  }
+
+  /**
+   * Populate the rows in this range
+   */
+  private getRows(params: IGetRowsParams): void {
+    // request new rows
+    this.fetchRows(
+      params.startRow,
+      params.endRow,
+      params.sortModel,
+      params.filterModel
+    ).subscribe((response: AsyncResponse) => {
+      params.successCallback(response.rows, response.total);
+    });
+  }
+
+  private fetchRows(
+    startRow: number,
+    endRow: number,
+    sortModel,
+    filterModel
+  ): Observable<AsyncResponse> {
+    // filtering and sorting the data
+    let dataAfterSortingAndFiltering = this.sortAndFilter(
+      this.asyncData,
+      sortModel,
+      filterModel
+    );
+
+    let rowsThisPage = dataAfterSortingAndFiltering.slice(startRow, endRow);
+
+    // simulate asynchronous loading
+    return timer(1000).pipe(
+      mapTo({ rows: rowsThisPage, total: this.asyncData.length })
+    );
+  }
+
+  private sortAndFilter(allOfTheData, sortModel, filterModel) {
+    return this.sortData(sortModel, this.filterData(filterModel, allOfTheData));
+  }
+
+  private sortData(sortModel, data) {
+    let sortPresent = sortModel && sortModel.length > 0;
+    if (!sortPresent) {
+      return data;
+    }
+
+    let resultOfSort = data.slice();
+    resultOfSort.sort(function(a, b) {
+      for (let k = 0; k < sortModel.length; k++) {
+        let sortColModel = sortModel[k];
+        let valueA = a[sortColModel.colId];
+        let valueB = b[sortColModel.colId];
+        if (valueA == valueB) {
+          continue;
+        }
+        let sortDirection = sortColModel.sort === "asc" ? 1 : -1;
+        if (valueA > valueB) {
+          return sortDirection;
+        } else {
+          return sortDirection * -1;
+        }
+      }
+      return 0;
+    });
+
+    return resultOfSort;
+  }
+
+  private filterData(filterModel, data) {
+    let filterPresent = filterModel && Object.keys(filterModel).length > 0;
+    if (!filterPresent) {
+      return data;
+    }
+    let resultOfFilter = [];
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i];
+
+      if (filterModel.age) {
+        let age = item.age;
+        let allowedAge = parseInt(filterModel.age.filter);
+        if (filterModel.age.type == "equals") {
+          if (age !== allowedAge) {
+            continue;
+          }
+        } else if (filterModel.age.type == "lessThan") {
+          if (age >= allowedAge) {
+            continue;
+          }
+        } else {
+          if (age <= allowedAge) {
+            continue;
+          }
+        }
+      }
+
+      resultOfFilter.push(item);
+    }
+
+    return resultOfFilter;
+  }
+
+  private prepareFakeData() {
+    const lastRow = 10000;
+    for (let i = 0; i < lastRow; i++) {
+      this.asyncData.push({
+        id: i,
+        age: i * 5,
+        athlete: this.makeAthleteName()
+      });
+    }
+  }
+
+  private makeAthleteName() {
+    let text = "";
+    const possible =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < 5; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+  }
+
+  getColumns(): GridColumns {
+    return [
+      {
+        headerName: "ID",
+        field: "id",
+        width: 100,
+        suppressSorting: true,
+        suppressMenu: true,
+        suppressFilter: true
+      },
+      {
+        headerName: "Athlete",
+        field: "athlete",
+        suppressMenu: true,
+        suppressFilter: true
+      },
+      {
+        headerName: "Age",
+        field: "age",
+        filter: "agNumberColumnFilter",
+        filterParams: {
+          filterOptions: ["equals", "lessThan", "greaterThan"],
+          newRowsAction: "keep"
+        }
+      }
+    ];
+  }
+
+  getOptions(): GridOptions {
+    return {
+      rowModelType: "infinite",
+      datasource: this.dataSource,
+      // we need this for server side sorting
+      enableServerSideSorting: true,
+      // we need this for server side filtering
+      enableServerSideFilter: true
+    };
+  }
+
+  getToolbarActions(): ToolbarAction[] {
+    return [];
+  }
+}

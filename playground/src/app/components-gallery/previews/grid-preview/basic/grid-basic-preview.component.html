@@ -1,48 +1,11 @@
-<dato-preview title="Grid">
+<dato-preview title="Basic Example">
+
   <p>
-    Provides a full example of dato-grid and the toolbar capabillities.<br>
-    The buttons in the toolbar, appended directly in the markup as ng-template.
-    <br> You can choose when to show each button, according to the number of selected rows, or even write your own
-    function.
-    <br> Checkout the source-code for more information.
+    A basic example with three static rows and two columns.
   </p>
 
   <div *ngIf="data">
-    <dato-grid-header [grid]="gridRef">Grid Title</dato-grid-header>
-    <dato-grid-toolbar [grid]="gridRef" class="mb-10">
-
-      <ng-template datoGridToolbarItem showWhen="none">
-        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
-          None
-        </dato-button>
-      </ng-template>
-
-      <ng-template datoGridToolbarItem showWhen="always">
-        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
-          Always
-        </dato-button>
-      </ng-template>
-
-      <ng-template datoGridToolbarItem showWhen="single">
-        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
-          When Single
-        </dato-button>
-      </ng-template>
-
-      <ng-template datoGridToolbarItem showWhen="multi">
-        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
-          When Multiple
-        </dato-button>
-      </ng-template>
-
-      <ng-template datoGridToolbarItem [showWhen]="myCustomLogic">
-        <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
-          Only when one of the values equal to 5
-        </dato-button>
-      </ng-template>
-
-    </dato-grid-toolbar>
-    <div style="height: 450px">
+    <div style="height: 300px">
       <dato-grid [options]="options" #gridRef></dato-grid>
     </div>
   </div>
@@ -51,78 +14,59 @@
   <dato-tabs show="html,js">
 
     <textarea datoHighlight="html">
-      <dato-grid-header [grid]="gridRef">Title</dato-grid-header>
-      <dato-grid-toolbar [grid]="gridRef" class="mb-10">
-
-        <ng-template datoGridToolbarItem showWhen="none">
-          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
-            None
-          </dato-button>
-        </ng-template>
-
-        <ng-template datoGridToolbarItem showWhen="always">
-          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
-            Always
-          </dato-button>
-        </ng-template>
-
-        <ng-template datoGridToolbarItem showWhen="single">
-          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
-            When Single
-          </dato-button>
-        </ng-template>
-
-        <ng-template datoGridToolbarItem showWhen="multi">
-          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
-            When Multiple
-          </dato-button>
-        </ng-template>
-
-        <ng-template datoGridToolbarItem [showWhen]="myCustomLogic">
-          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement>
-            Only when one of the values equal to 5
-          </dato-button>
-        </ng-template>
-
-      </dato-grid-toolbar>
-
-      <dato-grid [options]="options" #gridRef></dato-grid>
+      <div *ngIf="data">
+        <div style="height: 300px">
+          <dato-grid [options]="options" #gridRef></dato-grid>
+        </div>
+      </div>
     </textarea>
 
     <textarea datoHighlight="js">
-    export class GridActionsPreviewComponent extends DatoGrid {
-
-      ngOnInit() {
-        super.ngOnInit();
-        this.datoGridReady.pipe(
-           concatMap(( grid ) => this.asyncRows())
-          ).subscribe(( rows ) => {
-            this.setRows(rows);
-        });
+  export class GridBasicPreviewComponent extends DatoGrid<any> {
+    data = [
+      {
+        id: 1,
+        value: 'Item one'
+      },
+      {
+        id: 2,
+        value: 'Item two'
+      },
+      {
+        id: 3,
+        value: 'Item three'
       }
+    ];
 
-      myCustomLogic( selectedRows : any[] ) {
-        return selectedRows.some(( row ) => row.value === 5);
-      }
+    ngOnInit() {
+      super.ngOnInit();
 
-      options: GridOptions = {
-        columnDefs: [
-          {
-            headerName: 'ID',
-            field: 'id',
-            width: 100
-          },
-          {
-            headerName: 'Value',
-            field: 'value',
-            width: 100
-          },
-        ],
+      this.datoGridReady.subscribe(() => {
+        this.setRows(this.data);
+      });
+    }
 
-        rowData: [...]
-      };
-      }
+    getColumns(): GridColumns {
+      return [
+        {
+          headerName: "ID",
+          field: "id",
+          width: 100,
+          filter: "agNumberColumnFilter"
+        },
+        {
+          headerName: "Value",
+          field: "value",
+          width: 100,
+          filter: "agTextColumnFilter"
+        }
+      ];
+    }
 
+    getToolbarActions(): ToolbarAction[] {
+      return [];
+    }
+  }
     </textarea>
 
 

@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
-import { AgGridEvent, ColumnApi, GridApi } from 'ag-grid';
+import { AgGridEvent, ColumnApi, Events, GridApi } from 'ag-grid';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
 import { OnDestroy, TakeUntilDestroy } from 'ngx-take-until-destroy';
@@ -47,14 +47,19 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
   private readonly XS_DISPLAY_SIZE: number = 160;
   private readonly SMALL_DISPLAY_SIZE: number = 390;
 
+  private onPaginationChange = null;
+
   /** The ag-grid api */
   @Input() agGridApi: GridApi;
   /** The ag-grid column api */
   @Input() agGridColumnApi: ColumnApi;
   /** update the expand collapse item according to the table state */
   @Input() isCollapsed: boolean;
-  /** Whether to shot the Fit-To-Content button */
+  /** Whether to show the Fit-To-Content button */
   @Input() showFitToContent = true;
+
+  /** Whether it's a server side pagination */
+  @Input() hasInfinitePagination = false;
 
   @Input() rowDataChanged: Subject<AgGridEvent>;
 
@@ -112,9 +117,17 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
     // Current page index starts from 0
     if (this.agGridApi) {
       this.navigatePage(0);
+
+      if (!this.onPaginationChange) {
+        this.onPaginationChange = this.paginationChange.bind(this);
+        this.agGridApi.addEventListener(Events.EVENT_PAGINATION_CHANGED, this.onPaginationChange);
+      }
     }
     this.changeDetector.detectChanges();
   }
+
+  // TODO: to be continue
+  private paginationChange() {}
 
   /**
    * Set the number of page numbers showing at the same time in the navigation
@@ -195,10 +208,27 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
       if (this.pageNumbersDisplay.pages.length === 0 || !this.pagesFitView) {
         this.pageNumbersDisplay.pages = this.getPages(displayNumber);
       }
-    }
 
-    // Set the displaying rows range
-    this.setRowsDisplayRange(pageNumber);
+      // Set the displaying rows range
+      this.setRowsDisplayRange(pageNumber);
+    }
+  }
+
+  navigateNextPage() {
+    if (this.hasInfinitePagination) {
+      this.agGridApi.paginationGoToNextPage();
+    } else {
+      this.navigatePage(this.pageNumbersDisplay.currentPage);
+    }
+  }
+
+  navigatePrevPage() {
+    if (this.hasInfinitePagination) {
+      this.agGridApi.paginationGoToPreviousPage();
+    } else {
+      // ag-grid API works with first index 0 so we need to reduce 2 instead of one
+      this.navigatePage(this.pageNumbersDisplay.currentPage - 2);
+    }
   }
 
   /**
@@ -250,7 +280,11 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
     return page;
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (this.onPaginationChange) {
+      this.agGridApi.removeEventListener(Events.EVENT_PAGINATION_CHANGED, this.onPaginationChange);
+    }
+  }
 
   /**
    * Sets the rows display string

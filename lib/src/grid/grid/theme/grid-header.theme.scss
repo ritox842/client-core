@@ -6,6 +6,16 @@
   .ag-header {
     border-bottom: solid 2px themify(primary-200);
 
+    .ag-header-cell {
+      line-height: 27px;
+
+      // header checkbox
+      .ag-header-select-all {
+        @include gridCheckbox;
+        margin-top: 6px;
+      }
+
+    }
     .ag-header-cell-label {
       color: themify(primary-300);
     }
@@ -21,14 +31,10 @@
   /* Column Resize Handler */
   .ag-header-cell-resize {
     right: -($grid-size) + 1px;
-    opacity: 0;
-    &:hover {
-      opacity: 1;
-    }
     &::after {
-      border-right: 1px solid #bdc3c761;
-      margin-top: 10px;
-      height: 14px;
+      border-right: 2px solid #bdc3c761;
+      margin-top: 0px;
+      height: 24px;
     }
   }
 

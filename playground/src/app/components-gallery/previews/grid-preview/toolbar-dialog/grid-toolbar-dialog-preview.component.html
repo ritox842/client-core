@@ -1,0 +1,68 @@
+<dato-preview title="Dialog Example">
+
+  Click the <code>Plus</code> icon to add a new row.<br/>
+  Select a single row and click on the <code>delete</code> button to delete a row from the grid.
+
+  <div style="height: 250px" class="d-flex-column flex-1">
+    <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
+    </dato-grid-toolbar>
+    <dato-grid [options]="options" #gridRef class="d-flex-column">
+    </dato-grid>
+  </div>
+
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
+      </dato-grid-toolbar>
+      <dato-grid [options]="options" #gridRef class="d-flex-column">
+      </dato-grid>
+    </textarea>
+
+    <textarea datoHighlight="js">
+     getToolbarActions(): ToolbarAction[] {
+        return [
+          {
+            actionType: ToolbarActionType.Add,
+            click: () => {
+              this.dialog.open(GridToolbarDialogCustomComponent).afterClosed().subscribe((result: DatoDialogResult<string>) => {
+                if (result.status === DialogResultStatus.SUCCESS) {
+                  this.addRows({
+                    id: ++this.lastId,
+                    value: result.data
+                  });
+                }
+              });
+            },
+          },
+          {
+            actionType: ToolbarActionType.Delete,
+            click: new ToolbarDeleteConfirmation({
+              afterClosed: (result: ToolbarConfirmationHandlerResult) => {
+                console.log(`Got: ${result.dialogResult.status}`);
+              }
+            })
+          },
+          {
+            text: 'Click Me',
+            showWhen: RowSelectionType.MULTI,
+            click: new ToolbarConfirmation({
+              dialogOptions: {
+                title: 'My Awesome Dialog',
+                content: 'Some <strong>content</strong> here'
+              },
+              afterClosed: (result: ToolbarConfirmationHandlerResult) => {
+                console.log(`Got: ${result.dialogResult.status}, for ${result.selectedRows.length} rows.`);
+              }
+            })
+          }
+        ];
+      }
+    </textarea>
+
+
+  </dato-tabs>
+
+
+</dato-preview>

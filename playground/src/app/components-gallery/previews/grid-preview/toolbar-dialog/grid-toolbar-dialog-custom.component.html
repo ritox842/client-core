@@ -1,0 +1,11 @@
+<dato-dialog-header>Title</dato-dialog-header>
+<dato-dialog-content>
+  <div class="d-flex-column">
+    <p>Type the item name</p>
+    <dato-input class="d-flex-row" datoSize="sm" [formControl]="valueControl"></dato-input>
+  </div>
+</dato-dialog-content>
+<dato-dialog-footer>
+  <dato-button datoType="secondary" datoDialogDismiss>No Thanks</dato-button>
+  <dato-button [datoDialogClose]="valueControl.value">Add</dato-button>
+</dato-dialog-footer>

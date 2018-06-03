@@ -24,12 +24,13 @@ import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoCheckboxModule } from '../checkbox/checkbox.module';
 import { DatoButtonModule } from '../button/button.module';
 import { DatoLinkButtonModule } from '../link-button/link-button.module';
+import { DatoTextModule } from '../text/text.module';
 
 const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectOptionComponent, DatoSelectGroupComponent, DatoSelectMultiOptionComponent];
 const directives = [DatoSelectActiveDirective];
 
 @NgModule({
-  imports: [CommonModule, OverlayModule, PortalModule, ScrollDispatchModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule, DatoButtonModule, DatoLinkButtonModule],
+  imports: [CommonModule, OverlayModule, PortalModule, ScrollDispatchModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule, DatoButtonModule, DatoLinkButtonModule, DatoTextModule],
   declarations: [publicApi, directives],
   exports: [publicApi, directives],
   entryComponents: [publicApi]

@@ -172,6 +172,32 @@
 
 </dato-preview>
 
+<dato-preview title="Group - Multi">
+
+  <section class="d-flex">
+    <div class="select-preview">
+
+      <dato-select [formControl]="groupControlMulti" [dataSet]="grouped" #datoSelectGroupMulti type="multi">
+
+        <dato-group *ngFor="let group of datoSelectGroupMulti.data">
+          <div groupLabel>{{group.label}}</div>
+
+          <dato-option *ngFor="let option of group.children" [option]="option" multi>
+            {{option.label}}
+          </dato-option>
+
+        </dato-group>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{groupControlMulti.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+</dato-preview>
+
 
 <dato-preview title="Select Multi - With Footer">
 
@@ -196,12 +222,12 @@
 
 
 
-<dato-preview title="Select Multi - With Search">
+<dato-preview title="Select Multi - With Search And Select All">
 
   <section class="d-flex">
     <div class="select-preview">
 
-      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti type="multi">
+      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti type="multi" [allowSelectAll]="true">
 
         <dato-option *ngFor="let option of datoSelectMulti.data" [option]="option" multi>
           {{option.label}}

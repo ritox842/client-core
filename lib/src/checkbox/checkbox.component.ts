@@ -6,10 +6,10 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit, Renderer2, OnDestroy } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { pluck } from 'rxjs/operators';
+import { debounceTime, tap } from 'rxjs/operators';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { toBoolean } from '@datorama/utils';
 import { BaseCustomControl } from '../internal/base-custom-control';
@@ -30,29 +30,26 @@ const valueAccessor = {
   providers: [valueAccessor]
 })
 export class DatoCheckboxComponent extends BaseCustomControl implements OnInit, OnDestroy, ControlValueAccessor {
-  private _checked: boolean = false;
-
-  /**
-   * Whether the checkbox is checked.
-   */
-  get checked(): boolean {
-    return this._checked;
-  }
+  _checked = false;
 
   @Input()
   set checked(value: boolean) {
-    if (value !== this.checked) {
-      this._checked = value;
-      this.setInputValue(value);
-      this.cdr.markForCheck();
-    }
+    this._checked = value;
+    this.setInputValue(value);
+    this.cdr.markForCheck();
   }
+
+  @Output() check = new EventEmitter();
 
   /**
    * Get the native input
    */
   get inpuElement() {
     return this.host.nativeElement.querySelector('input');
+  }
+
+  get checkMarkElement() {
+    return this.host.nativeElement.querySelector('.checkmark');
   }
 
   constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef, @Attribute('trueValue') public trueValue, @Attribute('falseValue') public falseValue) {
@@ -62,17 +59,15 @@ export class DatoCheckboxComponent extends BaseCustomControl implements OnInit, 
   }
 
   ngOnInit() {
-    fromEvent(this.inpuElement, 'change')
-      .pipe(pluck('target', 'checked'), untilDestroyed(this))
-      .subscribe(val => {
-        this.onChange(val ? this.trueValue : this.falseValue);
+    fromEvent(this.checkMarkElement, 'click')
+      .pipe(tap((event: MouseEvent) => event.stopPropagation()), debounceTime(30), untilDestroyed(this))
+      .subscribe(() => {
+        this._checked = !this._checked;
+        const normalized = this._checked ? this.trueValue : this.falseValue;
+        this.onChange(normalized);
+        this.check.emit(normalized);
         this.cdr.markForCheck();
       });
-  }
-
-  /** Toggles the `checked` state of the checkbox. */
-  toggle(): void {
-    this.writeValue(!this.checked);
   }
 
   /**

@@ -17,6 +17,7 @@ import { DatoSelectOptionComponent } from './select-option.component';
 import { merge } from 'rxjs/observable/merge';
 import { debounceTime, mapTo } from 'rxjs/operators';
 import { DatoSelectActiveDirective } from './select-active.directive';
+import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -81,8 +82,14 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Whether to show loading indicator */
   @Input() isLoading = false;
 
+  /** Whether to allow select all checkbox */
+  @Input() allowSelectAll = false;
+
   /** The type of the select */
   @Input() type: SelectType = SelectType.SINGLE;
+
+  /** Client search strategy */
+  @Input() searchStrategy: DatoSelectSearchStrategy = defaultClientSearchStrategy;
 
   /** The options to display in the dropdown */
   @Input()
@@ -147,8 +154,19 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     return this.type === SelectType.AUTO_COMPLETE;
   }
 
-  get showEmptyResults() {
+  get _showEmptyResults() {
     return (!this.hasResults || !this._data.length) && !this.isGroup;
+  }
+
+  get _count() {
+    const total = this.options.length;
+    const actives = this._model.length;
+    return `(${actives}/${total})`;
+  }
+
+  /** Whether all the options are checked */
+  get _isAllChecked() {
+    return this.options.length === this._model.length;
   }
 
   /** FormControl which listens for search value changes */
@@ -264,6 +282,10 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
     this.toggle();
 
+    /**
+     * When we first open the dropdown we need to mark the
+     * FormControl values as actives
+     */
     if (this.hasValue && this._initialOpen) {
       this.markAsActive(this._model);
       this._initialOpen = false;
@@ -272,6 +294,25 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   ngAfterContentInit(): void {
     this.subscribeToOptionClick(this.options);
+  }
+
+  /**
+   *
+   * @param {boolean} checked
+   */
+  checkAll(checked: boolean) {
+    this.options.forEach(datoOption => (datoOption.active = checked));
+    const model = checked ? this.getRawOptions() : [];
+    this._model = model;
+    this.onChange(model);
+  }
+
+  /**
+   *
+   * @returns {any[]}
+   */
+  private getRawOptions() {
+    return this.options.map(datoOption => datoOption.option);
   }
 
   /**
@@ -306,7 +347,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     let hasResult = false;
 
     for (let datoOption of this.options.toArray()) {
-      const match = datoOption.option[this.labelKey].toLowerCase().indexOf(value) > -1;
+      const match = this.searchStrategy(datoOption, value, this.labelKey);
 
       if (!match) {
         datoOption.hide = true;
@@ -345,6 +386,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
         } else {
           this.search.emit(value);
         }
+        this.cdr.markForCheck();
       });
   }
 
@@ -360,7 +402,6 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
     this._clicksSubscription = merge(...clicks$).subscribe((datoOption: DatoSelectOptionComponent) => {
       if (datoOption.disabled) return;
-
       this.isSingle ? this.handleSingleClick(datoOption) : this.handleMultiClick(datoOption);
     });
   }

@@ -44,3 +44,16 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+.dato-select__header {
+  border-bottom: themify(primary-100) 2px solid;
+  padding-left: 10px;
+  align-items: center;
+  .dato-select__option {
+    padding-left: 0;
+    cursor: default;
+  }
+  .checkmark {
+    top: -8px !important;
+  }
+}

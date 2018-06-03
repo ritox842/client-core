@@ -29,16 +29,15 @@ dato-select {
 .dato-select__option {
   height: $select-md-height * 1px;
   line-height: $select-md-height * 1px;
-  padding: 0 13px 0 10px;
   font-size: 14px;
   cursor: pointer;
-
+  padding: 0 13px 0 10px;
   &--disabled {
     pointer-events: none;
   }
 }
 
-.dato-select__option:not(.dato-select__group) {
+dato-group .dato-select__option:not(.dato-select__group) {
   padding-left: 20px;
 }
 

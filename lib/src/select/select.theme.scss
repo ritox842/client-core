@@ -37,10 +37,13 @@
 
 .dato-select__footer {
   background-color: themify(primary-0);
-  height: 50px;
   border-top: 1px solid #f2f2f4;
-  padding-right: 30px;
+}
+
+.dato-select__footer.with-actions {
+  height: 50px;
   line-height: 50px;
+  padding: 0 30px 0 0;
   align-items: center;
   justify-content: flex-end;
 }
@@ -56,4 +59,8 @@
   .checkmark {
     top: -8px !important;
   }
+}
+
+.dato-select__option--disabled [datoFont] {
+  color: themify(primary-300);
 }

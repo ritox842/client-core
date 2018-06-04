@@ -1,11 +1,16 @@
 import Popper, { PopperOptions } from 'popper.js';
 import { ApplicationRef, EmbeddedViewRef, TemplateRef } from '@angular/core';
 import { DatoCoreError } from '../errors';
+import { Subscription } from 'rxjs/Subscription';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { Subject } from 'rxjs/Subject';
 
 export class DatoOverlay {
   private overlay: HTMLElement;
   private popper: Popper;
   private attached = false;
+  private onClickSubscription: Subscription;
+  private backDropClick = new Subject();
 
   constructor(private origin: HTMLElement, private tplPortal: DatoTemplatePortal) {}
 
@@ -17,6 +22,18 @@ export class DatoOverlay {
     appRef.attachView(this.tplPortal.viewRef);
     this.createPopper(this.createOverlay(), options);
     this.attached = true;
+    this.onClickSubscription = fromEvent(document.body, 'click', { capture: true }).subscribe(this.handleClick.bind(this));
+  }
+
+  get backDropClick$() {
+    return this.backDropClick.asObservable();
+  }
+
+  private handleClick(event: MouseEvent) {
+    const target = event.target as Node;
+    if (this.origin.contains(target) === false && this.overlay.contains(target) === false) {
+      this.backDropClick.next(event);
+    }
   }
 
   /**
@@ -37,6 +54,7 @@ export class DatoOverlay {
    * @param {Partial<PopperOptions>} options
    */
   private createPopper(target: HTMLElement, options: Partial<PopperOptions>) {
+    /** TODO: Run outside Angular Zone */
     this.popper = new Popper(this.origin, target, options);
     this.popper.scheduleUpdate();
   }
@@ -57,6 +75,7 @@ export class DatoOverlay {
       this.popper.options.removeOnDestroy = true;
     }
     this.popper.destroy();
+    this.onClickSubscription && this.onClickSubscription.unsubscribe();
   }
 }
 

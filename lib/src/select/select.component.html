@@ -19,10 +19,16 @@
 
   <section class="dato-select__dropdown-container">
 
+    <!-- HEADER -->
+
     <header class="dato-select__header d-flex" *ngIf="isMulti && allowSelectAll" [class.force-hide]="_showEmptyResults">
       <dato-checkbox (check)="checkAll($event)" [checked]="_isAllChecked"></dato-checkbox>
       <div class="dato-select__option">Select all <span class="primary-300-color note-italic">{{_count}}</span></div>
     </header>
+
+    <!-- END HEADER -->
+
+    <!-- DROPDOWN -->
 
     <div class="dato-select__dropdown">
 
@@ -32,10 +38,23 @@
 
     </div>
 
-    <footer class="dato-select__footer d-flex" *ngIf="_withActions">
-      <dato-link class="mr-20" datoType="secondary" (click)="close()">Cancel</dato-link>
-      <dato-button datoSize="sm" (click)="save.emit(); close();">Save</dato-button>
+    <!-- END DROPDOWN -->
+
+
+    <!-- FOOTER -->
+
+    <footer class="dato-select__footer d-flex" [class.with-actions]="_withActions">
+
+      <ng-content select="[datoSelectFooter]"></ng-content>
+
+      <ng-container *ngIf="_withActions">
+        <dato-link class="mr-20" datoType="secondary" (click)="close()">Cancel</dato-link>
+        <dato-button datoSize="sm" (click)="save.emit(); close();">Save</dato-button>
+      </ng-container>
+
     </footer>
+
+    <!-- END FOOTER -->
 
   </section>
 

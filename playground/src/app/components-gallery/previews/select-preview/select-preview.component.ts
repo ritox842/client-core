@@ -23,6 +23,7 @@ export class SelectPreviewComponent implements OnInit {
   multiControl = new FormControl();
   withActionsControl = new FormControl();
   groupControlMulti = new FormControl();
+  customFooterControl = new FormControl();
 
   options$ = this.subject.asObservable();
   options = [];
@@ -98,7 +99,7 @@ export class SelectPreviewComponent implements OnInit {
     { id: 5, label: "nop" }
   ];
 
-  isLoading;
+  isLoading = false;
 
   getNewItems(term) {
     this.isLoading = true;

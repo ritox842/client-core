@@ -12,9 +12,7 @@ import { Observable } from 'rxjs/Observable';
 
 export function getMultiTemplate() {
   return `
-    <div class="d-flex">
-      <dato-checkbox style="position: relative; top: 10px;" [checked]="_active"></dato-checkbox><ng-content></ng-content>
-    </div>
+      <div class="dato-checkbox"><label><p datoFont><ng-content></ng-content></p><input type="checkbox" [checked]="_active" [disabled]="_disabled"><span class="checkmark"></span></label></div>
   `;
 }
 

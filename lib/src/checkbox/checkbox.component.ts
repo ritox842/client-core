@@ -6,10 +6,10 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit, Renderer2, OnDestroy, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { debounceTime, tap } from 'rxjs/operators';
+import { pluck } from 'rxjs/operators';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { toBoolean } from '@datorama/utils';
 import { BaseCustomControl } from '../internal/base-custom-control';
@@ -24,13 +24,20 @@ const valueAccessor = {
 @Component({
   selector: 'dato-checkbox',
   templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'datoCheckbox',
   providers: [valueAccessor]
 })
 export class DatoCheckboxComponent extends BaseCustomControl implements OnInit, OnDestroy, ControlValueAccessor {
-  _checked = false;
+  private _checked: boolean = false;
+
+  /**
+   * Whether the checkbox is checked.
+   */
+  get checked(): boolean {
+    return this._checked;
+  }
 
   @Input()
   set checked(value: boolean) {
@@ -48,10 +55,6 @@ export class DatoCheckboxComponent extends BaseCustomControl implements OnInit, 
     return this.host.nativeElement.querySelector('input');
   }
 
-  get checkMarkElement() {
-    return this.host.nativeElement.querySelector('.checkmark');
-  }
-
   constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef, @Attribute('trueValue') public trueValue, @Attribute('falseValue') public falseValue) {
     super();
     this.trueValue = toBoolean(this.trueValue) ? this.trueValue : true;
@@ -59,15 +62,20 @@ export class DatoCheckboxComponent extends BaseCustomControl implements OnInit, 
   }
 
   ngOnInit() {
-    fromEvent(this.checkMarkElement, 'click')
-      .pipe(tap((event: MouseEvent) => event.stopPropagation()), debounceTime(30), untilDestroyed(this))
-      .subscribe(() => {
+    fromEvent(this.inpuElement, 'change')
+      .pipe(pluck('target', 'checked'), untilDestroyed(this))
+      .subscribe(val => {
         this._checked = !this._checked;
         const normalized = this._checked ? this.trueValue : this.falseValue;
         this.onChange(normalized);
         this.check.emit(normalized);
-        this.cdr.markForCheck();
+        this.check.emit(normalized);
       });
+  }
+
+  /** Toggles the `checked` state of the checkbox. */
+  toggle(): void {
+    this.writeValue(!this.checked);
   }
 
   /**

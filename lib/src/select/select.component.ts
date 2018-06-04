@@ -13,7 +13,7 @@ import { coerceArray } from '@datorama/utils';
 import { SelectType } from './select.types';
 import { DatoSelectOptionComponent } from './select-option.component';
 import { merge } from 'rxjs/observable/merge';
-import { debounceTime, mapTo } from 'rxjs/operators';
+import { debounceTime, mapTo, take } from 'rxjs/operators';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { Placement, PopperOptions } from 'popper.js';
@@ -246,6 +246,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     if (this.open && this.isCombo) {
       this._focus = true;
     }
+
     this.cdr.markForCheck();
   }
 
@@ -283,6 +284,10 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       const templatePortal = new DatoTemplatePortal(this.dropdown);
       this._overlayRef = new DatoOverlay(this.origin.nativeElement, templatePortal);
     }
+
+    this._overlayRef.backDropClick$.pipe(take(1)).subscribe(() => {
+      this.open && this.close();
+    });
 
     this._overlayRef.create(this.getPopperOptions(), this.appRef);
 
@@ -406,10 +411,12 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     /** Gather all the clicks */
     const clicks$ = options.map(option => option.click$.pipe(mapTo(option)));
 
-    this._clicksSubscription = merge(...clicks$).subscribe((datoOption: DatoSelectOptionComponent) => {
-      if (datoOption.disabled) return;
-      this.isSingle ? this.handleSingleClick(datoOption) : this.handleMultiClick(datoOption);
-    });
+    this._clicksSubscription = merge(...clicks$)
+      .pipe(debounceTime(10))
+      .subscribe((datoOption: DatoSelectOptionComponent) => {
+        if (datoOption.disabled) return;
+        this.isSingle ? this.handleSingleClick(datoOption) : this.handleMultiClick(datoOption);
+      });
   }
 
   /**

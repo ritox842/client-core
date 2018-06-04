@@ -182,7 +182,7 @@
         <dato-group *ngFor="let group of datoSelectGroupMulti.data">
           <div groupLabel>{{group.label}}</div>
 
-          <dato-option *ngFor="let option of group.children" [option]="option" multi>
+          <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi [disabled]="index === 0">
             {{option.label}}
           </dato-option>
 
@@ -199,7 +199,7 @@
 </dato-preview>
 
 
-<dato-preview title="Select Multi - With Footer">
+<dato-preview title="Select Multi - With Actions">
 
   <section class="d-flex">
     <div class="select-preview">
@@ -220,6 +220,31 @@
 
 </dato-preview>
 
+
+<dato-preview title="Select Multi - With Custom Footer">
+
+  <section class="d-flex">
+    <div class="select-preview">
+
+      <dato-select [formControl]="customFooterControl" [dataSet]="options" #datoSelectCustomFooter type="multi">
+
+        <dato-option *ngFor="let option of datoSelectCustomFooter.data" [option]="option" multi>
+          {{option.label}}
+        </dato-option>
+
+        <div datoSelectFooter>
+          <dato-button (click)="datoSelectCustomFooter.close()">Content inside footer</dato-button>
+        </div>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{customFooterControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+</dato-preview>
 
 
 <dato-preview title="Select Multi - With Search And Select All">

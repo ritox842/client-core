@@ -6,11 +6,9 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
-import { ConnectedPositionStrategy, Overlay, OverlayConfig, OverlayOrigin, OverlayRef } from '@angular/cdk/overlay';
-import { TemplatePortal } from '@angular/cdk/portal';
 import { coerceArray } from '@datorama/utils';
 import { SelectType } from './select.types';
 import { DatoSelectOptionComponent } from './select-option.component';
@@ -18,6 +16,9 @@ import { merge } from 'rxjs/observable/merge';
 import { debounceTime, mapTo } from 'rxjs/operators';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
+import { Placement, PopperOptions } from 'popper.js';
+import { setStyle } from '../internal/helpers';
+import { DatoOverlay, DatoTemplatePortal } from '../..';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -29,6 +30,7 @@ const valueAccessor = {
   selector: 'dato-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
+  preserveWhitespaces: false,
   providers: [valueAccessor],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +41,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   @ViewChild('dropdown') dropdown: TemplateRef<any>;
 
   /** The overlay origin which is one of dato-triggers **/
-  @ViewChild(OverlayOrigin) origin: OverlayOrigin;
+  @ViewChild('overlayOrigin') origin: ElementRef;
 
   /** QueryList of datoSelectOptions childs */
   @ContentChildren(DatoSelectOptionComponent, { descendants: true })
@@ -90,6 +92,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   /** Client search strategy */
   @Input() searchStrategy: DatoSelectSearchStrategy = defaultClientSearchStrategy;
+
+  /** The default position of thh dropdown */
+  @Input() placement: Placement = 'bottom-start';
 
   /** The options to display in the dropdown */
   @Input()
@@ -197,7 +202,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   _open = false;
 
   /** Reference to the overlay*/
-  _overlayRef: OverlayRef;
+  _overlayRef: DatoOverlay;
 
   /** Search control subscription */
   _searchSubscription;
@@ -214,7 +219,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Whether generate cancel/save footer */
   _withActions = false;
 
-  constructor(private overlay: Overlay, private viewContainerRef: ViewContainerRef, private cdr: ChangeDetectorRef) {
+  constructor(private cdr: ChangeDetectorRef, private appRef: ApplicationRef) {
     super();
   }
 
@@ -228,7 +233,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    */
   close() {
     this.searchControl.patchValue('');
-    this._overlayRef && this._overlayRef.dispose();
+    this._overlayRef.detach();
     this.toggle();
     this._focus = false;
   }
@@ -274,11 +279,12 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     /** Don't close the dropdown if we click on the input and it's open */
     if (this.open && this.isCombo) return;
 
-    const { width } = (this.origin.elementRef.nativeElement as HTMLElement).getBoundingClientRect();
+    if (!this._overlayRef) {
+      const templatePortal = new DatoTemplatePortal(this.dropdown);
+      this._overlayRef = new DatoOverlay(this.origin.nativeElement, templatePortal);
+    }
 
-    const config = this.getOverlayConfig(width, this.getOverlayPosition(this.origin));
-    this._overlayRef = this.overlay.create(config);
-    this._overlayRef.attach(new TemplatePortal(this.dropdown, this.viewContainerRef));
+    this._overlayRef.create(this.getPopperOptions(), this.appRef);
 
     this.toggle();
 
@@ -441,39 +447,26 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   /**
    *
-   * @param origin
-   * @returns {ConnectedPositionStrategy}
+   * @returns {Partial<PopperOptions>}
    */
-  private getOverlayPosition(origin) {
-    return this.overlay.position().connectedTo(
-      origin.elementRef,
-      {
-        originX: 'start',
-        originY: 'bottom'
-      },
-      { overlayX: 'start', overlayY: 'top' }
-    );
-  }
-
-  /**
-   *
-   * @param width
-   * @param positionStrategy
-   * @returns {OverlayConfig}
-   */
-  private getOverlayConfig(width: number, positionStrategy: ConnectedPositionStrategy) {
-    return new OverlayConfig({
-      positionStrategy,
-      scrollStrategy: this.overlay.scrollStrategies.reposition(),
-      width,
-      hasBackdrop: false,
-      backdropClass: 'dato-select',
-      panelClass: 'dato-select'
-    });
+  private getPopperOptions(): Partial<PopperOptions> {
+    return {
+      placement: this.placement,
+      modifiers: {
+        preventOverflow: { enabled: false },
+        applyStyle: {
+          onLoad: (origin: HTMLElement, dropdown: HTMLElement) => {
+            const { width } = origin.getBoundingClientRect();
+            setStyle(dropdown, 'width', `${width}px`);
+          }
+        }
+      }
+    };
   }
 
   ngOnDestroy() {
     this._searchSubscription && this._searchSubscription.unsubscribe();
     this._clicksSubscription && this._clicksSubscription.unsubscribe();
+    this._overlayRef && this._overlayRef.destroy();
   }
 }

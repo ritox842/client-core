@@ -7,3 +7,4 @@
  */
 
 export * from './dynamic-components';
+export * from './overlay';

@@ -3,7 +3,6 @@ import { FormControl } from "@angular/forms";
 import { timer } from "rxjs/observable/timer";
 import { mapTo } from "rxjs/operators";
 import { Subject } from "rxjs/Subject";
-import { SnackbarRef } from "../../../../../../lib/src/snackbar/snackbar-ref";
 import { DatoSnackbar } from "../../../../../../lib";
 
 @Component({

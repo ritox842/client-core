@@ -13,9 +13,10 @@ describe('DatoFontDirective', () => {
   });
 
   it('should throw if the class does not exists', () => {
+    const klasses = ['headline', 'sub-headline', 'simple', 'simple-bold', 'simple-italic', 'note', 'note-bold', 'note-italic'];
     expect(function() {
       createHost(`<div datoFont="bla">Testing DatoFontDirective</div>`);
-    }).toThrow(new DatoCoreError(`datoFont - bla doesn't exists`));
+    }).toThrow(new DatoCoreError(`datoFont - bla doesn't exists. Valid options: ${klasses.join(', ')}`));
   });
 
   it('should add the right class', () => {

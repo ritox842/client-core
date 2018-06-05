@@ -12,7 +12,8 @@
     "link-bin": "link-parent-bin --child-directory-root .",
     "themes": "cd lib && npm run themify:dev",
     "test:ci": "CI=true karma start lib/config/karma.conf.js",
-    "test": "karma start lib/config/karma.conf.js"
+    "test": "karma start lib/config/karma.conf.js",
+    "pub": "npm run build && cd dist && npm publish --access public"
   },
   "config": {
     "commitizen": {

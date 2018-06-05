@@ -18,7 +18,7 @@ import { ColorDirective } from '../themes/color.directive';
 function assertClassName(klass: string) {
   const klasses = ['headline', 'sub-headline', 'simple', 'simple-bold', 'simple-italic', 'note', 'note-bold', 'note-italic'];
   if (klasses.indexOf(klass) === -1) {
-    throw new DatoCoreError(`datoFont - ${klass} doesn't exists`);
+    throw new DatoCoreError(`datoFont - ${klass} doesn't exists. Valid options: ${klasses.join(', ')}`);
   }
 }
 

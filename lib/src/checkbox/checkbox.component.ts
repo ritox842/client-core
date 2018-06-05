@@ -13,6 +13,7 @@ import { pluck } from 'rxjs/operators';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { toBoolean } from '@datorama/utils';
 import { BaseCustomControl } from '../internal/base-custom-control';
+import { DatoCoreError } from '../errors';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -78,6 +79,11 @@ export class DatoCheckboxComponent extends BaseCustomControl implements OnInit, 
    * @param value
    */
   writeValue(value): void {
+    // check for a valid value
+    if (value == null || (value !== this.trueValue && value !== this.falseValue)) {
+      throw new DatoCoreError(`Invalid checkbox value: ${value}`);
+    }
+
     const normalizedValue = value === this.trueValue ? true : false;
     this.setInputValue(normalizedValue);
   }

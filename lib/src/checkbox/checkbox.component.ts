@@ -79,7 +79,7 @@ export class DatoCheckboxComponent extends BaseCustomControl implements OnInit, 
    * @param value
    */
   writeValue(value): void {
-    // check for a valid value
+    /* check for a valid value */
     if (value == null || (value !== this.trueValue && value !== this.falseValue)) {
       throw new DatoCoreError(`Invalid checkbox value: ${value}`);
     }

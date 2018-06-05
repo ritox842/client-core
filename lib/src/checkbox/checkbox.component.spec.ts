@@ -10,7 +10,7 @@ class CustomHostComponent {
   control = new FormControl(false);
 }
 
-fdescribe('DatoCheckboxComponent', () => {
+describe('DatoCheckboxComponent', () => {
   let host: SpectatorWithHost<DatoCheckboxComponent, CustomHostComponent>;
 
   const createHost = createHostComponentFactory({

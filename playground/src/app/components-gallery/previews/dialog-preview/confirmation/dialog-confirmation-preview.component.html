@@ -19,7 +19,7 @@
             title: "Delete",
             content: 'Are you sure you want to delete the entity?'
           })
-          .afterClose()
+          .afterClosed()
           .subscribe((result: DatoDialogResult) => {
             console.log(result.status);
           });
@@ -65,7 +65,7 @@
             title: "Delete",
             content: this.dialogTpl
           })
-          .afterClose()
+          .afterClosed()
           .subscribe((result: DatoDialogResult) => {
             console.log(result.status);
           });

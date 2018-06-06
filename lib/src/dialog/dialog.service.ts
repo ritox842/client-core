@@ -173,7 +173,8 @@ export class DatoDialog {
    * @param {Element} element
    */
   private registerEvents(config: DialogConfig) {
-    const dialogElement = config.dialogElement.querySelector('.dato-dialog') as HTMLElement;
+    const dialogTag = 'dato-dialog';
+    const dialogElement = config.dialogElement.querySelector(`.${dialogTag}`) as HTMLElement;
 
     // set next z-index
     dialogElement.style.zIndex = (++this.lastZIndex).toString();
@@ -183,7 +184,11 @@ export class DatoDialog {
       return;
     }
 
-    const modalClick$ = fromEvent(dialogElement, 'click');
+    const modalClick$ = fromEvent(dialogElement, 'click').pipe(
+      filter((e: MouseEvent) => {
+        return (e.target as HTMLElement).classList.contains(dialogTag);
+      })
+    );
     const escapeClick$ = fromEvent(document, 'keyup').pipe(filter((e: KeyboardEvent) => e.keyCode === 27));
 
     merge(modalClick$, escapeClick$)

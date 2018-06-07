@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { AfterContentInit, ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { coerceArray } from '@datorama/utils';
@@ -18,7 +18,7 @@ import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { Placement, PopperOptions } from 'popper.js';
 import { setStyle } from '../internal/helpers';
-import { DatoOverlay, DatoTemplatePortal } from '../..';
+import { DatoOverlay, DatoTemplatePortal } from '../angular/overlay';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -31,7 +31,7 @@ const valueAccessor = {
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
   preserveWhitespaces: false,
-  providers: [valueAccessor],
+  providers: [valueAccessor, DatoOverlay],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'datoSelect'
@@ -103,7 +103,10 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
     /** If it's async updates, create micro task in order to re-subscribe to clicks */
     if (this._dataIsDirty) {
-      Promise.resolve().then(() => this.subscribeToOptionClick(this.options));
+      Promise.resolve().then(() => {
+        this.subscribeToOptionClick(this.options);
+        this.markAsActive(this._model);
+      });
     }
 
     this._dataIsDirty = true;
@@ -155,10 +158,6 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     return this.type === SelectType.MULTI;
   }
 
-  get isAutoComplete() {
-    return this.type === SelectType.AUTO_COMPLETE;
-  }
-
   get _showEmptyResults() {
     return (!this.hasResults || !this._data.length) && !this.isGroup;
   }
@@ -201,9 +200,6 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Wheter the dropdown is open */
   _open = false;
 
-  /** Reference to the overlay*/
-  _overlayRef: DatoOverlay;
-
   /** Search control subscription */
   _searchSubscription;
 
@@ -219,8 +215,14 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Whether generate cancel/save footer */
   _withActions = false;
 
-  constructor(private cdr: ChangeDetectorRef, private appRef: ApplicationRef) {
+  /** Notify the multi trigger when click outside to remove the focus  */
+  _clickOutside = false;
+
+  _dropdownClass;
+
+  constructor(private cdr: ChangeDetectorRef, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
     super();
+    this._dropdownClass = `dato-select-${size || 'md'}`;
   }
 
   ngOnInit() {
@@ -233,7 +235,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    */
   close() {
     this.searchControl.patchValue('');
-    this._overlayRef.detach();
+    this.datoOverlay.detach();
     this.toggle();
     this._focus = false;
   }
@@ -245,6 +247,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this.open = !this.open;
     if (this.open && this.isCombo) {
       this._focus = true;
+      this._clickOutside = false;
     }
 
     this.cdr.markForCheck();
@@ -280,16 +283,17 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     /** Don't close the dropdown if we click on the input and it's open */
     if (this.open && this.isCombo) return;
 
-    if (!this._overlayRef) {
+    if (!this.datoOverlay.created) {
       const templatePortal = new DatoTemplatePortal(this.dropdown);
-      this._overlayRef = new DatoOverlay(this.origin.nativeElement, templatePortal);
+      this.datoOverlay.create(this.origin.nativeElement, templatePortal);
     }
 
-    this._overlayRef.backDropClick$.pipe(take(1)).subscribe(() => {
+    this.datoOverlay.backDropClick$.pipe(take(1)).subscribe(() => {
+      this._clickOutside = true;
       this.open && this.close();
     });
 
-    this._overlayRef.create(this.getPopperOptions(), this.appRef);
+    this.datoOverlay.attach(this.getPopperOptions(), this._dropdownClass);
 
     this.toggle();
 
@@ -316,6 +320,18 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     const model = checked ? this.getRawOptions() : [];
     this._model = model;
     this.onChange(model);
+  }
+
+  /**
+   *
+   * @param option
+   */
+  removeOption(option) {
+    this._model = this._model.filter(current => current[this.idKey] !== option[this.idKey]);
+    this.options.find(datoOption => datoOption.option[this.idKey] === option[this.idKey]).active = false;
+    this.onChange(this._model);
+    this.cdr.markForCheck();
+    this.datoOverlay.scheduleUpdate();
   }
 
   /**
@@ -445,11 +461,13 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     datoOption.active = !datoOption.active;
     const rawOption = datoOption.option;
     if (datoOption.active) {
-      this._model.push(rawOption);
+      this._model = this._model.concat(rawOption);
     } else {
-      this._model = this._model.filter(current => current !== rawOption);
+      this._model = this._model.filter(current => current[this.idKey] !== rawOption[this.idKey]);
     }
     this.onChange(this._model);
+    this.cdr.markForCheck();
+    this.datoOverlay.scheduleUpdate();
   }
 
   /**
@@ -474,6 +492,6 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   ngOnDestroy() {
     this._searchSubscription && this._searchSubscription.unsubscribe();
     this._clicksSubscription && this._clicksSubscription.unsubscribe();
-    this._overlayRef && this._overlayRef.destroy();
+    this.datoOverlay.attached && this.datoOverlay.destroy();
   }
 }

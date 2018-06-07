@@ -6,9 +6,10 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Host, Input, OnInit, forwardRef, Inject } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Observable } from 'rxjs/Observable';
+import { DatoSelectComponent } from './select.component';
 
 export function getMultiTemplate() {
   return `

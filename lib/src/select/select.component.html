@@ -1,18 +1,28 @@
 <section #overlayOrigin class="dato-select__trigger" [class.dato-select--disabled]="_disabled">
 
-  <dato-input [class.force-hide]="(!open && isCombo) || !isCombo"
-              [placeholder]="searchPlaceholder"
-              [isFocused]="_focus"
-              [isLoading]="isLoading"
-              [formControl]="searchControl"
-              type="search"></dato-input>
+  <div class="dato-select__single" *ngIf="isSingle">
+    <dato-input [class.force-hide]="(!open && isCombo) || !isCombo"
+                [placeholder]="searchPlaceholder"
+                [isFocused]="_focus"
+                [isLoading]="isLoading"
+                [formControl]="searchControl"
+                type="search"></dato-input>
 
-  <dato-trigger-single [active]="active"
-                       [context]="_model[0]"
-                       [class.force-hide]="open && isCombo"
-                       [placeholder]="placeholder"
-                       class="ontop-overlay"
-                       (click)="openDropdown($event)"></dato-trigger-single>
+    <dato-trigger-single [active]="active"
+                         [context]="_model[0]"
+                         [class.force-hide]="open && isCombo"
+                         [placeholder]="placeholder"
+                         class="ontop-overlay"
+                         (click)="openDropdown($event)"></dato-trigger-single>
+  </div>
+
+  <dato-trigger-multi [options]="_model"
+                      [control]="searchControl"
+                      [labelKey]="labelKey"
+                      [clickOutside]="_clickOutside"
+                      (removeOption)="removeOption($event)"
+                      *ngIf="isMulti" (click)="openDropdown($event)"></dato-trigger-multi>
+
 </section>
 
 <ng-template #dropdown>

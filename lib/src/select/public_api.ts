@@ -14,3 +14,4 @@ export * from './select-multi-option.component';
 export * from './select-empty.component';
 export * from './select-option.component';
 export * from './select-multi-option.component';
+export * from './trigger-multi/trigger-multi.component';

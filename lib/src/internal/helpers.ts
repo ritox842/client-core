@@ -46,3 +46,31 @@ export function addClass(element, className: string): void {
 export function removeClass(element, className: string): void {
   element.classList.remove(className);
 }
+
+/**
+ *
+ * @param {string} tagName
+ * @returns {HTMLElement}
+ */
+export function createElement(tagName: string) {
+  return document.createElement(tagName);
+}
+
+/**
+ *
+ * @param {HTMLElement} parent
+ * @param {HTMLElement} child
+ * @returns {HTMLElement}
+ */
+export function appendChild(parent: HTMLElement, child: HTMLElement) {
+  return parent.appendChild(child);
+}
+
+/**
+ *
+ * @param {HTMLElement} child
+ * @returns {HTMLElement}
+ */
+export function appendToBody(child: HTMLElement) {
+  return appendChild(document.body, child);
+}

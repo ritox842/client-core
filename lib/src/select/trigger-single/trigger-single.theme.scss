@@ -1,6 +1,16 @@
 dato-trigger-single {
-  @include input-like();
   @include input-like-theme();
+  @include input-like();
+
+  .dato-icon-arrow-down path {
+    fill: themify(primary-300);
+  }
+}
+
+dato-trigger-multi {
+  @include input-like-theme();
+  @include input-like(dropdown);
+  height: auto;
   .dato-icon-arrow-down path {
     fill: themify(primary-300);
   }

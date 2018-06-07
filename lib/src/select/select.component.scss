@@ -5,10 +5,13 @@ dato-select {
 }
 
 .dato-select__trigger {
-  height: 30px;
   &[disabled] {
     pointer-events: none;
   }
+}
+
+.dato-select__single {
+  height: 30px;
 }
 
 .dato-select__dropdown-container {

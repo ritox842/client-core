@@ -24,6 +24,9 @@ export class SelectPreviewComponent implements OnInit {
   withActionsControl = new FormControl();
   groupControlMulti = new FormControl();
   customFooterControl = new FormControl();
+  multiControl = new FormControl();
+  multiControl2 = new FormControl();
+  multiControl3 = new FormControl();
 
   options$ = this.subject.asObservable();
   options = [];

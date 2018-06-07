@@ -63,6 +63,54 @@
 
 </dato-preview>
 
+<dato-preview title="Select Multi">
+
+  <section class="d-flex">
+    <div class="select-preview" style="width: 500px;">
+
+      <dato-select [formControl]="multiControl" [dataSet]="options" type="multi" #datoSelectMulti2 datoSize="lg">
+
+        <dato-option *ngFor="let option of datoSelectMulti2.data" [option]="option" multi>
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{multiControl.value | json}}</span></p>
+
+    </div>
+
+    <div class="select-preview" style="width: 500px; margin-left: 20px">
+
+      <dato-select [formControl]="multiControl2" [dataSet]="options" type="multi" #datoSelectMulti3>
+
+        <dato-option *ngFor="let option of datoSelectMulti3.data" [option]="option" multi>
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{multiControl2.value | json}}</span></p>
+
+    </div>
+
+    <div class="select-preview" style="width: 500px; margin-left: 20px">
+
+      <dato-select [formControl]="multiControl3" [dataSet]="options" type="multi" #datoSelectMulti4 datoSize="sm">
+
+        <dato-option *ngFor="let option of datoSelectMulti4.data" [option]="option" multi>
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{multiControl3.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+</dato-preview>
 
 <dato-preview title="Select Single - Server Side Search">
 
@@ -88,7 +136,6 @@
   </section>
 
 </dato-preview>
-
 
 
 <dato-preview title="Select Single - Disabled">
@@ -175,7 +222,7 @@
 <dato-preview title="Group - Multi">
 
   <section class="d-flex">
-    <div class="select-preview">
+    <div class="select-preview" style="width: 500px;">
 
       <dato-select [formControl]="groupControlMulti" [dataSet]="grouped" #datoSelectGroupMulti type="multi">
 
@@ -202,7 +249,7 @@
 <dato-preview title="Select Multi - With Actions">
 
   <section class="d-flex">
-    <div class="select-preview">
+    <div class="select-preview" style="width: 500px;">
 
       <dato-select [formControl]="withActionsControl" [dataSet]="options" #datoSelectFooter (save)="onSave()" type="multi">
 
@@ -224,7 +271,7 @@
 <dato-preview title="Select Multi - With Custom Footer">
 
   <section class="d-flex">
-    <div class="select-preview">
+    <div class="select-preview" style="width: 500px;">
 
       <dato-select [formControl]="customFooterControl" [dataSet]="options" #datoSelectCustomFooter type="multi">
 
@@ -250,7 +297,7 @@
 <dato-preview title="Select Multi - With Search And Select All">
 
   <section class="d-flex">
-    <div class="select-preview">
+    <div class="select-preview" style="width: 500px;">
 
       <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti type="multi" [allowSelectAll]="true">
 

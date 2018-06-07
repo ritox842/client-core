@@ -19,22 +19,23 @@
     </textarea>
 
     <textarea datoHighlight="js">
+    export class GridFormControlCheckboxPreviewComponent extends DatoGrid<any> {
       data = [
         {
           id: 1,
-          value: 'Item one'
+          value: "Item one"
         },
         {
           id: 2,
-          value: 'Item two'
+          value: "Item two"
         },
         {
           id: 3,
-          value: 'Item three'
+          value: "Item three"
         }
       ];
 
-      selectedRowsControl = new FormControl([]);
+      selectedRowsControl = new FormControl([this.data[0]]);
 
       ngOnInit() {
         super.ngOnInit();
@@ -43,6 +44,30 @@
           this.setRows(this.data);
         });
       }
+
+      getColumns(): GridColumns {
+        return [
+          {
+            headerName: "ID",
+            field: "id",
+            width: 100,
+            filter: "agNumberColumnFilter",
+            headerCheckboxSelection: true,
+            checkboxSelection: true
+          },
+          {
+            headerName: "Value",
+            field: "value",
+            width: 100,
+            filter: "agTextColumnFilter"
+          }
+        ];
+      }
+
+      getToolbarActions(): ToolbarAction[] {
+        return [];
+      }
+    }
     </textarea>
 
 

@@ -8,13 +8,11 @@ import { Dimensions } from "../../../../../../lib/src/types/public_api";
   selector: "dato-dialog-preview",
   templateUrl: "./dialog-preview.component.html"
 })
-export class DialogPreviewComponent implements OnInit {
+export class DialogPreviewComponent {
   dialogWidthControl = new FormControl("400px");
   dialogHeightControl = new FormControl("500px");
 
   constructor(private dialog: DatoDialog) {}
-
-  ngOnInit() {}
 
   openDialogWithSize(size: Dimensions) {
     this.dialog.confirm({

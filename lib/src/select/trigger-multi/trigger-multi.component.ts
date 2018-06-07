@@ -8,6 +8,7 @@
 
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { last } from '@datorama/utils';
 
 @Component({
   selector: 'dato-trigger-multi',
@@ -156,5 +157,21 @@ export class DatoTriggerMulti implements OnInit {
   clearSearch() {
     this.control.setValue('');
     this.input.nativeElement.focus();
+  }
+
+  /**
+   * Remove option with keyboard
+   * @param event
+   */
+  onKeyDown(event) {
+    const BACKSPACE = event.keyCode === 8;
+    const DELETE = event.keyCode === 46;
+    const hasOptions = this.options.length >= 1;
+    const emptySearch = !this.input.nativeElement.value;
+
+    if ((BACKSPACE || DELETE) && hasOptions && emptySearch) {
+      const lastOption = last(this.options);
+      this.removeOption.emit(lastOption);
+    }
   }
 }

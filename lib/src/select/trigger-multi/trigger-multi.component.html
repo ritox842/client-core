@@ -6,6 +6,7 @@
 
   <input type="text" class="dato-multi-search flex-1"
          [placeholder]="placeholder"
+         (keydown)="onKeyDown($event)"
          [style.minWidth.px]="inputWidth"
          [formControl]="control"
          #input>

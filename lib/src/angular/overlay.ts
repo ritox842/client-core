@@ -4,7 +4,8 @@ import { DatoCoreError } from '../errors';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { addClass, appendChild, appendToBody, createElement } from '../internal/helpers';
+import { addClass, appendChild, appendToBody, createElement, setStyle } from '../internal/helpers';
+import { debounceTime } from 'rxjs/operators';
 
 @Injectable()
 export class DatoOverlay {
@@ -13,6 +14,7 @@ export class DatoOverlay {
   private overlay: HTMLElement;
   private popper: Popper;
   private onClickSubscription;
+  private onResizeSubscription;
   private backDropClick = new Subject();
   private origin: HTMLElement;
   private tplPortal: DatoTemplatePortal;
@@ -27,6 +29,12 @@ export class DatoOverlay {
     this.created = true;
     this.origin = origin;
     this.tplPortal = tplPortal;
+    this.ngZone.runOutsideAngular(() => {
+      this.onClickSubscription = fromEvent(document.body, 'click', { capture: true }).subscribe(this.handleClick.bind(this));
+      this.onResizeSubscription = fromEvent(window, 'resize')
+        .pipe(debounceTime(100))
+        .subscribe(this.handleResize.bind(this, origin));
+    });
   }
 
   /**
@@ -37,7 +45,6 @@ export class DatoOverlay {
     this.appRef.attachView(this.tplPortal.viewRef);
     this.createPopper(this.createOverlay(classes), options);
     this.attached = true;
-    this.onClickSubscription = fromEvent(document.body, 'click', { capture: true }).subscribe(this.handleClick.bind(this));
   }
 
   /**
@@ -62,7 +69,21 @@ export class DatoOverlay {
   private handleClick(event: MouseEvent) {
     const target = event.target as Node;
     if (this.origin.contains(target) === false && this.overlay.contains(target) === false) {
-      this.backDropClick.next(event);
+      this.ngZone.run(() => {
+        this.backDropClick.next(event);
+      });
+    }
+  }
+
+  /**
+   *
+   * @param {HTMLElement} origin
+   */
+  private handleResize(origin: HTMLElement) {
+    if (this.attached) {
+      const { width } = origin.getBoundingClientRect();
+      setStyle(this.tplPortal.elementRef, 'width', `${width}px`);
+      this.scheduleUpdate();
     }
   }
 
@@ -110,6 +131,7 @@ export class DatoOverlay {
     this.popper.destroy();
     this.appRef.detachView(this.tplPortal.viewRef);
     this.onClickSubscription && this.onClickSubscription.unsubscribe();
+    this.onResizeSubscription && this.onResizeSubscription.unsubscribe();
   }
 }
 

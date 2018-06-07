@@ -19,6 +19,7 @@ import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.
 import { Placement, PopperOptions } from 'popper.js';
 import { setStyle } from '../internal/helpers';
 import { DatoOverlay, DatoTemplatePortal } from '../angular/overlay';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -218,16 +219,22 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Notify the multi trigger when click outside to remove the focus  */
   _clickOutside = false;
 
+  /** Dropdown size class */
   _dropdownClass;
 
   constructor(private cdr: ChangeDetectorRef, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
     super();
     this._dropdownClass = `dato-select-${size || 'md'}`;
+    this.resize();
   }
 
   ngOnInit() {
     this._withActions = this.save.observers.length === 1;
     this.listenToSearch();
+  }
+
+  resize() {
+    //fromEvent(window, 'resize').subscribe(console.log);
   }
 
   /**

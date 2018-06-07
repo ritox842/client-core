@@ -47,7 +47,9 @@
   <section class="d-flex">
     <div class="select-preview">
 
-      <dato-select [formControl]="simpleControlSearch" [dataSet]="options" #datoSelectSearch>
+      <p datoSize="sub-headline">Large</p>
+
+      <dato-select [formControl]="simpleControlSearch" [dataSet]="options" #datoSelectSearch datoSize="lg">
 
         <dato-option *ngFor="let option of datoSelectSearch.data" [option]="option">
           {{option.label}}
@@ -59,6 +61,37 @@
 
     </div>
 
+    <div class="select-preview" style="margin-left: 20px;">
+
+      <p datoSize="sub-headline">Medium</p>
+
+      <dato-select [formControl]="simpleControlSearch2" [dataSet]="options" #datoSelectSearch2>
+
+        <dato-option *ngFor="let option of datoSelectSearch2.data" [option]="option">
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{simpleControlSearch2.value | json}}</span></p>
+
+    </div>
+
+    <div class="select-preview" style="margin-left: 20px;">
+
+      <p datoSize="sub-headline">Small</p>
+
+      <dato-select [formControl]="simpleControlSearch3" [dataSet]="options" #datoSelectSearch3 datoSize="sm">
+
+        <dato-option *ngFor="let option of datoSelectSearch3.data" [option]="option">
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{simpleControlSearch.value | json}}</span></p>
+
+    </div>
   </section>
 
 </dato-preview>
@@ -67,6 +100,8 @@
 
   <section class="d-flex">
     <div class="select-preview" style="width: 500px;">
+
+      <p datoSize="sub-headline">Large</p>
 
       <dato-select [formControl]="multiControl" [dataSet]="options" type="multi" #datoSelectMulti2 datoSize="lg">
 
@@ -82,6 +117,8 @@
 
     <div class="select-preview" style="width: 500px; margin-left: 20px">
 
+      <p datoSize="sub-headline">Medium</p>
+
       <dato-select [formControl]="multiControl2" [dataSet]="options" type="multi" #datoSelectMulti3>
 
         <dato-option *ngFor="let option of datoSelectMulti3.data" [option]="option" multi>
@@ -95,6 +132,8 @@
     </div>
 
     <div class="select-preview" style="width: 500px; margin-left: 20px">
+
+      <p datoSize="sub-headline">Small</p>
 
       <dato-select [formControl]="multiControl3" [dataSet]="options" type="multi" #datoSelectMulti4 datoSize="sm">
 

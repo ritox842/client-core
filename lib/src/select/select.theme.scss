@@ -19,6 +19,10 @@
   border-top: themify(primary-200) 1px solid;
 }
 
+.dato-select__option:not(.dato-select__not-found) {
+  color: themify(primary-600);
+}
+
 .dato-select--disabled {
   pointer-events: none;
 
@@ -26,7 +30,7 @@
     @include input-disabled();
   }
 
-  .dato-select__placeholder{
+  .dato-select__placeholder {
     color: themify(primary-200);
   }
 

@@ -19,13 +19,10 @@ dato-select {
 }
 
 .dato-select__dropdown {
-  max-height: $select-md-height * 4px;
   overflow-y: auto;
 }
 
 .dato-select__option {
-  height: $select-md-height * 1px;
-  line-height: $select-md-height * 1px;
   font-size: 14px;
   cursor: pointer;
   padding: 0 13px 0 10px;

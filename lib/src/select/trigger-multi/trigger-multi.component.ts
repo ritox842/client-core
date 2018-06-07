@@ -12,8 +12,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'dato-trigger-multi',
   templateUrl: './trigger-multi.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: [`./trigger-multi.component.scss`]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatoTriggerMulti implements OnInit {
   @ViewChild('input') input: ElementRef;

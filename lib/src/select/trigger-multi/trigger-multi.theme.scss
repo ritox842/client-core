@@ -22,6 +22,8 @@ $lg: (
   font: 14px
 );
 
+$max-items: 4;
+
 dato-trigger-multi {
   display: block;
   position: relative;
@@ -36,7 +38,7 @@ dato-trigger-multi {
 /**
  SMALL
  */
-dato-select[datosize="sm"] dato-trigger-multi {
+dato-select[datosize="sm"] dato-trigger-multi  {
   min-height: map-get($sm, height);
   font-size: map-get($sm, font);
 
@@ -70,7 +72,12 @@ dato-select[datosize="sm"] dato-trigger-multi {
 
 .dato-select-sm .dato-select__option {
   height: map-get($sm, optionHeight);
+  line-height: map-get($sm, optionHeight);
   font-size: map-get($sm, font);
+}
+
+.dato-select-sm .dato-select__dropdown {
+  max-height: #{map-get($sm, optionHeight) * $max-items};
 }
 
 /**
@@ -111,9 +118,14 @@ dato-select dato-trigger-multi {
 
 }
 
-.dato-select-sm .dato-select__option {
+.dato-select-md .dato-select__option {
   height: map-get($md, optionHeight);
+  line-height: map-get($md, optionHeight);
   font-size: map-get($md, font);
+}
+
+.dato-select-md .dato-select__dropdown {
+  max-height: #{map-get($md, optionHeight) * $max-items};
 }
 
 /**
@@ -148,9 +160,14 @@ dato-select[datosize="lg"] dato-trigger-multi {
 
 }
 
-.dato-select-sm .dato-select__option {
+.dato-select-lg .dato-select__option {
   height: map-get($lg, optionHeight);
+  line-height: map-get($lg, optionHeight);
   font-size: map-get($lg, font);
+}
+
+.dato-select-lg .dato-select__dropdown {
+  max-height: #{map-get($lg, optionHeight) * $max-items};
 }
 
 /**

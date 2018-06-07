@@ -15,6 +15,8 @@ export class SelectPreviewComponent implements OnInit {
 
   simpleControl = new FormControl({ id: 1, label: "Item 1" });
   simpleControlSearch = new FormControl();
+  simpleControlSearch2 = new FormControl();
+  simpleControlSearch3 = new FormControl();
   asyncControl = new FormControl();
   controlDisabled = new FormControl();
   activeTplControl = new FormControl();

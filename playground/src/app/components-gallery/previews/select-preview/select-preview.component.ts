@@ -22,12 +22,14 @@ export class SelectPreviewComponent implements OnInit {
   activeTplControl = new FormControl();
   groupControl = new FormControl();
   serverSideControl = new FormControl();
-  multiControl = new FormControl();
   withActionsControl = new FormControl();
   groupControlMulti = new FormControl();
   customFooterControl = new FormControl();
   multiControl = new FormControl();
-  multiControl2 = new FormControl();
+  multiControl2 = new FormControl([
+    { id: 1, label: "Item 1" },
+    { id: 5, label: "Item 5" }
+  ]);
   multiControl3 = new FormControl();
 
   options$ = this.subject.asObservable();

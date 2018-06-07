@@ -23,6 +23,10 @@
   color: themify(primary-600);
 }
 
+.dato-select__placeholder {
+  user-select: none;
+}
+
 .dato-select--disabled {
   pointer-events: none;
 

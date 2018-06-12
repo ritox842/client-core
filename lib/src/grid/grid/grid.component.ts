@@ -7,8 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostBinding, Input, Output, ViewEncapsulation } from '@angular/core';
-import { ColumnApi, GridOptions, GridReadyEvent } from 'ag-grid';
-import { DatoTranslateService } from '../../services/translate.service';
+import { ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
 import { IconRegistry } from '../../services/icon-registry';
 import { getGridIcons } from './grid-icons';
 import { BaseCustomControl } from '../../internal/base-custom-control';
@@ -17,6 +16,9 @@ import { coerceArray } from '@datorama/utils';
 import { DatoGridAPI } from '../dato-grid-api';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { take } from 'rxjs/operators';
+import { DatoGridHelper } from '../grid-helper';
+import { DatoCoreError } from '../../errors';
+import { ColDef, ColGroupDef } from 'ag-grid/src/ts/entities/colDef';
 
 export type ExtendedGridOptions = {
   onRowDataUpdated: (event) => void;
@@ -77,7 +79,7 @@ export class DatoGridComponent extends BaseCustomControl implements ControlValue
 
   @Input()
   set options(options: DatoGridOptions) {
-    this.translateColumns(options);
+    options.columnDefs = this.gridHelper.translateColumns(options.columnDefs);
     this.gridOptions = { ...this.defaultGridOptions, ...options };
     // check if we got a pagination
     this.hasPagination = this.gridOptions.pagination;
@@ -90,7 +92,7 @@ export class DatoGridComponent extends BaseCustomControl implements ControlValue
 
   @Output() gridReady = new EventEmitter<GridReadyEvent>();
 
-  constructor(private translate: DatoTranslateService, private element: ElementRef, private iconRegistry: IconRegistry, private cdr: ChangeDetectorRef) {
+  constructor(private gridHelper: DatoGridHelper, private element: ElementRef, private iconRegistry: IconRegistry, private cdr: ChangeDetectorRef) {
     super();
 
     this.api = new DatoGridAPI();
@@ -131,6 +133,14 @@ export class DatoGridComponent extends BaseCustomControl implements ControlValue
     }
   }
 
+  /**
+   * Updaet the columns definitions
+   * @param {(ColDef | ColGroupDef)[]} columnDefs
+   */
+  updateColumns(columnDefs: (ColDef | ColGroupDef)[]) {
+    this.gridHelper.updateColumns(this.api.gridApi, columnDefs);
+  }
+
   writeValue(obj: any): void {
     const rows = obj ? coerceArray(obj) : [];
 
@@ -144,18 +154,5 @@ export class DatoGridComponent extends BaseCustomControl implements ControlValue
           this.api.setSelectedRows(rows);
         });
     }
-  }
-
-  /**
-   *
-   * @param {GridOptions} options
-   */
-  private translateColumns(options: GridOptions) {
-    options.columnDefs = options.columnDefs.map(column => {
-      return {
-        ...column,
-        headerName: this.translate.transform(column.headerName)
-      };
-    });
   }
 }

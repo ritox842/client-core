@@ -50,6 +50,11 @@ export type DatoDialogOptions = {
    * Whether the dialog can be drag. Defaults false.
    */
   draggable: boolean;
+
+  /**
+   * Set the dialog to be in full screen.
+   */
+  fullScreen: boolean;
 };
 
 export function getDefaultOptions(): DatoDialogOptions {
@@ -62,7 +67,8 @@ export function getDefaultOptions(): DatoDialogOptions {
     width: null,
     height: null,
     size: Dimensions.SM,
-    draggable: false
+    draggable: false,
+    fullScreen: false
   };
 }
 

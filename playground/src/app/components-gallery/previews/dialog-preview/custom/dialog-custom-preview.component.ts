@@ -11,6 +11,7 @@ import { DatoDialogResult } from "../../../../../../../lib/src/dialog/config/dia
 export class DatoDialogCustomPreviewComponent {
   enableCloseControl = new FormControl(true);
   backdropControl = new FormControl(true);
+  fullScreenControl = new FormControl(false);
 
   nameControl = new FormControl("");
   animal: string;
@@ -24,7 +25,8 @@ export class DatoDialogCustomPreviewComponent {
           name: this.nameControl.value
         },
         enableClose: this.enableCloseControl.value,
-        backdrop: this.backdropControl.value
+        backdrop: this.backdropControl.value,
+        fullScreen: this.fullScreenControl.value
       })
       .afterClosed()
       .subscribe((result: DatoDialogResult<string>) => {

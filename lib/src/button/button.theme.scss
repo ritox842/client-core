@@ -35,6 +35,22 @@ dato-button[datoType='secondary'] button:active {
 }
 
 /**
+ Gingi
+ */
+dato-button[datoType='orange'] button {
+  background-color: themify(orange-400);
+}
+
+dato-button[datoType='orange'] button:hover {
+  background-color: themify(orange-500);
+}
+
+dato-button[datoType='orange'] button:active {
+  background-color: themify(orange-600);
+}
+
+
+/**
  None - no background
  */
 dato-button[datoType='none'] button {

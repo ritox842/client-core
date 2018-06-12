@@ -29,10 +29,9 @@ export class DatoDialog {
    * @returns {Observable<any>}
    */
   open<T>(content: ContentType, options: Partial<DatoDialogOptions> = {}): DatoDialogRef {
-    const mergedOptions = { ...getDefaultOptions(), ...options };
+    const mergedOptions = this.getOptions(options);
     const dialogRef = this.createDialogRef(mergedOptions);
     const container = mergedOptions.container;
-    mergedOptions.container = null;
 
     const config = new DialogConfig(dialogRef);
 
@@ -102,6 +101,17 @@ export class DatoDialog {
     }
 
     return parent;
+  }
+
+  private getOptions(userOptions: Partial<DatoDialogOptions>) {
+    const options = { ...getDefaultOptions(), ...userOptions };
+
+    // set fullScreen size
+    if (options.fullScreen) {
+      options.width = options.height = '100%';
+    }
+
+    return options;
   }
 
   /**
@@ -206,7 +216,7 @@ export class DatoDialog {
     config.innerComponentRef && config.innerComponentRef.destroy();
     config.componentRef && config.componentRef.destroy();
 
-    document.body.removeChild(config.dialogElement);
+    config.dialogRef.options.container.removeChild(config.dialogElement);
 
     const id = config.dialogRef.options.id;
     if (this.dialogs.has(id)) {

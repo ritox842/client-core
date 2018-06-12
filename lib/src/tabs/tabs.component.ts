@@ -28,10 +28,12 @@ export class DatoTab {
    * Unique tab identifier. Must be unique for the entire document for proper accessibility support.
    */
   @Input() id = `dato-tab-${nextId++}`;
+
   /**
    * Simple (string only) title. Use the "DatoTabTitle" directive for more complex use-cases.
    */
   @Input() title: string;
+
   /**
    * Allows toggling disabled state of a given state. Disabled tabs can't be selected.
    */

@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostBinding, Input, Output, ViewEncapsulation } from '@angular/core';
-import { ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
+import { ColumnApi, GridOptions, GridReadyEvent, ColDef, ColGroupDef } from 'ag-grid';
 import { IconRegistry } from '../../services/icon-registry';
 import { getGridIcons } from './grid-icons';
 import { BaseCustomControl } from '../../internal/base-custom-control';
@@ -17,8 +17,6 @@ import { DatoGridAPI } from '../dato-grid-api';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { take } from 'rxjs/operators';
 import { DatoGridHelper } from '../grid-helper';
-import { DatoCoreError } from '../../errors';
-import { ColDef, ColGroupDef } from 'ag-grid/src/ts/entities/colDef';
 
 export type ExtendedGridOptions = {
   onRowDataUpdated: (event) => void;

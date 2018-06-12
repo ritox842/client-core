@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ColDef, ColGroupDef } from 'ag-grid/src/ts/entities/colDef';
+import { ColDef, ColGroupDef, GridApi } from 'ag-grid';
 import { DatoTranslateService } from '../services/translate.service';
-import { GridApi } from 'ag-grid';
 import { DatoCoreError } from '../errors';
-import { DatoGridAPI } from './dato-grid-api';
 
 @Injectable()
 export class DatoGridHelper {
@@ -27,7 +25,7 @@ export class DatoGridHelper {
    * Translate the header name of each column
    * @param {GridOptions} options
    */
-  translateColumns(columnDefs: (ColDef | ColGroupDef)[]) {
+  translateColumns(columnDefs: (ColDef | ColGroupDef)[]): (ColDef | ColGroupDef)[] {
     return columnDefs.map(column => {
       return {
         ...column,

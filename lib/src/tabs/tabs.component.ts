@@ -1,4 +1,4 @@
-import { AfterContentChecked, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Directive, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, TemplateRef } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Directive, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, TemplateRef } from '@angular/core';
 import { addClass, setStyle } from '../internal/helpers';
 import { debounce } from 'helpful-decorators';
 
@@ -83,7 +83,7 @@ export interface DatoTabChangeEvent {
   styleUrls: ['./tabs.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatoTabset implements AfterContentChecked {
+export class DatoTabset implements AfterContentChecked, AfterContentInit {
   @ContentChildren(DatoTab) tabs: QueryList<DatoTab>;
 
   /**
@@ -135,7 +135,12 @@ export class DatoTabset implements AfterContentChecked {
     // auto-correct activeId that might have been set incorrectly as input
     let activeTab = this._getTabById(this.activeId);
     this.activeId = activeTab ? activeTab.id : this.tabs.length ? this.tabs.first.id : null;
-    this.movePointer();
+  }
+
+  ngAfterContentInit() {
+    setTimeout(() => {
+      this.movePointer();
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -147,7 +152,7 @@ export class DatoTabset implements AfterContentChecked {
   private movePointer() {
     if (!this.datoVertical && !this.datoNakedActive && this.activeId) {
       const activeTab = this._getTabById(this.activeId);
-      let element = document.querySelector(`#${activeTab.id}`) as HTMLElement;
+      let element = this.host.nativeElement.querySelector(`#${activeTab.id}`) as HTMLElement;
 
       if (element) {
         element = element.parentNode as HTMLElement;

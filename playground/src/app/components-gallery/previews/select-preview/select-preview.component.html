@@ -24,6 +24,7 @@
 
   <section class="d-flex">
     <div class="select-preview">
+      <button (click)="update()">Update to item 3</button>
 
       <dato-select [formControl]="asyncControl" [dataSet]="options$ | async" #datoSelectAsync>
 
@@ -192,6 +193,27 @@
 
       <dato-button (click)="toggleDisableEnable()" datoSize="sm" class="mt-10">Toggle Disable/enable</dato-button>
       <p datoFont class="mt-10">Control value: <span class="code">{{controlDisabled.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+</dato-preview>
+
+<dato-preview title="Select Multi - Disabled">
+
+  <section class="d-flex">
+    <div class="select-preview" style="width: 500px;">
+
+      <dato-select [formControl]="multiDisableControl" [dataSet]="options" #datoSelectMultiDisabled type="multi">
+
+        <dato-option *ngFor="let option of datoSelectMultiDisabled.data" [option]="option" multi>
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{multiDisableControl.value | json}}</span></p>
 
     </div>
 

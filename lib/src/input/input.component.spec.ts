@@ -58,7 +58,7 @@ describe('DatoInputComponent', () => {
 
   it('should add search icon', () => {
     host = createHost(`<dato-input [formControl]="control" type="search"></dato-input>`);
-    expect(host.query('.dato-icon-search')).toExist();
+    expect(host.query('.dato-icon-datosearch')).toExist();
   });
 
   it('should add delete icon', () => {

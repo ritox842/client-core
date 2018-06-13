@@ -18,6 +18,7 @@ import { DatoSelectActiveDirective } from '../select-active.directive';
 export class DatoTriggerSingle implements OnInit {
   @Input() active: DatoSelectActiveDirective;
   @Input() placeholder = '';
+  @Input() labelKey;
 
   @Input()
   set context(value) {
@@ -29,11 +30,15 @@ export class DatoTriggerSingle implements OnInit {
     return !this._model || !this._model.$implicit;
   }
 
-  _model;
+  _model: { $implicit?: any };
 
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.cdr.detach();
+  }
+
+  get getLabel() {
+    return this._model && this._model.$implicit && this._model.$implicit[this.labelKey];
   }
 }

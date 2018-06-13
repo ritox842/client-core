@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { timer } from "rxjs/observable/timer";
-import { mapTo } from "rxjs/operators";
+import { mapTo, switchMap } from "rxjs/operators";
 import { Subject } from "rxjs/Subject";
 import { DatoSnackbar } from "../../../../../../lib";
 
@@ -31,6 +31,10 @@ export class SelectPreviewComponent implements OnInit {
     { id: 5, label: "Item 5" }
   ]);
   multiControl3 = new FormControl();
+  multiDisableControl = new FormControl([
+    { id: 1, label: "Item 1" },
+    { id: 2, label: "Item 2" }
+  ]);
 
   options$ = this.subject.asObservable();
   options = [];
@@ -55,6 +59,7 @@ export class SelectPreviewComponent implements OnInit {
 
   ngOnInit() {
     this.controlDisabled.disable();
+    this.multiDisableControl.disable();
 
     this.dynamic = [
       {
@@ -107,6 +112,10 @@ export class SelectPreviewComponent implements OnInit {
   ];
 
   isLoading = false;
+
+  update() {
+    this.asyncControl.patchValue({ ...this.options[2] });
+  }
 
   getNewItems(term) {
     this.isLoading = true;

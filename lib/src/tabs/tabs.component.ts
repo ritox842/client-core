@@ -1,5 +1,6 @@
-import { AfterContentChecked, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Directive, ElementRef, EventEmitter, Input, Output, QueryList, TemplateRef } from '@angular/core';
-import { addClass } from '../internal/helpers';
+import { AfterContentChecked, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Directive, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, TemplateRef } from '@angular/core';
+import { addClass, setStyle } from '../internal/helpers';
+import { debounce } from 'helpful-decorators';
 
 let nextId = 0;
 
@@ -124,6 +125,7 @@ export class DatoTabset implements AfterContentChecked {
 
       if (!defaultPrevented) {
         this.activeId = selectedTab.id;
+        this.movePointer();
       }
     }
     this.cdr.markForCheck();
@@ -133,6 +135,31 @@ export class DatoTabset implements AfterContentChecked {
     // auto-correct activeId that might have been set incorrectly as input
     let activeTab = this._getTabById(this.activeId);
     this.activeId = activeTab ? activeTab.id : this.tabs.length ? this.tabs.first.id : null;
+    this.movePointer();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  @debounce(100)
+  private onResize() {
+    this.movePointer();
+  }
+
+  private movePointer() {
+    if (!this.datoVertical && !this.datoNakedActive && this.activeId) {
+      const activeTab = this._getTabById(this.activeId);
+      let element = document.querySelector(`#${activeTab.id}`) as HTMLElement;
+
+      if (element) {
+        element = element.parentNode as HTMLElement;
+        const pointer = this.getPointer();
+        setStyle(pointer, 'width', `${element.clientWidth}px`);
+        setStyle(pointer, 'transform', `translateX(${element.offsetLeft}px)`);
+      }
+    }
+  }
+
+  private getPointer() {
+    return this.host.nativeElement.querySelector('.tab-pointer');
   }
 
   private _getTabById(id: string): DatoTab {

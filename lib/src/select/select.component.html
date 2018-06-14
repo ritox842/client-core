@@ -5,6 +5,7 @@
   <div class="dato-select__single {{_dropdownClass}}" *ngIf="isSingle">
     <dato-input [class.force-hide]="(!open && isCombo) || !isCombo"
                 [placeholder]="searchPlaceholder"
+                (keyup)="keyup($event)"
                 [isFocused]="_focus"
                 [isLoading]="isLoading"
                 [formControl]="searchControl"
@@ -30,7 +31,7 @@
 
 <ng-template #dropdown>
 
-  <section class="dato-select__dropdown-container" tabindex="0" (keydown)="openM($event)">
+  <section class="dato-select__dropdown-container" tabindex="0" (keyup)="keyup($event)">
 
     <!-- HEADER -->
 

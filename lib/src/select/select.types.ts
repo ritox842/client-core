@@ -10,3 +10,5 @@ export enum SelectType {
   SINGLE = 'single',
   MULTI = 'multi'
 }
+
+export type SelectSize = 'sm' | 'md' | 'lg';

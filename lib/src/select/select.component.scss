@@ -1,5 +1,9 @@
 $select-md-height: 35;
 
+dato-option {
+  display: block;
+}
+
 .dato-overlay {
   z-index: 2000;
 }
@@ -20,6 +24,9 @@ dato-select {
 
 .dato-select__dropdown-container {
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+  &:focus {
+    outline: none;
+  }
 }
 
 .dato-select__dropdown {

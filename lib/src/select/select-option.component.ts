@@ -6,10 +6,8 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Host, Input, OnInit, forwardRef, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { Observable } from 'rxjs/Observable';
-import { DatoSelectComponent } from './select.component';
 
 export function getMultiTemplate() {
   return `
@@ -22,7 +20,7 @@ export function getOptionTemplate(isMulti = false) {
     <div class="dato-select__option  dato-select__option--simple dato-select__option--hover"
          [class.force-hide]="hide"
          ${isMulti ? '' : '[class.dato-option--active]="active"'}
-         [class.dato-select__option--disabled]="_disabled"
+         [class.dato-select__option--disabled]="permanentDisabled"
          [class.dato-option--keyboard-active]="activeByKeyboard"
          >
       ${isMulti ? getMultiTemplate() : '<ng-content></ng-content>'} 
@@ -48,14 +46,14 @@ export class DatoSelectOptionComponent implements OnInit {
     }
   }
 
-  get disabled() {
-    return this._disabled;
+  get permanentDisabled() {
+    return this._permanentDisabled;
   }
 
-  @Input()
-  set disabled(value) {
-    if (value !== this._disabled) {
-      this._disabled = value;
+  @Input('disabled')
+  set permanentDisabled(value) {
+    if (value !== this._permanentDisabled) {
+      this._permanentDisabled = value;
       this.detectChanges();
     }
   }
@@ -96,11 +94,24 @@ export class DatoSelectOptionComponent implements OnInit {
     }
   }
 
+  get disabled() {
+    return this._disabled;
+  }
+
   _option;
   _disabled = false;
   _activeByKeyboard = false;
   _active = false;
   _hide = false;
+
+  /**
+   * We need to distinguish between this param to `disabled`.
+   * `disabled` used by the keyManager and skip it. (When searching we mark the item as disabled which leads the keyMangaer to skip it)
+   * `permanentDisabled` is the real disabled value - for CSS purposes.
+   * @type {boolean}
+   * @private
+   */
+  _permanentDisabled = false;
 
   click$ = fromEvent(this.element, 'click');
 
@@ -116,5 +127,26 @@ export class DatoSelectOptionComponent implements OnInit {
 
   detectChanges() {
     this.cdr.detectChanges();
+  }
+
+  /**
+   *
+   * @param value
+   */
+  hideAndDisabled(value) {
+    let needCd = false;
+    if (value !== this._disabled) {
+      needCd = true;
+      this._disabled = value;
+    }
+
+    if (value !== this._hide) {
+      needCd = true;
+      this._hide = value;
+    }
+
+    if (needCd) {
+      this.detectChanges();
+    }
   }
 }

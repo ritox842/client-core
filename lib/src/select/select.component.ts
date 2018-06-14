@@ -19,7 +19,10 @@ import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.
 import { Placement, PopperOptions } from 'popper.js';
 import { setStyle } from '../internal/helpers';
 import { DatoOverlay, DatoTemplatePortal } from '../angular/overlay';
-import { arrowDownKey, arrowUpKey, enterKey, escKey } from '../services/keycodes';
+import { ListKeyManager } from '@angular/cdk/a11y';
+import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
+import { Subscription } from 'rxjs/Subscription';
+import { getSelectOptionHeight } from './select-size';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -201,12 +204,6 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Wheter the dropdown is open */
   _open = false;
 
-  /** Search control subscription */
-  _searchSubscription;
-
-  /** Clicks options subscription */
-  _clicksSubscription;
-
   /** Whether we have search result */
   _hasResults = true;
 
@@ -222,9 +219,22 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Dropdown size class */
   _dropdownClass;
 
+  /** Search control subscription */
+  private searchSubscription: Subscription;
+
+  /** Clicks options subscription */
+  private clicksSubscription: Subscription;
+
+  /** Keyboard Manager */
+  private keyboardEventsManager: ListKeyManager<DatoSelectOptionComponent>;
+
+  /** Keyboard subscription */
+  private keyboardEventsManagerSubscription: Subscription;
+
   constructor(private cdr: ChangeDetectorRef, private host: ElementRef, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
     super();
-    this._dropdownClass = `dato-select-${size || 'md'}`;
+    this.size = size || 'md';
+    this._dropdownClass = `dato-select-${this.size}`;
   }
 
   ngOnInit() {
@@ -310,12 +320,18 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       this._initialOpen = false;
     }
 
-    (document.querySelector('.dato-select__dropdown-container') as any).focus();
-    (this.options.toArray()[0] as DatoSelectOptionComponent).activeByKeyboard = true;
+    this.dropdownFocus();
   }
 
   ngAfterContentInit(): void {
     this.subscribeToOptionClick(this.options);
+    this.keyboardEventsManager = new ListKeyManager(this.options).withWrap().withVerticalOrientation(true);
+    this.keyboardEventsManagerSubscription = this.keyboardEventsManager.change.subscribe(index => {
+      const options = this.options.toArray();
+      options.forEach(datoOption => (datoOption.activeByKeyboard = false));
+      options[index].activeByKeyboard = true;
+      this.scrollToElement(index);
+    });
   }
 
   /**
@@ -368,7 +384,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    */
   private showAll() {
     for (let datoOption of this.options.toArray()) {
-      datoOption.hide = false;
+      datoOption.hideAndDisabled(false);
     }
   }
 
@@ -384,9 +400,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       const match = this.searchStrategy(datoOption, value, this.labelKey);
 
       if (!match) {
-        datoOption.hide = true;
+        datoOption.hideAndDisabled(true);
       } else {
-        datoOption.hide = false;
+        datoOption.hideAndDisabled(false);
         hasResult = true;
       }
     }
@@ -407,7 +423,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * Subscribe to search changes and filter the list
    */
   private listenToSearch() {
-    this._searchSubscription =
+    this.searchSubscription =
       this.isCombo &&
       this.searchControl.valueChanges.pipe(debounceTime(this.debounceTime)).subscribe(value => {
         if (this.internalSearch) {
@@ -420,6 +436,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
         } else {
           this.search.emit(value);
         }
+
+        this.keyboardEventsManager.setActiveItem(0);
+
         this.cdr.markForCheck();
       });
   }
@@ -429,13 +448,13 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * @param {DatoSelectOptionComponent[]} options
    */
   private subscribeToOptionClick(options: QueryList<DatoSelectOptionComponent>) {
-    this._clicksSubscription && this._clicksSubscription.unsubscribe();
+    this.clicksSubscription && this.clicksSubscription.unsubscribe();
 
     /** Gather all the clicks */
     const clicks$ = options.map(option => option.click$.pipe(mapTo(option)));
 
     /** Consider change it to use event delegation */
-    this._clicksSubscription = merge(...clicks$)
+    this.clicksSubscription = merge(...clicks$)
       .pipe(debounceTime(10))
       .subscribe((datoOption: DatoSelectOptionComponent) => {
         if (datoOption.disabled) return;
@@ -443,47 +462,34 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       });
   }
 
+  /**
+   *
+   * @param {number} keyCode
+   */
   @HostListener('document:keydown', ['$event'])
-  c({ keyCode, target }: KeyboardEvent) {
-    if (keyCode === escKey && this.open) {
+  onDocumentKeydown({ keyCode }: KeyboardEvent) {
+    if (keyCode === ESCAPE && this.open) {
       this.close();
-    }
-
-    const d = this.host.nativeElement.querySelector('.dato-select__trigger');
-    if (keyCode === arrowDownKey && target === d) {
-      event.preventDefault();
-      this.openDropdown();
-      if (document.querySelector('.dato-select__dropdown-container')) {
-        (document.querySelector('.dato-select__dropdown-container') as any).focus();
-        (this.options.toArray()[0] as DatoSelectOptionComponent).activeByKeyboard = true;
-      }
     }
   }
 
-  index = 0;
-
-  openM(event: KeyboardEvent) {
-    event.preventDefault();
+  /**
+   *
+   * @param {KeyboardEvent} event
+   * @returns {boolean}
+   */
+  keyup(event: KeyboardEvent) {
     event.stopPropagation();
 
-    if (event.keyCode === arrowUpKey) {
-      (this.options.toArray()[this.index > 0 ? this.index : 0] as DatoSelectOptionComponent).activeByKeyboard = false;
-      (this.options.toArray()[this.index === 0 ? (this.index = this.options.length - 1) : --this.index] as DatoSelectOptionComponent).activeByKeyboard = true;
+    if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
+      this.keyboardEventsManager.onKeydown(event);
+      return false;
+    } else if (event.keyCode === ENTER) {
+      const index = this.keyboardEventsManager.activeItemIndex;
+      const active = this.options.toArray()[index];
+      this.isSingle ? this.handleSingleClick(active) : this.handleMultiClick(active);
+      return false;
     }
-
-    if (event.keyCode === arrowDownKey && this.index + 1 !== this.options.toArray().length) {
-      (this.options.toArray()[this.index > 0 ? this.index : 0] as DatoSelectOptionComponent).activeByKeyboard = false;
-      (this.options.toArray()[++this.index] as DatoSelectOptionComponent).activeByKeyboard = true;
-    }
-
-    if (event.keyCode === enterKey) {
-      this.options.toArray()[this.index].activeByKeyboard = false;
-      this.handleSingleClick(this.options.toArray()[this.index]);
-      this.index = 0;
-      return;
-    }
-
-    document.querySelector('.dato-select__dropdown').scrollTop = 35 * this.index;
   }
 
   /**
@@ -523,6 +529,18 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   /**
    *
+   * @param {number} index
+   */
+  private scrollToElement(index: number) {
+    const dropdown = document.querySelector('.dato-select__dropdown');
+    if (dropdown) {
+      const optionHeight = getSelectOptionHeight(this.type, this.size);
+      dropdown.scrollTop = optionHeight * index;
+    }
+  }
+
+  /**
+   *
    * @returns {Partial<PopperOptions>}
    */
   private getPopperOptions(): Partial<PopperOptions> {
@@ -540,9 +558,19 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     };
   }
 
+  /**
+   * Focus dropdown
+   */
+  private dropdownFocus() {
+    const container = document.querySelector('.dato-select__dropdown-container') as HTMLElement;
+    if (container) container.focus();
+    this.keyboardEventsManager.setActiveItem(0);
+  }
+
   ngOnDestroy() {
-    this._searchSubscription && this._searchSubscription.unsubscribe();
-    this._clicksSubscription && this._clicksSubscription.unsubscribe();
+    this.searchSubscription && this.searchSubscription.unsubscribe();
+    this.clicksSubscription && this.clicksSubscription.unsubscribe();
+    this.keyboardEventsManagerSubscription && this.keyboardEventsManagerSubscription.unsubscribe();
     this.datoOverlay.attached && this.datoOverlay.destroy();
   }
 }

@@ -7,6 +7,10 @@
   font-weight: 500;
 }
 
+.dato-option--keyboard-active {
+  background-color: themify(accent-300);
+}
+
 .dato-select__option--hover:not(.dato-option--active):hover {
   background-color: themify(primary-100);
 }
@@ -19,8 +23,7 @@
   border-top: themify(primary-200) 1px solid;
 }
 
-/** Todo: refactor and change to specfic class */
-.dato-select__option:not(.dato-select__not-found):not(.dato-select__option--disabled):not(.dato-select__group) {
+.dato-select__option--simple:not(.dato-select__option--disabled) {
   color: themify(primary-600);
 }
 

@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { coerceArray } from '@datorama/utils';
@@ -19,6 +19,7 @@ import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.
 import { Placement, PopperOptions } from 'popper.js';
 import { setStyle } from '../internal/helpers';
 import { DatoOverlay, DatoTemplatePortal } from '../angular/overlay';
+import { arrowDownKey, arrowUpKey, enterKey, escKey } from '../services/keycodes';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -221,7 +222,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Dropdown size class */
   _dropdownClass;
 
-  constructor(private cdr: ChangeDetectorRef, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
+  constructor(private cdr: ChangeDetectorRef, private host: ElementRef, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
     super();
     this._dropdownClass = `dato-select-${size || 'md'}`;
   }
@@ -308,6 +309,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       this.markAsActive(this._model);
       this._initialOpen = false;
     }
+
+    (document.querySelector('.dato-select__dropdown-container') as any).focus();
+    (this.options.toArray()[0] as DatoSelectOptionComponent).activeByKeyboard = true;
   }
 
   ngAfterContentInit(): void {
@@ -430,12 +434,56 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     /** Gather all the clicks */
     const clicks$ = options.map(option => option.click$.pipe(mapTo(option)));
 
+    /** Consider change it to use event delegation */
     this._clicksSubscription = merge(...clicks$)
       .pipe(debounceTime(10))
       .subscribe((datoOption: DatoSelectOptionComponent) => {
         if (datoOption.disabled) return;
         this.isSingle ? this.handleSingleClick(datoOption) : this.handleMultiClick(datoOption);
       });
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  c({ keyCode, target }: KeyboardEvent) {
+    if (keyCode === escKey && this.open) {
+      this.close();
+    }
+
+    const d = this.host.nativeElement.querySelector('.dato-select__trigger');
+    if (keyCode === arrowDownKey && target === d) {
+      event.preventDefault();
+      this.openDropdown();
+      if (document.querySelector('.dato-select__dropdown-container')) {
+        (document.querySelector('.dato-select__dropdown-container') as any).focus();
+        (this.options.toArray()[0] as DatoSelectOptionComponent).activeByKeyboard = true;
+      }
+    }
+  }
+
+  index = 0;
+
+  openM(event: KeyboardEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (event.keyCode === arrowUpKey) {
+      (this.options.toArray()[this.index > 0 ? this.index : 0] as DatoSelectOptionComponent).activeByKeyboard = false;
+      (this.options.toArray()[this.index === 0 ? (this.index = this.options.length - 1) : --this.index] as DatoSelectOptionComponent).activeByKeyboard = true;
+    }
+
+    if (event.keyCode === arrowDownKey && this.index + 1 !== this.options.toArray().length) {
+      (this.options.toArray()[this.index > 0 ? this.index : 0] as DatoSelectOptionComponent).activeByKeyboard = false;
+      (this.options.toArray()[++this.index] as DatoSelectOptionComponent).activeByKeyboard = true;
+    }
+
+    if (event.keyCode === enterKey) {
+      this.options.toArray()[this.index].activeByKeyboard = false;
+      this.handleSingleClick(this.options.toArray()[this.index]);
+      this.index = 0;
+      return;
+    }
+
+    document.querySelector('.dato-select__dropdown').scrollTop = 35 * this.index;
   }
 
   /**

@@ -19,10 +19,12 @@ export function getMultiTemplate() {
 
 export function getOptionTemplate(isMulti = false) {
   return `
-    <div class="dato-select__option dato-select__option--hover"
-         [class.force-hide]="_hide"
-         ${isMulti ? '' : '[class.dato-option--active]="_active"'}
-         [class.dato-select__option--disabled]="_disabled">
+    <div class="dato-select__option  dato-select__option--simple dato-select__option--hover"
+         [class.force-hide]="hide"
+         ${isMulti ? '' : '[class.dato-option--active]="active"'}
+         [class.dato-select__option--disabled]="_disabled"
+         [class.dato-option--keyboard-active]="activeByKeyboard"
+         >
       ${isMulti ? getMultiTemplate() : '<ng-content></ng-content>'} 
     </div>
   `;
@@ -82,8 +84,21 @@ export class DatoSelectOptionComponent implements OnInit {
     }
   }
 
+  get activeByKeyboard() {
+    return this._activeByKeyboard;
+  }
+
+  @Input()
+  set activeByKeyboard(value) {
+    if (value !== this._activeByKeyboard) {
+      this._activeByKeyboard = value;
+      this.detectChanges();
+    }
+  }
+
   _option;
   _disabled = false;
+  _activeByKeyboard = false;
   _active = false;
   _hide = false;
 

@@ -1,6 +1,5 @@
 <section #overlayOrigin class="dato-select__trigger"
-         [class.dato-select--disabled]="_disabled"
-         tabindex="0">
+         [class.dato-select--disabled]="_disabled">
 
   <div class="dato-select__single {{_dropdownClass}}" *ngIf="isSingle">
     <dato-input [class.force-hide]="(!open && isCombo) || !isCombo"

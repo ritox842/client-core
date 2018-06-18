@@ -583,7 +583,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * Focus dropdown
    */
   private dropdownFocus() {
-    const container = document.querySelector('.dato-select__dropdown-container') as HTMLElement;
+    const container = query('.dato-select__dropdown-container') as HTMLElement;
     if (container) container.focus();
     this.keyboardEventsManager.setActiveItem(0);
   }

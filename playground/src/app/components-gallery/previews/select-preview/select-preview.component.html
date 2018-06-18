@@ -28,7 +28,7 @@
 
       <dato-select [formControl]="asyncControl" [dataSet]="options$ | async" #datoSelectAsync>
 
-        <dato-option *ngFor="let option of datoSelectAsync.data" [option]="option">
+        <dato-option *ngFor="let option of datoSelectAsync.data; index as index" [option]="option" [disabled]="index === 1">
           {{option.label}}
         </dato-option>
 

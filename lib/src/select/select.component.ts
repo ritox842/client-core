@@ -17,11 +17,10 @@ import { debounceTime, mapTo, take } from 'rxjs/operators';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { Placement, PopperOptions } from 'popper.js';
-import { setStyle } from '../internal/helpers';
+import { query, setStyle } from '../internal/helpers';
 import { DatoOverlay, DatoTemplatePortal } from '../angular/overlay';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
-import { Subscription } from 'rxjs/Subscription';
 import { getSelectOptionHeight } from './select-size';
 
 const valueAccessor = {
@@ -220,16 +219,19 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   _dropdownClass;
 
   /** Search control subscription */
-  private searchSubscription: Subscription;
+  private searchSubscription;
 
   /** Clicks options subscription */
-  private clicksSubscription: Subscription;
+  private clicksSubscription;
 
   /** Keyboard Manager */
   private keyboardEventsManager: ListKeyManager<DatoSelectOptionComponent>;
 
   /** Keyboard subscription */
-  private keyboardEventsManagerSubscription: Subscription;
+  private keyboardEventsManagerSubscription;
+
+  /** Current index of active item (keyboard navigation) */
+  private currentIndex;
 
   constructor(private cdr: ChangeDetectorRef, private host: ElementRef, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
     super();
@@ -532,11 +534,30 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * @param {number} index
    */
   private scrollToElement(index: number) {
-    const dropdown = document.querySelector('.dato-select__dropdown');
-    if (dropdown) {
-      const optionHeight = getSelectOptionHeight(this.type, this.size);
-      dropdown.scrollTop = optionHeight * index;
+    const dropdown = query('.dato-select__dropdown');
+    if (!dropdown) return;
+
+    const NUM_ITEMS = 4;
+    let scrollTop = dropdown.scrollTop;
+    const LAST = this.options.filter(datoOption => !datoOption.disabled).length;
+
+    if (index === LAST) {
+      scrollTop = dropdown.scrollHeight;
+    } else {
+      if (index < NUM_ITEMS) {
+        scrollTop = 0;
+      } else {
+        const optionHeight = getSelectOptionHeight(this.type, this.size);
+        if (this.currentIndex > index) {
+          scrollTop = dropdown.scrollTop - optionHeight;
+        } else {
+          scrollTop = optionHeight + dropdown.scrollTop;
+        }
+      }
     }
+
+    dropdown.scrollTop = scrollTop;
+    this.currentIndex = index;
   }
 
   /**

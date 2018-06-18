@@ -7,7 +7,8 @@
  */
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef } from '@angular/core';
-import { DatoSelectOptionComponent, getOptionTemplate } from './select-option.component';
+import { DatoSelectOptionComponent } from './select-option.component';
+import { getOptionTemplate } from './option-template';
 
 @Component({
   selector: 'dato-option[multi]',

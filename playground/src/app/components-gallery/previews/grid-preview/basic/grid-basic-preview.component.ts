@@ -1,27 +1,36 @@
 import { Component } from "@angular/core";
-import { timer } from "rxjs/observable/timer";
-import { concatMap, mapTo, tap } from "rxjs/operators";
-import { DatoGrid } from "../../../../../../../lib/src/grid/dato-grid";
-import { GridColumns, ToolbarAction } from "../../../../../../../lib";
+import {
+  DatoGrid,
+  GridColumns
+} from "../../../../../../../lib/src/grid/dato-grid";
+import { ToolbarAction } from "../../../../../../../lib/src/grid/grid-toolbar/grid-toolbar.types";
 
 @Component({
   selector: "dato-grid-basic-preview",
   templateUrl: "./grid-basic-preview.component.html"
 })
 export class GridBasicPreviewComponent extends DatoGrid<any> {
-  data;
+  data = [
+    {
+      id: 1,
+      value: "Item one"
+    },
+    {
+      id: 2,
+      value: "Item two"
+    },
+    {
+      id: 3,
+      value: "Item three"
+    }
+  ];
 
   ngOnInit() {
     super.ngOnInit();
 
-    this.asyncRows()
-      .pipe(
-        tap(data => (this.data = data)),
-        concatMap(grid => this.datoGridReady)
-      )
-      .subscribe(rows => {
-        this.setRows(this.data);
-      });
+    this.datoGridReady.subscribe(() => {
+      this.setRows(this.data);
+    });
   }
 
   getColumns(): GridColumns {
@@ -37,40 +46,11 @@ export class GridBasicPreviewComponent extends DatoGrid<any> {
         field: "value",
         width: 100,
         filter: "agTextColumnFilter"
-      },
-      {
-        valueGetter(params) {
-          const { id, value } = params.data;
-
-          return `${id} ${value}`;
-        },
-        field: "idValue",
-        headerName: "ID & Value"
-      },
-      {
-        field: "updateTime",
-        valueFormatter({ value }) {
-          return value.toDateString();
-        },
-        headerName: "Update Time",
-        filter: "agDateColumnFilter"
       }
     ];
   }
 
   getToolbarActions(): ToolbarAction[] {
     return [];
-  }
-
-  asyncRows() {
-    let rows = [];
-    for (let i = 0; i < 1000; i++) {
-      rows.push({ id: i, value: i * 5, updateTime: new Date() });
-    }
-    return timer(3000).pipe(mapTo(rows));
-  }
-
-  myCustomLogic(selectedRows: any[]) {
-    return selectedRows.some(row => row.value === 5);
   }
 }

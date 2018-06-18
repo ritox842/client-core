@@ -6,9 +6,42 @@
   /* Rows */
   .ag-row {
     border-bottom: solid 1px themify(primary-0);
+
+    &.ag-row-group {
+      background-color: themify(primary-0);
+      border-bottom: solid 1px themify(primary-200);
+      height: 35px;
+
+      span {
+        color: themify(primary-300);
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      &:hover {
+        span {
+          color: themify(accent-400);
+        }
+        .da-grid-icon {
+          fill: themify(accent-400);
+        }
+      }
+    }
+
   }
 
   /* Cells */
+  .ag-cell {
+    .ag-selection-checkbox {
+      @include gridCheckbox;
+
+      display: inline-block;
+      vertical-align: middle;
+      margin-top: -4px;
+      margin-right: 4px;
+    }
+  }
+
   .ag-cell-highlight {
     background-color: $range-selection-highlight-color !important;
   }

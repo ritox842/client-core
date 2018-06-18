@@ -1,8 +1,9 @@
 <dato-preview title="Typography - with components">
 
   <div datoFont="simple">
-    You can use the <span datoFont="simple-bold">dato-text</span> component, to generate your text.
-    The component adds a <span datoFont="simple-bold">p</span> tag and injects your content to it.
+    You can use the <span datoFont="simple-bold">datoFont</span> directive, to style your text according to the guideline.
+    <br/>
+    <span datoFont="note-italic">Psss look in the source code for the CSS properties...</span>
   </div>
 
   <p datoFont="headline" datoColor="accent-300">headline</p>
@@ -14,12 +15,11 @@
   <p datoFont="note">note</p>
   <p datoFont="note-italic">note-italic</p>
 
-  <dato-tabs show="html">
+  <dato-tabs show="html, css">
 
     <textarea datoHighlight="html">
       <div datoFont="simple">
-        You can use the <span datoFont="simple-bold">dato-text</span> component, to generate your text.
-        The component adds a <span datoFont="simple-bold">p</span> tag and injects your content to it.
+        You can use the <span datoFont="simple-bold">datoFont</span> directive, to style your text according to the guideline.
       </div>
 
       <p datoFont="headline" datoColor="accent-300">headline</p>
@@ -31,7 +31,38 @@
       <p datoFont="note">note</p>
       <p datoFont="note-italic">note-italic</p>
     </textarea>
-
+    <textarea datoHighlight="css">
+      .headline {
+          font-size: 34px;
+          font-weight: 300;
+      }
+      .sub-headline {
+          font-size: 18px;
+          font-weight: 600;
+      }
+      .simple-bold {
+          font-size: 14px;
+          font-weight: 600;
+      }
+      .simple {
+          font-size: 14px;
+      }
+      .simple-italic {
+          font-size: 14px;
+          font-style: italic;
+      }
+      .note-bold {
+          font-size: 12px;
+          font-weight: 600;
+      }
+      .note {
+          font-size: 12px;
+      }
+      .note-italic {
+          font-size: 12px;
+          font-style: italic;
+      }
+    </textarea>
   </dato-tabs>
 
 </dato-preview>

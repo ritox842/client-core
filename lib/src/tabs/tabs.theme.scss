@@ -7,8 +7,16 @@ dato-tabset:not(.dato-tabs--clean) {
       a {
         color: themify(accent-400);
       }
-      border-bottom: 2px solid themify(accent-400);
       background-color: transparent;
     }
+    .tab-pointer {
+      background-color: themify(accent-400);
+    }
   }
+
+  &.dato-tabs--vertical .dato-tabs .active {
+    border-bottom: 2px solid themify(accent-400);
+  }
+
 }
+

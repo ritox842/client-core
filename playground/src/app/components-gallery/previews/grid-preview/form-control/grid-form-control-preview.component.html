@@ -1,0 +1,75 @@
+<dato-preview title="FormControl Example">
+
+  {{selectedRowsControl.value.length}} rows selected.
+
+  <div *ngIf="data">
+    <div style="height: 300px">
+      <dato-grid [options]="options" [formControl]="selectedRowsControl"></dato-grid>
+    </div>
+  </div>
+
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      { {selectedRowsControl.value.length} } rows selected.
+
+      <dato-grid [options]="options" [formControl]="selectedRowsControl"></dato-grid>
+
+    </textarea>
+
+    <textarea datoHighlight="js">
+   export class GridFormControlPreviewComponent extends DatoGrid<any> {
+    data = [
+      {
+        id: 1,
+        value: "Item one"
+      },
+      {
+        id: 2,
+        value: "Item two"
+      },
+      {
+        id: 3,
+        value: "Item three"
+      }
+    ];
+
+    selectedRowsControl = new FormControl([this.data[0]]);
+
+    ngOnInit() {
+      super.ngOnInit();
+
+      this.datoGridReady.subscribe(() => {
+        this.setRows(this.data);
+      });
+    }
+
+    getColumns(): GridColumns {
+      return [
+        {
+          headerName: "ID",
+          field: "id",
+          width: 100,
+          filter: "agNumberColumnFilter"
+        },
+        {
+          headerName: "Value",
+          field: "value",
+          width: 100,
+          filter: "agTextColumnFilter"
+        }
+      ];
+    }
+
+    getToolbarActions(): ToolbarAction[] {
+      return [];
+    }
+  }
+    </textarea>
+
+
+  </dato-tabs>
+
+
+</dato-preview>

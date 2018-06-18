@@ -1,6 +1,6 @@
 {
   "name": "@datorama/core",
-  "version": "1.0.60-beta",
+  "version": "1.0.74-beta",
   "repository": {
     "type": "git",
     "url": "url"
@@ -23,9 +23,9 @@
     "@angular/core": "^5.0.0",
     "@angular/http": "^5.0.0",
     "@datorama/utils": "^1.17",
-    "ag-grid": "17.0.0",
-    "ag-grid-angular": "17.0.0",
-    "ag-grid-enterprise": "17.0.0",
+    "ag-grid": "17.1.1",
+    "ag-grid-angular": "17.1.0",
+    "ag-grid-enterprise": "17.1.1",
     "helpful-decorators": "^1.7.0",
     "ngx-take-until-destroy": "^2.1.1",
     "popper.js": "^1.12.9",

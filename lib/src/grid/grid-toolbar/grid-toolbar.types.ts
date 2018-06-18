@@ -6,6 +6,8 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
+import { ToolbarConfirmation, ToolbarHandler } from './grid-toolbar-handlers';
+
 export enum RowSelectionType {
   SINGLE = 'single',
   MULTI = 'multi',
@@ -66,11 +68,16 @@ export enum ToolbarArea {
   Menu = 'Menu'
 }
 
+export type ToolbarActionHandler = (<T>(selectedRows: T[]) => void) | ToolbarHandler | ToolbarConfirmation;
+
 export interface ToolbarAction {
+  /**
+   * A predefined action type
+   */
   actionType?: ToolbarActionType;
   order?: number;
   text?: string;
   icon?: string;
   showWhen?: RowSelectionType | showWhenFunc;
-  click?: <T>(selectedRows: T[]) => void;
+  click?: ToolbarActionHandler;
 }

@@ -20,11 +20,14 @@ import { DatoTextModule } from '../text/text.module';
 import { DatoGridToolbarItemDirective, DatoGridToolbarItemElementDirective } from './grid-toolbar/grid-toolbar-item.directive';
 import { DatoThemesModule } from '../themes/themes.module';
 import { DatoGridHeaderComponent } from './grid-header/grid-header.component';
+import { GridToolbarService } from './grid-toolbar/grid-toolbar.service';
+import { DatoGridHelper } from './grid-helper';
 
 const declerations = [DatoGridComponent, DatoGridPaginationComponent, DatoGridToolbarComponent, DatoGridToolbarItemDirective, DatoGridToolbarItemElementDirective, DatoGridHeaderComponent];
 
 @NgModule({
   imports: [CommonModule, DatoButtonModule, DatoLinkButtonModule, DatoIconButtonModule, DatoIconModule, DatoTextModule, DatoThemesModule, AgGridModule.withComponents([])],
+  providers: [GridToolbarService, DatoGridHelper],
   declarations: [declerations],
   exports: [AgGridModule, DatoIconButtonModule, ...declerations]
 })

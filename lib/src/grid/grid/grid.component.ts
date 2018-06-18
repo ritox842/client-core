@@ -6,25 +6,38 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, Input, Output, ViewEncapsulation } from '@angular/core';
-import { ColumnApi, GridApi, GridOptions, GridReadyEvent } from 'ag-grid';
-import { DatoTranslateService } from '../../services/translate.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostBinding, Input, Output, ViewEncapsulation } from '@angular/core';
+import { ColumnApi, GridOptions, GridReadyEvent, ColDef, ColGroupDef } from 'ag-grid';
 import { IconRegistry } from '../../services/icon-registry';
 import { getGridIcons } from './grid-icons';
+import { BaseCustomControl } from '../../internal/base-custom-control';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { coerceArray } from '@datorama/utils';
+import { DatoGridAPI } from '../dato-grid-api';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+import { take } from 'rxjs/operators';
+import { DatoGridHelper } from '../grid-helper';
 
 export type ExtendedGridOptions = {
   onRowDataUpdated: (event) => void;
 };
 export type DatoGridOptions = ExtendedGridOptions & GridOptions;
 
+const valueAccessor = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => DatoGridComponent),
+  multi: true
+};
+
 @Component({
   selector: 'dato-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [valueAccessor]
 })
-export class DatoGridComponent {
+export class DatoGridComponent extends BaseCustomControl implements ControlValueAccessor {
   @Output() rowDataChanged = new EventEmitter();
 
   private defaultGridOptions: DatoGridOptions = {
@@ -37,15 +50,22 @@ export class DatoGridComponent {
     onRowDataUpdated: event => {
       this.rowDataChanged.emit(event);
     },
+    onSelectionChanged: event => {
+      const selectedRows = this.api.getSelectedRows();
+      this.onChange(selectedRows);
+    },
     rowSelection: 'multiple',
     rowDeselection: true,
     icons: {},
     unSortIcon: true,
     toolPanelSuppressSideButtons: true,
-    showToolPanel: false
+    showToolPanel: false,
+    animateRows: true
   };
 
-  gridApi: GridApi;
+  private hasInfinitePagination = false;
+
+  api: DatoGridAPI<any>;
   gridColumnApi: ColumnApi;
   gridOptions: DatoGridOptions;
 
@@ -57,10 +77,11 @@ export class DatoGridComponent {
 
   @Input()
   set options(options: DatoGridOptions) {
-    this.translateColumns(options);
+    options.columnDefs = this.gridHelper.translateColumns(options.columnDefs);
     this.gridOptions = { ...this.defaultGridOptions, ...options };
     // check if we got a pagination
     this.hasPagination = this.gridOptions.pagination;
+    this.hasInfinitePagination = this.gridOptions.rowModelType === 'infinite';
   }
 
   get options(): DatoGridOptions {
@@ -69,9 +90,11 @@ export class DatoGridComponent {
 
   @Output() gridReady = new EventEmitter<GridReadyEvent>();
 
-  constructor(private translate: DatoTranslateService, private element: ElementRef, private iconRegistry: IconRegistry) {
-    this.defaultGridOptions.icons = getGridIcons(iconRegistry);
+  constructor(private gridHelper: DatoGridHelper, private element: ElementRef, private iconRegistry: IconRegistry, private cdr: ChangeDetectorRef) {
+    super();
 
+    this.api = new DatoGridAPI();
+    this.defaultGridOptions.icons = getGridIcons(iconRegistry);
     this.gridOptions = { ...this.defaultGridOptions };
   }
 
@@ -81,9 +104,10 @@ export class DatoGridComponent {
    */
   onGridReady(event: GridReadyEvent) {
     // set grid API
-    this.gridApi = event.api;
+    this.api.gridApi = event.api;
     this.gridColumnApi = event.columnApi;
 
+    this.cdr.detectChanges();
     this.gridReady.emit(event);
   }
 
@@ -98,7 +122,7 @@ export class DatoGridComponent {
    * call ag-grid's size all columns to fit to content
    */
   fitToContent(): void {
-    this.gridOptions.columnApi.autoSizeAllColumns('api');
+    this.gridOptions.columnApi.autoSizeAllColumns();
     const { width } = this.element.nativeElement.getBoundingClientRect();
     const agBody = this.element.nativeElement.querySelector('.ag-body-container');
     const bodyWidth: number = agBody ? agBody.clientWidth : 0;
@@ -108,15 +132,25 @@ export class DatoGridComponent {
   }
 
   /**
-   *
-   * @param {GridOptions} options
+   * Updaet the columns definitions
+   * @param {(ColDef | ColGroupDef)[]} columnDefs
    */
-  private translateColumns(options: GridOptions) {
-    options.columnDefs = options.columnDefs.map(column => {
-      return {
-        ...column,
-        headerName: this.translate.transform(column.headerName)
-      };
-    });
+  updateColumns(columnDefs: (ColDef | ColGroupDef)[]) {
+    this.gridHelper.updateColumns(this.api.gridApi, columnDefs);
+  }
+
+  writeValue(obj: any): void {
+    const rows = obj ? coerceArray(obj) : [];
+
+    if (this.api.ready) {
+      this.api.setSelectedRows(rows);
+    } else {
+      // wait for the grid to be ready and the data has been set
+      combineLatest(this.rowDataChanged, this.gridReady)
+        .pipe(take(1))
+        .subscribe(() => {
+          this.api.setSelectedRows(rows);
+        });
+    }
   }
 }

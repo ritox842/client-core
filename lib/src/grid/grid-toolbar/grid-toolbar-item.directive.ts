@@ -7,7 +7,7 @@
  */
 
 import { Directive, ElementRef, Input, TemplateRef } from '@angular/core';
-import { RowSelectionType, showWhenFunc, ToolbarActionType } from './grid-toolbar';
+import { RowSelectionType, showWhenFunc, ToolbarActionType } from './grid-toolbar.types';
 
 @Directive({
   selector: '[datoGridToolbarItem]'

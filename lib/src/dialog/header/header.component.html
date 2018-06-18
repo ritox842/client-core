@@ -1,9 +1,9 @@
-<div style="display: flex; justify-content: space-between;"
+<div class="d-flex-row justify-between"
      datoDraggable [datoDragTarget]="draggableDialogElement"
      [datoDragHandle]="element" [datoDragEnabled]="draggableEnabled">
-  <p class="sub-headline">
+  <div class="sub-headline d-flex-1">
     <ng-content></ng-content>
-  </p>
+  </div>
   <dato-icon-button class="x-button" datoDialogDismiss *ngIf="enableClose"
                     datoSize="md" datoType="none" datoIcon="close">
   </dato-icon-button>

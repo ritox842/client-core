@@ -1,7 +1,5 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DatoDialogOptions, dialogSizePreset } from '../config/dialog.options';
-import { takeUntil } from 'rxjs/operators';
-import { fromEvent } from 'rxjs/observable/fromEvent';
 import { TakeUntilDestroy } from 'ngx-take-until-destroy';
 import { Observable } from 'rxjs/Observable';
 import { DatoDialogRef } from '../dialog-ref';
@@ -26,11 +24,6 @@ export class DatoDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const projectionElement = this.element.nativeElement.querySelector('.dato-dialog-projection');
-
-    // prevent from click events from propagate to the backdrop
-    fromEvent(projectionElement, 'click')
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe((e: Event) => e.stopPropagation());
 
     // set custom size
     let { width, height } = this.dialogRef.options;

@@ -6,17 +6,21 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ColDef, ColGroupDef, DetailGridInfo, GridApi, GridOptions, RowNode } from 'ag-grid';
-import { coerceArray, getFunctionName, toBoolean } from '@datorama/utils';
+import { ColDef, ColGroupDef, DetailGridInfo, GridOptions } from 'ag-grid';
+import { getFunctionName } from '@datorama/utils';
 import { ContentChild, OnInit, ViewChild } from '@angular/core';
-import { ToolbarAction } from './grid-toolbar/grid-toolbar';
+import { ToolbarAction } from './grid-toolbar/grid-toolbar.types';
 import { DatoGridComponent } from './grid/grid.component';
 import { Subject } from 'rxjs/Subject';
 import { getGridModel, setGridModel } from './grid-config';
+import { DatoGridAPI } from './dato-grid-api';
 
 export type GridColumns = (ColDef | ColGroupDef)[];
 
-export abstract class DatoGrid<T> implements OnInit {
+/**
+ * Base component for grid components
+ */
+export abstract class DatoGrid<T> extends DatoGridAPI<T> implements OnInit {
   @ViewChild(DatoGridComponent)
   set gridViewChild(gridComponent: DatoGridComponent) {
     this.initialGridReady(gridComponent);
@@ -31,19 +35,12 @@ export abstract class DatoGrid<T> implements OnInit {
   toolbarActions: ToolbarAction[];
   datoGridReady = new Subject<DetailGridInfo>();
 
-  private _gridApi: GridApi;
   private onFilterSortChangedBind;
   private gridName: string;
 
-  get gridApi() {
-    return this._gridApi;
-  }
-
-  set gridApi(gridApi) {
-    this._gridApi = gridApi;
-  }
-
   constructor() {
+    super();
+
     this.onFilterSortChangedBind = this.onFilterSortChanged.bind(this);
     this.gridName = this.getGridName();
   }
@@ -59,101 +56,17 @@ export abstract class DatoGrid<T> implements OnInit {
     return getFunctionName(this.constructor);
   }
 
+  /**
+   * Extend GridOptions
+   * @return {GridOptions}
+   */
+  protected getOptions(): GridOptions {
+    return {};
+  }
+
   ngOnInit() {
-    this.options = { columnDefs: this.getColumns() };
+    this.options = { columnDefs: this.getColumns(), ...this.getOptions() };
     this.toolbarActions = this.getToolbarActions();
-  }
-
-  /**
-   *
-   * @returns {T}
-   */
-  getSelectedRows(onlyFirstRow: true): T & RowNode;
-  getSelectedRows(onlyFirstRow?: false): T[] & RowNode[];
-  getSelectedRows(onlyFirstRow: boolean): T[] & RowNode[] | T & RowNode;
-  getSelectedRows(onlyFirstRow = false): T[] & RowNode[] | T & RowNode {
-    const rows = this.gridApi.getSelectedRows();
-    if (!onlyFirstRow) {
-      return rows;
-    }
-    return rows.length ? rows[0] : null;
-  }
-
-  /**
-   *
-   * @param data
-   */
-  setRows(data: T[]) {
-    this.gridApi.setRowData(data);
-    this.gridApi.sizeColumnsToFit();
-  }
-
-  /**
-   *
-   * @param {T} row
-   * @param {number} index
-   * @returns {RowNodeTransaction}
-   */
-  addRows(row: T, index: number): any {
-    const rows = coerceArray(row);
-    let data: any = {
-      add: rows
-    };
-    if (toBoolean(index)) {
-      data.addIndex = index;
-    }
-    return this.gridApi.updateRowData(data);
-  }
-
-  /**
-   *
-   * @param {T[]} row
-   * @returns {RowNodeTransaction}
-   */
-  updateRows(row: T[]): any {
-    const rows = coerceArray(row);
-    return this.gridApi.updateRowData({
-      update: rows
-    });
-  }
-
-  /**
-   *
-   * @param {string} id
-   * @param {string} key
-   * @param newValue
-   */
-  updateRowValue(id: string, key: string, newValue: any) {
-    const rowNode = this.gridApi.getRowNode(id);
-    rowNode.setDataValue(key, newValue);
-  }
-
-  /**
-   *
-   * @param {RowNode | RowNode[]} row
-   * @returns {RowNodeTransaction}
-   */
-  removeRows(row: RowNode | RowNode[]): any {
-    const rows = coerceArray(row);
-    return this.gridApi.updateRowData({
-      remove: rows
-    });
-  }
-
-  /**
-   *
-   * @returns {RowNodeTransaction}
-   */
-  removeSelectedRows() {
-    const selectedRows = this.getSelectedRows();
-    return this.removeRows(selectedRows);
-  }
-
-  /**
-   * Clear all the rows
-   */
-  clearTable() {
-    this.setRows([]);
   }
 
   private removeEventListeners() {

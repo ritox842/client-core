@@ -1,5 +1,6 @@
-import { AfterContentChecked, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Directive, ElementRef, EventEmitter, Input, Output, QueryList, TemplateRef } from '@angular/core';
-import { addClass } from '../internal/helpers';
+import { AfterContentChecked, AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Directive, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, TemplateRef } from '@angular/core';
+import { addClass, setStyle } from '../internal/helpers';
+import { debounce } from 'helpful-decorators';
 
 let nextId = 0;
 
@@ -28,10 +29,12 @@ export class DatoTab {
    * Unique tab identifier. Must be unique for the entire document for proper accessibility support.
    */
   @Input() id = `dato-tab-${nextId++}`;
+
   /**
    * Simple (string only) title. Use the "DatoTabTitle" directive for more complex use-cases.
    */
   @Input() title: string;
+
   /**
    * Allows toggling disabled state of a given state. Disabled tabs can't be selected.
    */
@@ -80,7 +83,7 @@ export interface DatoTabChangeEvent {
   styleUrls: ['./tabs.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatoTabset implements AfterContentChecked {
+export class DatoTabset implements AfterContentChecked, AfterContentInit {
   @ContentChildren(DatoTab) tabs: QueryList<DatoTab>;
 
   /**
@@ -122,6 +125,7 @@ export class DatoTabset implements AfterContentChecked {
 
       if (!defaultPrevented) {
         this.activeId = selectedTab.id;
+        this.movePointer();
       }
     }
     this.cdr.markForCheck();
@@ -131,6 +135,36 @@ export class DatoTabset implements AfterContentChecked {
     // auto-correct activeId that might have been set incorrectly as input
     let activeTab = this._getTabById(this.activeId);
     this.activeId = activeTab ? activeTab.id : this.tabs.length ? this.tabs.first.id : null;
+  }
+
+  ngAfterContentInit() {
+    setTimeout(() => {
+      this.movePointer();
+    });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  @debounce(100)
+  private onResize() {
+    this.movePointer();
+  }
+
+  private movePointer() {
+    if (!this.datoVertical && !this.datoNakedActive && this.activeId) {
+      const activeTab = this._getTabById(this.activeId);
+      let element = this.host.nativeElement.querySelector(`#${activeTab.id}`) as HTMLElement;
+
+      if (element) {
+        element = element.parentNode as HTMLElement;
+        const pointer = this.getPointer();
+        setStyle(pointer, 'width', `${element.clientWidth}px`);
+        setStyle(pointer, 'transform', `translateX(${element.offsetLeft}px)`);
+      }
+    }
+  }
+
+  private getPointer() {
+    return this.host.nativeElement.querySelector('.tab-pointer');
   }
 
   private _getTabById(id: string): DatoTab {

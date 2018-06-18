@@ -47,6 +47,7 @@
 <dato-preview title="Checkbox">
 
   <section>
+
     <div style="margin-top: 20px">
       <dato-checkbox [formControl]="checkboxCheckedControl" class="mr-20">Checked</dato-checkbox>
       <dato-checkbox [formControl]="checkboxDisableControl">Disabled</dato-checkbox>
@@ -64,6 +65,12 @@
         </dato-checkbox>
         <code>Control value: {{checkboxCustomValueControl.value}}</code>
       </div>
+    </div>
+
+    <div>
+      <br/><br/>
+      <strong>Note:</strong> Make sure to initialize the form control with a valid value. <br/>
+      Otherwise you'll get the following exception: <code>Invalid checkbox value: ?</code>.
     </div>
 
   </section>

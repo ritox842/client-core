@@ -24,6 +24,7 @@ export * from './snackbar/public_api';
 export * from './editable-header/public_api';
 export * from './select/public_api';
 export * from './tabs/public_api';
+export * from './dialog/public_api';
 export * from './angular/public_api';
 
 export * from './services/public_api';

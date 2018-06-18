@@ -29,10 +29,9 @@ export class DatoDialog {
    * @returns {Observable<any>}
    */
   open<T>(content: ContentType, options: Partial<DatoDialogOptions> = {}): DatoDialogRef {
-    const mergedOptions = { ...getDefaultOptions(), ...options };
+    const mergedOptions = this.getOptions(options);
     const dialogRef = this.createDialogRef(mergedOptions);
     const container = mergedOptions.container;
-    mergedOptions.container = null;
 
     const config = new DialogConfig(dialogRef);
 
@@ -104,6 +103,17 @@ export class DatoDialog {
     return parent;
   }
 
+  private getOptions(userOptions: Partial<DatoDialogOptions>) {
+    const options = { ...getDefaultOptions(), ...userOptions };
+
+    // set fullScreen size
+    if (options.fullScreen) {
+      options.width = options.height = '100%';
+    }
+
+    return options;
+  }
+
   /**
    *
    * @param {DatoDialogOptions} options
@@ -173,7 +183,8 @@ export class DatoDialog {
    * @param {Element} element
    */
   private registerEvents(config: DialogConfig) {
-    const dialogElement = config.dialogElement.querySelector('.dato-dialog') as HTMLElement;
+    const dialogTag = 'dato-dialog';
+    const dialogElement = config.dialogElement.querySelector(`.${dialogTag}`) as HTMLElement;
 
     // set next z-index
     dialogElement.style.zIndex = (++this.lastZIndex).toString();
@@ -183,7 +194,11 @@ export class DatoDialog {
       return;
     }
 
-    const modalClick$ = fromEvent(dialogElement, 'click');
+    const modalClick$ = fromEvent(dialogElement, 'click').pipe(
+      filter((e: MouseEvent) => {
+        return (e.target as HTMLElement).classList.contains(dialogTag);
+      })
+    );
     const escapeClick$ = fromEvent(document, 'keyup').pipe(filter((e: KeyboardEvent) => e.keyCode === 27));
 
     merge(modalClick$, escapeClick$)
@@ -201,7 +216,7 @@ export class DatoDialog {
     config.innerComponentRef && config.innerComponentRef.destroy();
     config.componentRef && config.componentRef.destroy();
 
-    document.body.removeChild(config.dialogElement);
+    config.dialogRef.options.container.removeChild(config.dialogElement);
 
     const id = config.dialogRef.options.id;
     if (this.dialogs.has(id)) {

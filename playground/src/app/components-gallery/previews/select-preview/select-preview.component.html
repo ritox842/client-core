@@ -16,7 +16,19 @@
     </div>
 
   </section>
+  <dato-tabs show="html">
 
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple>
+
+        <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option" [disabled]="index === 1">
+          option.label
+        </dato-option>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
 </dato-preview>
 
 
@@ -39,6 +51,20 @@
     </div>
 
   </section>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="asyncControl" [dataSet]="options$ | async" #datoSelectAsync>
+
+        <dato-option *ngFor="let option of datoSelectAsync.data; index as index" [option]="option" [disabled]="index === 1">
+          option.label
+        </dato-option>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
 
 </dato-preview>
 
@@ -95,6 +121,28 @@
     </div>
   </section>
 
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="simpleControlSearch" [dataSet]="options" #datoSelectSearch datoSize="lg">
+
+        <dato-option *ngFor="let option of datoSelectSearch.data" [option]="option">
+          option.label
+        </dato-option>
+
+      </dato-select>
+
+      <dato-select [formControl]="simpleControlSearch3" [dataSet]="options" #datoSelectSearch3 datoSize="sm">
+
+        <dato-option *ngFor="let option of datoSelectSearch3.data" [option]="option">
+          option.label
+        </dato-option>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
+
 </dato-preview>
 
 <dato-preview title="Select Multi">
@@ -150,6 +198,28 @@
 
   </section>
 
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="multiControl" [dataSet]="options" type="multi" #datoSelectMulti2 datoSize="lg">
+
+        <dato-option *ngFor="let option of datoSelectMulti2.data" [option]="option" multi>
+          option.label
+        </dato-option>
+
+      </dato-select>
+
+      <dato-select [formControl]="multiControl3" [dataSet]="options" type="multi" #datoSelectMulti4 datoSize="sm">
+
+        <dato-option *ngFor="let option of datoSelectMulti4.data" [option]="option" multi>
+          option.label
+        </dato-option>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
+
 </dato-preview>
 
 <dato-preview title="Select Single - Server Side Search">
@@ -175,6 +245,25 @@
 
   </section>
 
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="serverSideControl"
+                   [dataSet]="optionsFromServer"
+                   (search)="onSearch($event)"
+                   [isLoading]="isLoading"
+                   [internalSearch]="false"
+                   #datoSelectServer>
+
+        <dato-option *ngFor="let option of datoSelectServer.data" [option]="option">
+          option.label
+        </dato-option>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
+
 </dato-preview>
 
 
@@ -198,6 +287,24 @@
 
   </section>
 
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="controlDisabled" [dataSet]="options$ | async" #datoSelectDisabled>
+
+        <dato-option *ngFor="let option of datoSelectDisabled.data" [option]="option">
+          option.label
+        </dato-option>
+
+      </dato-select>
+
+    </textarea>
+
+    <textarea datoHighlight="js">
+      controlDisabled.disable();
+      controlDisabled.enable();
+    </textarea>
+  </dato-tabs>
 </dato-preview>
 
 <dato-preview title="Select Multi - Disabled">
@@ -218,6 +325,25 @@
     </div>
 
   </section>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="multiDisableControl" [dataSet]="options" #datoSelectMultiDisabled type="multi">
+
+        <dato-option *ngFor="let option of datoSelectMultiDisabled.data" [option]="option" multi>
+          option.label
+        </dato-option>
+
+      </dato-select>
+
+    </textarea>
+
+    <textarea datoHighlight="js">
+      controlDisabled.disable();
+      controlDisabled.enable();
+    </textarea>
+  </dato-tabs>
 
 </dato-preview>
 
@@ -251,6 +377,30 @@
 
   </section>
 
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="activeTplControl" [dataSet]="options" #datoSelectActiveTpl>
+
+        <ng-container *datoActive="let active">
+          <div class="d-flex items-center">
+            <dato-icon datoIcon="pin" datoSize="md" width="15px" class="mr-5" datoColor="green-400"></dato-icon>
+            active?.label
+          </div>
+        </ng-container>
+
+        <dato-option *ngFor="let option of datoSelectActiveTpl.data" [option]="option">
+          <div class="d-flex items-center">
+            <dato-icon datoIcon="pin" datoSize="md" class="mr-5" width="15px"></dato-icon>
+            option.label
+          </div>
+        </dato-option>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
+
 </dato-preview>
 
 
@@ -278,6 +428,24 @@
 
   </section>
 
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+       <dato-select [formControl]="groupControl" [dataSet]="grouped" #datoSelectGroup>
+
+        <dato-group *ngFor="let group of datoSelectGroup.data">
+          <div groupLabel>group.label</div>
+
+          <dato-option *ngFor="let option of group.children" [option]="option">
+            option.label
+          </dato-option>
+
+        </dato-group>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
 </dato-preview>
 
 <dato-preview title="Group - Multi">
@@ -304,6 +472,24 @@
 
   </section>
 
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="groupControlMulti" [dataSet]="grouped" #datoSelectGroupMulti type="multi">
+
+        <dato-group *ngFor="let group of datoSelectGroupMulti.data">
+          <div groupLabel>group.label</div>
+
+          <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi [disabled]="index === 0">
+            option.label
+          </dato-option>
+
+        </dato-group>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
 </dato-preview>
 
 
@@ -325,6 +511,20 @@
     </div>
 
   </section>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="withActionsControl" [dataSet]="options" #datoSelectFooter (save)="onSave()" type="multi">
+
+        <dato-option *ngFor="let option of datoSelectFooter.data" [option]="option" multi>
+          option.label
+        </dato-option>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
 
 </dato-preview>
 
@@ -352,6 +552,24 @@
 
   </section>
 
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="customFooterControl" [dataSet]="options" #datoSelectCustomFooter type="multi">
+
+        <dato-option *ngFor="let option of datoSelectCustomFooter.data" [option]="option" multi>
+          option.label
+        </dato-option>
+
+        <div datoSelectFooter>
+          <dato-button (click)="datoSelectCustomFooter.close()">Content inside footer</dato-button>
+        </div>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
+
 </dato-preview>
 
 
@@ -373,5 +591,19 @@
     </div>
 
   </section>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti type="multi" [allowSelectAll]="true">
+
+        <dato-option *ngFor="let option of datoSelectMulti.data" [option]="option" multi>
+          option.label
+        </dato-option>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
 
 </dato-preview>

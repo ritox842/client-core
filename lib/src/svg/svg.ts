@@ -26,16 +26,8 @@ export default {
   'plus-add': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14"><g fill-rule="evenodd"><rect width="2" height="14" x="6" rx="1"/><rect width="2" height="14" x="6" rx="1" transform="rotate(90 7 7)"/></g></svg>',
   delete: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 17"><path fill-rule="evenodd" d="M9 2.125V0H4.5v2.125H0v1.063h1.125V17h11.25V3.187H13.5V2.125H9zM5.625 1.062h2.25v1.063h-2.25V1.062zm5.625 14.876h-9V3.188h9v12.75zM9 5.312H7.875v8.5H9v-8.5zm-3.375 0H4.5v8.5h1.125v-8.5z"/></svg>',
   duplicate: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M15.5,0H3.5A0.5,0.5,0,0,0,3,.5V4H4V1H15V12H12v1h3.5a0.5,0.5,0,0,0,.5-0.5V0.5A0.5,0.5,0,0,0,15.5,0Z"/><path d="M12.48,16h-12A0.5,0.5,0,0,1,0,15.5V3.5A0.5,0.5,0,0,1,.48,3h12a0.5,0.5,0,0,1,.5.5v12A0.5,0.5,0,0,1,12.48,16ZM1,15H12V4H1V15Z"/></svg>',
-  datosearch: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 24 24">
-    <defs>
-        <path id="search" d="M19.954 19.362l-4.065-4.094a6.793 6.793 0 0 0-.463-9.434 6.784 6.784 0 0 0-9.438.155 6.793 6.793 0 0 0-.155 9.443 6.784 6.784 0 0 0 9.429.464l4.1 4.058a.442.442 0 0 0 .592-.592zm-9.173-2.653a5.887 5.887 0 0 1-5.885-5.888 5.887 5.887 0 0 1 5.885-5.89 5.887 5.887 0 0 1 5.886 5.89 5.887 5.887 0 0 1-5.85 5.87l-.036.018z"/>
-    </defs>
-    <g fill-rule="evenodd">
-        <mask id="searchb">
-            <use xlink:href="#search"/>
-        </mask>
-        <use xlink:href="#search"/>
-    </g>
+  datosearch: `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1024 1024">
+<path d="M936.217 904.621l-216.798-218.332c128.772-146.908 117.847-369.54-24.691-503.119s-365.284-129.934-503.379 8.238c-138.095 138.171-141.738 361.041-8.233 503.657s356.014 153.548 502.841 24.704l218.683 216.446c9.060 4.491 19.975 2.699 27.125-4.455s8.941-18.074 4.453-27.14zM447.007 763.153c-173.354 0-313.886-140.609-313.886-314.059s140.531-314.059 313.886-314.059c173.354 0 313.886 140.609 313.886 314.059-0.514 172.348-139.75 312.082-312 313.116l-1.885 0.943z"></path>
 </svg>`,
   close: `  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 24 24">
     <defs>

@@ -126,7 +126,8 @@ export class DatoTriggerMulti implements OnInit {
   }
 
   ngOnInit() {
-    this.inputWidth = this.placeholder.length * 13;
+    const BASE_LENGTH = 13;
+    this.inputWidth = this.placeholder.length * BASE_LENGTH;
 
     this.searchSubscription = this.control.valueChanges.subscribe(value => {
       this.showClear = !!value;

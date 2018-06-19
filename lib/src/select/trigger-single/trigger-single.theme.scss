@@ -2,8 +2,8 @@ dato-trigger-single {
   @include input-like-theme();
   @include input-like();
 
-  .dato-icon-arrow-down path {
-    fill: themify(primary-300);
+  .dato-icon-arrow-down {
+    color: themify(primary-300);
   }
 }
 
@@ -29,7 +29,6 @@ $lg: 35px;
 
 .dato-select__single.dato-select-sm .dato-icon-datosearch, .dato-select__single.dato-select-sm .dato-icon-close {
   width: 20px;
-  top: 1px;
   right: 4px;
 }
 

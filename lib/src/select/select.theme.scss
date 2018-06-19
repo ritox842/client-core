@@ -63,7 +63,7 @@
 
 .dato-select__footer {
   background-color: themify(primary-0);
-  border-top: 1px solid #f2f2f4;
+  border-top: 1px solid themify(primary-100);
 }
 
 .dato-select__footer.with-actions {

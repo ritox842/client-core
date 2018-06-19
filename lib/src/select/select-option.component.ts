@@ -103,7 +103,7 @@ export class DatoSelectOptionComponent implements OnInit {
     return this.host.nativeElement;
   }
 
-  detectChanges() {
+  private detectChanges() {
     this.cdr.detectChanges();
   }
 

@@ -22,6 +22,7 @@ import { DatoOverlay, DatoTemplatePortal } from '../angular/overlay';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import { getSelectOptionHeight } from './select-size';
+import { DatoTranslateService } from '../services/translate.service';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -60,13 +61,13 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   @Input() labelKey = 'label';
 
   /** A placeholder for the trigger */
-  @Input() placeholder = 'Select..';
+  @Input() placeholder = this.translate.transform('general.select');
 
   /** A placeholder for the search */
-  @Input() searchPlaceholder = 'Search Items..';
+  @Input() searchPlaceholder = this.translate.transform('general.search');
 
   /** Custom text when we don't have results */
-  @Input() noItemsLabel = 'No items found';
+  @Input() noItemsLabel = this.translate.transform('general.no-items');
 
   /** Add/removes search input */
   @Input() isCombo = true;
@@ -233,7 +234,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Current index of active item (keyboard navigation) */
   private currentIndex;
 
-  constructor(private cdr: ChangeDetectorRef, private host: ElementRef, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
+  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
     super();
     this.size = size || 'md';
     this._dropdownClass = `dato-select-${this.size}`;
@@ -471,6 +472,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   @HostListener('document:keydown', ['$event'])
   onDocumentKeydown({ keyCode }: KeyboardEvent) {
     if (keyCode === ESCAPE && this.open) {
+      this._clickOutside = true;
       this.close();
     }
   }
@@ -547,7 +549,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       if (index < NUM_ITEMS) {
         scrollTop = 0;
       } else {
-        const optionHeight = getSelectOptionHeight(this.type, this.size);
+        const optionHeight = getSelectOptionHeight(this.size);
         if (this.currentIndex > index) {
           scrollTop = dropdown.scrollTop - optionHeight;
         } else {

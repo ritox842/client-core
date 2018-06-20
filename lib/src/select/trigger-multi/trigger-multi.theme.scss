@@ -38,7 +38,7 @@ dato-trigger-multi {
 /**
  SMALL
  */
-dato-select[datosize="sm"] dato-trigger-multi  {
+dato-select[datosize="sm"] dato-trigger-multi {
   min-height: map-get($sm, height);
   font-size: map-get($sm, font);
 
@@ -63,9 +63,12 @@ dato-select[datosize="sm"] dato-trigger-multi  {
   }
 
   .dato-trigger-multi__clear {
-    width: 20px;
-    top: 0px;
     right: 7px;
+    top: 1px;
+  }
+
+  .dato-input__spinner {
+    top: 5px;
   }
 
 }
@@ -111,9 +114,12 @@ dato-select dato-trigger-multi {
   }
 
   .dato-trigger-multi__clear {
-    width: 20px;
-    top: 0px;
     right: 7px;
+    top: 4px;
+  }
+
+  .dato-input__spinner {
+    top: 9px;
   }
 
 }
@@ -155,7 +161,12 @@ dato-select[datosize="lg"] dato-trigger-multi {
 
   .dato-trigger-multi__clear {
     right: 10px;
-    top: 10px;
+    top: 7px;
+  }
+
+  .dato-input__spinner {
+    top: 15px;
+    right: 13px;
   }
 
 }

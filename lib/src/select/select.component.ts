@@ -163,7 +163,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   }
 
   get _showEmptyResults() {
-    return (!this.hasResults || !this._data.length) && !this.isGroup;
+    return this._data && (!this.hasResults || !this._data.length) && !this.isGroup;
   }
 
   get _count() {
@@ -253,6 +253,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this.datoOverlay.detach();
     this.toggle();
     this._focus = false;
+    this._clickOutside = true;
   }
 
   /**
@@ -331,9 +332,11 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this.keyboardEventsManager = new ListKeyManager(this.options).withWrap().withVerticalOrientation(true);
     this.keyboardEventsManagerSubscription = this.keyboardEventsManager.change.subscribe(index => {
       const options = this.options.toArray();
-      options.forEach(datoOption => (datoOption.activeByKeyboard = false));
-      options[index].activeByKeyboard = true;
-      this.scrollToElement(index);
+      if (options.length) {
+        options.forEach(datoOption => (datoOption.activeByKeyboard = false));
+        options[index].activeByKeyboard = true;
+        this.scrollToElement(index);
+      }
     });
   }
 
@@ -470,8 +473,8 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * @param {number} keyCode
    */
   @HostListener('document:keydown', ['$event'])
-  onDocumentKeydown({ keyCode }: KeyboardEvent) {
-    if (keyCode === ESCAPE && this.open) {
+  onDocumentKeydown(event: KeyboardEvent) {
+    if (event.keyCode === ESCAPE && this.open) {
       this._clickOutside = true;
       this.close();
     }
@@ -570,6 +573,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     return {
       placement: this.placement,
       modifiers: {
+        hide: { enabled: false },
         preventOverflow: { enabled: false },
         applyStyle: {
           onLoad: (origin: HTMLElement, dropdown: HTMLElement) => {

@@ -13,5 +13,7 @@
 
 </section>
 
-<dato-icon datoIcon="close" *ngIf="showClear" (click)="clearSearch()" class="dato-trigger-multi__clear"></dato-icon>
+<dato-icon datoIcon="close" *ngIf="showClear && !isLoading" (click)="clearSearch()" class="dato-trigger-multi__clear"></dato-icon>
 <dato-icon datoIcon="arrow-down" datoSize="sm" *ngIf="!showClear"></dato-icon>
+<span class="dato-input__spinner" *ngIf="isLoading"></span>
+

@@ -47,6 +47,17 @@ export class DatoTriggerMulti implements OnInit {
     this._placeholder = value;
   }
 
+  private _isLoading = false;
+
+  get isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  @Input()
+  set isLoading(value: boolean) {
+    this._isLoading = value;
+  }
+
   /**
    *
    * @type {any[]}
@@ -110,6 +121,7 @@ export class DatoTriggerMulti implements OnInit {
     if (!!value) {
       this.isFocused = false;
       this.showClear = false;
+      this.input.nativeElement.blur();
     }
   }
 
@@ -122,7 +134,7 @@ export class DatoTriggerMulti implements OnInit {
   @HostListener('click')
   onClick() {
     this.isFocused = true;
-    this.input.nativeElement.focus();
+    Promise.resolve().then(() => this.input.nativeElement.focus());
   }
 
   ngOnInit() {

@@ -1,0 +1,44 @@
+.dato-radio {
+  input[type="radio"] {
+    + .radio-label {
+      &:before {
+        background: themify(primary-0);
+        border: themify(primary-300) 1px solid;
+      }
+    }
+
+    &:checked {
+      + .radio-label {
+        &:before {
+          background-color: themify(accent-400);
+          border: themify(accent-400) 1px solid;
+          box-shadow: inset 0 0 0 2px #fff;
+        }
+      }
+      &:hover {
+        + .radio-label {
+          &:before {
+            background-color: themify((light: accent-500, dark: accent-350));
+            border: themify((light: accent-500, dark: accent-350)) 1px solid;
+          }
+        }
+      }
+      &:active {
+        + .radio-label {
+          &:before {
+            background-color: themify((light: accent-600, dark: accent-300));
+            border: themify((light: accent-600, dark: accent-300)) 1px solid;
+          }
+        }
+      }
+    }
+    &:disabled {
+      + .radio-label {
+        &:before {
+          background-color: themify(primary-300, 0.5);
+          box-shadow: inset 0 0 0 2px #F1F2F5;
+        }
+      }
+    }
+  }
+}

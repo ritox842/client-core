@@ -1,0 +1,11 @@
+<table class="table is-fullwidth is-bordered mt-4 is-striped">
+  <thead>
+  <tr>
+    <th><span class="code">{{isOutputs ? 'Output()' : 'Input()'}}</span></th>
+    <th><span class="code">{{isOutputs ? 'Type' : 'Options'}}</span></th>
+    <th *ngIf="!isOutputs"><span class="code">Default Value</span></th>
+    <th><span class="code">Description</span></th>
+  </tr>
+  </thead>
+  <ng-content></ng-content>
+</table>

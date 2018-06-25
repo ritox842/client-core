@@ -1,0 +1,20 @@
+<ag-grid-angular #agGrid class="ag-dato-core ag-material"
+                 [gridOptions]="gridOptions"
+                 rowHeight="30"
+                 headerHeight="30"
+                 [enableFilter]="enableFilter"
+                 [enableSorting]="enableSorting"
+                 [enableColResize]="enableColResize"
+                 multiSortKey="ctrl"
+                 (gridReady)="onGridReady($event)">
+</ag-grid-angular>
+<dato-grid-pagination
+        *ngIf="hasPagination"
+        (fitToContainer)="fitToContainer()"
+        (fitToContent)="fitToContent()"
+        class="d-flex-row flex-0-0-100"
+        [rowDataChanged]="rowDataChanged"
+        [agGridApi]="api.gridApi"
+        [agGridColumnApi]="gridColumnApi"
+        [hasInfinitePagination]="hasInfinitePagination">
+</dato-grid-pagination>

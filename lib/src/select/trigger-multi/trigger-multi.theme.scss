@@ -1,0 +1,245 @@
+$sm: (
+  height: 25px,
+  selectedHeight: 17px,
+  optionHeight: 30px,
+  selectedMargin: 3px,
+  font: 12px
+);
+
+$md: (
+  height: 35px,
+  selectedHeight: 25px,
+  optionHeight: 35px,
+  selectedMargin: 5px,
+  font: 14px
+);
+
+$lg: (
+  height: 45px,
+  selectedHeight: 29px,
+  optionHeight: 35px,
+  selectedMargin: 10px,
+  font: 14px
+);
+
+$max-items: 4;
+
+dato-trigger-multi {
+  display: block;
+  position: relative;
+  align-items: center;
+  display: flex;
+  min-height: map-get($md, height);
+  section {
+    transform: translateX(-4px);
+  }
+}
+
+/**
+ SMALL
+ */
+dato-select[datosize="sm"] dato-trigger-multi {
+  min-height: map-get($sm, height);
+  font-size: map-get($sm, font);
+
+  .dato-multi-search, .dato-trigger-multi__active {
+    font-size: map-get($sm, font);
+  }
+
+  .dato-trigger-multi__active {
+    height: map-get($sm, selectedHeight);
+    margin-right: map-get($sm, selectedMargin);
+  }
+
+  .dato-icon-close {
+    margin-left: 3px;
+    width: 18px;
+  }
+
+  .dato-icon-arrow-down {
+    top: 7px;
+    width: 9px;
+    right: 11px;
+  }
+
+  .dato-trigger-multi__clear {
+    right: 7px;
+    top: 1px;
+  }
+
+  .dato-input__spinner {
+    top: 5px;
+  }
+
+}
+
+.dato-select-sm .dato-select__option {
+  height: map-get($sm, optionHeight);
+  line-height: map-get($sm, optionHeight);
+  font-size: map-get($sm, font);
+}
+
+.dato-select-sm .dato-select__dropdown {
+  max-height: #{map-get($sm, optionHeight) * $max-items};
+}
+
+/**
+ END SMALL
+ */
+
+/**
+ MEDIUM
+ */
+dato-select dato-trigger-multi {
+  min-height: map-get($md, height);
+  font-size: map-get($md, font);
+
+  .dato-multi-search, .dato-trigger-multi__active {
+    font-size: map-get($md, font);
+  }
+
+  .dato-trigger-multi__active {
+    height: map-get($md, selectedHeight);
+    margin-right: map-get($md, selectedMargin);
+  }
+
+  .dato-icon-close {
+    width: 23px;
+  }
+
+  .dato-icon-arrow-down {
+    top: 10px;
+    width: 9px;
+    right: 11px;
+  }
+
+  .dato-trigger-multi__clear {
+    right: 7px;
+    top: 4px;
+  }
+
+  .dato-input__spinner {
+    top: 9px;
+  }
+
+}
+
+.dato-select-md .dato-select__option {
+  height: map-get($md, optionHeight);
+  line-height: map-get($md, optionHeight);
+  font-size: map-get($md, font);
+}
+
+.dato-select-md .dato-select__dropdown {
+  max-height: #{map-get($md, optionHeight) * $max-items};
+}
+
+/**
+ END MEDIUM
+ */
+
+/**
+ LARGE
+ */
+dato-select[datosize="lg"] dato-trigger-multi {
+  min-height: map-get($lg, height);
+  font-size: map-get($lg, font);
+
+  .dato-multi-search, .dato-trigger-multi__active {
+    font-size: map-get($lg, font);
+  }
+
+  .dato-trigger-multi__active {
+    height: map-get($lg, selectedHeight);
+    margin-right: map-get($lg, selectedMargin);
+  }
+
+  .dato-icon-arrow-down {
+    top: 15px;
+    right: 15px;
+  }
+
+  .dato-trigger-multi__clear {
+    right: 10px;
+    top: 7px;
+  }
+
+  .dato-input__spinner {
+    top: 15px;
+    right: 13px;
+  }
+
+}
+
+.dato-select-lg .dato-select__option {
+  height: map-get($lg, optionHeight);
+  line-height: map-get($lg, optionHeight);
+  font-size: map-get($lg, font);
+}
+
+.dato-select-lg .dato-select__dropdown {
+  max-height: #{map-get($lg, optionHeight) * $max-items};
+}
+
+/**
+ END LARGE
+ */
+
+dato-trigger-multi {
+
+  .dato-trigger-multi__active {
+    height: 29px;
+    padding: 0px 10px;
+    border-radius: 5px;
+    color: themify(primary-0);
+    background-color: themify(accent-400);
+    user-select: none;
+    padding: 4px;
+    margin: 4px 10px 4px 0px;
+    align-items: center;
+    padding-left: 10px;
+    &:hover {
+      background-color: themify(accent-500);
+      .dato-icon-close {
+        color: themify(accent-200);
+      }
+    }
+
+    .dato-icon-close {
+      color: themify(accent-300);
+      cursor: pointer;
+      transform: translateX(3px);
+      margin-left: 10px;
+    }
+
+  }
+
+  .dato-multi-search {
+    border: none;
+    min-width: 0;
+    font-size: 15px;
+    background-color: transparent;
+    margin: 4px 10px 4px 4px;
+    &:focus {
+      outline: none;
+    }
+    @include placeholder() {
+      color: themify(primary-300);
+    }
+  }
+
+  .dato-icon-arrow-down {
+    position: absolute;
+  }
+
+  .dato-trigger-multi__clear {
+    color: themify(primary-300);
+    position: absolute;
+    cursor: pointer;
+  }
+
+}
+
+.dato-trigger-multi--focused {
+  border-color: themify(accent-400) !important;
+}

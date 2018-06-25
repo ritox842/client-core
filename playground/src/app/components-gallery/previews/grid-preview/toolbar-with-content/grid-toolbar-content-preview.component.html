@@ -1,0 +1,98 @@
+<dato-preview title="Toolbar with Content">
+
+  <div style="height: 250px" class="d-flex-column flex-1">
+    <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
+      <div class="toolbar-title">
+        This is my awesome grid!
+      </div>
+    </dato-grid-toolbar>
+    <dato-grid [options]="options" #gridRef>
+    </dato-grid>
+  </div>
+
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+    <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
+      <div class="toolbar-title">
+        This is my awesome grid!
+      </div>
+    </dato-grid-toolbar>
+    <dato-grid [options]="options" #gridRef>
+    </dato-grid>
+    </textarea>
+
+    <textarea datoHighlight="js">
+    @Component({
+      selector: "dato-grid-toolbar-content-preview",
+      templateUrl: "./grid-toolbar-content-preview.component.html"
+    })
+    export class GridToolbarContentPreviewComponent extends DatoGrid<any> {
+
+      data = [
+        {
+          id: 1,
+          value: "Item one"
+        },
+        {
+          id: 2,
+          value: "Item two"
+        },
+        {
+          id: 3,
+          value: "Item three"
+        }
+      ];
+
+      constructor() {
+        super();
+      }
+
+      ngOnInit() {
+        super.ngOnInit();
+
+        this.datoGridReady.subscribe(() => {
+          this.setRows(this.data);
+        });
+      }
+
+      getColumns(): GridColumns {
+        return [
+          {
+            headerName: "ID",
+            field: "id",
+            width: 100,
+            filter: "agNumberColumnFilter"
+          },
+          {
+            headerName: "Value",
+            field: "value",
+            width: 100,
+            filter: "agTextColumnFilter"
+          }
+        ];
+      }
+
+      getToolbarActions(): ToolbarAction[] {
+        return [
+          {
+            actionType: ToolbarActionType.Add
+          },
+          {
+            actionType: ToolbarActionType.Delete
+          },
+          {
+            text: "Click Me",
+            showWhen: RowSelectionType.MULTI
+          }
+        ];
+      }
+    }
+    </textarea>
+
+
+  </dato-tabs>
+
+
+</dato-preview>

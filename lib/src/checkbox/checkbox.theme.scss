@@ -1,0 +1,101 @@
+dato-checkbox, .dato-checkbox {
+  label {
+    color: themify(primary-600);
+  }
+
+  .checkmark:after {
+    border-color: themify((light: primary-0, dark: primary-700));
+    border-width: 0 2px 2px 0;
+    border-style: solid;
+  }
+
+  // unchecked state
+  input:not(:checked) ~ .checkmark {
+    background-color: themify(primary-0);
+    border: themify(primary-300) solid 1px;
+  }
+  &:hover input:not(:checked) ~ .checkmark {
+    border-color: themify(accent-500);
+  }
+  &:active input:not(:checked) ~ .checkmark {
+    border-color: themify(accent-600);
+  }
+
+  /* On mouse-over, add a grey background color */
+  &:hover input:checked ~ .checkmark {
+    background-color: themify(accent-500);
+  }
+  &:active input:checked ~ .checkmark {
+    background-color: themify(accent-600);
+  }
+  /* When the checkbox is checked, add a blue background */
+  input:checked ~ .checkmark {
+    background-color: themify(accent-400);
+  }
+
+  input:disabled ~ .checkmark {
+    background-color: rgba(156, 160, 160, 0.1) !important;
+    border-color: transparent !important;
+
+    &:after {
+      border-color: themify(primary-200);
+    }
+
+  }
+}
+
+$checkbox-size: 16px;
+$label-left-padding: 10px;
+
+dato-checkbox, .dato-checkbox {
+  display: inline-block;
+
+  label {
+    display: block;
+    position: relative;
+    padding-left: $checkbox-size + $label-left-padding;
+    font-size: 14px;
+    user-select: none;
+    cursor: pointer;
+    line-height: $checkbox-size;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: $checkbox-size;
+      width: $checkbox-size;
+      transition: background 0.2s ease;
+
+      /* Create the checkmark/indicator (hidden when not checked) */
+      &:after {
+        content: "";
+        display: none;
+
+        position: absolute;
+        left: 6px;
+        top: 3px;
+        width: 5px;
+        height: 10px;
+
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        box-sizing: border-box;
+      }
+
+    }
+
+    /* Show the checkmark when checked */
+    input:checked ~ .checkmark:after {
+      display: block;
+    }
+
+  }
+
+}

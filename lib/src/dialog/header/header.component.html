@@ -1,0 +1,10 @@
+<div class="d-flex-row justify-between"
+     datoDraggable [datoDragTarget]="draggableDialogElement"
+     [datoDragHandle]="element" [datoDragEnabled]="draggableEnabled">
+  <div class="sub-headline d-flex-1" datoColor="primary-600">
+    <ng-content></ng-content>
+  </div>
+  <dato-icon-button class="x-button" datoDialogDismiss *ngIf="enableClose"
+                    datoSize="md" datoType="none" datoIcon="close">
+  </dato-icon-button>
+</div>

@@ -1,0 +1,8 @@
+<ng-container
+        *ngIf="active && !hidePlaceholder"
+        [ngTemplateOutlet]="active.tpl"
+        [ngTemplateOutletContext]="_model">
+</ng-container>
+<ng-container *ngIf="!active">{{getLabel}}</ng-container>
+<span class="dato-select__placeholder" *ngIf="hidePlaceholder">{{placeholder}}</span>
+<dato-icon datoIcon="arrow-down" datoSize="sm"></dato-icon>

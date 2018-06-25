@@ -1,0 +1,96 @@
+<div class="grid-toolbar__container d-flex-row-rev" #container>
+
+  <div class="d-flex-row-rev">
+    <div *ngFor="let item of internalAreaItems;">
+      <div class="mr-4">
+        <ng-container *ngTemplateOutlet="item?.tpl"></ng-container>
+      </div>
+    </div>
+
+    <div class="separator mx-8" *ngIf="internalAreaItems.length && (preservedAreaItems.length || leftAreaItems.length)"
+         datoColor="primary-100 background"></div>
+
+    <div *ngFor="let item of preservedAreaItems;">
+      <div class="mr-4">
+        <ng-container *ngTemplateOutlet="item?.tpl"></ng-container>
+      </div>
+    </div>
+
+    <div class="separator mx-8" *ngIf="preservedAreaItems.length && leftAreaItems.length"
+         datoColor="primary-100 background"></div>
+
+    <ng-container *ngFor="let item of leftAreaItems;">
+      <div class="mr-4">
+        <ng-container *ngTemplateOutlet="item?.tpl"></ng-container>
+      </div>
+    </ng-container>
+
+    <!-- Provide built-in template for the actions -->
+    <ng-container *ngFor="let action of actions">
+      <ng-container [ngSwitch]="action.actionType">
+
+        <ng-template datoGridToolbarItem [showWhen]="action.showWhen" *ngSwitchDefault>
+          <dato-button datoType="secondary" datoSize="sm" datoGridToolbarItemElement
+                       (click)="actionClick(action)">
+            <dato-icon *ngIf="action.icon" [datoIcon]="action.icon"></dato-icon>
+            <span class="ml-4">{{action.text}}</span>
+          </dato-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem
+                     [showWhen]="action.showWhen"
+                     [actionType]="action.actionType"
+                     order="1"
+                     *ngSwitchCase="'Add'">
+          <dato-icon-button datoCircle datoSize="md"
+                            [datoIcon]="action.icon || 'plus-add'"
+                            datoGridToolbarItemElement
+                            (click)="actionClick(action)">
+          </dato-icon-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem
+                     [showWhen]="action.showWhen || 'multi'"
+                     [actionType]="action.actionType"
+                     order="3"
+                     *ngSwitchCase="'Edit'">
+          <dato-icon-button datoSize="md" datoType="none"
+                            [datoIcon]="action.icon || 'edit'"
+                            datoGridToolbarItemElement
+                            (click)="actionClick(action)">
+          </dato-icon-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem
+                     [showWhen]="action.showWhen || 'multi'"
+                     [actionType]="action.actionType"
+                     order="2"
+                     *ngSwitchCase="'Delete'">
+          <dato-icon-button datoSize="md" datoType="none"
+                            [datoIcon]="action.icon || 'delete'"
+                            datoGridToolbarItemElement
+                            (click)="actionClick(action)">
+          </dato-icon-button>
+        </ng-template>
+
+        <ng-template datoGridToolbarItem
+                     [showWhen]="action.showWhen || 'single'"
+                     [actionType]="action.actionType"
+                     order="1"
+                     *ngSwitchCase="'Copy'">
+          <dato-icon-button datoSize="md" datoType="none"
+                            [datoIcon]="action.icon || 'duplicate'"
+                            datoGridToolbarItemElement
+                            (click)="actionClick(action)">
+          </dato-icon-button>
+        </ng-template>
+
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="d-flex d-flex-1 align-start-center">
+    <ng-content select=".toolbar-title"></ng-content>
+  </div>
+
+</div>

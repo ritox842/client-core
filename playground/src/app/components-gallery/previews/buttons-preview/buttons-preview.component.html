@@ -1,0 +1,322 @@
+<dato-preview title="Buttons - Basic">
+
+  <div class="d-flex">
+    <dato-button class="mr-10" width="200px">Custom width</dato-button>
+    <dato-button class="mr-10">Primary</dato-button>
+    <dato-button>
+      <dato-icon datoIcon="fit-to-content"></dato-icon>
+      Primary
+    </dato-button>
+  </div>
+
+  <div class="mt-13 d-flex">
+    <dato-button class="mr-10" datoType="secondary">Secondary</dato-button>
+    <dato-button datoType="secondary">
+      <dato-icon datoIcon="fit-to-content"></dato-icon>
+      Secondary
+    </dato-button>
+  </div>
+
+  <div class="mt-13 d-flex">
+    <dato-button class="mr-10" [disabled]="true" (click)="yeah()">Disabled</dato-button>
+    <dato-button [disabled]="true" (click)="yeah()">
+      <dato-icon datoIcon="fit-to-content"></dato-icon>
+      Disabled
+    </dato-button>
+  </div>
+
+  <div class="mt-13 d-flex">
+    <dato-button class="mr-10" datoSize="sm">Primary small</dato-button>
+    <dato-button datoSize="sm">
+      <dato-icon datoIcon="fit-to-content"></dato-icon>
+      Primary small
+    </dato-button>
+  </div>
+
+  <div class="mt-13 d-flex">
+    <dato-button class="mr-10" datoSize="sm" datoType="secondary">Secondary small</dato-button>
+    <dato-button datoSize="sm" datoType="secondary">
+      <dato-icon datoIcon="fit-to-content"></dato-icon>
+      Secondary small
+    </dato-button>
+  </div>
+
+  <div class="mt-13 d-flex">
+    <dato-button class="mr-10" datoSize="md" datoType="orange">I'm Gingi!</dato-button>
+  </div>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-button class="mr-10" width="200px">Custom width</dato-button>
+      <dato-button class="mr-10">Primary</dato-button>
+      <dato-button>
+        <dato-icon datoIcon="fit-to-content"></dato-icon>
+        Primary
+      </dato-button>
+
+      <dato-button class="mr-10" datoType="secondary">Secondary</dato-button>
+      <dato-button datoType="secondary">
+        <dato-icon datoIcon="fit-to-content"></dato-icon>
+        Secondary
+      </dato-button>
+
+      <dato-button class="mr-10" [disabled]="true">Disabled</dato-button>
+      <dato-button [disabled]="true">
+        <dato-icon datoIcon="fit-to-content"></dato-icon>
+        Disabled
+      </dato-button>
+
+      <dato-button class="mr-10" datoSize="sm">Primary small</dato-button>
+      <dato-button datoSize="sm">
+        <dato-icon datoIcon="fit-to-content"></dato-icon>
+        Primary small
+      </dato-button>
+
+      <dato-button class="mr-10" datoSize="sm" datoType="secondary">Secondary small</dato-button>
+      <dato-button datoSize="sm" datoType="secondary">
+        <dato-icon datoIcon="fit-to-content"></dato-icon>
+        Secondary small
+      </dato-button>
+
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Buttons - Link">
+
+  <div class="d-flex">
+    <dato-link class="mr-10">Primary</dato-link>
+    <dato-link>
+      <dato-icon datoIcon="fit-to-content"></dato-icon>
+      Primary
+    </dato-link>
+  </div>
+
+  <div class="mt-4 d-flex">
+    <dato-link class="mr-10" datoType="secondary">Secondary</dato-link>
+    <dato-link datoType="secondary">
+      <dato-icon datoIcon="fit-to-content"></dato-icon>
+      Secondary
+    </dato-link>
+  </div>
+
+  <div class="mt-4 d-flex">
+    <dato-link class="mr-10" [disabled]="true">Disabled</dato-link>
+    <dato-link [disabled]="true">
+      <dato-icon datoIcon="fit-to-content"></dato-icon>
+      Disabled
+    </dato-link>
+  </div>
+
+  <div class="mt-4 d-flex">
+    <dato-link class="mr-10" datoSize="sm">Primary small</dato-link>
+    <dato-link datoSize="sm">
+      <dato-icon datoIcon="fit-to-content"></dato-icon>
+      Primary small
+    </dato-link>
+  </div>
+
+  <div class="mt-4 d-flex">
+    <dato-link class="mr-10" datoSize="sm" datoType="secondary">Secondary small</dato-link>
+    <dato-link datoSize="sm" datoType="secondary">
+      <dato-icon datoIcon="fit-to-content"></dato-icon>
+      Secondary small
+    </dato-link>
+  </div>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-link class="mr-10">Primary</dato-link>
+      <dato-link>
+        <dato-icon datoIcon="fit-to-content"></dato-icon>
+        Primary
+      </dato-link>
+
+      <dato-link class="mr-10" datoType="secondary">Secondary</dato-link>
+      <dato-link datoType="secondary">
+        <dato-icon datoIcon="fit-to-content"></dato-icon>
+        Secondary
+      </dato-link>
+
+      <dato-link class="mr-10" [disabled]="true">Disabled</dato-link>
+      <dato-link [disabled]="true">
+        <dato-icon datoIcon="fit-to-content"></dato-icon>
+        Disabled
+      </dato-link>
+
+      <dato-link class="mr-10" datoSize="sm">Primary small</dato-link>
+      <dato-link datoSize="sm">
+        <dato-icon datoIcon="fit-to-content"></dato-icon>
+        Primary small
+      </dato-link>
+
+      <dato-link class="mr-10" datoSize="sm" datoType="secondary">Secondary small</dato-link>
+      <dato-link datoSize="sm" datoType="secondary">
+        <dato-icon datoIcon="fit-to-content"></dato-icon>
+        Secondary small
+      </dato-link>
+
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Buttons - Icons">
+  <p datoFont class="mb-20">datoType <span class="code">none</span> supports custom width and height</p>
+
+  <div class="d-flex-row align-start-center">
+
+    <div class="mr-10">
+      <dato-icon-button datoCircle [disabled]="true" datoIcon="fit-to-content">
+      </dato-icon-button>
+    </div>
+
+    <div class="mr-10">
+      <dato-icon-button datoCircle datoIcon="edit">
+      </dato-icon-button>
+    </div>
+
+    <div class="mr-10">
+      <dato-icon-button datoCircle datoSize="md" datoIcon="edit" datoType="secondary">
+      </dato-icon-button>
+    </div>
+
+  </div>
+
+  <div class="d-flex-row align-start-center mt-8">
+    <div class="mr-10">
+      <dato-icon-button [disabled]="true" datoIcon="edit" datoType="none">
+      </dato-icon-button>
+    </div>
+
+    <div class="mr-10">
+      <dato-icon-button datoSize="lg" datoIcon="edit" datoType="none">
+      </dato-icon-button>
+    </div>
+
+    <div class="mr-10">
+      <dato-icon-button datoIcon="edit" datoType="none" width="40px" height="40px"></dato-icon-button>
+    </div>
+
+  </div>
+
+  <br/>
+  <div class="d-flex-column mt-8">
+
+    <p datoFont>Working with flex containers</p>
+
+    <div class="mr-10 d-flex" style="height: 100px; border: solid 1px #cccccc">
+      <div class="d-flex d-flex-1 align-center">
+        <dato-icon-button datoSize="lg" datoIcon="edit" class="align-center">
+        </dato-icon-button>
+      </div>
+    </div>
+
+  </div>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+
+            <div>
+              <dato-icon-button datoCircle [disabled]="true" datoIcon="fit-to-content">
+              </dato-icon-button>
+
+              <dato-icon-button datoCircle datoIcon="edit">
+              </dato-icon-button>
+
+              <dato-icon-button datoCircle datoSize="md" datoIcon="edit" datoType="secondary">
+              </dato-icon-button>
+
+              <dato-icon-button datoCircle datoSize="sm" datoIcon="plus">
+              </dato-icon-button>
+            </div>
+
+            <!--Working with datoType="none"-->
+            <div>
+              <dato-icon-button [disabled]="true" datoIcon="edit" datoType="none">
+              </dato-icon-button>
+
+              <dato-icon-button datoSize="lg" datoIcon="edit" datoType="none">
+              </dato-icon-button>
+
+              <dato-icon-button datoSize="md" datoIcon="edit" datoType="none">
+              </dato-icon-button>
+
+              <dato-icon-button datoIcon="edit" datoType="none" width="40px" height="40px"></dato-icon-button>
+            </div>
+
+            <!-- Flex Container-->
+            <div class="mr-10 d-flex" style="height: 100px; border: solid 1px #cccccc">
+              <div class="d-flex d-flex-1 align-center">
+                <dato-icon-button datoSize="lg" datoIcon="edit" class="align-center">
+                </dato-icon-button>
+              </div>
+            </div>
+
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>datoSize</td>
+        <td>lg, md (only in icon-button), sm</td>
+        <td>lg</td>
+        <td>
+          The size of the button. <br/>
+          <code>lg</code> - 35px height <br/>
+          <code>md</code> - 24px X 24px <br/>
+          <code>sm</code> - 24px height; font-size of 12px;
+        </td>
+      </tr>
+      <tr>
+        <td>datoType</td>
+        <td>primary, secondary, none</td>
+        <td>primary</td>
+        <td>Wheteher it's primary or secondary</td>
+      </tr>
+      <tr>
+        <td>disabled</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Wheteher it's disabled</td>
+      </tr>
+      <tr>
+        <td>datoCircle</td>
+        <td>as attribute</td>
+        <td></td>
+        <td>Wheteher it should be circle</td>
+      </tr>
+      <tr>
+        <td>width</td>
+        <td></td>
+        <td></td>
+        <td>Custom width</td>
+      </tr>
+      <tr>
+        <td>height</td>
+        <td></td>
+        <td></td>
+        <td>Custom height</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

@@ -1,0 +1,19 @@
+html {
+  overflow: hidden;
+}
+html, body{
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif
+}
+
+a.active {
+  background-color: gray;
+}
+
+.navbar-item {
+  color: #fff;
+  &:hover {
+    background: hotpink;
+    color: #fff;
+  }
+}

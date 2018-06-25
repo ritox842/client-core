@@ -1,0 +1,97 @@
+<dato-preview title="Typography - with components">
+
+  <div datoFont="simple">
+    You can use the <span datoFont="simple-bold">datoFont</span> directive, to style your text according to the guideline.
+    <br/>
+    <span datoFont="note-italic">Psss look in the source code for the CSS properties...</span>
+  </div>
+
+  <p datoFont="headline" datoColor="accent-300">headline</p>
+  <p datoFont="sub-headline">sub-headline</p>
+  <p datoFont="simple-bold">simple-bold</p>
+  <p datoFont="simple">simple</p>
+  <p datoFont="simple-italic">simple-italic</p>
+  <p datoFont="note-bold">note-bold</p>
+  <p datoFont="note">note</p>
+  <p datoFont="note-italic">note-italic</p>
+
+  <dato-tabs show="html, css">
+
+    <textarea datoHighlight="html">
+      <div datoFont="simple">
+        You can use the <span datoFont="simple-bold">datoFont</span> directive, to style your text according to the guideline.
+      </div>
+
+      <p datoFont="headline" datoColor="accent-300">headline</p>
+      <p datoFont="sub-headline">sub-headline</p>
+      <p datoFont="simple-bold">simple-bold</p>
+      <p datoFont="simple">simple</p>
+      <p datoFont="simple-italic">simple-italic</p>
+      <p datoFont="note-bold">note-bold</p>
+      <p datoFont="note">note</p>
+      <p datoFont="note-italic">note-italic</p>
+    </textarea>
+    <textarea datoHighlight="css">
+      .headline {
+          font-size: 34px;
+          font-weight: 300;
+      }
+      .sub-headline {
+          font-size: 18px;
+          font-weight: 600;
+      }
+      .simple-bold {
+          font-size: 14px;
+          font-weight: 600;
+      }
+      .simple {
+          font-size: 14px;
+      }
+      .simple-italic {
+          font-size: 14px;
+          font-style: italic;
+      }
+      .note-bold {
+          font-size: 12px;
+          font-weight: 600;
+      }
+      .note {
+          font-size: 12px;
+      }
+      .note-italic {
+          font-size: 12px;
+          font-style: italic;
+      }
+    </textarea>
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Typography - usage in SASS">
+
+  <div datoFont="simple">
+    The two methods above are considered the <span datoFont="simple-bold">best practice</span>
+    for applying typography in your elements.<br>
+    If you have to use it as part of your CSS, and you don't have an access to the HTML -
+    you can use the <span datoFont="simple-bold">typography mixin</span>. <br>
+    In order to apply one of the predefined typography styles in your SASS classess, <br>
+    you can leverage the <span datoFont="simple-bold">typography mixin</span>.
+    The <span datoFont="simple-bold">typography mixin</span> recieved the name of the typography as a parameter,
+    and generate the appropriate font properties:
+  </div>
+
+
+  <dato-tabs show="sass">
+
+    <textarea datoHighlight="css">
+      .my-class {
+        @include typography(note-bold);
+      }
+      .my-other-class {
+        @include typography(simple);
+      }
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>

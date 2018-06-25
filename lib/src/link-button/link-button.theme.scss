@@ -1,0 +1,28 @@
+dato-link a {
+  color: themify(accent-400);
+
+  &:hover {
+    color: themify(accent-600);
+  }
+  &:active {
+    color: themify(accent-700);
+  }
+  &.disabled {
+    color: themify(primary-300, 0.5);
+  }
+
+}
+
+/**
+ Secondary
+ */
+dato-link[datoType='secondary'] a {
+  color: themify(primary-400);
+
+  &:hover {
+    color: themify(accent-600);
+  }
+  &:active {
+    color: themify(accent-700);
+  }
+}

@@ -1,0 +1,19 @@
+dato-editable-header:not(.standalone) {
+  border-bottom: 2px solid themify(primary-200);
+}
+
+dato-editable-header {
+  input {
+    @include input-like-theme();
+    background-color: transparent;
+  }
+
+  .initial input[type=text] {
+    color: themify(primary-300);
+  }
+
+  input[type="text"]:hover {
+    border-color: themify(primary-500);
+  }
+
+}

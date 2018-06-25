@@ -1,0 +1,85 @@
+<dato-preview title="Asynchronous Example">
+
+  <dato-button (click)="loadData()">Click to Load</dato-button>
+  <div *ngIf="data">
+    <div style="height: 450px">
+      <dato-grid [options]="options"></dato-grid>
+    </div>
+  </div>
+
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-button (click)="loadData()">Click to Load</dato-button>
+      <div *ngIf="data">
+        <div style="height: 450px">
+          <dato-grid [options]="options"></dato-grid>
+        </div>
+      </div>
+    </textarea>
+
+    <textarea datoHighlight="js">
+  export class GridAsyncPreviewComponent extends DatoGrid<any> {
+    data;
+
+    ngOnInit() {
+      super.ngOnInit();
+    }
+
+    loadData() {
+      this.asyncRows()
+        .pipe(
+          tap(data => (this.data = data)),
+          concatMap(grid => this.datoGridReady)
+        )
+        .subscribe(rows => {
+          this.setRows(this.data);
+        });
+    }
+
+    asyncRows() {
+      let rows = [];
+      for (let i = 0; i < 1000; i++) {
+        rows.push({ id: i, value: i * 5, updateTime: new Date() });
+      }
+      return timer(3000).pipe(mapTo(rows));
+    }
+
+    getColumns(): GridColumns {
+      return [
+        {
+          headerName: "ID",
+          field: "id",
+          width: 100,
+          filter: "agNumberColumnFilter"
+        },
+        {
+          headerName: "Value",
+          field: "value",
+          width: 100,
+          filter: "agTextColumnFilter"
+        },
+        {
+          field: "updateTime",
+          valueFormatter({ value }) {
+            return value.toDateString();
+          },
+          headerName: "Update Time",
+          filter: "agDateColumnFilter"
+        }
+      ];
+    }
+
+    getToolbarActions(): ToolbarAction[] {
+      return [];
+    }
+
+  }
+    </textarea>
+
+
+  </dato-tabs>
+
+
+</dato-preview>

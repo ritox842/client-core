@@ -1,0 +1,76 @@
+<section #overlayOrigin class="dato-select__trigger"
+         [class.dato-select--disabled]="_disabled">
+
+  <div class="dato-select__single {{_dropdownClass}}" *ngIf="isSingle">
+    <dato-input [class.force-hide]="(!open && isCombo) || !isCombo"
+                [placeholder]="searchPlaceholder"
+                (keyup)="keyup($event)"
+                [isFocused]="_focus"
+                [isLoading]="isLoading"
+                [formControl]="searchControl"
+                type="search"></dato-input>
+
+    <dato-trigger-single [active]="active"
+                         [labelKey]="labelKey"
+                         [context]="_model[0]"
+                         [class.force-hide]="open && isCombo"
+                         [placeholder]="placeholder"
+                         class="ontop-overlay"
+                         (click)="openDropdown($event)"></dato-trigger-single>
+  </div>
+
+  <dato-trigger-multi [options]="_model"
+                      [control]="searchControl"
+                      [labelKey]="labelKey"
+                      (keyup)="keyup($event)"
+                      [isLoading]="isLoading"
+                      [clickOutside]="_clickOutside"
+                      (removeOption)="removeOption($event)"
+                      *ngIf="isMulti" (click)="openDropdown($event)"></dato-trigger-multi>
+
+</section>
+
+<ng-template #dropdown>
+
+  <section class="dato-select__dropdown-container" tabindex="0" (keyup)="keyup($event)">
+
+    <!-- HEADER -->
+
+    <header class="dato-select__header d-flex" *ngIf="isMulti && allowSelectAll" [class.force-hide]="_showEmptyResults">
+      <dato-checkbox (check)="checkAll($event)" [checked]="_isAllChecked"></dato-checkbox>
+      <div class="dato-select__option dato-select__option--simple">Select all <span class="primary-300-color note-italic ml-5">{{_count}}</span></div>
+    </header>
+
+    <!-- END HEADER -->
+
+    <!-- DROPDOWN -->
+
+    <div class="dato-select__dropdown">
+
+      <ng-content></ng-content>
+
+      <dato-select-empty [show]="_showEmptyResults">{{noItemsLabel}}</dato-select-empty>
+
+    </div>
+
+    <!-- END DROPDOWN -->
+
+
+    <!-- FOOTER -->
+
+    <footer class="dato-select__footer d-flex" [class.with-actions]="_withActions">
+
+      <ng-content select="[datoSelectFooter]"></ng-content>
+
+      <ng-container *ngIf="_withActions">
+        <dato-link class="mr-20" datoType="secondary" (click)="close()">Cancel</dato-link>
+        <dato-button datoSize="sm" (click)="save.emit(); close();">Save</dato-button>
+      </ng-container>
+
+    </footer>
+
+    <!-- END FOOTER -->
+
+  </section>
+
+</ng-template>

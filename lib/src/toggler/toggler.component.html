@@ -1,0 +1,12 @@
+<section class="d-flex items-center">
+  <div class="dato-toggle"
+       [class.dato-toggle--disabled]="isDisabled"
+       [class.dato-toggle--active]="isActive"
+       (click)="toggle()">
+    <div class="dato-toggle__rail">
+      <div class="dato-toggle__ball">
+      </div>
+    </div>
+  </div>
+  <span datoFont (click)="toggle()"><ng-content></ng-content></span>
+</section>

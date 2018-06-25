@@ -1,0 +1,114 @@
+<dato-preview title="Basic Example">
+
+  Select a single or multiples rows, and see the toolbar in action.
+
+  <div style="height: 250px" class="d-flex-column flex-1">
+    <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
+    </dato-grid-toolbar>
+    <dato-grid [options]="options" #gridRef class="d-flex-column">
+    </dato-grid>
+  </div>
+
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
+      </dato-grid-toolbar>
+      <dato-grid [options]="options" #gridRef class="d-flex-column">
+      </dato-grid>
+    </textarea>
+
+    <textarea datoHighlight="js">
+  export class GridBasicToolbarPreviewComponent extends DatoGrid<any> {
+
+    data = [
+      {
+        id: 1,
+        value: 'Item one'
+      },
+      {
+        id: 2,
+        value: 'Item two'
+      },
+      {
+        id: 3,
+        value: 'Item three'
+      }
+    ];
+
+    ngOnInit() {
+      super.ngOnInit();
+
+      this.datoGridReady.subscribe(() => {
+        this.setRows(this.data);
+      });
+    }
+
+    getColumns(): GridColumns {
+      return [
+        {
+          headerName: "ID",
+          field: "id",
+          width: 100,
+          filter: "agNumberColumnFilter"
+        },
+        {
+          headerName: "Value",
+          field: "value",
+          width: 100,
+          filter: "agTextColumnFilter"
+        }
+      ];
+    }
+
+    getToolbarActions(): ToolbarAction[] {
+      return [
+        {
+          actionType: ToolbarActionType.Add,
+          click: function () {
+            /* Add new row here */
+          },
+        },
+        {
+          actionType: ToolbarActionType.Edit,
+          click: function () {
+            /* Edit the row */
+          },
+        },
+        {
+          actionType: ToolbarActionType.Delete,
+          click: this.removeSelectedRows.bind(this)
+        },
+        {
+          actionType: ToolbarActionType.Copy,
+          click: function () {
+            /* Copy the row */
+          },
+        },
+        {
+          text: 'single row?',
+          icon: 'edit',
+          showWhen: RowSelectionType.SINGLE,
+          click: function () {
+            /* Do something here */
+          }
+        },
+        {
+          text: 'multiple rows?',
+          icon: 'edit',
+          showWhen: RowSelectionType.MULTI,
+          click: function () {
+            /* Do something here */
+          }
+        }
+      ];
+    }
+  }
+    </textarea>
+
+
+  </dato-tabs>
+
+
+</dato-preview>

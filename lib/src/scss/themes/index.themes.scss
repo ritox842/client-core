@@ -1,0 +1,33 @@
+$PRESERVE_THEMIFY: true;
+@import '../../../../node_modules/@datorama/themify/themify.scss';
+
+$themeRules: (
+  'color', 'background-color', 'fill', 'stroke'
+);
+
+@include generateThemeHelpers($themeRules);
+
+/**
+Components Themes
+ */
+@import '../../button/button.theme.scss';
+@import '../../input/input.theme.scss';
+@import '../../link-button/link-button.theme.scss';
+@import '../../grid/grid/theme/grid.theme';
+@import '../../text/text.theme.scss';
+@import '../../action-menu/action-menu.theme.scss';
+@import '../../loader/loader.theme';
+@import '../../sortable/sortable.theme';
+@import '../../checkbox/checkbox.theme';
+@import '../../radio/radio.theme';
+@import '../../toggler/toggler.theme';
+@import '../../snackbar/snackbar.theme';
+@import '../../editable-header/editable-header.theme';
+@import '../../tabs/tabs.theme';
+@import '../../dialog/dialog/dialog.theme';
+@import '../../dialog/footer/dialog-footer.theme';
+@import '../../dialog/confirmation/confirmation-dialog.theme';
+@import '../../dialog/content/dialog-content.theme';
+@import '../../select/select.theme';
+@import '../../select/trigger-single/trigger-single.theme';
+@import '../../select/trigger-multi/trigger-multi.theme';

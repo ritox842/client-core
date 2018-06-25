@@ -1,0 +1,76 @@
+
+<dato-preview title="Confirmation - With Text Content">
+
+  <section class="d-flex-row">
+    <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Show Confirmation</dato-button>
+    <dato-button class="mx-10" datoSize="sm" (click)="openDialog(true)">Show Disruptive Confirmation</dato-button>
+  </section>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-button class="mx-10" datoSize="sm" (click)="openDialog()">Show Confirmation</dato-button>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      openDialog() {
+        this.modalService
+          .confirm( {
+            title: "Delete",
+            content: 'Are you sure you want to delete the entity?'
+          })
+          .afterClosed()
+          .subscribe((result: DatoDialogResult) => {
+            console.log(result.status);
+          });
+      }
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="Confirmation - With Template">
+
+  <section class="d-flex-column">
+
+    <ng-template #templateRef>
+      <div>
+        Hello from the template!
+      </div>
+    </ng-template>
+
+    <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithTemplate()">Show Confirmation</dato-button>
+  </section>
+
+  <dato-tabs>
+
+    <textarea datoHighlight="html">
+      <ng-template #templateRef>
+        <div>
+          Hello from the template!
+        </div>
+      </ng-template>
+
+      <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithTemplate()">Show Confirmation</dato-button>
+      </textarea>
+
+    <textarea datoHighlight="js">
+
+      @ViewChild('templateRef')
+      private dialogTpl: TemplateRef<any>;
+
+      openDialogWithTemplate() {
+        this.modalService
+          .confirm({
+            title: "Delete",
+            content: this.dialogTpl
+          })
+          .afterClosed()
+          .subscribe((result: DatoDialogResult) => {
+            console.log(result.status);
+          });
+      }
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>

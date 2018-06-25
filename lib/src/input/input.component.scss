@@ -1,0 +1,46 @@
+@import './input-helper.scss';
+
+:host {
+  display: inline-block;
+}
+
+:host {
+  width: 100%;
+  input {
+    @include input-like();
+    width: 100%;
+  }
+}
+
+:host div {
+  position: relative;
+  overflow: hidden;
+}
+
+:host dato-icon {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+:host[datoSize='sm'] dato-icon {
+  right: 3px;
+}
+
+:host[datoSize='lg'] dato-icon {
+  right: 5px;
+}
+
+:host .dato-icon-close {
+  cursor: pointer;
+  z-index: 1002;
+}
+
+@include size(input, sm) {
+  @include input-size(sm);
+}
+
+@include size(input, lg) {
+  @include input-size(lg);
+}

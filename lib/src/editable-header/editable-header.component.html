@@ -1,0 +1,8 @@
+<section [class.initial]="!isValueChanged">
+  <input type="text"
+         class="ellipsis"
+         (input)="input($event)"
+         (blur)="blur()"
+         (focus)="focus($event)"
+         (keyup.esc)="revert()">
+</section>

@@ -1,0 +1,25 @@
+dato-toggler {
+  .dato-toggle {
+    &__rail {
+      background-color: themify(primary-300, 0.5);
+    }
+
+    &__ball {
+      background-color: themify((light: primary-0, dark: primary-700));
+    }
+
+    &--active {
+      .dato-toggle__rail {
+        background-color: themify(accent-400);
+      }
+    }
+
+    &--disabled {
+      .dato-toggle__ball, .dato-toggle__rail {
+        background-color: themify(primary-300, 0.35);
+      }
+    }
+  }
+}
+
+

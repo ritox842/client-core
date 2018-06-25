@@ -1,0 +1,98 @@
+<dato-preview title="Grid - With Actions">
+  <div>
+    Provides a simple and intuitive way of configure actions on the toolbar.<br>
+    Instead of defining the ng-template on the markup, you can pass an array of ToolbarAction
+    (see the source-code).<br><br> There are several build-in actions you should use for CRUD actions:<br>
+    <ul>
+      <li class="ml-30" style="list-style-type: disc;">Add button - Used to add new entities.</li>
+      <li class="ml-30" style="list-style-type: disc;">Edit button - Used to edit entities.</li>
+      <li class="ml-30" style="list-style-type: disc;">Delete button - Used to delete entities.</li>
+      <li class="ml-30" style="list-style-type: disc;">Copy button - Used to copy entities.</li>
+    </ul>
+    <br>
+  </div>
+
+  <div style="height: 250px" class="d-flex-column flex-1">
+    <dato-grid-header [grid]="gridRef">Grid Title</dato-grid-header>
+    <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions">
+    </dato-grid-toolbar>
+    <dato-grid [options]="options" #gridRef class="d-flex-column">
+    </dato-grid>
+  </div>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-grid-toolbar [grid]="gridRef" class="mb-10" [actions]="toolbarActions"></dato-grid-toolbar>
+      <dato-grid [options]="options2" #gridRef></dato-grid>
+    </textarea>
+
+    <textarea datoHighlight="js">
+    export class GridActionsPreviewComponent extends DatoGrid {
+
+      ngOnInit() {
+        super.ngOnInit();
+        this.datoGridReady.subscribe(() => {
+          this.setRows(this.getRows());
+        });
+      }
+
+      toolbarActions: ToolbarAction[] = [
+        {
+          actionType: ToolbarActionType.Add,
+          click: function () {
+            alert('you clicked me :)');
+          },
+        },
+        {
+          actionType: ToolbarActionType.Edit,
+          click: function () {
+            alert('you clicked me :)');
+          },
+        },
+        {
+          actionType: ToolbarActionType.Delete,
+          click: function () {
+            alert('you clicked me :)');
+          },
+        },
+        {
+          actionType: ToolbarActionType.Copy,
+          click: function () {
+            alert('you clicked me :)');
+          },
+        },
+        {
+          text: 'cool button',
+          icon: 'edit',
+          showWhen: 'single',
+          click: function () {
+            alert('you clicked me :)');
+          },
+        }
+      ];
+
+      options: GridOptions = {
+        columnDefs: [
+          {
+            headerName: 'ID',
+            field: 'id',
+            width: 100
+          },
+          {
+            headerName: 'Value',
+            field: 'value',
+            width: 100
+          },
+        ],
+
+        rowData: [...]
+      };
+      }
+
+    </textarea>
+
+
+  </dato-tabs>
+
+</dato-preview>

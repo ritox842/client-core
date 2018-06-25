@@ -1,0 +1,41 @@
+
+/* Header Theme */
+
+@mixin headerTheme {
+
+  .ag-header {
+    border-bottom: solid 2px themify(primary-200);
+
+    .ag-header-cell {
+      line-height: 27px;
+
+      // header checkbox
+      .ag-header-select-all {
+        @include gridCheckbox;
+        margin-top: 6px;
+      }
+
+    }
+    .ag-header-cell-label {
+      color: themify(primary-300);
+    }
+    .ag-header-cell-label {
+      @include typography(note-bold);
+    }
+    .da-grid-icon.active {
+      fill: themify(accent-400);
+    }
+
+  }
+
+  /* Column Resize Handler */
+  .ag-header-cell-resize {
+    right: -($grid-size) + 1px;
+    &::after {
+      border-right: 2px solid #bdc3c761;
+      margin-top: 0px;
+      height: 24px;
+    }
+  }
+
+}

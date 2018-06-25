@@ -1,0 +1,23 @@
+@import '~@datorama/atomic/dist/index.css';
+@import '../../../tmp/bundle.css';
+@import "../../../node_modules/ag-grid/dist/styles/ag-grid.css";
+
+body *,
+body, button, input, select, textarea {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+code * {
+  font-family: Fira Mono, monospace;
+  font-size: 16px;
+}
+
+$navbar-from-color: #606b79;
+$navbar-to-color: #001026;
+
+.navbar {
+  background-image: linear-gradient(to right, $navbar-from-color 0%, $navbar-to-color 100%) !important;
+  position: relative;
+  z-index: 1000;
+}

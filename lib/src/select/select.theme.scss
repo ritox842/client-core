@@ -1,0 +1,92 @@
+.dato-select__dropdown-container {
+  background-color: themify(primary-0);
+}
+
+.dato-option--active {
+  background-color: themify(accent-200);
+  font-weight: 500;
+}
+
+.dato-option--keyboard-active {
+  background-color: themify(primary-100);
+}
+
+.dato-select__option--hover:not(.dato-option--active):not(.dato-option--keyboard-active):hover {
+  background-color: themify(primary-100);
+}
+
+.dato-select__placeholder, .dato-select__option--disabled, dato-select__not-found, .dato-select__group {
+  color: themify(primary-300);
+}
+
+.dato-select__group-container:not(:first-child) .dato-select__group {
+  border-top: themify(primary-200) 1px solid;
+}
+
+.dato-select__option--simple:not(.dato-select__option--disabled) {
+  color: themify(primary-600);
+}
+
+.dato-select__placeholder {
+  user-select: none;
+}
+
+.dato-select--disabled {
+  pointer-events: none;
+
+  dato-trigger-single, dato-trigger-multi {
+    @include input-disabled();
+  }
+
+  .dato-select__placeholder {
+    color: themify(primary-200);
+  }
+
+  dato-trigger-single dato-icon path, dato-trigger-multi dato-icon path {
+    fill: themify(primary-200);
+  }
+
+  .dato-trigger-multi__active {
+    background-color: themify(primary-300, 0.1);
+    color: themify(primary-200);
+    .dato-icon-close {
+      fill: themify(primary-200);
+    }
+  }
+
+  .dato-multi-search {
+    @include placeholder() {
+      color: themify(primary-200);
+    }
+  }
+}
+
+.dato-select__footer {
+  background-color: themify(primary-0);
+  border-top: 1px solid themify(primary-100);
+}
+
+.dato-select__footer.with-actions {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 30px 0 0;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.dato-select__header {
+  border-bottom: themify(primary-100) 2px solid;
+  padding-left: 10px;
+  align-items: center;
+  .dato-select__option {
+    padding-left: 0;
+    cursor: default;
+  }
+  .checkmark {
+    top: -8px !important;
+  }
+}
+
+.dato-select__option--disabled [datoFont] {
+  color: themify(primary-300);
+}

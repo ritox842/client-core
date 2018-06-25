@@ -1,0 +1,48 @@
+dato-trigger-single {
+  @include input-like-theme();
+  @include input-like();
+
+  .dato-icon-arrow-down {
+    color: themify(primary-300);
+  }
+}
+
+dato-trigger-multi {
+  @include input-like-theme();
+  @include input-like(dropdown);
+  height: auto;
+  .dato-icon-arrow-down path {
+    fill: themify(primary-300);
+  }
+}
+
+$sm: 25px;
+$md: 30px;
+$lg: 35px;
+
+.dato-select__single.dato-select-sm, .dato-select__single.dato-select-sm  dato-trigger-single, .dato-select__single.dato-select-sm .dato-input {
+  height: $sm;
+  min-height: $sm;
+  line-height: $sm;
+  font-size: 12px;
+}
+
+.dato-select__single.dato-select-sm .dato-icon-datosearch, .dato-select__single.dato-select-sm .dato-icon-close {
+  width: 20px;
+  right: 4px;
+}
+
+.dato-select__single.dato-select-md, .dato-select__single.dato-select-md dato-trigger-single, .dato-select__single.dato-select-md .dato-input {
+  height: $md;
+  min-height: $md;
+  line-height: $md;
+  font-size: 14px;
+}
+
+.dato-select__single.dato-select-lg, .dato-select__single.dato-select-lg dato-trigger-single, .dato-select__single.dato-select-lg .dato-input {
+  height: $lg;
+  min-height: $lg;
+  line-height: $lg;
+  font-size: 14px;
+}
+

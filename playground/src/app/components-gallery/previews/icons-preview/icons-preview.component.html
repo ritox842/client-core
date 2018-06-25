@@ -1,0 +1,110 @@
+<dato-preview title="Icons">
+
+  <section class="d-flex d-flex-wrap icons">
+    <dato-icon datoIcon="arrow-left" datoSize="sm"></dato-icon>
+    <dato-icon datoIcon="arrow-right" datoColor="primary-400"></dato-icon>
+    <dato-icon datoIcon="arrow-left-double" datoSize="lg" datoColor="accent-700"></dato-icon>
+    <dato-icon datoIcon="arrow-right-double"></dato-icon>
+    <dato-icon datoIcon="expend" datoColor="accent-200"></dato-icon>
+    <dato-icon datoIcon="collapse"></dato-icon>
+  </section>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+
+      <dato-icon datoIcon="arrow-left" datoSize="sm"></dato-icon>
+      <dato-icon datoIcon="arrow-right" datoColor="primary-400"></dato-icon>
+      <dato-icon datoIcon="arrow-left-double" datoSize="lg" datoColor="accent-700"></dato-icon>
+      <dato-icon datoIcon="arrow-right-double"></dato-icon>
+      <dato-icon datoIcon="expend" datoColor="accent-200"></dato-icon>
+      <dato-icon datoIcon="collapse"></dato-icon>
+
+    </textarea>
+
+    <textarea datoHighlight="js">
+      icons = [
+        'arrow-left',
+        'arrow-right',
+        'arrow-left-double',
+        'arrow-right-double',
+        'expend',
+        'collapse',
+        'fit-to-content',
+        'fit-to-container'
+      ];
+    </textarea>
+
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="Icons with Specific Size">
+
+  <section class="d-flex-column d-flex-wrap">
+
+    <p datoFont="simple">
+      You can use the <span datoFont="simple-bold">width</span> and <span datoFont="simple-bold">height</span>
+      attributes to change the icon size.
+    </p>
+    <br/>
+
+    <dato-icon datoIcon="arrow-left" width="50px" height="50px"></dato-icon>
+    <dato-icon datoIcon="arrow-left" width="10px" height="10px"></dato-icon>
+  </section>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+
+      <dato-icon datoIcon="arrow-left" width="50px" height="50px"></dato-icon>
+      <dato-icon datoIcon="arrow-left" width="10px" height="10px"></dato-icon>
+
+    </textarea>
+
+    <textarea datoHighlight="js">
+      icons = [
+        'arrow-left'
+      ];
+    </textarea>
+
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="All Registered Icons">
+
+  <section class="d-flex d-flex-wrap">
+    <ul>
+      <li *ngFor="let icon of icons" class="icon-list">
+        <dato-icon [datoIcon]="icon" datoSize="lg" datoColor="primary-400"></dato-icon>
+        <p class="icon-name">{{icon}}</p>
+      </li>
+    </ul>
+  </section>
+
+</dato-preview>
+
+
+<p datoFont="sub-headline">Available Size</p>
+<br/>
+<table class="table is-fullwidth is-bordered mt-4 is-striped">
+  <thead>
+  <tr>
+    <th><span class="code">datoSize</span></th>
+    <th><span>value (width & height)</span></th>
+  </tr>
+  </thead>
+  <tr>
+    <td><code>lg</code></td>
+    <td><code>36px</code></td>
+  </tr>
+  <tr>
+    <td><code>md</code> <strong>default</strong></td>
+    <td><code>24px</code></td>
+  </tr>
+  <tr>
+    <td><code>sm</code></td>
+    <td><code>12px</code></td>
+  </tr>
+</table>

@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.dato-radio {
+  margin: 0.5rem;
+  display: inline-block;
+  label {
+    cursor: pointer;
+  }
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    +.radio-label {
+      &:before {
+        content: '';
+        border-radius: 100%;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        position: relative;
+        top: -2px;
+        margin-right: 10px;
+        vertical-align: middle;
+        cursor: pointer;
+        text-align: center;
+        transition: all 250ms ease;
+      }
+    }
+    &:focus {
+      +.radio-label {
+        &:before {
+          outline: none;
+        }
+      }
+    }
+    +.radio-label {
+      &:empty {
+        &:before {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

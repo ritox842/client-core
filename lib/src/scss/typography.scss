@@ -1,0 +1,55 @@
+$text-bold-weight: 600;
+$headline-font-size: 34px;
+$sub-headline-font-size: 18px;
+$simple-font-size: 14px;
+$note-font-size: 12px;
+
+$typography-map: (
+  headline: (size: $headline-font-size, weight: 300),
+  sub-headline: (size: $sub-headline-font-size, weight: 600),
+  simple: (size: $simple-font-size),
+  simple-bold: (size: $simple-font-size, weight: 600),
+  simple-italic: (size: $simple-font-size, style: italic),
+  note: (size: $note-font-size),
+  note-bold: (size: $note-font-size, weight: 600),
+  note-italic: (size: $note-font-size, style: italic),
+);
+
+/*
+  Create a custom typography class
+ */
+@mixin createTypography($font-size, $font-weight, $font-style) {
+  @if ($font-size) {
+    font-size: $font-size;
+  }
+  @if ($font-weight) {
+    font-weight: $font-weight;
+  }
+  @if ($font-style) {
+    font-style: $font-style;
+  }
+}
+
+/*
+  Append font properties according to the typography name
+ */
+@mixin typography($name) {
+
+  @if not(map-has-key($typography-map, $name)) {
+    @error $name + " is not a known typography.";
+  }
+
+  $val: map-get($typography-map, $name);
+  $fontSize: map-get($val, size);
+  $weight: map-get($val, weight);
+  $style: map-get($val, style);
+
+  @include createTypography($fontSize, $weight, $style);
+}
+
+/* Generate all typography classes */
+@each $name, $val in $typography-map {
+  .#{$name} {
+    @include typography($name);
+  }
+}

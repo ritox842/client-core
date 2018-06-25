@@ -1,0 +1,204 @@
+<dato-preview title="Inputs">
+
+  <section>
+    <div style="margin-top: 20px">
+      <dato-input placeholder="Hint" datoSize="sm" width="200px"></dato-input>
+    </div>
+
+    <div class="d-flex" style="margin-top: 20px">
+      <dato-input placeholder="Hint" [formControl]="inputControl" [debounceTime]="300"></dato-input>
+      <code>
+        {{inputControl.value}}
+      </code>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-input placeholder="Hint" type="search" datoSize="lg"></dato-input>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-input placeholder="Hint" [disabled]="true"></dato-input>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-input placeholder="Hint" type="search"></dato-input>
+    </div>
+
+
+  </section>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+      <dato-input placeholder="Hint" datoSize="sm" width="200px"></dato-input>
+      <dato-input placeholder="Hint" [formControl]="inputControl" [debounceTime]="300"></dato-input>
+      <dato-input placeholder="Hint" type="search" datoSize="lg"></dato-input>
+      <dato-input placeholder="Hint" [disabled]="true"></dato-input>
+      <dato-input placeholder="Hint" type="search"></dato-input>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      control = new FormControl('initial value');
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="Checkbox">
+
+  <section>
+
+    <div style="margin-top: 20px">
+      <dato-checkbox [formControl]="checkboxCheckedControl" class="mr-20">Checked</dato-checkbox>
+      <dato-checkbox [formControl]="checkboxDisableControl">Disabled</dato-checkbox>
+      <code>Control value: {{checkboxCheckedControl.value}}</code>
+    </div>
+    <div style="margin-top: 20px">
+      <dato-checkbox [formControl]="checkboxControl">I'm {{checkboxControl.value ? 'on' : 'off'}}</dato-checkbox>
+    </div>
+
+    <div style="margin-top: 20px">
+      <p>It's possible to replace the value of "true" and "false" with your own values:</p>
+      <div>
+        <dato-checkbox [formControl]="checkboxCustomValueControl" trueValue="yep" falseValue="nope">
+          {{checkboxCustomValueControl.value}}
+        </dato-checkbox>
+        <code>Control value: {{checkboxCustomValueControl.value}}</code>
+      </div>
+    </div>
+
+    <div>
+      <br/><br/>
+      <strong>Note:</strong> Make sure to initialize the form control with a valid value. <br/>
+      Otherwise you'll get the following exception: <code>Invalid checkbox value: ?</code>.
+    </div>
+
+  </section>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+      <div>
+        <dato-checkbox [formControl]="checkboxCheckedControl" class="mr-20">Checked</dato-checkbox>
+        <dato-checkbox [formControl]="checkboxDisableControl">Disabled</dato-checkbox>
+      </div>
+      <div>
+        <dato-checkbox [formControl]="checkboxControl">I'm {{checkboxControl.value ? 'on' : 'off'}}</dato-checkbox>
+      </div>
+
+      <div>
+        <p>It's possible to replace the value of "true" and "false" with your own values:</p>
+        <div>
+          <dato-checkbox [formControl]="checkboxCustomValueControl" trueValue="yep" falseValue="nope">
+            {{checkboxCustomValueControl.value}}
+          </dato-checkbox>
+        </div>
+      </div>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      inputControl = new FormControl("initial value");
+
+      checkboxControl = new FormControl(true);
+      checkboxCheckedControl = new FormControl(true);
+      checkboxDisableControl = new FormControl(false);
+
+      // custom checkbox value
+      checkboxCustomValueControl = new FormControl('yep');
+
+      ngOnInit() {
+
+        // enable/disable the checkbox
+        this.checkboxDisableControl.valueChanges
+          .pipe(untilDestroyed(this))
+          .subscribe((value) => {
+          value ? this.checkboxControl.disable() : this.checkboxControl.enable();
+        });
+
+        // checked/unchecked the checkbox
+        this.checkboxCheckedControl.valueChanges
+          .pipe(untilDestroyed(this))
+          .subscribe((value) => {
+            this.checkboxControl.patchValue(value);
+          });
+
+      }
+
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="Radio">
+
+  <section>
+    <div style="margin-top: 20px" class="d-flex items-center">
+      <dato-radio [formControl]="radioControl" name="sex" value="male">Male</dato-radio>
+      <dato-radio [formControl]="radioControl" name="sex" value="female">Female</dato-radio>
+      <code>Control value: {{radioControl.value}}</code>
+    </div>
+
+    <div style="margin-top: 20px" class="d-flex items-center">
+      <dato-radio [formControl]="radioControl2" name="car" value="volvo">Volvo</dato-radio>
+      <dato-radio [formControl]="radioControl2" name="car" value="fiat">Fiat</dato-radio>
+      <code>Control value: {{radioControl2.value}}</code>
+    </div>
+
+    <div style="margin-top: 20px " class="d-flex items-center">
+        <dato-radio [formControl]="radioDisableControl">Disabled</dato-radio>
+    </div>
+
+    <div style="margin-top: 20px" class="d-flex items-center">
+      <dato-radio [formControl]="radioDynamic" *ngFor="let radio of radios" [value]="radio.value" name="pita">{{radio.title}}</dato-radio>
+      <code>Control value: {{radioDynamic.value}}</code>
+    </div>
+
+  </section>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+        <dato-radio [formControl]="radioControl" name="sex" value="male">Male</dato-radio>
+        <dato-radio [formControl]="radioControl" name="sex" value="female">Female</dato-radio>
+    </textarea>
+
+    <textarea datoHighlight="js">
+        radioControl = new FormControl("male");
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="Toggler">
+
+  <section>
+    <div style="margin-top: 20px">
+      <dato-toggler [formControl]="togglerControl">Toggle me</dato-toggler>
+      <code>Control value: {{togglerControl.value}}</code>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-toggler [formControl]="togglerControl2">Toggle me</dato-toggler>
+      <code>Control value: {{togglerControl2.value}}</code>
+    </div>
+
+    <div style="margin-top: 20px">
+      <dato-toggler [formControl]="togglerControl3">Toggle me</dato-toggler>
+    </div>
+
+  </section>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+      <dato-toggler [formControl]="togglerControl">Toggle me</dato-toggler>
+    </textarea>
+
+    <textarea datoHighlight="js">
+        togglerControl = new FormControl(false);
+        togglerControl2 = new FormControl(true);
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+

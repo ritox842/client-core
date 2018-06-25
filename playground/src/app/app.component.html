@@ -1,0 +1,11 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand d-flex flex-1 align-space-between-center">
+    <img routerLink="/"
+    src="https://datorama.com/wp-content/themes/datorama/images/logo-2.svg"
+    style="height: 70px;cursor: pointer;">
+    <i class="fa fa-paint-brush" aria-hidden="true" (click)="changeTheme()"></i>
+  </div>
+  <a routerLink="atomic" class="navbar-item" >Atomic</a>
+  <a routerLink="utils" class="navbar-item" >Utils</a>
+</nav>
+<router-outlet></router-outlet>

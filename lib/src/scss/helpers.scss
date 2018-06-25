@@ -1,0 +1,33 @@
+$sizes: sm md lg;
+
+@function contains($list,$var) {
+  @return index($list, $var) > 0;
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+
+  &:-moz-placeholder {
+    @content;
+  }
+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+@mixin size($selector, $size: 'sm') {
+  @if (contains($sizes, $size)) {
+    :host[datoSize='#{$size}'] #{$selector} {
+      @content;
+    }
+  } @else {
+    @error "Size not supported";
+  }
+}

@@ -1,0 +1,37 @@
+<div class="tabs is-boxed">
+  <ul>
+
+    <li (click)="setActive(0)" [class.is-active]="HTMLActive" *ngIf="HTMLVisible">
+      <a>
+        <span class="icon"><i class="fas icon-html5-alt" style="font-size: 25px;"></i></span>
+      </a>
+    </li>
+
+    <li (click)="setActive(1)" [class.is-active]="TSActive" *ngIf="TSVisible">
+      <a>
+        <span class="icon"><i class="fas icon-javascript-alt" style="font-size: 25px;"></i></span>
+      </a>
+    </li>
+
+    <li (click)="setActive(2)" [class.is-active]="SASSActive" *ngIf="SASSVisible">
+      <a>
+        <span class="icon"><i class="fas icon-sass" style="font-size: 25px;"></i></span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="tab-content">
+  <dato-tab *ngIf="HTMLVisible">
+    <ng-content select="[datoHighlight='html']"></ng-content>
+  </dato-tab>
+
+  <dato-tab *ngIf="TSVisible">
+    <ng-content select="[datoHighlight='js']"></ng-content>
+  </dato-tab>
+
+  <dato-tab *ngIf="SASSVisible">
+    <ng-content select="[datoHighlight='css']"></ng-content>
+  </dato-tab>
+</div>
+

@@ -1,0 +1,76 @@
+<dato-preview title="Basic Example">
+
+  <p>
+    A basic example with three static rows and two columns.
+  </p>
+
+  <div *ngIf="data">
+    <div style="height: 300px">
+      <dato-grid [options]="options" #gridRef></dato-grid>
+    </div>
+  </div>
+
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <div *ngIf="data">
+        <div style="height: 300px">
+          <dato-grid [options]="options" #gridRef></dato-grid>
+        </div>
+      </div>
+    </textarea>
+
+    <textarea datoHighlight="js">
+  export class GridBasicPreviewComponent extends DatoGrid<any> {
+    data = [
+      {
+        id: 1,
+        value: 'Item one'
+      },
+      {
+        id: 2,
+        value: 'Item two'
+      },
+      {
+        id: 3,
+        value: 'Item three'
+      }
+    ];
+
+    ngOnInit() {
+      super.ngOnInit();
+
+      this.datoGridReady.subscribe(() => {
+        this.setRows(this.data);
+      });
+    }
+
+    getColumns(): GridColumns {
+      return [
+        {
+          headerName: "ID",
+          field: "id",
+          width: 100,
+          filter: "agNumberColumnFilter"
+        },
+        {
+          headerName: "Value",
+          field: "value",
+          width: 100,
+          filter: "agTextColumnFilter"
+        }
+      ];
+    }
+
+    getToolbarActions(): ToolbarAction[] {
+      return [];
+    }
+  }
+    </textarea>
+
+
+  </dato-tabs>
+
+
+</dato-preview>

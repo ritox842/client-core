@@ -1,0 +1,74 @@
+@import "../../../../node_modules/ag-grid/src/styles/ag-theme-common";
+
+$grid-pagination-height: 25px !default;
+$grid-pagination-margin-top: 7px !default;
+$total-grid-pagination-height: $grid-pagination-height + $grid-pagination-margin-top;
+
+dato-grid {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+dato-grid.grid-pagination {
+  // reduce the grid height when we have a pagination
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+
+  ag-grid-angular {
+    margin-bottom: 7px;
+    height: calc(100% - #{$total-grid-pagination-height});
+  }
+}
+
+.ag-dato-core {
+
+  width: 100%;
+  height: 100%;
+
+  .da-grid-icon {
+    display: inline-block;
+    line-height: 31px;
+    vertical-align: middle;
+  }
+
+  // align the icon only in the context menu
+  .ag-menu .da-grid-icon svg {
+    vertical-align: middle;
+  }
+
+  .ag-header-cell-sortable {
+    .ag-sort-none-icon {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    &:hover .ag-sort-none-icon {
+      opacity: 1;
+    }
+  }
+
+  // icons dimensions
+  .sort-icon svg {
+    width: 14px;
+    height: 16px;
+  }
+  .filter-icon svg {
+    width: 13px;
+  }
+  .menu-icon, .columns-icon, .menu-pin-icon {
+    svg {
+      width: 4px;
+      height: 14px;
+    }
+  }
+
+  .group-expanded-icon,
+  .group-contracted-icon {
+    width: 7px;
+  }
+  .group-expanded-icon {
+    transform: rotate(90deg);
+  }
+
+}

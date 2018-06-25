@@ -1,0 +1,19 @@
+<section class="d-flex d-flex-wrap flex-1">
+
+  <div class="dato-trigger-multi__active d-flex justify-between" *ngFor="let option of options;" (click)="removeFocus($event)">{{option[labelKey]}}
+    <dato-icon datoIcon="close" (click)="remove(option); removeFocus($event)"></dato-icon>
+  </div>
+
+  <input type="text" class="dato-multi-search flex-1"
+         [placeholder]="placeholder"
+         (keydown)="onKeyDown($event)"
+         [style.minWidth.px]="inputWidth"
+         [formControl]="control"
+         #input>
+
+</section>
+
+<dato-icon datoIcon="close" *ngIf="showClear && !isLoading" (click)="clearSearch()" class="dato-trigger-multi__clear"></dato-icon>
+<dato-icon datoIcon="arrow-down" datoSize="sm" *ngIf="!showClear"></dato-icon>
+<span class="dato-input__spinner" *ngIf="isLoading"></span>
+

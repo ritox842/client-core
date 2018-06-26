@@ -13,6 +13,7 @@ import { Directive, Input, Renderer2, ElementRef } from '@angular/core';
 })
 export class ColorDirective {
   private supportProperties = ['background', 'border'];
+  private lastKlass;
 
   /** Example: <div datoColor="primary-100, accent-200 border-left border-right">text</div> */
   @Input()
@@ -32,7 +33,11 @@ export class ColorDirective {
       /** If it's the only key it should be the color value */
       if (split.length === 1) {
         const klass = `${colorVar}-color`;
+        if (this.lastKlass) {
+          this.renderer.removeClass(this.host.nativeElement, this.lastKlass);
+        }
         this.renderer.addClass(this.host.nativeElement, klass);
+        this.lastKlass = klass;
         return;
       }
 
@@ -45,7 +50,12 @@ export class ColorDirective {
           klass = `${colorVar}-${prop}-color`;
         }
 
+        if (this.lastKlass) {
+          this.renderer.removeClass(this.host.nativeElement, this.lastKlass);
+        }
+
         this.renderer.addClass(this.host.nativeElement, klass);
+        this.lastKlass = klass;
       });
     });
   }

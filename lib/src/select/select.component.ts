@@ -61,13 +61,22 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   @Input() labelKey = 'label';
 
   /** A placeholder for the trigger */
-  @Input() placeholder = this.translate.transform('general.select');
+  @Input()
+  set placeholder(value: string) {
+    this._placeholder = this.translate.transform(value);
+  }
 
   /** A placeholder for the search */
-  @Input() searchPlaceholder = this.translate.transform('general.search');
+  @Input()
+  set searchPlaceholder(value: string) {
+    this._searchPlaceholder = this.translate.transform(value);
+  }
 
   /** Custom text when we don't have results */
-  @Input() noItemsLabel = this.translate.transform('general.no-items');
+  @Input()
+  set noItemsLabel(value: string) {
+    this._noItemsLabel = this.translate.transform(value);
+  }
 
   /** Add/removes search input */
   @Input() isCombo = true;
@@ -183,6 +192,12 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /**
    * Private Properties
    */
+
+  _placeholder = this.translate.transform('general.select');
+
+  _searchPlaceholder = this.translate.transform('general.search');
+
+  _noItemsLabel = this.translate.transform('general.no-items');
 
   /** Store the initial data */
   _data = [];

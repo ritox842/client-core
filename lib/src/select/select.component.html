@@ -3,7 +3,7 @@
 
   <div class="dato-select__single {{_dropdownClass}}" *ngIf="isSingle">
     <dato-input [class.force-hide]="(!open && isCombo) || !isCombo"
-                [placeholder]="searchPlaceholder"
+                [placeholder]="_searchPlaceholder"
                 (keyup)="keyup($event)"
                 [isFocused]="_focus"
                 [isLoading]="isLoading"
@@ -14,13 +14,14 @@
                          [labelKey]="labelKey"
                          [context]="_model[0]"
                          [class.force-hide]="open && isCombo"
-                         [placeholder]="placeholder"
+                         [placeholder]="_placeholder"
                          class="ontop-overlay"
                          (click)="openDropdown($event)"></dato-trigger-single>
   </div>
 
   <dato-trigger-multi [options]="_model"
                       [control]="searchControl"
+                      [placeholder]="_placeholder"
                       [labelKey]="labelKey"
                       (keyup)="keyup($event)"
                       [isLoading]="isLoading"
@@ -49,7 +50,7 @@
 
       <ng-content></ng-content>
 
-      <dato-select-empty [show]="_showEmptyResults">{{noItemsLabel}}</dato-select-empty>
+      <dato-select-empty [show]="_showEmptyResults">{{_noItemsLabel}}</dato-select-empty>
 
     </div>
 

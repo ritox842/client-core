@@ -234,6 +234,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Dropdown size class */
   _dropdownClass;
 
+  /** Whether is selectAll checked */
+  _checked;
+
   /** Search control subscription */
   private searchSubscription;
 
@@ -360,13 +363,14 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    *
    * @param {boolean} checked
    */
-  checkAll(checked: boolean) {
+  checkAll() {
+    this._checked = !this._checked;
     this.options.forEach(datoOption => {
       if (!datoOption.disabled) {
-        datoOption.active = checked;
+        datoOption.active = this._checked;
       }
     });
-    const model = checked ? this.getRawOptions() : [];
+    const model = this._checked ? this.getRawOptions() : [];
     this._model = model;
     this.onChange(model);
   }

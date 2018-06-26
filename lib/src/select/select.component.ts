@@ -466,6 +466,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
         this.keyboardEventsManager.setActiveItem(0);
 
         this.cdr.markForCheck();
+        this.datoOverlay && this.datoOverlay.scheduleUpdate();
       });
   }
 

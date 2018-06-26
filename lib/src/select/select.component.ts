@@ -340,6 +340,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     }
 
     this.dropdownFocus();
+    this.datoOverlay.scheduleUpdate();
   }
 
   ngAfterContentInit(): void {

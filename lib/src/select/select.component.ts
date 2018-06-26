@@ -361,7 +361,11 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * @param {boolean} checked
    */
   checkAll(checked: boolean) {
-    this.options.forEach(datoOption => (datoOption.active = checked));
+    this.options.forEach(datoOption => {
+      if (!datoOption.disabled) {
+        datoOption.active = checked;
+      }
+    });
     const model = checked ? this.getRawOptions() : [];
     this._model = model;
     this.onChange(model);
@@ -384,7 +388,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * @returns {any[]}
    */
   private getRawOptions() {
-    return this.options.map(datoOption => datoOption.option);
+    return this.options.filter(datoOption => !datoOption.disabled).map(datoOption => datoOption.option);
   }
 
   /**

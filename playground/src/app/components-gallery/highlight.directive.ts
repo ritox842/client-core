@@ -17,7 +17,6 @@ export class HighlightDirective implements AfterViewInit {
     let innerText = window[method](this.host.nativeElement.value);
     if (this.datoHighlight === "html") {
       innerText = this.host.nativeElement.value;
-      code.style.transform = "translateX(-50px)";
       code.style.display = "block";
     } else {
       code.style.display = "inline-block";

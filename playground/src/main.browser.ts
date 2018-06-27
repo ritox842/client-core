@@ -6,6 +6,12 @@ import { environment } from "environments/environment";
 
 require("core-js");
 
+//import {loadCSSVariablesFallback} from '@datorama/themify/utils';
+//
+//loadCSSVariablesFallback('/theme_fallback.css', () => {
+//  console.log('loadCSSVariablesFallback');
+//});
+
 /**
  * App Module
  * our top level module that holds all of our components

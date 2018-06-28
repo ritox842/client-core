@@ -2,16 +2,17 @@
 
   <section class="d-flex">
     <div class="select-preview">
-      <dato-list [search]="search"></dato-list>
+      <!--<dato-list [formControl]="formControl" [options]="options"></dato-list>-->
+      <dato-list [formControl]="control" [dataSet]="options"></dato-list>
       <!--<dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple>-->
 
-        <!--<dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option" [disabled]="index === 1">-->
-          <!--{{option.label}}-->
-        <!--</dato-option>-->
+      <!--<dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option" [disabled]="index === 1">-->
+      <!--{{option.label}}-->
+      <!--</dato-option>-->
 
       <!--</dato-select>-->
 
-      <!--<p datoFont class="mt-10">Control value: <span class="code">{{simpleControl.value | json}}</span></p>-->
+      <p datoFont class="mt-10">Control value: <span class="code">{{control.value | json}}</span></p>
 
     </div>
 
@@ -21,9 +22,9 @@
     <textarea datoHighlight="html">
       <!--<dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple>-->
 
-        <!--<dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option" [disabled]="index === 1">-->
-          <!--option.label-->
-        <!--</dato-option>-->
+      <!--<dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option" [disabled]="index === 1">-->
+      <!--option.label-->
+      <!--</dato-option>-->
 
       <!--</dato-select>-->
     </textarea>

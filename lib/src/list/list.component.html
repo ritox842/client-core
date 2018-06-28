@@ -1,14 +1,14 @@
 <div>
-  <dato-input datoSize="lg"
-              [formControl]="search"
-              type="search">
-  </dato-input>
-  <!--<dato-group *ngFor="let group of datoSelectGroup.data">-->
-    <!--<div groupLabel>{{group.label}}</div>-->
-
-    <!--<dato-option *ngFor="let option of group.children" [option]="option">-->
-      <!--{{option.label}}-->
-    <!--</dato-option>-->
-
-  <!--</dato-group>-->
+    <dato-input datoSize="lg"
+                [formControl]="search"
+                type="search">
+    </dato-input>
+    <dato-group *ngFor="let group of data">
+        <div groupLabel>{{group.label}}</div>
+        <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+            {{option.label}}
+        </dato-option>
+    </dato-group>
+    <dato-button class="mr-10" datoType="secondary" (click)="performAction()">{{buttons.cancel}}</dato-button>
+    <dato-button (click)="performAction()">{{buttons.action}}</dato-button>
 </div>

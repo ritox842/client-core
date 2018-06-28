@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ApplicationRef, NgModule, NgZone } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DatoSelectComponent } from './select.component';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -26,9 +26,8 @@ import { DatoButtonModule } from '../button/button.module';
 import { DatoLinkButtonModule } from '../link-button/link-button.module';
 import { DatoTextModule } from '../text/text.module';
 import { DatoTriggerMulti } from './trigger-multi/trigger-multi.component';
-import { DatoListComponent } from '../list/list.component';
 
-const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectOptionComponent, DatoSelectGroupComponent, DatoSelectMultiOptionComponent, DatoTriggerMulti, DatoListComponent];
+const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectOptionComponent, DatoSelectGroupComponent, DatoSelectMultiOptionComponent, DatoTriggerMulti];
 const directives = [DatoSelectActiveDirective];
 
 @NgModule({

@@ -25,6 +25,7 @@ export * from './editable-header/public_api';
 export * from './select/public_api';
 export * from './tabs/public_api';
 export * from './dialog/public_api';
+export * from './toast/public_api';
 export * from './angular/public_api';
 
 export * from './services/public_api';
@@ -34,3 +35,4 @@ export * from './types/public_api';
 export * from './dato-core.module';
 export * from './rx/public_api';
 export * from './errors';
+export * from './internal/deep-merge';

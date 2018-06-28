@@ -1,0 +1,45 @@
+dato-toast {
+  border-radius: 2px;
+  font-size: 12px;
+  padding: 13px 12px;
+  max-width: 420px;
+  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px;
+
+  .dato-icon-close {
+    cursor: pointer;
+  }
+
+  .dato-toast-content {
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 40px;
+  }
+
+  .toast-icon {
+    margin-right: 10px;
+  }
+
+  footer {
+    margin-top: 8px;
+  }
+}
+
+@keyframes toastIn {
+  from {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  to {
+    ransform: translateX(-30px);
+    opacity: 1;
+  }
+}
+
+@keyframes toastOut {
+  to {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+}
+

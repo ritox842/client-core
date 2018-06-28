@@ -1,0 +1,97 @@
+<dato-preview title="Toast - Icon">
+
+  <dato-button (click)="toast()">Click</dato-button>
+
+  <dato-tabs show="js">
+
+    <textarea datoHighlight="js">
+      contructor(private toast: DatoToast) {}
+
+      const options: ToastOptions = {
+        icon: {
+          name: 'alert',
+          size: sm | md | lg,
+          color: ''
+        }
+      }
+
+      this.toast.open('A Message From Another Module\'s Process 1', options);
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Toast - Without Icon">
+
+  <dato-button (click)="withoutIcon()">Click</dato-button>
+
+  <dato-tabs show="js">
+
+    <textarea datoHighlight="js">
+      contructor(private toast: DatoToast) {}
+
+      this.toast.open('A Message From Another Module\'s Process 1');
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Toast - With Custom Template">
+
+  <ng-template #tpl>
+    <p datoFont="simple-italic" datoColor="accent-300" style="font-size: 12px;">Additional info</p>
+  </ng-template>
+
+  <dato-button (click)="withTpl()">Click</dato-button>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+     <ng-template #tpl>
+       <p datoFont="simple-italic" datoColor="accent-300" style="font-size: 12px;">Additional info</p>
+     </ng-template>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      @ViewChild('tpl') tpl: TemplateRef<any>;
+
+      contructor(private toast: DatoToast) {}
+
+      this.toast.open('A Message From Another Module\'s Process 1', { content: this.tpl } );
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>duration</td>
+        <td>number</td>
+        <td>4000</td>
+      </tr>
+      <tr>
+        <td>icon</td>
+        <td> Object with keys: ( name: string, size: sm | md | lg, color: string, width: string, height: string ) </td>
+        <td>undefined</td>
+      </tr>
+      <tr>
+        <td>content</td>
+        <td>string | TemplateRef | Component</td>
+        <td>undefined</td>
+        <td>custom content for the footer</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

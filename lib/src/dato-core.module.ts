@@ -31,10 +31,12 @@ import { DatoSnackbarModule } from './snackbar/snackbar.module';
 import { DatoDialogModule } from './dialog/dialog.module';
 import { DatoDynamicContentModule } from './dynamic-content/dynamic-content.module';
 import { DatoSelectModule } from './select/select.module';
+import { DatoToast } from './toast/toast.service';
+import { DatoToastModule } from './toast/toast.module';
 
-const modules = [DatoDirectivesModule, DatoSelectModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule, DatoDynamicContentModule];
+const modules = [DatoDirectivesModule, DatoSelectModule, DatoToastModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule, DatoDynamicContentModule];
 
-const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService];
+const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService, DatoToast];
 
 @NgModule({
   imports: [],

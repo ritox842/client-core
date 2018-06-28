@@ -1,0 +1,13 @@
+dato-toast {
+  background-color: themify(primary-0);
+
+  .dato-toast-content__title {
+    color: themify(primary-600);
+  }
+}
+
+.dato-toasts-container {
+  top: 90px;
+  right: 30px;
+  position: fixed;
+}

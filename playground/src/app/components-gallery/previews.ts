@@ -14,6 +14,7 @@ import { DialogPreviewComponent } from "./previews/dialog-preview/dialog-preview
 import { dialogPreviewComponents } from "./previews/dialog-preview/dialog-preview.providers";
 import { gridProviders } from "./previews/grid-preview/grid-provider";
 import { SelectPreviewComponent } from "./previews/select-preview/select-preview.component";
+import { ToastPreviewComponent } from "./previews/toast-preview/toast-preview.component";
 
 export const previews = [
   ButtonsPreviewComponent,
@@ -28,6 +29,7 @@ export const previews = [
   LayoutPreviewComponent,
   SnackbarPreviewComponent,
   SelectPreviewComponent,
+  ToastPreviewComponent,
   ...dialogPreviewComponents,
   ...gridProviders
 ];
@@ -46,5 +48,6 @@ export const routeToComponent = {
   layout: LayoutPreviewComponent,
   snackbar: SnackbarPreviewComponent,
   dialog: DialogPreviewComponent,
-  select: SelectPreviewComponent
+  select: SelectPreviewComponent,
+  toast: ToastPreviewComponent
 };

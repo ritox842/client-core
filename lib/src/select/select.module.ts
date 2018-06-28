@@ -26,8 +26,9 @@ import { DatoButtonModule } from '../button/button.module';
 import { DatoLinkButtonModule } from '../link-button/link-button.module';
 import { DatoTextModule } from '../text/text.module';
 import { DatoTriggerMulti } from './trigger-multi/trigger-multi.component';
+import { DatoListComponent } from '../list/list.component';
 
-const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectOptionComponent, DatoSelectGroupComponent, DatoSelectMultiOptionComponent, DatoTriggerMulti];
+const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectOptionComponent, DatoSelectGroupComponent, DatoSelectMultiOptionComponent, DatoTriggerMulti, DatoListComponent];
 const directives = [DatoSelectActiveDirective];
 
 @NgModule({

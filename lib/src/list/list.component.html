@@ -3,8 +3,12 @@
               [formControl]="search"
               type="search">
   </dato-input>
-  !!!
-  <!--<dato-group>-->
-    <!---->
+  <!--<dato-group *ngFor="let group of datoSelectGroup.data">-->
+    <!--<div groupLabel>{{group.label}}</div>-->
+
+    <!--<dato-option *ngFor="let option of group.children" [option]="option">-->
+      <!--{{option.label}}-->
+    <!--</dato-option>-->
+
   <!--</dato-group>-->
 </div>

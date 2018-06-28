@@ -1,6 +1,6 @@
 <div>
     <dato-input datoSize="lg"
-                [formControl]="search"
+                [formControl]="searchControl"
                 type="search">
     </dato-input>
     <dato-group *ngFor="let group of data">
@@ -9,6 +9,6 @@
             {{option.label}}
         </dato-option>
     </dato-group>
-    <dato-button class="mr-10" datoType="secondary" (click)="performAction()">{{buttons.cancel}}</dato-button>
-    <dato-button (click)="performAction()">{{buttons.action}}</dato-button>
+    <dato-button class="mr-10" datoType="secondary" (click)="performAction()">{{buttonNames.cancel}}</dato-button>
+    <dato-button (click)="performAction()">{{buttonNames.action}}</dato-button>
 </div>

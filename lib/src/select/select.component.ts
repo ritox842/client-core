@@ -47,7 +47,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** The overlay origin which is one of dato-triggers **/
   @ViewChild('overlayOrigin') origin: ElementRef;
 
-  /** QueryList of datoSelectOptions childs */
+  /** QueryList of datoSelectOptions children */
   @ContentChildren(DatoSelectOptionComponent, { descendants: true })
   options: QueryList<DatoSelectOptionComponent>;
 
@@ -106,7 +106,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Client search strategy */
   @Input() searchStrategy: DatoSelectSearchStrategy = defaultClientSearchStrategy;
 
-  /** The default position of thh dropdown */
+  /** The default position of the dropdown */
   @Input() placement: Placement = 'bottom-start';
 
   /** The options to display in the dropdown */
@@ -210,7 +210,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Triggers the focus on the input */
   _focus = false;
 
-  /** Store the actives options */
+  /** Store the active options */
   _model = [];
 
   /** Enable/disable the select-trigger */
@@ -219,7 +219,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Wheter the dropdown is open */
   _open = false;
 
-  /** Whether we have search result */
+  /** Whether we have search results */
   _hasResults = true;
 
   /** Indication if we need to set the initial control value as actives */

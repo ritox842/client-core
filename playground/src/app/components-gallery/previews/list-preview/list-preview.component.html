@@ -7,7 +7,7 @@
         <dato-group *ngFor="let group of datoListGroupMulti.data">
           <div groupLabel>{{group.label}}</div>
 
-          <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi [disabled]="index === 0">
+          <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
             {{option.label}}
           </dato-option>
 

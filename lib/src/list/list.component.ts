@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
@@ -17,8 +17,7 @@ import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from '../select
 import { DatoGroupComponent } from '../options/group.component';
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
 import { ListKeyManager } from '@angular/cdk/a11y';
-import { DatoOverlay } from '../angular/overlay';
-import { merge } from 'rxjs/index';
+import { merge } from 'rxjs';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -31,11 +30,11 @@ const valueAccessor = {
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   preserveWhitespaces: false,
-  providers: [valueAccessor, DatoOverlay],
+  providers: [valueAccessor],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatoListComponent extends BaseCustomControl implements OnInit, ControlValueAccessor, OnDestroy {
+export class DatoListComponent extends BaseCustomControl implements OnInit, ControlValueAccessor, AfterContentInit, OnDestroy {
   /** QueryList of datoOptions children */
   @ContentChildren(DatoOptionComponent, { descendants: true })
   options: QueryList<DatoOptionComponent>;
@@ -52,7 +51,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     if (this._dataIsDirty) {
       Promise.resolve().then(() => {
         this.subscribeToOptionClick(this.options);
-        // this.markAsActive(this._model);
+        this.markAsActive(this._model);
       });
     }
 
@@ -70,9 +69,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   /** The lookup key for the label */
   @Input() labelKey = 'label';
-
-  /** Emit when user clicks the action button */
-  @Output() action = new EventEmitter<string>();
 
   /**
    * Getters and Setters
@@ -93,6 +89,10 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     this._hasResults = value;
   }
 
+  get hasValue() {
+    return this._model.length;
+  }
+
   /** FormControl which listens for search value changes */
   searchControl = new FormControl();
 
@@ -107,6 +107,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    *  This is optimization for non async calls.
    * */
   _dataIsDirty = false;
+
+  /** Enable/disable the select-trigger */
+  _disabled;
 
   /** Triggers the focus on the input */
   _focus = false;
@@ -130,12 +133,16 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Search control subscription */
   private searchSubscription;
 
-  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private datoOverlay: DatoOverlay) {
+  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService) {
     super();
   }
 
   ngOnInit() {
     this.listenToSearch();
+  }
+
+  ngAfterContentInit(): void {
+    this.subscribeToOptionClick(this.options);
   }
 
   ngOnDestroy() {}
@@ -161,10 +168,28 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   /**
    *
+   * @param {boolean} isDisabled
+   */
+  setDisabledState(isDisabled: boolean): void {
+    this._disabled = isDisabled;
+    this.cdr.markForCheck();
+  }
+
+  /**
+   *
    * @param {any | any[]} activeOptions
    */
   writeValue(activeOptions: any | any[]): void {
     this._model = activeOptions ? coerceArray(activeOptions) : [];
+    /**
+     * When we first open the dropdown we need to mark the
+     * FormControl values as actives
+     */
+    setTimeout(() => {
+      if (this.hasValue) {
+        this.markAsActive(this._model);
+      }
+    }, 0);
     /** For later updates */
     this.cdr.markForCheck();
   }
@@ -183,7 +208,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     }
     this.onChange(this._model);
     this.cdr.markForCheck();
-    this.datoOverlay.scheduleUpdate();
   }
 
   /**
@@ -209,8 +233,21 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
       this.keyboardEventsManager.setActiveItem(0);
 
       this.cdr.markForCheck();
-      this.datoOverlay && this.datoOverlay.scheduleUpdate();
     });
+  }
+
+  /**
+   * Mark the initial control value as active
+   * @param model
+   */
+  private markAsActive(model: any[]) {
+    const asArray = this.options.toArray();
+    for (const option of model) {
+      const match = asArray.find(current => current.option[this.idKey] === option[this.idKey]);
+      if (match) {
+        match.active = true;
+      }
+    }
   }
 
   /**

@@ -11,10 +11,14 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { coerceArray } from '@datorama/utils';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, mapTo } from 'rxjs/operators';
 import { DatoOptionComponent } from '../options/option.component';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from '../select/search.strategy';
 import { DatoGroupComponent } from '../options/group.component';
+import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
+import { ListKeyManager } from '@angular/cdk/a11y';
+import { DatoOverlay } from '../angular/overlay';
+import { merge } from 'rxjs/index';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -27,7 +31,7 @@ const valueAccessor = {
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   preserveWhitespaces: false,
-  providers: [valueAccessor],
+  providers: [valueAccessor, DatoOverlay],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -39,8 +43,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** QueryList of datoGroups children */
   @ContentChildren(DatoGroupComponent) groups: QueryList<DatoGroupComponent>;
 
-  @Input() actionName = 'share';
-
   /** The options to display in the dropdown */
   @Input()
   set dataSet(data: any[]) {
@@ -49,7 +51,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     /** If it's async updates, create micro task in order to re-subscribe to clicks */
     if (this._dataIsDirty) {
       Promise.resolve().then(() => {
-        // this.subscribeToOptionClick(this.options);
+        this.subscribeToOptionClick(this.options);
         // this.markAsActive(this._model);
       });
     }
@@ -59,6 +61,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   /** Debounce time to emit search queries */
   @Input() debounceTime = 300;
+
+  /** The key that stores the option id */
+  @Input() idKey = 'id';
 
   /** Whether to show loading indicator */
   @Input() isLoading = false;
@@ -88,8 +93,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     this._hasResults = value;
   }
 
-  buttonNames = { action: '', cancel: '' };
-
   /** FormControl which listens for search value changes */
   searchControl = new FormControl();
 
@@ -105,6 +108,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * */
   _dataIsDirty = false;
 
+  /** Triggers the focus on the input */
+  _focus = false;
+
   /** Whether we have search results */
   _hasResults = true;
 
@@ -113,24 +119,44 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   _searchPlaceholder = this.translate.transform('general.search');
 
+  /** Clicks options subscription */
+  private clicksSubscription;
+
+  /** Keyboard Manager */
+  private keyboardEventsManager: ListKeyManager<DatoOptionComponent>;
+
   private searchStrategy: DatoSelectSearchStrategy = defaultClientSearchStrategy;
 
   /** Search control subscription */
   private searchSubscription;
 
-  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService) {
+  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private datoOverlay: DatoOverlay) {
     super();
   }
 
   ngOnInit() {
-    this.translateButtonNames();
     this.listenToSearch();
   }
 
   ngOnDestroy() {}
 
-  performAction() {
-    this.action.emit();
+  /**
+   *
+   * @param {KeyboardEvent} event
+   * @returns {boolean}
+   */
+  keyup(event: KeyboardEvent) {
+    event.stopPropagation();
+
+    if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
+      this.keyboardEventsManager.onKeydown(event);
+      return false;
+    } else if (event.keyCode === ENTER) {
+      const index = this.keyboardEventsManager.activeItemIndex;
+      const active = this.options.toArray()[index];
+      this.handleClick(active);
+      return false;
+    }
   }
 
   /**
@@ -141,6 +167,23 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     this._model = activeOptions ? coerceArray(activeOptions) : [];
     /** For later updates */
     this.cdr.markForCheck();
+  }
+
+  /**
+   *
+   * @param {DatoOptionComponent} datoOption
+   */
+  private handleClick(datoOption: DatoOptionComponent) {
+    datoOption.active = !datoOption.active;
+    const rawOption = datoOption.option;
+    if (datoOption.active) {
+      this._model = this._model.concat(rawOption);
+    } else {
+      this._model = this._model.filter(current => current[this.idKey] !== rawOption[this.idKey]);
+    }
+    this.onChange(this._model);
+    this.cdr.markForCheck();
+    this.datoOverlay.scheduleUpdate();
   }
 
   /**
@@ -163,10 +206,10 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
       } else {
         this.hasResults = this.searchOptions(value);
       }
-      // this.keyboardEventsManager.setActiveItem(0);
+      this.keyboardEventsManager.setActiveItem(0);
 
       this.cdr.markForCheck();
-      // this.datoOverlay && this.datoOverlay.scheduleUpdate();
+      this.datoOverlay && this.datoOverlay.scheduleUpdate();
     });
   }
 
@@ -200,8 +243,22 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     }
   }
 
-  private translateButtonNames() {
-    this.buttonNames.action = this.translate.transform(this.actionName);
-    this.buttonNames.cancel = this.translate.transform('general.cancel');
+  /**
+   * Subscribe to option click and change the state accordingly
+   * @param {DatoOptionComponent[]} options
+   */
+  private subscribeToOptionClick(options: QueryList<DatoOptionComponent>) {
+    this.clicksSubscription && this.clicksSubscription.unsubscribe();
+
+    /** Gather all the clicks */
+    const clicks$ = options.map(option => option.click$.pipe(mapTo(option)));
+
+    /** Consider change it to use event delegation */
+    this.clicksSubscription = merge(...clicks$)
+      .pipe(debounceTime(10))
+      .subscribe((datoOption: DatoOptionComponent) => {
+        if (datoOption.disabled) return;
+        this.handleClick(datoOption);
+      });
   }
 }

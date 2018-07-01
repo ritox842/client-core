@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, forwardRef, Input, OnDestroy, OnInit, QueryList, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
@@ -28,9 +28,9 @@ const valueAccessor = {
 @Component({
   selector: 'dato-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
-  preserveWhitespaces: false,
   providers: [valueAccessor],
+  preserveWhitespaces: false,
+  styleUrls: ['./list.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -1,3 +1,21 @@
+$md: (
+        height: 35px,
+        selectedHeight: 25px,
+        optionHeight: 35px,
+        selectedMargin: 5px,
+        font: 14px
+);
+
+dato-list {
+  background-color: firebrick !important;
+  & .dato-select__option {
+    height: map-get($md, optionHeight);
+    line-height: map-get($md, optionHeight);
+    font-size: map-get($md, font);
+  }
+}
+
+
 .force-hide {
   display: none !important;
 }

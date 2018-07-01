@@ -22,10 +22,6 @@ const valueAccessor = {
   multi: true
 };
 
-const TIMING = 250;
-
-const animations = [trigger('fromRight', [transition(':enter', [style({ transform: 'translateX(100px)' }), animate(TIMING, style({ transform: 'translateX(0)' }))]), transition(':leave', [animate(TIMING, style({ transform: 'translateX(100px)' }))])]), trigger('fromUp', [transition(':enter', [style({ transform: 'translateY(100px)' }), animate(TIMING, style({ transform: 'translateY(0)' }))]), transition(':leave', [animate(TIMING, style({ transform: 'translateY(100px)' }))])])];
-
 @TakeUntilDestroy()
 @Component({
   selector: 'dato-input',

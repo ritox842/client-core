@@ -24,6 +24,7 @@ export class SelectPreviewComponent implements OnInit {
   withActionsControl = new FormControl();
   groupControlMulti = new FormControl();
   customFooterControl = new FormControl();
+  infiniteControl = new FormControl();
   multiControl = new FormControl();
   multiControl2 = new FormControl([
     { id: 1, label: "Item 1" },
@@ -38,6 +39,7 @@ export class SelectPreviewComponent implements OnInit {
   options$ = this.subject.asObservable();
   options = [];
   optionsFromServer;
+  infiniteOptions = [];
 
   constructor(private snackbar: DatoSnackbar) {
     for (var i = 0, len = 15; i < len; i++) {
@@ -52,6 +54,7 @@ export class SelectPreviewComponent implements OnInit {
     }, 500);
 
     this.optionsFromServer = this.options.slice();
+    this.infiniteOptions = this.options.slice();
   }
 
   dynamic;
@@ -126,5 +129,23 @@ export class SelectPreviewComponent implements OnInit {
 
   onSave() {
     this.snackbar.success("Success!!!");
+  }
+
+  infiniteScrollLoading = false;
+
+  fetchMore() {
+    this.infiniteScrollLoading = true;
+    setTimeout(() => {
+      let more = [];
+      for (var i = 0, len = 15; i < len; i++) {
+        more.push({
+          label: `New Item ${i + 1}`,
+          id: Math.random()
+        });
+      }
+
+      this.infiniteOptions = [...this.infiniteOptions, ...more];
+      this.infiniteScrollLoading = false;
+    }, 1000);
   }
 }

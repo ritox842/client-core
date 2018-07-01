@@ -13,7 +13,7 @@ import { coerceArray } from '@datorama/utils';
 import { SelectType } from './select.types';
 import { DatoSelectOptionComponent } from './select-option.component';
 import { merge } from 'rxjs';
-import { debounceTime, mapTo, take } from 'rxjs/operators';
+import { debounceTime, mapTo, take, throttleTime } from 'rxjs/operators';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { Placement, PopperOptions } from 'popper.js';
@@ -23,6 +23,7 @@ import { ListKeyManager } from '@angular/cdk/a11y';
 import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import { getSelectOptionHeight } from './select-size';
 import { DatoTranslateService } from '../services/translate.service';
+import { fromEvent } from 'rxjs';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -109,6 +110,8 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** The default position of thh dropdown */
   @Input() placement: Placement = 'bottom-start';
 
+  @Input() infiniteScrollLoading = false;
+
   /** The options to display in the dropdown */
   @Input()
   set dataSet(data: any[]) {
@@ -130,6 +133,8 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   /** Emit when [withActions] is true and the user clicks save */
   @Output() save = new EventEmitter<string>();
+
+  @Output() fetch = new EventEmitter<boolean>();
 
   /**
    * Getters and Setters
@@ -228,6 +233,8 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Whether generate cancel/save footer */
   _withActions = false;
 
+  _withInfiniteScroll = false;
+
   /** Notify the multi trigger when click outside to remove the focus  */
   _clickOutside = false;
 
@@ -249,6 +256,8 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Keyboard subscription */
   private keyboardEventsManagerSubscription;
 
+  private infiniteSubscription;
+
   /** Current index of active item (keyboard navigation) */
   private currentIndex;
 
@@ -260,6 +269,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   ngOnInit() {
     this._withActions = this.save.observers.length === 1;
+    this._withInfiniteScroll = this.fetch.observers.length === 1;
     this.listenToSearch();
   }
 
@@ -272,6 +282,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this.toggle();
     this._focus = false;
     this._clickOutside = true;
+    this.infiniteSubscription && this.infiniteSubscription.unsubscribe();
   }
 
   /**
@@ -344,6 +355,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
     this.dropdownFocus();
     this.datoOverlay.scheduleUpdate();
+    if (this._withInfiniteScroll) {
+      this.activateInfiniteScroll();
+    }
   }
 
   ngAfterContentInit(): void {
@@ -619,9 +633,24 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this.keyboardEventsManager.setActiveItem(0);
   }
 
+  private activateInfiniteScroll() {
+    this.infiniteSubscription = fromEvent(document.querySelector('.dato-select__dropdown'), 'scroll')
+      .pipe(debounceTime(50))
+      .subscribe(_ => {
+        const container = document.querySelector('.dato-select__dropdown') as HTMLElement;
+        const scrollY = container.scrollHeight - container.scrollTop;
+        const height = container.offsetHeight;
+        const offset = height - scrollY;
+        if (offset == 0 || offset == 1) {
+          this.fetch.emit(true);
+        }
+      });
+  }
+
   ngOnDestroy() {
     this.searchSubscription && this.searchSubscription.unsubscribe();
     this.clicksSubscription && this.clicksSubscription.unsubscribe();
+    this.infiniteSubscription && this.infiniteSubscription.unsubscribe();
     this.keyboardEventsManagerSubscription && this.keyboardEventsManagerSubscription.unsubscribe();
     this.datoOverlay.attached && this.datoOverlay.destroy();
   }

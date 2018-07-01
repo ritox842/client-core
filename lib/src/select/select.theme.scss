@@ -90,3 +90,10 @@
 .dato-select__option--disabled [datoFont] {
   color: themify(primary-300);
 }
+
+.dato-select-infinite-spinner {
+  .dato-input__spinner {
+    position: relative;
+    margin-top: 0;
+  }
+}

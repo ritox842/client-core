@@ -3,6 +3,10 @@ dato-checkbox, .dato-checkbox {
     color: themify(primary-600);
   }
 
+  input {
+    display: none;
+  }
+
   .checkmark:after {
     border-color: themify((light: primary-0, dark: primary-700));
     border-width: 0 2px 2px 0;

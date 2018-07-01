@@ -607,3 +607,32 @@
   </dato-tabs>
 
 </dato-preview>
+
+
+<dato-preview title="Infinite Scroll">
+
+  <section class="d-flex">
+    <div class="select-preview">
+
+      <dato-select [formControl]="infiniteControl" [dataSet]="infiniteOptions" [infiniteScrollLoading]="infiniteScrollLoading" #datoSelectInfinite (fetch)="fetchMore()">
+
+        <dato-option *ngFor="let option of datoSelectInfinite.data; index as index" [option]="option">
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{infiniteControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="infiniteControl" [dataSet]="infiniteOptions" [infiniteScrollLoading]="infiniteScrollLoading" #datoSelectInfinite (fetch)="fetchMore()"></dato-select>
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>

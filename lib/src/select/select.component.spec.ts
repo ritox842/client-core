@@ -1,10 +1,10 @@
 import { DatoSelectComponent } from './select.component';
 import { createHostComponentFactory, dispatchFakeEvent, dispatchKeyboardEvent, query, queryAll, SpectatorWithHost, typeInElement } from '@netbasal/spectator';
 import { DatoTriggerMulti } from './trigger-multi/trigger-multi.component';
-import { DatoButtonModule, DatoCheckboxModule, DatoIconModule, DatoInputModule, DatoLinkButtonModule, DatoSelectEmptyComponent, DatoSelectMultiOptionComponent, DatoSelectOptionComponent, DatoTranslateService, DatoTriggerSingle, IconRegistry } from '../..';
+import { DatoButtonModule, DatoCheckboxModule, DatoIconModule, DatoInputModule, DatoLinkButtonModule, DatoSelectEmptyComponent, DatoMultiOptionComponent, DatoOptionComponent, DatoTranslateService, DatoTriggerSingle, IconRegistry } from '../..';
 import { DatoOverlay } from '../angular/overlay';
 import { DatoSelectActiveDirective } from './select-active.directive';
-import { DatoSelectGroupComponent } from './select-group.component';
+import { DatoGroupComponent } from '../options/group.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Component, Type } from '@angular/core';
 import { stubs } from '../services/public_api';
@@ -100,7 +100,7 @@ function createHostFactory<T>(host: Type<T>) {
   return createHostComponentFactory({
     component: DatoSelectComponent,
     host,
-    declarations: [DatoTriggerSingle, DatoTriggerMulti, DatoSelectActiveDirective, DatoSelectEmptyComponent, DatoSelectGroupComponent, DatoSelectOptionComponent, DatoSelectMultiOptionComponent],
+    declarations: [DatoTriggerSingle, DatoTriggerMulti, DatoSelectActiveDirective, DatoSelectEmptyComponent, DatoGroupComponent, DatoOptionComponent, DatoMultiOptionComponent],
     providers: [DatoOverlay, DatoTranslateService, stubs.translate(), IconRegistry],
     imports: [DatoIconModule, DatoInputModule, ReactiveFormsModule, DatoCheckboxModule, DatoLinkButtonModule, DatoButtonModule]
   });
@@ -527,9 +527,9 @@ describe('DatoSelect', () => {
     const createHost = createHostFactory(GroupComponent);
 
     const select = `
-      <dato-select [formControl]="control" [dataSet]="options$ | async" #datoSelectGroup>
+      <dato-select [formControl]="control" [dataSet]="options$ | async" #datoGroup>
 
-        <dato-group *ngFor="let group of datoSelectGroup.data">
+        <dato-group *ngFor="let group of datoGroup.data">
           <div groupLabel>{{group.label}}</div>
 
           <dato-option *ngFor="let option of group.children" [option]="option">

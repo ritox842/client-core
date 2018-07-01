@@ -3,12 +3,5 @@
                 [formControl]="searchControl"
                 type="search">
     </dato-input>
-    <dato-group *ngFor="let group of data">
-        <div groupLabel>{{group.label}}</div>
-        <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
-            {{option.label}}
-        </dato-option>
-    </dato-group>
-    <dato-button class="mr-10" datoType="secondary" (click)="performAction()">{{buttonNames.cancel}}</dato-button>
-    <dato-button (click)="performAction()">{{buttonNames.action}}</dato-button>
+    <ng-content></ng-content>
 </div>

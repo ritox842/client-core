@@ -409,9 +409,9 @@
   <section class="d-flex">
     <div class="select-preview">
 
-      <dato-select [formControl]="groupControl" [dataSet]="grouped" #datoSelectGroup>
+      <dato-select [formControl]="groupControl" [dataSet]="grouped" #datoGroup>
 
-        <dato-group *ngFor="let group of datoSelectGroup.data">
+        <dato-group *ngFor="let group of datoGroup.data">
           <div groupLabel>{{group.label}}</div>
 
           <dato-option *ngFor="let option of group.children" [option]="option">
@@ -431,9 +431,9 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-       <dato-select [formControl]="groupControl" [dataSet]="grouped" #datoSelectGroup>
+       <dato-select [formControl]="groupControl" [dataSet]="grouped" #datoGroup>
 
-        <dato-group *ngFor="let group of datoSelectGroup.data">
+        <dato-group *ngFor="let group of datoGroup.data">
           <div groupLabel>group.label</div>
 
           <dato-option *ngFor="let option of group.children" [option]="option">
@@ -453,9 +453,9 @@
   <section class="d-flex">
     <div class="select-preview" style="width: 500px;">
 
-      <dato-select [formControl]="groupControlMulti" [dataSet]="grouped" #datoSelectGroupMulti type="multi">
+      <dato-select [formControl]="groupControlMulti" [dataSet]="grouped" #datoGroupMulti type="multi">
 
-        <dato-group *ngFor="let group of datoSelectGroupMulti.data">
+        <dato-group *ngFor="let group of datoGroupMulti.data">
           <div groupLabel>{{group.label}}</div>
 
           <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi [disabled]="index === 0">
@@ -475,9 +475,9 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <dato-select [formControl]="groupControlMulti" [dataSet]="grouped" #datoSelectGroupMulti type="multi">
+      <dato-select [formControl]="groupControlMulti" [dataSet]="grouped" #datoGroupMulti type="multi">
 
-        <dato-group *ngFor="let group of datoSelectGroupMulti.data">
+        <dato-group *ngFor="let group of datoGroupMulti.data">
           <div groupLabel>group.label</div>
 
           <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi [disabled]="index === 0">

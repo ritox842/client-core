@@ -13,11 +13,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DatoInputModule } from '../input/input.module';
 import { DatoSelectModule } from '../select/select.module';
 import { DatoButtonModule } from '../button/button.module';
+import { DatoOptionsModule } from '../options/options.module';
 
 const publicApi = [DatoListComponent];
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, DatoButtonModule, DatoInputModule, DatoSelectModule],
+  imports: [CommonModule, ReactiveFormsModule, DatoButtonModule, DatoInputModule, DatoOptionsModule],
   declarations: [publicApi],
   exports: [publicApi],
   entryComponents: [publicApi]

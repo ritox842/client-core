@@ -9,29 +9,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DatoSelectComponent } from './select.component';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { PortalModule } from '@angular/cdk/portal';
 import { DatoIconModule } from '../icon/icon.module';
 import { DatoInputModule } from '../input/input.module';
 import { DatoTriggerSingle } from './trigger-single/trigger-single.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatoSelectEmptyComponent } from './select-empty.component';
-import { DatoSelectMultiOptionComponent } from './select-multi-option.component';
-import { DatoSelectOptionComponent } from './select-option.component';
-import { DatoSelectGroupComponent } from './select-group.component';
-import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoCheckboxModule } from '../checkbox/checkbox.module';
 import { DatoButtonModule } from '../button/button.module';
 import { DatoLinkButtonModule } from '../link-button/link-button.module';
 import { DatoTextModule } from '../text/text.module';
 import { DatoTriggerMulti } from './trigger-multi/trigger-multi.component';
+import { DatoOptionsModule } from '../options/options.module';
 
-const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoSelectOptionComponent, DatoSelectGroupComponent, DatoSelectMultiOptionComponent, DatoTriggerMulti];
+const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoTriggerMulti];
 const directives = [DatoSelectActiveDirective];
 
 @NgModule({
-  imports: [CommonModule, OverlayModule, PortalModule, ScrollDispatchModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule, DatoButtonModule, DatoLinkButtonModule, DatoTextModule],
+  imports: [CommonModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule, DatoButtonModule, DatoLinkButtonModule, DatoTextModule, DatoOptionsModule],
   declarations: [publicApi, directives],
   exports: [publicApi, directives],
   entryComponents: [publicApi]

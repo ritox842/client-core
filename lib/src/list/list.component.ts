@@ -6,15 +6,15 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, QueryList, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { coerceArray } from '@datorama/utils';
 import { debounceTime } from 'rxjs/operators';
-import { DatoSelectOptionComponent } from '../select/select-option.component';
+import { DatoOptionComponent } from '../options/option.component';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from '../select/search.strategy';
-import { DatoSelectMultiOptionComponent } from '../select/select-multi-option.component';
+import { DatoGroupComponent } from '../options/group.component';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -32,8 +32,12 @@ const valueAccessor = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatoListComponent extends BaseCustomControl implements OnInit, ControlValueAccessor, OnDestroy {
-  /** QueryList of datoSelectOptions children */
-  @ViewChildren(DatoSelectOptionComponent) options: QueryList<DatoSelectOptionComponent>;
+  /** QueryList of datoOptions children */
+  @ContentChildren(DatoOptionComponent, { descendants: true })
+  options: QueryList<DatoOptionComponent>;
+
+  /** QueryList of datoGroups children */
+  @ContentChildren(DatoGroupComponent) groups: QueryList<DatoGroupComponent>;
 
   @Input() actionName = 'share';
 

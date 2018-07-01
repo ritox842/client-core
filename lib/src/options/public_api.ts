@@ -6,5 +6,5 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-export * from './select-option.component';
-export * from './select-multi-option.component';
+export * from './option.component';
+export * from './multi-option.component';

@@ -11,7 +11,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { coerceArray } from '@datorama/utils';
 import { SelectType } from './select.types';
-import { DatoSelectOptionComponent } from './select-option.component';
+import { DatoOptionComponent } from '../options/option.component';
 import { merge } from 'rxjs';
 import { debounceTime, mapTo, take } from 'rxjs/operators';
 import { DatoSelectActiveDirective } from './select-active.directive';
@@ -47,9 +47,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** The overlay origin which is one of dato-triggers **/
   @ViewChild('overlayOrigin') origin: ElementRef;
 
-  /** QueryList of datoSelectOptions children */
-  @ContentChildren(DatoSelectOptionComponent, { descendants: true })
-  options: QueryList<DatoSelectOptionComponent>;
+  /** QueryList of datoOptions children */
+  @ContentChildren(DatoOptionComponent, { descendants: true })
+  options: QueryList<DatoOptionComponent>;
 
   /** Allowing custom template by passing *datoActive directive which gets the active as context */
   @ContentChild(DatoSelectActiveDirective) active: DatoSelectActiveDirective;
@@ -244,7 +244,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   private clicksSubscription;
 
   /** Keyboard Manager */
-  private keyboardEventsManager: ListKeyManager<DatoSelectOptionComponent>;
+  private keyboardEventsManager: ListKeyManager<DatoOptionComponent>;
 
   /** Keyboard subscription */
   private keyboardEventsManagerSubscription;
@@ -476,9 +476,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   /**
    * Subscribe to option click and change the state accordingly
-   * @param {DatoSelectOptionComponent[]} options
+   * @param {DatoOptionComponent[]} options
    */
-  private subscribeToOptionClick(options: QueryList<DatoSelectOptionComponent>) {
+  private subscribeToOptionClick(options: QueryList<DatoOptionComponent>) {
     this.clicksSubscription && this.clicksSubscription.unsubscribe();
 
     /** Gather all the clicks */
@@ -487,7 +487,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     /** Consider change it to use event delegation */
     this.clicksSubscription = merge(...clicks$)
       .pipe(debounceTime(10))
-      .subscribe((datoOption: DatoSelectOptionComponent) => {
+      .subscribe((datoOption: DatoOptionComponent) => {
         if (datoOption.disabled) return;
         this.isSingle ? this.handleSingleClick(datoOption) : this.handleMultiClick(datoOption);
       });
@@ -526,9 +526,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   /**
    *
-   * @param {DatoSelectOptionComponent} datoOption
+   * @param {DatoOptionComponent} datoOption
    */
-  private handleSingleClick(datoOption: DatoSelectOptionComponent) {
+  private handleSingleClick(datoOption: DatoOptionComponent) {
     if (datoOption.active) {
       this.close();
     } else {
@@ -544,9 +544,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   /**
    *
-   * @param {DatoSelectOptionComponent} datoOption
+   * @param {DatoOptionComponent} datoOption
    */
-  private handleMultiClick(datoOption: DatoSelectOptionComponent) {
+  private handleMultiClick(datoOption: DatoOptionComponent) {
     datoOption.active = !datoOption.active;
     const rawOption = datoOption.option;
     if (datoOption.active) {

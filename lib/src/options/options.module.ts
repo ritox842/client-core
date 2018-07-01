@@ -1,8 +1,8 @@
-import { DatoSelectMultiOptionComponent } from './select-multi-option.component';
+import { DatoMultiOptionComponent } from './multi-option.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DatoSelectOptionComponent } from './select-option.component';
+import { DatoOptionComponent } from './option.component';
 import { DatoInputModule } from '../input/input.module';
-import { DatoSelectGroupComponent } from './select-group.component';
+import { DatoGroupComponent } from './group.component';
 import { DatoLinkButtonModule } from '../link-button/link-button.module';
 import { DatoTextModule } from '../text/text.module';
 import { DatoButtonModule } from '../button/button.module';
@@ -11,7 +11,7 @@ import { NgModule } from '@angular/core';
 import { DatoCheckboxModule } from '../checkbox/checkbox.module';
 import { CommonModule } from '@angular/common';
 
-const publicApi = [DatoSelectOptionComponent, DatoSelectGroupComponent, DatoSelectMultiOptionComponent];
+const publicApi = [DatoOptionComponent, DatoGroupComponent, DatoMultiOptionComponent];
 
 @NgModule({
   imports: [CommonModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule, DatoButtonModule, DatoLinkButtonModule, DatoTextModule],

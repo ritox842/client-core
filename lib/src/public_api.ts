@@ -23,6 +23,8 @@ export * from './toggler/public_api';
 export * from './snackbar/public_api';
 export * from './editable-header/public_api';
 export * from './select/public_api';
+export * from './list/public_api';
+export * from './options/public_api';
 export * from './tabs/public_api';
 export * from './dialog/public_api';
 export * from './angular/public_api';

@@ -18,7 +18,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
     <ng-content></ng-content>
   `
 })
-export class DatoSelectGroupComponent implements OnInit {
+export class DatoGroupComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {

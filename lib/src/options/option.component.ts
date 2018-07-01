@@ -15,7 +15,7 @@ import { getOptionTemplate } from './option-template';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: getOptionTemplate()
 })
-export class DatoSelectOptionComponent implements OnInit {
+export class DatoOptionComponent implements OnInit {
   get option() {
     return this._option;
   }

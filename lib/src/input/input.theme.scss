@@ -18,7 +18,7 @@ dato-input:hover dato-icon path {
   display: flex;
   margin: auto;
   border: themify(primary-300) 2px solid;
-  border-top-color: transparent;
+  border-top-color: transparent !important;
   min-width: 15px;
   max-width: 15px;
   height: 15px;

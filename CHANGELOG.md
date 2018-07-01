@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/datorama/client-core/compare/v1.0.2...v1.1.0) (2018-07-01)
+
+
+### Features
+
+* **components:** add toast component ([3f5c1d8](https://github.com/datorama/client-core/commit/3f5c1d8))
+* **dropdown:** add inifinite scroll ([6bac760](https://github.com/datorama/client-core/commit/6bac760))
+
 ## [1.0.2](https://github.com/datorama/client-core/compare/v1.0.1...v1.0.2) (2018-06-27)
 
 

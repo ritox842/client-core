@@ -32,10 +32,14 @@ export function setStyle(element, prop: string, value: string): void {
 /**
  *
  * @param element
- * @param {string} className
+ * @param {string | string[]} className
  */
-export function addClass(element, className: string): void {
-  element.classList.add(className);
+export function addClass(element, className: string | string[]): void {
+  if (Array.isArray(className)) {
+    className.forEach(name => element.classList.add(name));
+  } else {
+    element.classList.add(className);
+  }
 }
 
 /**
@@ -62,8 +66,17 @@ export function createElement(tagName: string) {
  * @param {HTMLElement} child
  * @returns {HTMLElement}
  */
-export function appendChild(parent: HTMLElement, child: HTMLElement) {
+export function appendChild(parent: HTMLElement, child: Node) {
   return parent.appendChild(child);
+}
+
+/**
+ *
+ * @param {HTMLElement} parent
+ * @param {HTMLElement} child
+ */
+export function prependChild(parent: HTMLElement, child: Node) {
+  parent.insertBefore(child, parent.firstChild);
 }
 
 /**

@@ -1,0 +1,14 @@
+<div class="d-flex justify-between items-center">
+  <div class="toast-icon mr-7 d-flex self-start" *ngIf="icon.name">
+    <dato-icon [datoIcon]="icon.name" [attr.datoSize]="icon.size" [datoColor]="icon.color" [style.width]="icon.width" [style.height]="icon.height"></dato-icon>
+  </div>
+  <div class="dato-toast-content">
+    <div class="dato-toast-content__title">
+      <ng-content></ng-content>
+    </div>
+    <footer *ngIf="content">
+      <dato-dynamic-content [content]="content"></dato-dynamic-content>
+    </footer>
+  </div>
+  <dato-icon datoIcon="close" (click)="onClose()" datoColor="primary-300" class="self-start"></dato-icon>
+</div>

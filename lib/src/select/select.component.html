@@ -51,6 +51,9 @@
       <ng-content></ng-content>
 
       <dato-select-empty [show]="_showEmptyResults">{{_noItemsLabel}}</dato-select-empty>
+      <div class="dato-select__option dato-select-infinite-spinner" *ngIf="infiniteScrollLoading">
+        <span class="dato-input__spinner"></span>
+      </div>
 
     </div>
 

@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
 import { DatoListComponent } from './list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatoInputModule } from '../input/input.module';
-import { DatoSelectModule } from '../select/select.module';
 import { DatoButtonModule } from '../button/button.module';
 import { DatoOptionsModule } from '../options/options.module';
 

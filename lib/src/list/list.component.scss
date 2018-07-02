@@ -7,14 +7,12 @@ $md: (
 );
 
 dato-list {
-  background-color: firebrick !important;
   & .dato-select__option {
     height: map-get($md, optionHeight);
     line-height: map-get($md, optionHeight);
     font-size: map-get($md, font);
   }
 }
-
 
 .force-hide {
   display: none !important;

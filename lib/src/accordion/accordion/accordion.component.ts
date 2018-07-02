@@ -29,6 +29,7 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
 
   @Input() closeOthers = false;
   @Input() expandAll = false;
+  @Input() includeArrows = false;
   @Input() activeIds: number | number[] = [];
 
   groupsSubscription;
@@ -79,10 +80,10 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
 
     this.toggleGroup(group, !group.content._expanded);
 
-    const childes = this.getChildAccordionsComponents();
+    const children = this.getChildAccordionsComponents();
 
-    if (childes.length) {
-      childes.forEach(child => child.groups.forEach(g => this.closeAndEmit(g)));
+    if (children.length) {
+      children.forEach(child => child.groups.forEach(g => this.closeAndEmit(g)));
     }
 
     this.emitToggle(group);

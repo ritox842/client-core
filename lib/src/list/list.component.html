@@ -2,7 +2,7 @@
     <dato-input datoSize="lg"
                 [placeholder]="_searchPlaceholder"
                 (keyup)="keyup($event)"
-                [isFocused]="_focus"
+                [isFocused]="autoFocus"
                 [isLoading]="isLoading"
                 [formControl]="searchControl"
                 type="search">

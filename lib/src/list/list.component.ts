@@ -10,7 +10,7 @@ import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
-import { coerceArray } from '@datorama/utils';
+import { coerceArray, toBoolean } from '@datorama/utils';
 import { debounceTime, mapTo } from 'rxjs/operators';
 import { DatoOptionComponent } from '../options/option.component';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from '../select/search.strategy';
@@ -18,6 +18,7 @@ import { DatoGroupComponent } from '../options/group.component';
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { merge } from 'rxjs';
+import { DatoAccordionComponent, DatoAccordionGroupComponent } from '../../';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -41,6 +42,16 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   /** QueryList of datoGroups children */
   @ContentChildren(DatoGroupComponent) groups: QueryList<DatoGroupComponent>;
+
+  // /** QueryList of datoAccordionGroups children */
+  // @ContentChildren(forwardRef(() => DatoAccordionGroupComponent), {descendants: true}) accordionGroups: QueryList<DatoAccordionGroupComponent>;
+
+  /** QueryList of datoAccordionGroups children */
+  @ContentChildren(forwardRef(() => DatoAccordionComponent), { descendants: true })
+  accordion: QueryList<DatoAccordionComponent>;
+
+  /** autoFocus on search input element */
+  @Input() autoFocus = true;
 
   /** The options to display in the dropdown */
   @Input()
@@ -69,6 +80,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   /** The lookup key for the label */
   @Input() labelKey = 'label';
+
+  /** Search groups as well as options */
+  @Input() searchGroupLabels = true;
 
   /**
    * Getters and Setters
@@ -111,9 +125,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Enable/disable the select-trigger */
   _disabled;
 
-  /** Triggers the focus on the input */
-  _focus = false;
-
   /** Whether we have search results */
   _hasResults = true;
 
@@ -127,6 +138,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   /** Keyboard Manager */
   private keyboardEventsManager: ListKeyManager<DatoOptionComponent>;
+
+  /** Keyboard subscription */
+  private keyboardEventsManagerSubscription;
 
   private searchStrategy: DatoSelectSearchStrategy = defaultClientSearchStrategy;
 
@@ -143,6 +157,15 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   ngAfterContentInit(): void {
     this.subscribeToOptionClick(this.options);
+    this.keyboardEventsManager = new ListKeyManager(this.options).withWrap().withVerticalOrientation(true);
+    this.keyboardEventsManagerSubscription = this.keyboardEventsManager.change.subscribe(index => {
+      const options = this.options.toArray();
+      if (options.length) {
+        options.forEach(datoOption => (datoOption.activeByKeyboard = false));
+        options[index].activeByKeyboard = true;
+        this.scrollToElement(index);
+      }
+    });
   }
 
   ngOnDestroy() {}
@@ -251,24 +274,91 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   }
 
   /**
+   *
+   * @param {number} index
+   */
+  private scrollToElement(index: number) {
+    // const dropdown = query('.dato-select__dropdown');
+    // if (!dropdown) return;
+    //
+    // const NUM_ITEMS = 4;
+    // let scrollTop = dropdown.scrollTop;
+    // const LAST = this.options.filter(datoOption => !datoOption.disabled).length;
+    //
+    // if (index === LAST) {
+    //     scrollTop = dropdown.scrollHeight;
+    // } else {
+    //     if (index < NUM_ITEMS) {
+    //         scrollTop = 0;
+    //     } else {
+    //         const optionHeight = getSelectOptionHeight(this.size);
+    //         if (this.currentIndex > index) {
+    //             scrollTop = dropdown.scrollTop - optionHeight;
+    //         } else {
+    //             scrollTop = optionHeight + dropdown.scrollTop;
+    //         }
+    //     }
+    // }
+    //
+    // dropdown.scrollTop = scrollTop;
+    // this.currentIndex = index;
+  }
+
+  /**
    * Search for options and returns if we have result
    * @param {string} value
    * @returns {boolean}
    */
   private searchOptions(value: string) {
-    let hasResult = false;
+    const results = [];
+
+    this._data.forEach((group, index) => {
+      const matchGroup = group[this.labelKey].toLowerCase().indexOf(value) > -1;
+      if (this.searchGroupLabels && matchGroup) {
+        /** show entire group */
+        group.children.forEach(option => {
+          results.push(option[this.idKey]);
+        });
+
+        if (this.accordion.length) {
+          /** expand accordion group */
+          if (!this.accordion.first.groups.toArray()[index].content._expanded) {
+            this.accordion.first.toggle(index);
+          }
+        }
+      } else {
+        let showAccordionGroup = false;
+        group.children.forEach(option => {
+          const matchOption = option[this.labelKey].toLowerCase().indexOf(value) > -1;
+          if (matchOption) {
+            showAccordionGroup = true;
+            /** show option */
+            results.push(option[this.idKey]);
+          }
+        });
+        if (showAccordionGroup) {
+          /** expand accordion group */
+          if (!this.accordion.first.groups.toArray()[index].content._expanded) {
+            this.accordion.first.toggle(index);
+          }
+        } else {
+          /** contract accordion group */
+          if (this.accordion.first.groups.toArray()[index].content._expanded) {
+            this.accordion.first.toggle(index);
+          }
+        }
+      }
+    });
 
     for (let datoOption of this.options.toArray()) {
-      const match = this.searchStrategy(datoOption, value, this.labelKey);
-
-      if (!match) {
-        datoOption.hideAndDisabled(true);
-      } else {
+      if (results.includes(datoOption.option[this.idKey])) {
         datoOption.hideAndDisabled(false);
-        hasResult = true;
+      } else {
+        datoOption.hideAndDisabled(true);
       }
     }
-    return hasResult;
+
+    return toBoolean(results.length);
   }
 
   /**

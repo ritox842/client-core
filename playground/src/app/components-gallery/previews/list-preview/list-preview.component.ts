@@ -21,7 +21,8 @@ import { FormControl } from "@angular/forms";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListPreviewComponent implements OnInit, OnDestroy {
-  control = new FormControl({ id: 2, label: "efg" });
+  simpleControl = new FormControl({ id: 2, label: "efg" });
+  accordionControl = new FormControl({ id: 2, label: "efg" });
   options = [
     {
       label: "A",

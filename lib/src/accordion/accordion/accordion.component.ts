@@ -17,9 +17,9 @@ import { mapTo } from 'rxjs/operators';
   exportAs: 'datoAccordion',
   styles: [
     `
-      :host {
-        display: block;
-      }`
+            :host {
+                display: block;
+            }`
   ]
 })
 export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
@@ -51,6 +51,12 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     this.groups.changes.subscribe(() => {
       this.register();
     });
+
+    if (this.includeArrows) {
+      this.groups.forEach(group => {
+        group.header.includeArrow = true;
+      });
+    }
 
     this.register();
   }

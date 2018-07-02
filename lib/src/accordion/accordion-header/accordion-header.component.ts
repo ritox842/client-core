@@ -11,12 +11,12 @@ import { fromEvent, Observable } from 'rxjs';
 
 @Component({
   selector: 'dato-accordion-header',
-  template: '<ng-content></ng-content>',
+  template: '<div class="d-flex items-center">' + '<dato-icon *ngIf="includeArrow && !_expanded" datoIcon="arrow-right" datoSize="sm" class="mx-8"></dato-icon>' + '<dato-icon *ngIf="includeArrow && _expanded" datoIcon="arrow-down" datoSize="sm" class="mx-8"></dato-icon>' + '<ng-content></ng-content></div>',
   styles: [
     `
-    :host {
-      display: block;
-  }`
+            :host {
+                display: block;
+            }`
   ]
 })
 export class DatoAccordionHeaderComponent {
@@ -29,6 +29,8 @@ export class DatoAccordionHeaderComponent {
   }
 
   click$ = fromEvent(this.element, 'click');
+
+  includeArrow = false;
 
   constructor(public host: ElementRef, private cdr: ChangeDetectorRef) {}
 

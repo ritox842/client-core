@@ -7,6 +7,12 @@ import { Component, OnInit } from "@angular/core";
 })
 export class AccordionPreviewComponent implements OnInit {
   constructor() {}
-
+  expandAll;
+  activeIds = [0];
+  disable = false;
   ngOnInit() {}
+
+  changeActive() {
+    this.activeIds = [1, 2];
+  }
 }

@@ -6,13 +6,14 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectorRef, Component, ContentChild, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { DatoAccordionContentComponent } from '../accordion-content/accordion-content.component';
 import { DatoAccordionHeaderComponent } from '../accordion-header/accordion-header.component';
 
 @Component({
   selector: 'dato-accordion-group',
   template: '<ng-content></ng-content>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [`./accordion-group.component.scss`]
 })
 export class DatoAccordionGroupComponent {
@@ -27,6 +28,8 @@ export class DatoAccordionGroupComponent {
   @Input()
   set disabled(value) {
     this._disabled = value;
-    this.cdr.markForCheck();
+    this.content.expanded = false;
+    this.header.expanded = false;
+    this.cdr.detectChanges();
   }
 }

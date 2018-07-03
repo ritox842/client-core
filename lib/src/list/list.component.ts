@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, forwardRef, Input, OnDestroy, OnInit, QueryList, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, forwardRef, Input, OnDestroy, OnInit, QueryList, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
@@ -19,6 +19,8 @@ import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { merge } from 'rxjs';
 import { DatoAccordionComponent, DatoAccordionGroupComponent } from '../../';
+import { query } from '../internal/helpers';
+import { getListOptionHeight } from './list-size';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -42,9 +44,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   /** QueryList of datoGroups children */
   @ContentChildren(DatoGroupComponent) groups: QueryList<DatoGroupComponent>;
-
-  // /** QueryList of datoAccordionGroups children */
-  // @ContentChildren(forwardRef(() => DatoAccordionGroupComponent), {descendants: true}) accordionGroups: QueryList<DatoAccordionGroupComponent>;
 
   /** QueryList of datoAccordionGroups children */
   @ContentChildren(forwardRef(() => DatoAccordionComponent), { descendants: true })
@@ -136,19 +135,22 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Clicks options subscription */
   private clicksSubscription;
 
+  /** Current index of active item (keyboard navigation) */
+  private currentIndex;
+
   /** Keyboard Manager */
   private keyboardEventsManager: ListKeyManager<DatoOptionComponent>;
 
   /** Keyboard subscription */
   private keyboardEventsManagerSubscription;
 
-  private searchStrategy: DatoSelectSearchStrategy = defaultClientSearchStrategy;
-
   /** Search control subscription */
   private searchSubscription;
 
-  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService) {
+  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef, @Attribute('datoSize') public size) {
     super();
+    // this.size = size || 'md';
+    this.size = 'md';
   }
 
   ngOnInit() {
@@ -166,6 +168,8 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
         this.scrollToElement(index);
       }
     });
+
+    /** Workaround for accordion issue */
     if (this.accordion.length) {
       setTimeout(() => {
         this.accordion.first.toggle(0);
@@ -286,30 +290,24 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * @param {number} index
    */
   private scrollToElement(index: number) {
-    // const dropdown = query('.dato-select__dropdown');
-    // if (!dropdown) return;
-    //
-    // const NUM_ITEMS = 4;
-    // let scrollTop = dropdown.scrollTop;
-    // const LAST = this.options.filter(datoOption => !datoOption.disabled).length;
-    //
-    // if (index === LAST) {
-    //     scrollTop = dropdown.scrollHeight;
-    // } else {
-    //     if (index < NUM_ITEMS) {
-    //         scrollTop = 0;
-    //     } else {
-    //         const optionHeight = getSelectOptionHeight(this.size);
-    //         if (this.currentIndex > index) {
-    //             scrollTop = dropdown.scrollTop - optionHeight;
-    //         } else {
-    //             scrollTop = optionHeight + dropdown.scrollTop;
-    //         }
-    //     }
-    // }
-    //
-    // dropdown.scrollTop = scrollTop;
-    // this.currentIndex = index;
+    const optionsContainer = query('.dato-list__options', this.host.nativeElement);
+    if (!optionsContainer) return;
+
+    let scrollTop = optionsContainer.scrollTop;
+    const LAST = this.options.filter(datoOption => !datoOption.disabled).length;
+    if (index === LAST) {
+      scrollTop = optionsContainer.scrollHeight;
+    } else {
+      const optionHeight = getListOptionHeight(this.size);
+      if (this.currentIndex > index) {
+        scrollTop = optionsContainer.scrollTop - optionHeight;
+      } else {
+        scrollTop = optionHeight + optionsContainer.scrollTop;
+      }
+    }
+
+    optionsContainer.scrollTop = scrollTop;
+    this.currentIndex = index;
   }
 
   /**
@@ -344,15 +342,17 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
             results.push(option[this.idKey]);
           }
         });
-        if (showAccordionGroup) {
-          /** expand accordion group */
-          if (!this.accordion.first.groups.toArray()[index].content._expanded) {
-            this.accordion.first.toggle(index);
-          }
-        } else {
-          /** contract accordion group */
-          if (this.accordion.first.groups.toArray()[index].content._expanded) {
-            this.accordion.first.toggle(index);
+        if (this.accordion.length) {
+          if (showAccordionGroup) {
+            /** expand accordion group */
+            if (!this.accordion.first.groups.toArray()[index].content._expanded) {
+              this.accordion.first.toggle(index);
+            }
+          } else {
+            /** contract accordion group */
+            if (this.accordion.first.groups.toArray()[index].content._expanded) {
+              this.accordion.first.toggle(index);
+            }
           }
         }
       }

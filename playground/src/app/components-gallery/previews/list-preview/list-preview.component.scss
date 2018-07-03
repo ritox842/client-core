@@ -1,3 +1,7 @@
-:host {
+.list-container, .list-container-scrolling {
+  width: 250px;
+}
 
+.list-container-scrolling .dato-list__options {
+  height: 250px;
 }

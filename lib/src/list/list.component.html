@@ -7,5 +7,7 @@
                 [formControl]="searchControl"
                 type="search">
     </dato-input>
-    <ng-content></ng-content>
+    <div class="overflow-y-scroll dato-list__options">
+        <ng-content></ng-content>
+    </div>
 </div>

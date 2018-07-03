@@ -7,10 +7,9 @@
  */
 
 import {
-  Component,
   ChangeDetectionStrategy,
-  OnInit,
-  OnDestroy
+  Component,
+  ViewEncapsulation
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 
@@ -18,11 +17,14 @@ import { FormControl } from "@angular/forms";
   selector: "dato-list-preview",
   templateUrl: "./list-preview.component.html",
   styleUrls: ["./list-preview.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
-export class ListPreviewComponent implements OnInit, OnDestroy {
+export class ListPreviewComponent {
   simpleControl = new FormControl({ id: 2, label: "efg" });
   accordionControl = new FormControl({ id: 2, label: "efg" });
+  scrollingControl = new FormControl({ id: 2, label: "efg" });
+
   options = [
     {
       label: "A",
@@ -41,10 +43,34 @@ export class ListPreviewComponent implements OnInit, OnDestroy {
       children: [{ id: 5, label: "nop" }]
     }
   ];
-
-  constructor() {}
-
-  ngOnInit() {}
-
-  ngOnDestroy() {}
+  longOptions = [
+    {
+      label: "A",
+      children: [
+        { id: 1, label: "abc" },
+        { id: 2, label: "efg" },
+        { id: 3, label: "hij" }
+      ]
+    },
+    {
+      label: "B",
+      children: [{ id: 4, label: "klm" }]
+    },
+    {
+      label: "C",
+      children: [{ id: 5, label: "nop" }]
+    },
+    {
+      label: "D",
+      children: [{ id: 6, label: "qrs" }]
+    },
+    {
+      label: "E",
+      children: [{ id: 7, label: "tuv" }]
+    },
+    {
+      label: "F",
+      children: [{ id: 8, label: "wxyz" }]
+    }
+  ];
 }

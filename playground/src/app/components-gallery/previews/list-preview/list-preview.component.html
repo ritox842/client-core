@@ -2,7 +2,7 @@
 
   <section class="d-flex">
     <div class="select-preview">
-      <div>
+      <div class="list-container">
         <dato-list [formControl]="simpleControl" [dataSet]="options" #datoList>
 
           <dato-group *ngFor="let group of datoList.data">
@@ -25,7 +25,18 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
+      <dato-list [formControl]="simpleControl" [dataSet]="options" #datoList>
 
+          <dato-group *ngFor="let group of datoList.data">
+            <div groupLabel>group.label</div>
+
+            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+              option.label
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
     </textarea>
 
   </dato-tabs>
@@ -36,7 +47,7 @@
 
   <section class="d-flex">
     <div class="select-preview">
-      <div>
+      <div class="list-container">
         <dato-list [formControl]="accordionControl" [dataSet]="options" #datoListAccordion accordion>
           <dato-accordion [expandAll]="true" [includeArrows]="true">
             <dato-accordion-group *ngFor="let group of datoListAccordion.data">
@@ -62,7 +73,66 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
+        <dato-list [formControl]="accordionControl" [dataSet]="options" #datoListAccordion accordion>
+          <dato-accordion [expandAll]="true" [includeArrows]="true">
+            <dato-accordion-group *ngFor="let group of datoListAccordion.data">
+              <dato-accordion-header>
+                <div class="header">group.label</div>
+              </dato-accordion-header>
+              <dato-accordion-content>
+                <div class="content">
+                  <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+                    option.label
+                  </dato-option>
+                </div>
+              </dato-accordion-content>
+            </dato-accordion-group>
+          </dato-accordion>
+        </dato-list>
+    </textarea>
 
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="List - With Scrolling">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="list-container-scrolling">
+        <dato-list [formControl]="scrollingControl" [dataSet]="longOptions" #datoListWithScrolling>
+
+          <dato-group *ngFor="let group of datoListWithScrolling.data">
+            <div groupLabel>{{group.label}}</div>
+
+            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+              {{option.label}}
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
+      </div>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{scrollingControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-list [formControl]="scrollingControl" [dataSet]="longOptions" #datoListWithScrolling>
+
+          <dato-group *ngFor="let group of datoListWithScrolling.data">
+            <div groupLabel>group.label</div>
+
+            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+              option.label
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
     </textarea>
 
   </dato-tabs>

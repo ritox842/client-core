@@ -578,7 +578,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * @param {number} index
    */
   private scrollToElement(index: number) {
-    const dropdown = query('.dato-select__dropdown');
+    const dropdown = query('.dato-select__dropdown', this.host.nativeElement);
     if (!dropdown) return;
 
     const NUM_ITEMS = 4;

@@ -252,6 +252,10 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
       if (this.isEmpty(value)) {
         this.showAll();
         this.hasResults = true;
+        const groupComponentsArray = this.accordion.length ? this.accordion.first.groups.toArray() : this.groups.toArray();
+        (groupComponentsArray as any[]).forEach((groupComponent: DatoGroupComponent | DatoAccordionGroupComponent) => {
+          groupComponent._hidden = false;
+        });
       } else {
         this.hasResults = this.searchOptions(value);
       }
@@ -307,6 +311,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    */
   private searchOptions(value: string) {
     const results = [];
+    const groupComponentsArray = this.accordion.length ? this.accordion.first.groups.toArray() : this.groups.toArray();
 
     this._data.forEach((group, index) => {
       const matchGroup = group[this.labelKey].toLowerCase().indexOf(value) > -1;
@@ -316,12 +321,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
           results.push(option[this.idKey]);
         });
 
-        if (this.accordion.length) {
-          /** expand accordion group */
-          if (!this.accordion.first.groups.toArray()[index].content._expanded) {
-            this.accordion.first.toggle(index);
-          }
-        }
+        groupComponentsArray[index]._hidden = false;
       } else {
         let showAccordionGroup = false;
         group.children.forEach(option => {
@@ -332,18 +332,10 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
             results.push(option[this.idKey]);
           }
         });
-        if (this.accordion.length) {
-          if (showAccordionGroup) {
-            /** expand accordion group */
-            if (!this.accordion.first.groups.toArray()[index].content._expanded) {
-              this.accordion.first.toggle(index);
-            }
-          } else {
-            /** contract accordion group */
-            if (this.accordion.first.groups.toArray()[index].content._expanded) {
-              this.accordion.first.toggle(index);
-            }
-          }
+        if (showAccordionGroup) {
+          groupComponentsArray[index]._hidden = false;
+        } else {
+          groupComponentsArray[index]._hidden = true;
         }
       }
     });

@@ -21,6 +21,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnI
   encapsulation: ViewEncapsulation.None
 })
 export class DatoGroupComponent implements OnInit {
+  @HostBinding('class.force-hide') _hidden = false;
+
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {

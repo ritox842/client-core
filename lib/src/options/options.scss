@@ -35,3 +35,7 @@ dato-group .dato-select__option:not(.dato-select__group) {
 .dato-select__group {
   padding-left: 10px;
 }
+
+.force-hide {
+  display: none !important;
+}

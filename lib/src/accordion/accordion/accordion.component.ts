@@ -10,6 +10,7 @@ import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, Input,
 import { DatoAccordionGroupComponent } from '../accordion-group/accordion-group.component';
 import { merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
+import { toBoolean } from '@datorama/utils';
 
 @Component({
   selector: 'dato-accordion',
@@ -41,9 +42,24 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     private cdr: ChangeDetectorRef
   ) {}
 
+  ngOnChanges(changes) {
+    if (changes.expandAll && !changes.expandAll.firstChange) {
+      this.setExpandAll();
+    }
+
+    if (changes.activeIds && !changes.activeIds.firstChange) {
+      this.groups.forEach(g => this.toggleGroup(g, false));
+      this.setExpandAll(changes.activeIds.currentValue);
+    }
+  }
+
   toggle(index: number) {
     const group = this.groups.toArray()[index];
-    this.onGroupClick(group);
+    if (toBoolean(group)) {
+      this.onGroupClick(group);
+    } else {
+      console.error(`Group ${index} doesn't exists`);
+    }
   }
 
   ngAfterContentInit() {
@@ -111,9 +127,18 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
 
   private initialOpen(activeIds: number | number[]) {
     const toArray = this.expandAll ? this.groups.toArray().map((_, i) => i) : this.coerceArray<number>(activeIds);
+    this.setExpandAll(toArray);
+  }
+
+  setExpandAll(ids?: any[]) {
+    let toArray = ids;
+    if (!toArray) {
+      toArray = this.groups.toArray().map((_, i) => i);
+    }
     toArray.forEach(index => {
-      if (!this.parent) {
-        this.toggleGroup(this.groups.toArray()[index]);
+      const group = this.groups.toArray()[index];
+      if (!this.parent && !group._disabled) {
+        this.toggleGroup(group);
       }
     });
   }

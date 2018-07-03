@@ -6,11 +6,12 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Component, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'dato-accordion-content',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [@slideInOut] *ngIf="_expanded">
       <ng-content></ng-content>
@@ -33,7 +34,7 @@ export class DatoAccordionContentComponent {
   @Input()
   set expanded(value) {
     this._expanded = value;
-    this.cdr.markForCheck();
+    this.cdr.detectChanges();
   }
 
   constructor(private cdr: ChangeDetectorRef) {}

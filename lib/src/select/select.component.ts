@@ -354,10 +354,12 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     }
 
     this.dropdownFocus();
-    this.datoOverlay.scheduleUpdate();
+
     if (this._withInfiniteScroll) {
       this.activateInfiniteScroll();
     }
+
+    this.datoOverlay.scheduleUpdate();
   }
 
   ngAfterContentInit(): void {
@@ -398,7 +400,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this.options.find(datoOption => datoOption.option[this.idKey] === option[this.idKey]).active = false;
     this.onChange(this._model);
     this.cdr.markForCheck();
-    this.datoOverlay.scheduleUpdate();
+    if (this.datoOverlay.attached) {
+      this.datoOverlay.scheduleUpdate();
+    }
   }
 
   /**
@@ -545,6 +549,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   private handleSingleClick(datoOption: DatoOptionComponent) {
     if (datoOption.active) {
       this.close();
+      return;
     } else {
       this.options.forEach(datoOption => (datoOption.active = false));
       datoOption.active = true;
@@ -617,7 +622,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
         applyStyle: {
           onLoad: (origin: HTMLElement, dropdown: HTMLElement) => {
             const { width } = origin.getBoundingClientRect();
-            setStyle(dropdown, 'width', `${width}px`);
+            setStyle(dropdown.querySelector('.dato-select__dropdown-container'), 'width', `${width}px`);
           }
         }
       }

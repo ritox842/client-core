@@ -14,6 +14,7 @@ import { ApiTableComponent } from "./api-table/api-table.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DatoCoreModule } from "../../../../lib";
 import { ListItemComponent } from "./list-item/list-item.component";
+import { NgContentComponent } from "../ng-content";
 
 @NgModule({
   imports: [CommonModule, RouterModule, DatoCoreModule, ReactiveFormsModule],
@@ -29,7 +30,8 @@ import { ListItemComponent } from "./list-item/list-item.component";
     TabComponent,
     ApiTableComponent,
     ListItemComponent,
-    previews
+    previews,
+    NgContentComponent
   ]
 })
 export class ComponentsGalleryModule {}

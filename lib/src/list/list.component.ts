@@ -168,16 +168,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
         this.scrollToElement(index);
       }
     });
-
-    /** Workaround for accordion issue */
-    if (this.accordion.length) {
-      setTimeout(() => {
-        this.accordion.first.toggle(0);
-      }, 0);
-      setTimeout(() => {
-        this.accordion.first.toggle(0);
-      }, 0);
-    }
   }
 
   ngOnDestroy() {}

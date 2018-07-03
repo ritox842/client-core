@@ -6,11 +6,12 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Component, ElementRef, HostBinding, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, HostBinding, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { fromEvent, Observable } from 'rxjs';
 
 @Component({
   selector: 'dato-accordion-header',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<div class="d-flex items-center">' + '<dato-icon *ngIf="includeArrow && !_expanded" datoIcon="arrow-right" datoSize="sm" class="mx-8"></dato-icon>' + '<dato-icon *ngIf="includeArrow && _expanded" datoIcon="arrow-down" datoSize="sm" class="mx-8"></dato-icon>' + '<ng-content></ng-content></div>',
   styles: [
     `
@@ -25,12 +26,21 @@ export class DatoAccordionHeaderComponent {
   @Input()
   set expanded(value) {
     this._expanded = value;
-    this.cdr.markForCheck();
+    this.cdr.detectChanges();
+  }
+
+  get includeArrow() {
+    return this._includeArrow;
+  }
+
+  set includeArrow(value) {
+    this._includeArrow = value;
+    this.cdr.detectChanges();
   }
 
   click$ = fromEvent(this.element, 'click');
 
-  includeArrow = false;
+  private _includeArrow = false;
 
   constructor(public host: ElementRef, private cdr: ChangeDetectorRef) {}
 

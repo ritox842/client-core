@@ -117,8 +117,6 @@ const OPTIONS_SELECTOR = '.dato-list__options';
 const SEARCH_SELECTOR = 'dato-input';
 const TRIGGER_MULTI_SELECTOR = 'dato-trigger-multi';
 const OPTION_SELECTOR = 'dato-option';
-// const GROUP_SELECTOR = 'dato-group';
-// const SELECT_SELECTOR = 'dato-select';
 
 fdescribe('DatoList', () => {
   describe('Simple List', () => {

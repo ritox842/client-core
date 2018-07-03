@@ -107,16 +107,16 @@ function createHostFactory<T>(host: Type<T>) {
     component: DatoListComponent,
     host,
     declarations: [DatoListComponent],
-    providers: [IconRegistry],
+    providers: [IconRegistry, DatoTranslateService, stubs.translate()],
     imports: [CommonModule, ReactiveFormsModule, DatoButtonModule, DatoInputModule, DatoOptionsModule]
   });
 }
 
 //
 const OPTIONS_SELECTOR = '.dato-list__options';
-// const TRIGGER_SINGLE_SELECTOR = 'dato-trigger-single';
-// const TRIGGER_MULTI_SELECTOR = 'dato-trigger-multi';
-// const OPTION_SELECTOR = 'dato-option';
+const SEARCH_SELECTOR = 'dato-input';
+const TRIGGER_MULTI_SELECTOR = 'dato-trigger-multi';
+const OPTION_SELECTOR = 'dato-option';
 // const GROUP_SELECTOR = 'dato-group';
 // const SELECT_SELECTOR = 'dato-select';
 
@@ -146,219 +146,48 @@ fdescribe('DatoList', () => {
       expect(host.query(OPTIONS_SELECTOR)).toBeDefined();
     });
 
+    it(
+      'should select an option',
+      fakeAsync(() => {
+        host = createHost(list);
+        host.click(query(OPTION_SELECTOR));
+        tick(11);
+        expect(host.hostComponent.control.value).toEqual([{ id: 1, label: 'abc' }]);
+      })
+    );
+
+    it(
+      'should select multiple options',
+      fakeAsync(() => {
+        host = createHost(list);
+        host.click(query(OPTION_SELECTOR));
+        tick(11);
+        expect(host.hostComponent.control.value).toEqual([{ id: 1, label: 'abc' }]);
+      })
+    );
+
     // it(
-    //   'should select the option and close the dropdown',
-    //   fakeAsync(() => {
-    //     host = createHost(select);
-    //     host.click(TRIGGER_SINGLE_SELECTOR);
-    //     host.click(query(OPTION_SELECTOR));
-    //     tick(11);
-    //     expect(query(DROPDOWN_SELECTOR)).toBeNull();
-    //     expect(host.hostComponent.control.value).toEqual({ id: 1, label: 'Item 1' });
-    //     host.hostFixture.detectChanges();
-    //     expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('Item 1');
-    //   })
+    //     'should filter by search term',
+    //     fakeAsync(() => {
+    //         host = createHost(list);
+    //         // host.click(query(SEARCH_SELECTOR));
+    //         typeInElement('nop', query(SEARCH_SELECTOR));
+    //         console.error(query(SEARCH_SELECTOR))
+    //         console.error(query(OPTION_SELECTOR))
+    //         tick(301);
+    //         expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(4);
+    //         expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(4);
+    //         expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(4);
+    //         typeInElement('', query(SEARCH_SELECTOR));
+    //         tick(301);
+    //         /** We have one initial disabled */
+    //         expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(0);
+    //         expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(0);
+    //         expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(0);
+    //     })
     // );
-    //
-    // it('should close the dropdown on escape', () => {
-    //   host = createHost(select);
-    //   host.click(TRIGGER_SINGLE_SELECTOR);
-    //   expect(query(DROPDOWN_SELECTOR)).toBeDefined();
-    //   dispatchKeyboardEvent(document.body, 'keydown', ESCAPE);
-    //   expect(query(DROPDOWN_SELECTOR)).toBeNull();
-    // });
-    //
-    // it('should NOT display search box', () => {
-    //   host = createHost(select);
-    //   host.click(TRIGGER_SINGLE_SELECTOR);
-    //   expect(query('.dato-select__single dato-input')).toBeHidden();
-    // });
-    //
-    // it('should show placeholder when control is empty', () => {
-    //   host = createHost(select);
-    //   expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('general.select');
-    // });
-    //
-    // it('should show placeholder when control the is empty', () => {
-    //   host = createHost(select);
-    //   expect(host.query(TRIGGER_SINGLE_SELECTOR).querySelector('.dato-select__placeholder')).toBeVisible();
-    //   expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('general.select');
-    // });
-    //
-    // it('should NOT show placeholder when the control value is defined', () => {
-    //   host = createHost(select);
-    //   expect(host.query(TRIGGER_SINGLE_SELECTOR).querySelector('.dato-select__placeholder')).toBeVisible();
-    //   expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('general.select');
-    //   host.hostComponent.control.patchValue({ id: 1, label: 'Item 1' });
-    //   host.detectChanges();
-    //   expect(host.query(TRIGGER_SINGLE_SELECTOR).querySelector('.dato-select__placeholder')).not.toBeVisible();
-    //   expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('Item 1');
-    // });
   });
-  //
-  // describe('Select Single - Async', () => {
-  //   let host: SpectatorWithHost<DatoSelectComponent, AsyncComponent>;
-  //
-  //   const createHost = createHostFactory(AsyncComponent);
-  //
-  //   const select = `
-  //     <dato-select [formControl]="control" [dataSet]="options$ | async" #datoSelectAsync>
-  //
-  //       <dato-option *ngFor="let option of datoSelectAsync.data; index as index" [option]="option" [disabled]="index === 1">
-  //         {{option.label}}
-  //       </dato-option>
-  //
-  //     </dato-select>
-  //   `;
-  //
-  //   it('should be define', () => {
-  //     host = createHost(select);
-  //     expect(host.query(TRIGGER_SINGLE_SELECTOR)).toBeDefined();
-  //   });
-  //
-  //   it(
-  //     'should work with async',
-  //     fakeAsync(() => {
-  //       host = createHost(select);
-  //       host.click(TRIGGER_SINGLE_SELECTOR);
-  //       expect(queryAll(OPTION_SELECTOR).length).toEqual(0);
-  //       tick(501);
-  //       host.hostFixture.detectChanges();
-  //       expect(queryAll(OPTION_SELECTOR).length).toEqual(15);
-  //     })
-  //   );
-  //
-  //   it(
-  //     'should work with later updates',
-  //     fakeAsync(() => {
-  //       host = createHost(select);
-  //       host.click(TRIGGER_SINGLE_SELECTOR);
-  //       expect(queryAll(OPTION_SELECTOR).length).toEqual(0);
-  //       tick(501);
-  //       host.hostFixture.detectChanges();
-  //       expect(queryAll(OPTION_SELECTOR).length).toEqual(15);
-  //       host.hostComponent.subject.next([...host.hostComponent.options, { id: 16, label: 'Item 16' }]);
-  //       host.hostFixture.detectChanges();
-  //       expect(queryAll(OPTION_SELECTOR).length).toEqual(16);
-  //     })
-  //   );
-  // });
-  //
-  // describe('Select Single - With Search', () => {
-  //   let host: SpectatorWithHost<DatoSelectComponent, CustomHostComponent>;
-  //
-  //   const createHost = createHostFactory(CustomHostComponent);
-  //
-  //   const select = `
-  //     <dato-select [formControl]="control" [dataSet]="options" #datoSelectSimple>
-  //
-  //       <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option" [disabled]="index === 1">
-  //         {{option.label}}
-  //       </dato-option>
-  //
-  //     </dato-select>
-  //   `;
-  //
-  //   it('should show the search on click', () => {
-  //     host = createHost(select);
-  //     host.click(TRIGGER_SINGLE_SELECTOR);
-  //     expect(query('.dato-select__single dato-input')).toBeVisible();
-  //   });
-  //
-  //   it(
-  //     'should filter by search term',
-  //     fakeAsync(() => {
-  //       host = createHost(select);
-  //       host.click(TRIGGER_SINGLE_SELECTOR);
-  //       typeInElement('12', query('.dato-select__single .dato-input'));
-  //       tick(301);
-  //       expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(14);
-  //       expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(14);
-  //       expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(14);
-  //       typeInElement('', query('.dato-select__single .dato-input'));
-  //       tick(301);
-  //       /** We have one initial disabled */
-  //       expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(1);
-  //       expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(0);
-  //       expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(0);
-  //     })
-  //   );
-  //
-  //   it(
-  //     'should select & search term',
-  //     fakeAsync(() => {
-  //       host = createHost(select);
-  //       host.click(TRIGGER_SINGLE_SELECTOR);
-  //       typeInElement('12', query('.dato-select__single .dato-input'));
-  //       tick(301);
-  //       host.detectChanges();
-  //       expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(14);
-  //       const visibleOption = getOptionsAsArray().filter(el => !isOptionHidden(el))[0];
-  //       visibleOption.click();
-  //       tick(312);
-  //       host.detectChanges();
-  //       expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('Item 12');
-  //       expect(host.hostComponent.control.value).toEqual({ id: 12, label: 'Item 12' });
-  //     })
-  //   );
-  //
-  //   it(
-  //     'should show no items message',
-  //     fakeAsync(() => {
-  //       host = createHost(select);
-  //       host.click(TRIGGER_SINGLE_SELECTOR);
-  //       typeInElement('something that doesnt exists', query('.dato-select__single .dato-input'));
-  //       tick(301);
-  //       host.detectChanges();
-  //       expect(query('.dato-select__not-found')).toBeVisible();
-  //       typeInElement('12', query('.dato-select__single .dato-input'));
-  //       tick(301);
-  //       expect(query('.dato-select__not-found')).not.toBeVisible();
-  //     })
-  //   );
-  // });
-  //
-  // describe('Server Side Search', () => {
-  //   let host: SpectatorWithHost<DatoSelectComponent, ServerSearchComponent>;
-  //
-  //   const createHost = createHostFactory(ServerSearchComponent);
-  //
-  //   const select = `
-  //     <dato-select [formControl]="control" [dataSet]="options"
-  //                  (search)="onSearch($event)"
-  //                  [isLoading]="isLoading"
-  //                  [internalSearch]="false"
-  //                  #datoSelectServer>
-  //
-  //       <dato-option *ngFor="let option of datoSelectServer.data" [option]="option">
-  //         {{option.label}}
-  //       </dato-option>
-  //
-  //     </dato-select>
-  //   `;
-  //
-  //   it(
-  //     'should peform a server side search',
-  //     fakeAsync(() => {
-  //       host = createHost(select);
-  //       spyOn(host.hostComponent, 'onSearch').and.callThrough();
-  //       host.click(TRIGGER_SINGLE_SELECTOR);
-  //       typeInElement('a', query('.dato-select__single .dato-input'));
-  //       tick(301);
-  //       host.detectChanges();
-  //       expect(host.query('.dato-input__spinner')).toBeVisible();
-  //       tick(801);
-  //       host.detectChanges();
-  //       expect(host.query('.dato-input__spinner')).not.toBeVisible();
-  //       expect(host.hostComponent.onSearch).toHaveBeenCalledWith('a');
-  //       expect(queryAll(OPTION_SELECTOR).length).toEqual(1);
-  //       host.click('.dato-icon-close');
-  //       tick(1200);
-  //       host.detectChanges();
-  //       expect(queryAll(OPTION_SELECTOR).length).toEqual(5);
-  //     })
-  //   );
-  // });
+
   //
   // describe('Select Multi', () => {
   //   let host: SpectatorWithHost<DatoSelectComponent, CustomHostComponent>;

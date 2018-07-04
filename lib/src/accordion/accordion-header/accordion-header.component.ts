@@ -12,7 +12,7 @@ import { fromEvent, Observable } from 'rxjs';
 @Component({
   selector: 'dato-accordion-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<div class="d-flex items-center">' + '<dato-icon *ngIf="includeArrow && !_expanded" datoIcon="arrow-right" datoSize="sm" class="mx-8"></dato-icon>' + '<dato-icon *ngIf="includeArrow && _expanded" datoIcon="arrow-down" datoSize="sm" class="mx-8"></dato-icon>' + '<ng-content></ng-content></div>',
+  templateUrl: './accordion-header.component.html',
   styles: [
     `
             :host {

@@ -7,9 +7,6 @@ $md: (
 );
 
 dato-list {
-  & .dato-list__options{
-
-  }
   & .dato-select__option {
     height: map-get($md, optionHeight);
     line-height: map-get($md, optionHeight);

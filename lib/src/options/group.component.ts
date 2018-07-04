@@ -11,12 +11,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnI
 @Component({
   selector: 'dato-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-        <div class="dato-select__option dato-select__group">
-            <ng-content select="[groupLabel]"></ng-content>
-        </div>
-        <ng-content></ng-content>
-    `,
+  templateUrl: './group.component.html',
   styleUrls: ['./options.scss'],
   encapsulation: ViewEncapsulation.None
 })

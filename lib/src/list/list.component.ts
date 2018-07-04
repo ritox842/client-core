@@ -147,10 +147,8 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Search control subscription */
   private searchSubscription;
 
-  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef, @Attribute('datoSize') public size) {
+  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef) {
     super();
-    // this.size = size || 'md';
-    this.size = 'md';
   }
 
   ngOnInit() {
@@ -219,6 +217,10 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     this.cdr.markForCheck();
   }
 
+  private getGroupComponentsArray(): DatoAccordionGroupComponent[] | DatoGroupComponent[] {
+    return this.accordion.length ? this.accordion.first.groups.toArray() : this.groups.toArray();
+  }
+
   /**
    *
    * @param {DatoOptionComponent} datoOption
@@ -252,7 +254,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
       if (this.isEmpty(value)) {
         this.showAll();
         this.hasResults = true;
-        const groupComponentsArray = this.accordion.length ? this.accordion.first.groups.toArray() : this.groups.toArray();
+        const groupComponentsArray = this.getGroupComponentsArray();
         (groupComponentsArray as any[]).forEach((groupComponent: DatoGroupComponent | DatoAccordionGroupComponent) => {
           groupComponent._hidden = false;
         });
@@ -289,10 +291,13 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
     let scrollTop = optionsContainer.scrollTop;
     const LAST = this.options.filter(datoOption => !datoOption.disabled).length;
-    if (index === LAST) {
+
+    if (index === 0) {
+      scrollTop = 0;
+    } else if (index === LAST) {
       scrollTop = optionsContainer.scrollHeight;
     } else {
-      const optionHeight = getListOptionHeight(this.size);
+      const optionHeight = getListOptionHeight();
       if (this.currentIndex > index) {
         scrollTop = optionsContainer.scrollTop - optionHeight;
       } else {
@@ -311,7 +316,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    */
   private searchOptions(value: string) {
     const results = [];
-    const groupComponentsArray = this.accordion.length ? this.accordion.first.groups.toArray() : this.groups.toArray();
+    const groupComponentsArray = this.getGroupComponentsArray();
 
     this._data.forEach((group, index) => {
       const matchGroup = group[this.labelKey].toLowerCase().indexOf(value) > -1;

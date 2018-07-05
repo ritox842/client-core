@@ -1,8 +1,5 @@
-import { DatoSelectComponent } from './select.component';
 import { createHostComponentFactory, query, queryAll, SpectatorWithHost, typeInElement } from '@netbasal/spectator';
-import { DatoTriggerMulti } from './trigger-multi/trigger-multi.component';
 import { DatoButtonModule, DatoInputModule, DatoTranslateService, IconRegistry } from '../..';
-import { DatoSelectActiveDirective } from './select-active.directive';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Component, Type } from '@angular/core';
 import { stubs } from '../services/public_api';
@@ -42,7 +39,7 @@ function createHostFactory<T>(host: Type<T>) {
 
 //
 const OPTIONS_SELECTOR = '.dato-list__options';
-const SEARCH_SELECTOR = 'dato-input';
+const SEARCH_SELECTOR = '.dato-input';
 const TRIGGER_MULTI_SELECTOR = 'dato-trigger-multi';
 const OPTION_SELECTOR = 'dato-option';
 
@@ -101,21 +98,17 @@ describe('DatoList', () => {
         host = createHost(list);
         host.click(query(SEARCH_SELECTOR));
         typeInElement('nop', query(SEARCH_SELECTOR));
-        host.click(query(SEARCH_SELECTOR));
-        host.detectChanges();
-
-        tick(701);
-        host.detectChanges();
-        expect(query(SEARCH_SELECTOR).value).toEqual('nop');
+        host.click(query('div'));
+        tick(501);
         expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(4);
-        // expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(4);
-        // expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(4);
-        // typeInElement('', query(SEARCH_SELECTOR));
-        // tick(301);
-        // /** search cleared  */
-        // expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(0);
-        // expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(0);
-        // expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(0);
+        expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(4);
+        expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(4);
+        typeInElement('', query(SEARCH_SELECTOR));
+        tick(301);
+        /** search cleared  */
+        expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(0);
+        expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(0);
+        expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(0);
       })
     );
   });

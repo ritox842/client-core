@@ -345,7 +345,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     });
 
     for (let datoOption of this.options.toArray()) {
-      if (results.includes(datoOption.option[this.idKey])) {
+      if (results.indexOf(datoOption.option[this.idKey]) > -1) {
         datoOption.hideAndDisabled(false);
       } else {
         datoOption.hideAndDisabled(true);

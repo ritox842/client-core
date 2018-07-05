@@ -40,7 +40,6 @@ function createHostFactory<T>(host: Type<T>) {
 //
 const OPTIONS_SELECTOR = '.dato-list__options';
 const SEARCH_SELECTOR = '.dato-input';
-const TRIGGER_MULTI_SELECTOR = 'dato-trigger-multi';
 const OPTION_SELECTOR = 'dato-option';
 
 describe('DatoList', () => {
@@ -99,7 +98,7 @@ describe('DatoList', () => {
         host.click(query(SEARCH_SELECTOR));
         typeInElement('nop', query(SEARCH_SELECTOR));
         host.click(query('div'));
-        tick(501);
+        tick(301);
         expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(4);
         expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(4);
         expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(4);
@@ -119,6 +118,5 @@ function getOptionsAsArray() {
 }
 
 function isOptionHidden(el) {
-  var style = window.getComputedStyle(el.querySelector('.dato-select__option'));
-  return style.display === 'none' || style.visibility === 'hidden';
+  return !!el.querySelector('.dato-select__option.force-hide');
 }

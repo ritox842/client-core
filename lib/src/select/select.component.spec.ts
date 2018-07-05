@@ -76,7 +76,16 @@ class GroupComponent extends CustomHostComponent {
 class ServerSearchComponent extends CustomHostComponent {
   isLoading = false;
 
-  _optionsFromServer = [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }, { id: 4, label: 'klm' }, { id: 5, label: 'nop' }];
+  _optionsFromServer = [
+    { id: 1, label: 'abc' },
+    { id: 2, label: 'efg' },
+    { id: 3, label: 'hij' },
+    {
+      id: 4,
+      label: 'klm'
+    },
+    { id: 5, label: 'nop' }
+  ];
 
   constructor() {
     super();
@@ -167,7 +176,7 @@ describe('DatoSelect', () => {
     it('should NOT display search box', () => {
       host = createHost(select);
       host.click(TRIGGER_SINGLE_SELECTOR);
-      expect(query('.dato-select__single dato-input')).toBeHidden();
+      expect(query('.dato-select__single dato-input')).toHaveClass('force-hide');
     });
 
     it('should show placeholder when control is empty', () => {
@@ -909,6 +918,5 @@ function getOptionsAsArray() {
 }
 
 function isOptionHidden(el) {
-  var style = window.getComputedStyle(el.querySelector('.dato-select__option'));
-  return style.display === 'none' || style.visibility === 'hidden';
+  return !!el.querySelector('.dato-select__option.force-hide');
 }

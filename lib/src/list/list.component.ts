@@ -13,7 +13,6 @@ import { BaseCustomControl } from '../internal/base-custom-control';
 import { coerceArray, toBoolean } from '@datorama/utils';
 import { debounceTime, mapTo } from 'rxjs/operators';
 import { DatoOptionComponent } from '../options/option.component';
-import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from '../select/search.strategy';
 import { DatoGroupComponent } from '../options/group.component';
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
 import { ListKeyManager } from '@angular/cdk/a11y';
@@ -21,6 +20,7 @@ import { merge } from 'rxjs';
 import { DatoAccordionComponent, DatoAccordionGroupComponent } from '../../';
 import { query } from '../internal/helpers';
 import { getListOptionHeight } from './list-size';
+import { DatoListSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -67,6 +67,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
     this._dataIsDirty = true;
   }
+
+  /** Client search strategy */
+  @Input() searchStrategy: DatoListSearchStrategy = defaultClientSearchStrategy;
 
   /** Debounce time to emit search queries */
   @Input() debounceTime = 300;
@@ -319,7 +322,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     const groupComponentsArray = this.getGroupComponentsArray();
 
     this._data.forEach((group, index) => {
-      const matchGroup = group[this.labelKey].toLowerCase().indexOf(value) > -1;
+      const matchGroup = this.searchStrategy(group, value, this.labelKey);
       if (this.searchGroupLabels && matchGroup) {
         /** show entire group */
         group.children.forEach(option => {
@@ -328,20 +331,16 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
         groupComponentsArray[index]._hidden = false;
       } else {
-        let showAccordionGroup = false;
+        let showGroup = false;
         group.children.forEach(option => {
           const matchOption = option[this.labelKey].toLowerCase().indexOf(value) > -1;
           if (matchOption) {
-            showAccordionGroup = true;
+            showGroup = true;
             /** show option */
             results.push(option[this.idKey]);
           }
         });
-        if (showAccordionGroup) {
-          groupComponentsArray[index]._hidden = false;
-        } else {
-          groupComponentsArray[index]._hidden = true;
-        }
+        groupComponentsArray[index]._hidden = !showGroup;
       }
     });
 

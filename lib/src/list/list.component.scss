@@ -6,6 +6,9 @@ $md: (
         font: 14px
 );
 
+$simple-font-size: 14px;
+$text-bold-weight: 600;
+
 dato-list {
   & .dato-select__option {
     height: map-get($md, optionHeight);
@@ -14,5 +17,9 @@ dato-list {
   }
   & dato-accordion .dato-select__option {
     margin-left: 15px;
+  }
+  & dato-accordion dato-accordion-header {
+    font-size: $simple-font-size;
+    font-weight: $text-bold-weight;
   }
 }

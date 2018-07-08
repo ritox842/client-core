@@ -1,3 +1,20 @@
+# [1.2.0](https://github.com/datorama/client-core/compare/v1.1.1...v1.2.0) (2018-07-08)
+
+
+### Bug Fixes
+
+* **dropdown:** truncate select option ([97c0583](https://github.com/datorama/client-core/commit/97c0583))
+
+
+### Features
+
+* added search functionality to list component ([187bd4b](https://github.com/datorama/client-core/commit/187bd4b))
+* initial dato-list component + preview ([4a5b4b8](https://github.com/datorama/client-core/commit/4a5b4b8))
+* listed options ([5c9d67c](https://github.com/datorama/client-core/commit/5c9d67c))
+* **datolist:** list component ([567672a](https://github.com/datorama/client-core/commit/567672a))
+* **datooptions:** created module ([7c748bf](https://github.com/datorama/client-core/commit/7c748bf))
+* **list component:** initial dato-list component + preview ([285d3b7](https://github.com/datorama/client-core/commit/285d3b7))
+
 ## [1.1.1](https://github.com/datorama/client-core/compare/v1.1.0...v1.1.1) (2018-07-03)
 
 

@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/datorama/client-core/compare/v1.2.0...v1.2.1) (2018-07-08)
+
+
+### Bug Fixes
+
+* **list:** add group css ([c2970fc](https://github.com/datorama/client-core/commit/c2970fc))
+
 # [1.2.0](https://github.com/datorama/client-core/compare/v1.1.1...v1.2.0) (2018-07-08)
 
 

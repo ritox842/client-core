@@ -17,7 +17,7 @@ import { DatoGroupComponent } from '../options/group.component';
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { merge } from 'rxjs';
-import { DatoAccordionComponent, DatoAccordionGroupComponent } from '../../';
+import { DatoAccordionComponent, DatoAccordionGroupComponent } from '../accordion/public_api';
 import { query } from '../internal/helpers';
 import { getListOptionHeight } from './list-size';
 import { DatoListSearchStrategy, defaultClientSearchStrategy } from './search.strategy';

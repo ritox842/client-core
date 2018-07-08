@@ -211,11 +211,12 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
      * When we first open the dropdown we need to mark the
      * FormControl values as actives
      */
-    setTimeout(() => {
-      if (this.hasValue) {
+    if (this.hasValue) {
+      setTimeout(() => {
         this.markAsActive(this._model);
-      }
-    }, 0);
+      }, 0);
+    }
+
     /** For later updates */
     this.cdr.markForCheck();
   }

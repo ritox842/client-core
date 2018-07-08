@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/datorama/client-core/compare/v1.1.0...v1.1.1) (2018-07-03)
+
+
+### Bug Fixes
+
+* **accordion:** allow dynamic active ids and expand all ([8826f8d](https://github.com/datorama/client-core/commit/8826f8d))
+* **dropdown:** click on active and recalc widt ([86dd155](https://github.com/datorama/client-core/commit/86dd155))
+
 # [1.1.0](https://github.com/datorama/client-core/compare/v1.0.2...v1.1.0) (2018-07-01)
 
 

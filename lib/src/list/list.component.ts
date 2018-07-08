@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, forwardRef, Input, OnDestroy, OnInit, QueryList, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, forwardRef, Input, OnDestroy, OnInit, QueryList, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
@@ -52,7 +52,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** autoFocus on search input element */
   @Input() autoFocus = true;
 
-  /** The options to display in the dropdown */
+  /** The options to display in the list */
   @Input()
   set dataSet(data: any[]) {
     this._data = data;
@@ -208,7 +208,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   writeValue(activeOptions: any | any[]): void {
     this._model = activeOptions ? coerceArray(activeOptions) : [];
     /**
-     * When we first open the dropdown we need to mark the
+     * When we first open the list we need to mark the
      * FormControl values as actives
      */
     if (this.hasValue) {

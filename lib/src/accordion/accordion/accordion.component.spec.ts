@@ -13,11 +13,14 @@ import { DatoAccordionContentComponent } from '../accordion-content/accordion-co
 import { DatoAccordionGroupComponent } from '../accordion-group/accordion-group.component';
 import { Component, ElementRef } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
+import { DatoIconModule, IconRegistry } from '../../../index';
 
 const declarations = [DatoAccordionHeaderComponent, DatoAccordionContentComponent, DatoAccordionGroupComponent];
 const accordion = {
   component: DatoAccordionComponent,
-  declarations
+  declarations,
+  imports: [DatoIconModule],
+  providers: [IconRegistry]
 };
 
 const simpleAccordion = `
@@ -115,8 +118,8 @@ describe('DatoAccordionComponent', () => {
 @Component({
   selector: 'custom-host',
   template: `
-    <button (click)="addMore()">Add one</button>
-  `
+        <button (click)="addMore()">Add one</button>
+    `
 })
 class CustomHostComponent {
   dynamic = [{ id: 1, title: 'one', text: 'text1' }, { id: 1, title: 'two', text: 'text2' }];
@@ -147,7 +150,9 @@ describe('DatoAccordionComponent - Dynamic Content', () => {
   const createHost = createHostComponentFactory<DatoAccordionComponent, CustomHostComponent>({
     declarations,
     component: DatoAccordionComponent,
-    host: CustomHostComponent
+    host: CustomHostComponent,
+    imports: [DatoIconModule],
+    providers: [IconRegistry]
   });
 
   it('should work with *ngFor', () => {
@@ -197,7 +202,15 @@ describe('DatoAccordionComponent - Dynamic Content', () => {
   template: ``
 })
 class CustomHostDisabledComponent {
-  dynamic = [{ id: 1, title: 'one', text: 'text1', disabled: true }, { id: 1, title: 'two', text: 'text2', disabled: false }];
+  dynamic = [
+    { id: 1, title: 'one', text: 'text1', disabled: true },
+    {
+      id: 1,
+      title: 'two',
+      text: 'text2',
+      disabled: false
+    }
+  ];
 }
 
 const dynamicAccordionDisabled = `
@@ -219,7 +232,9 @@ describe('DatoAccordionComponent - Disabled', () => {
   const createHost = createHostComponentFactory<DatoAccordionComponent, CustomHostDisabledComponent>({
     declarations,
     component: DatoAccordionComponent,
-    host: CustomHostDisabledComponent
+    host: CustomHostDisabledComponent,
+    imports: [DatoIconModule],
+    providers: [IconRegistry]
   });
 
   beforeEach(() => {

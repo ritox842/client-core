@@ -20,6 +20,7 @@ export class DatoAccordionGroupComponent {
   @ContentChild(DatoAccordionContentComponent) content: DatoAccordionContentComponent;
   @ContentChild(DatoAccordionHeaderComponent) header: DatoAccordionHeaderComponent;
   @HostBinding('class.dato-accordion-disabled') _disabled = false;
+  @HostBinding('class.force-hide') _hidden = false;
 
   @Output() toggle = new EventEmitter<{ expanded: boolean }>();
 

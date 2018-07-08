@@ -1,0 +1,13 @@
+<div>
+    <dato-input datoSize="lg"
+                [placeholder]="_searchPlaceholder"
+                (keyup)="keyup($event)"
+                [isFocused]="autoFocus"
+                [isLoading]="isLoading"
+                [formControl]="searchControl"
+                type="search">
+    </dato-input>
+    <div class="overflow-y-scroll dato-list__options">
+        <ng-content></ng-content>
+    </div>
+</div>

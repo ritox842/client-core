@@ -7,16 +7,16 @@
  */
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef } from '@angular/core';
-import { DatoSelectOptionComponent } from './select-option.component';
+import { DatoOptionComponent } from './option.component';
 import { getOptionTemplate } from './option-template';
 
 @Component({
   selector: 'dato-option[multi]',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: DatoSelectOptionComponent, useExisting: DatoSelectMultiOptionComponent }],
+  providers: [{ provide: DatoOptionComponent, useExisting: DatoMultiOptionComponent }],
   template: getOptionTemplate(true)
 })
-export class DatoSelectMultiOptionComponent extends DatoSelectOptionComponent {
+export class DatoMultiOptionComponent extends DatoOptionComponent {
   constructor(protected cdr: ChangeDetectorRef, protected host: ElementRef) {
     super(cdr, host);
   }

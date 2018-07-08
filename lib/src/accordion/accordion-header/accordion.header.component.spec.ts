@@ -9,11 +9,16 @@
 import { createHostComponentFactory, SpectatorWithHost } from '@netbasal/spectator';
 import { DatoAccordionHeaderComponent } from './accordion-header.component';
 import { Observable } from 'rxjs';
+import { DatoIconModule, IconRegistry } from '../../../index';
 
 describe('DatoAccordionHeaderComponent', () => {
   let host: SpectatorWithHost<DatoAccordionHeaderComponent>;
 
-  const createHost = createHostComponentFactory<DatoAccordionHeaderComponent>(DatoAccordionHeaderComponent);
+  const createHost = createHostComponentFactory<DatoAccordionHeaderComponent>({
+    component: DatoAccordionHeaderComponent,
+    imports: [DatoIconModule],
+    providers: [IconRegistry]
+  });
 
   it('should exists', () => {
     host = createHost(`<dato-accordion-header></dato-accordion-header>`);

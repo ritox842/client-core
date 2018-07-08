@@ -1,10 +1,10 @@
 import { DatoSelectComponent } from './select.component';
 import { createHostComponentFactory, dispatchFakeEvent, dispatchKeyboardEvent, query, queryAll, SpectatorWithHost, typeInElement } from '@netbasal/spectator';
 import { DatoTriggerMulti } from './trigger-multi/trigger-multi.component';
-import { DatoButtonModule, DatoCheckboxModule, DatoIconModule, DatoInputModule, DatoLinkButtonModule, DatoSelectEmptyComponent, DatoSelectMultiOptionComponent, DatoSelectOptionComponent, DatoTranslateService, DatoTriggerSingle, IconRegistry } from '../..';
+import { DatoButtonModule, DatoCheckboxModule, DatoIconModule, DatoInputModule, DatoLinkButtonModule, DatoSelectEmptyComponent, DatoMultiOptionComponent, DatoOptionComponent, DatoTranslateService, DatoTriggerSingle, IconRegistry } from '../..';
 import { DatoOverlay } from '../angular/overlay';
 import { DatoSelectActiveDirective } from './select-active.directive';
-import { DatoSelectGroupComponent } from './select-group.component';
+import { DatoGroupComponent } from '../options/group.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Component, Type } from '@angular/core';
 import { stubs } from '../services/public_api';
@@ -76,7 +76,16 @@ class GroupComponent extends CustomHostComponent {
 class ServerSearchComponent extends CustomHostComponent {
   isLoading = false;
 
-  _optionsFromServer = [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }, { id: 4, label: 'klm' }, { id: 5, label: 'nop' }];
+  _optionsFromServer = [
+    { id: 1, label: 'abc' },
+    { id: 2, label: 'efg' },
+    { id: 3, label: 'hij' },
+    {
+      id: 4,
+      label: 'klm'
+    },
+    { id: 5, label: 'nop' }
+  ];
 
   constructor() {
     super();
@@ -100,7 +109,7 @@ function createHostFactory<T>(host: Type<T>) {
   return createHostComponentFactory({
     component: DatoSelectComponent,
     host,
-    declarations: [DatoTriggerSingle, DatoTriggerMulti, DatoSelectActiveDirective, DatoSelectEmptyComponent, DatoSelectGroupComponent, DatoSelectOptionComponent, DatoSelectMultiOptionComponent],
+    declarations: [DatoTriggerSingle, DatoTriggerMulti, DatoSelectActiveDirective, DatoSelectEmptyComponent, DatoGroupComponent, DatoOptionComponent, DatoMultiOptionComponent],
     providers: [DatoOverlay, DatoTranslateService, stubs.translate(), IconRegistry],
     imports: [DatoIconModule, DatoInputModule, ReactiveFormsModule, DatoCheckboxModule, DatoLinkButtonModule, DatoButtonModule]
   });
@@ -167,7 +176,7 @@ describe('DatoSelect', () => {
     it('should NOT display search box', () => {
       host = createHost(select);
       host.click(TRIGGER_SINGLE_SELECTOR);
-      expect(query('.dato-select__single dato-input')).toBeHidden();
+      expect(query('.dato-select__single dato-input')).toHaveClass('force-hide');
     });
 
     it('should show placeholder when control is empty', () => {
@@ -527,9 +536,9 @@ describe('DatoSelect', () => {
     const createHost = createHostFactory(GroupComponent);
 
     const select = `
-      <dato-select [formControl]="control" [dataSet]="options$ | async" #datoSelectGroup>
+      <dato-select [formControl]="control" [dataSet]="options$ | async" #datoGroup>
 
-        <dato-group *ngFor="let group of datoSelectGroup.data">
+        <dato-group *ngFor="let group of datoGroup.data">
           <div groupLabel>{{group.label}}</div>
 
           <dato-option *ngFor="let option of group.children" [option]="option">
@@ -909,6 +918,5 @@ function getOptionsAsArray() {
 }
 
 function isOptionHidden(el) {
-  var style = window.getComputedStyle(el.querySelector('.dato-select__option'));
-  return style.display === 'none' || style.visibility === 'hidden';
+  return !!el.querySelector('.dato-select__option.force-hide');
 }

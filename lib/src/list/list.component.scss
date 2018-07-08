@@ -1,0 +1,18 @@
+$md: (
+        height: 35px,
+        selectedHeight: 25px,
+        optionHeight: 35px,
+        selectedMargin: 5px,
+        font: 14px
+);
+
+dato-list {
+  & .dato-select__option {
+    height: map-get($md, optionHeight);
+    line-height: map-get($md, optionHeight);
+    font-size: map-get($md, font);
+  }
+  & dato-accordion .dato-select__option {
+    margin-left: 15px;
+  }
+}

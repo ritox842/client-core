@@ -20,11 +20,12 @@ import { DatoAccordionComponent } from './accordion/accordion.component';
 import { DatoAccordionContentComponent } from './accordion-content/accordion-content.component';
 import { DatoAccordionGroupComponent } from './accordion-group/accordion-group.component';
 import { DatoAccordionHeaderComponent } from './accordion-header/accordion-header.component';
+import { DatoIconModule } from '../icon/icon.module';
 
 const publicApi = [DatoAccordionComponent, DatoAccordionContentComponent, DatoAccordionGroupComponent, DatoAccordionHeaderComponent];
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, DatoIconModule],
   declarations: [publicApi],
   exports: [publicApi]
 })

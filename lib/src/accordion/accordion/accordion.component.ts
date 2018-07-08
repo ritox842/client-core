@@ -18,9 +18,9 @@ import { toBoolean } from '@datorama/utils';
   exportAs: 'datoAccordion',
   styles: [
     `
-      :host {
-        display: block;
-      }`
+            :host {
+                display: block;
+            }`
   ]
 })
 export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
@@ -30,6 +30,7 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
 
   @Input() closeOthers = false;
   @Input() expandAll = false;
+  @Input() includeArrows = false;
   @Input() activeIds: number | number[] = [];
 
   groupsSubscription;
@@ -67,6 +68,12 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
       this.register();
     });
 
+    if (this.includeArrows) {
+      this.groups.forEach(group => {
+        group.header.includeArrow = true;
+      });
+    }
+
     this.register();
   }
 
@@ -95,10 +102,10 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
 
     this.toggleGroup(group, !group.content._expanded);
 
-    const childes = this.getChildAccordionsComponents();
+    const children = this.getChildAccordionsComponents();
 
-    if (childes.length) {
-      childes.forEach(child => child.groups.forEach(g => this.closeAndEmit(g)));
+    if (children.length) {
+      children.forEach(child => child.groups.forEach(g => this.closeAndEmit(g)));
     }
 
     this.emitToggle(group);

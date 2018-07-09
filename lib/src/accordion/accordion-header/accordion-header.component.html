@@ -1,4 +1,4 @@
-<div class="d-flex items-center">
+<div [ngClass]="{'d-flex': includeArrow, 'items-center': includeArrow}">
     <dato-icon *ngIf="includeArrow && !_expanded" datoIcon="arrow-right" datoSize="sm" class="mx-8"></dato-icon>
     <dato-icon *ngIf="includeArrow && _expanded" datoIcon="arrow-down" datoSize="sm" class="mx-8"></dato-icon>
     <ng-content></ng-content>

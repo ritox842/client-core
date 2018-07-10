@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/datorama/client-core/compare/v1.2.1...v1.2.2) (2018-07-09)
+
+
+### Bug Fixes
+
+* **accordion:** include flex style only when arrows required ([6e09d2d](https://github.com/datorama/client-core/commit/6e09d2d))
+
 ## [1.2.1](https://github.com/datorama/client-core/compare/v1.2.0...v1.2.1) (2018-07-08)
 
 

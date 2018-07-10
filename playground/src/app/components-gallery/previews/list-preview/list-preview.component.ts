@@ -24,6 +24,7 @@ export class ListPreviewComponent {
   simpleControl = new FormControl({ id: 2, label: "efg" });
   accordionControl = new FormControl({ id: 2, label: "efg" });
   scrollingControl = new FormControl({ id: 2, label: "efg" });
+  flattenedControl = new FormControl({ id: 2, label: "efg", group: "A" });
 
   options = [
     {
@@ -72,5 +73,12 @@ export class ListPreviewComponent {
       label: "F",
       children: [{ id: 8, label: "wxyz" }]
     }
+  ];
+  flattenedOptions = [
+    { id: 1, label: "abc", group: "A" },
+    { id: 2, label: "efg", group: "A" },
+    { id: 3, label: "hij", group: "A" },
+    { id: 4, label: "klm", group: "B" },
+    { id: 5, label: "nop", group: "C" }
   ];
 }

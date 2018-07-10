@@ -144,10 +144,6 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     return this._data;
   }
 
-  set data(value: any[]) {
-    this._data = value;
-  }
-
   get open() {
     return this._open;
   }

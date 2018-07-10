@@ -10,7 +10,7 @@ import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
-import { coerceArray, mapValues, toBoolean, values } from '@datorama/utils';
+import { coerceArray, toBoolean, values } from '@datorama/utils';
 import { debounceTime, mapTo } from 'rxjs/operators';
 import { DatoOptionComponent } from '../options/option.component';
 import { DatoGroupComponent } from '../options/group.component';
@@ -55,7 +55,12 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** The options to display in the list */
   @Input()
   set dataSet(data: any[]) {
-    this._data = this.groupBy ? this.normalizeData(data) : data;
+    if (!this.initialRun) {
+      this._data = this.normalizeData(data);
+    } else {
+      /** data normalization, if required, will be handled by ngAfterContentInit in the initial run */
+      this._data = data;
+    }
 
     /** If it's async updates, create micro task in order to re-subscribe to clicks */
     if (this._dataIsDirty) {
@@ -94,10 +99,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    */
   get data() {
     return this._data;
-  }
-
-  set data(value: any[]) {
-    this._data = this.groupBy ? this.normalizeData(value) : value;
   }
 
   get hasResults() {
@@ -144,6 +145,8 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Current index of active item (keyboard navigation) */
   private currentIndex;
 
+  private initialRun = true;
+
   /** Keyboard Manager */
   private keyboardEventsManager: ListKeyManager<DatoOptionComponent>;
 
@@ -159,6 +162,8 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   ngOnInit() {
     this.listenToSearch();
+    this._data = this.normalizeData(this._data);
+    this.initialRun = false;
   }
 
   ngAfterContentInit(): void {
@@ -293,6 +298,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * @param {any[]} data
    */
   private normalizeData(data: any[]): any[] {
+    if (!this.groupBy) {
+      return data;
+    }
     const groups = {};
     data.forEach(datum => {
       if (!(datum[this.groupBy] in groups)) {

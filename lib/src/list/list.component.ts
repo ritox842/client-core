@@ -10,7 +10,7 @@ import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
-import { coerceArray, toBoolean } from '@datorama/utils';
+import { coerceArray, mapValues, toBoolean, values } from '@datorama/utils';
 import { debounceTime, mapTo } from 'rxjs/operators';
 import { DatoOptionComponent } from '../options/option.component';
 import { DatoGroupComponent } from '../options/group.component';
@@ -55,7 +55,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** The options to display in the list */
   @Input()
   set dataSet(data: any[]) {
-    this._data = data;
+    this._data = this.groupBy ? this.normalizeData(data) : data;
 
     /** If it's async updates, create micro task in order to re-subscribe to clicks */
     if (this._dataIsDirty) {
@@ -73,6 +73,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   /** Debounce time to emit search queries */
   @Input() debounceTime = 300;
+
+  /** If defined, indicates by which key the data should be normalized */
+  @Input() groupBy: string;
 
   /** The key that stores the option id */
   @Input() idKey = 'id';
@@ -94,7 +97,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   }
 
   set data(value: any[]) {
-    this._data = value;
+    this._data = this.groupBy ? this.normalizeData(value) : value;
   }
 
   get hasResults() {
@@ -283,6 +286,23 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
         match.active = true;
       }
     }
+  }
+
+  /**
+   * Normalize data
+   * @param {any[]} data
+   */
+  private normalizeData(data: any[]): any[] {
+    const groups = {};
+    data.forEach(datum => {
+      if (!(datum[this.groupBy] in groups)) {
+        groups[datum[this.groupBy]] = { children: [datum] };
+        groups[datum[this.groupBy]][this.labelKey] = datum[this.groupBy];
+      } else {
+        groups[datum[this.groupBy]].children.push(datum);
+      }
+    });
+    return values(groups);
   }
 
   /**

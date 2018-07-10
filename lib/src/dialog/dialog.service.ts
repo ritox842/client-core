@@ -11,13 +11,12 @@ import { DatoConfirmationDialogComponent } from './confirmation/confirmation-dia
 import { DatoCoreError } from '../errors';
 import { DatoTranslateService } from '../services/translate.service';
 import { ContentType } from '../dynamic-content/dynamic-content.types';
+import { zIndex } from '../internal/z-index';
 
 @Injectable()
 export class DatoDialog {
   private dialogs = new Map<string, DialogConfig>();
   private dialogsStack: DialogConfig[] = [];
-
-  private lastZIndex = 10000;
 
   constructor(private resolver: ComponentFactoryResolver, private applicationRef: ApplicationRef, private injector: Injector, private translate: DatoTranslateService) {}
 
@@ -186,7 +185,7 @@ export class DatoDialog {
     const dialogElement = config.dialogElement.querySelector(`.${dialogTag}`) as HTMLElement;
 
     // set next z-index
-    dialogElement.style.zIndex = (++this.lastZIndex).toString();
+    dialogElement.style.zIndex = (++zIndex.dialog).toString();
 
     // listen for close events
     if (config.dialogRef.options.enableClose === false) {

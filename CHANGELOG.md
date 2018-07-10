@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/datorama/client-core/compare/v1.2.2...v1.2.3) (2018-07-10)
+
+
+### Bug Fixes
+
+* **dropdown:** adding style and zindex ([12ae8a1](https://github.com/datorama/client-core/commit/12ae8a1))
+
 ## [1.2.2](https://github.com/datorama/client-core/compare/v1.2.1...v1.2.2) (2018-07-09)
 
 

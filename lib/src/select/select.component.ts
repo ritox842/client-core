@@ -12,8 +12,8 @@ import { BaseCustomControl } from '../internal/base-custom-control';
 import { coerceArray } from '@datorama/utils';
 import { SelectType } from './select.types';
 import { DatoOptionComponent } from '../options/option.component';
-import { merge } from 'rxjs';
-import { debounceTime, mapTo, take, throttleTime } from 'rxjs/operators';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, mapTo, take } from 'rxjs/operators';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { Placement, PopperOptions } from 'popper.js';
@@ -23,7 +23,7 @@ import { ListKeyManager } from '@angular/cdk/a11y';
 import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import { getSelectOptionHeight } from './select-size';
 import { DatoTranslateService } from '../services/translate.service';
-import { fromEvent } from 'rxjs';
+import { zIndex } from '../internal/z-index';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -82,7 +82,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Add/removes search input */
   @Input() isCombo = true;
 
-  /** Wheteher is group */
+  /** Wheteher it's a group */
   @Input() isGroup = false;
 
   /**
@@ -132,7 +132,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   @Output() search = new EventEmitter<string>();
 
   /** Emit when [withActions] is true and the user clicks save */
-  @Output() save = new EventEmitter<string>();
+  @Output() save = new EventEmitter<void>();
 
   @Output() fetch = new EventEmitter<boolean>();
 
@@ -360,6 +360,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     }
 
     this.datoOverlay.scheduleUpdate();
+    setStyle(query('.dato-overlay'), 'zIndex', zIndex.select.toString());
   }
 
   ngAfterContentInit(): void {

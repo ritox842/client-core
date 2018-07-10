@@ -12,7 +12,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnI
   selector: 'dato-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './group.component.html',
-  styleUrls: ['./options.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class DatoGroupComponent implements OnInit {

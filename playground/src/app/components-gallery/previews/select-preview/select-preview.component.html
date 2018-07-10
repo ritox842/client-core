@@ -5,7 +5,8 @@
 
       <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple>
 
-        <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option" [disabled]="index === 1">
+        <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option"
+                     [disabled]="index === 1">
           {{option.label}}
         </dato-option>
 
@@ -21,7 +22,8 @@
     <textarea datoHighlight="html">
       <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple>
 
-        <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option" [disabled]="index === 1">
+        <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option"
+                     [disabled]="index === 1">
           option.label
         </dato-option>
 
@@ -40,7 +42,8 @@
 
       <dato-select [formControl]="asyncControl" [dataSet]="options$ | async" #datoSelectAsync>
 
-        <dato-option *ngFor="let option of datoSelectAsync.data; index as index" [option]="option" [disabled]="index === 1">
+        <dato-option *ngFor="let option of datoSelectAsync.data; index as index" [option]="option"
+                     [disabled]="index === 1">
           {{option.label}}
         </dato-option>
 
@@ -57,7 +60,8 @@
     <textarea datoHighlight="html">
       <dato-select [formControl]="asyncControl" [dataSet]="options$ | async" #datoSelectAsync>
 
-        <dato-option *ngFor="let option of datoSelectAsync.data; index as index" [option]="option" [disabled]="index === 1">
+        <dato-option *ngFor="let option of datoSelectAsync.data; index as index" [option]="option"
+                     [disabled]="index === 1">
           option.label
         </dato-option>
 
@@ -458,7 +462,8 @@
         <dato-group *ngFor="let group of datoGroupMulti.data">
           <div groupLabel>{{group.label}}</div>
 
-          <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi [disabled]="index === 0">
+          <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi
+                       [disabled]="index === 0">
             {{option.label}}
           </dato-option>
 
@@ -480,7 +485,8 @@
         <dato-group *ngFor="let group of datoGroupMulti.data">
           <div groupLabel>group.label</div>
 
-          <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi [disabled]="index === 0">
+          <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi
+                       [disabled]="index === 0">
             option.label
           </dato-option>
 
@@ -498,7 +504,8 @@
   <section class="d-flex">
     <div class="select-preview" style="width: 500px;">
 
-      <dato-select [formControl]="withActionsControl" [dataSet]="options" #datoSelectFooter (save)="onSave()" type="multi">
+      <dato-select [formControl]="withActionsControl" [dataSet]="options" #datoSelectFooter (save)="onSave()"
+                   type="multi">
 
         <dato-option *ngFor="let option of datoSelectFooter.data" [option]="option" multi>
           {{option.label}}
@@ -515,7 +522,8 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <dato-select [formControl]="withActionsControl" [dataSet]="options" #datoSelectFooter (save)="onSave()" type="multi">
+      <dato-select [formControl]="withActionsControl" [dataSet]="options" #datoSelectFooter (save)="onSave()"
+                   type="multi">
 
         <dato-option *ngFor="let option of datoSelectFooter.data" [option]="option" multi>
           option.label
@@ -578,7 +586,8 @@
   <section class="d-flex">
     <div class="select-preview" style="width: 500px;">
 
-      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti type="multi" [allowSelectAll]="true">
+      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti type="multi"
+                   [allowSelectAll]="true">
 
         <dato-option *ngFor="let option of datoSelectMulti.data" [option]="option" multi>
           {{option.label}}
@@ -595,7 +604,8 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti type="multi" [allowSelectAll]="true">
+      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti type="multi"
+                   [allowSelectAll]="true">
 
         <dato-option *ngFor="let option of datoSelectMulti.data" [option]="option" multi>
           option.label
@@ -614,7 +624,8 @@
   <section class="d-flex">
     <div class="select-preview">
 
-      <dato-select [formControl]="infiniteControl" [dataSet]="infiniteOptions" [infiniteScrollLoading]="infiniteScrollLoading" #datoSelectInfinite (fetch)="fetchMore()">
+      <dato-select [formControl]="infiniteControl" [dataSet]="infiniteOptions"
+                   [infiniteScrollLoading]="infiniteScrollLoading" #datoSelectInfinite (fetch)="fetchMore()">
 
         <dato-option *ngFor="let option of datoSelectInfinite.data; index as index" [option]="option">
           {{option.label}}
@@ -631,8 +642,136 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <dato-select [formControl]="infiniteControl" [dataSet]="infiniteOptions" [infiniteScrollLoading]="infiniteScrollLoading" #datoSelectInfinite (fetch)="fetchMore()"></dato-select>
+      <dato-select [formControl]="infiniteControl" [dataSet]="infiniteOptions"
+                   [infiniteScrollLoading]="infiniteScrollLoading" #datoSelectInfinite
+                   (fetch)="fetchMore()"></dato-select>
     </textarea>
 
   </dato-tabs>
 </dato-preview>
+
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>idKey</td>
+        <td>string</td>
+        <td>id</td>
+        <td>
+          The key that stores the option id
+        </td>
+      </tr>
+      <tr>
+        <td>labelKey</td>
+        <td>string</td>
+        <td>label</td>
+        <td>The lookup key for the label</td>
+      </tr>
+      <tr>
+        <td>placeholder</td>
+        <td>translate key (general.search)</td>
+        <td>Select..</td>
+        <td>Placeholder</td>
+      </tr>
+      <tr>
+        <td>searchPlaceholder</td>
+        <td>translate key (general.search)</td>
+        <td>Search..</td>
+        <td>Placeholder for the search input</td>
+      </tr>
+      <tr>
+        <td>noItemsLabel</td>
+        <td>translate key</td>
+        <td>No items found</td>
+        <td>Placeholder for when there are no items</td>
+      </tr>
+      <tr>
+        <td>isCombo</td>
+        <td>boolean</td>
+        <td>true</td>
+        <td>Wheteher to allow search</td>
+      </tr>
+      <tr>
+        <td>isGroup</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Wheteher it's a group</td>
+      </tr>
+      <tr>
+        <td>internalSearch</td>
+        <td>boolean</td>
+        <td>true</td>
+        <td>Wheteher to perform an internal search</td>
+      </tr>
+      <tr>
+        <td>debounceTime</td>
+        <td>number</td>
+        <td>300</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>isLoading</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Whether to show loading indicator</td>
+      </tr>
+      <tr>
+        <td>allowSelectAll</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Whether to allow select all checkbox</td>
+      </tr>
+      <tr>
+        <td>type</td>
+        <td>single | multi</td>
+        <td>single</td>
+        <td>The select type</td>
+      </tr>
+      <tr>
+        <td>placement</td>
+        <td>string</td>
+        <td>bottom-start</td>
+        <td>Popper js placement</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>
+
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table type="outputs">
+      <tr>
+        <td>search</td>
+        <td>string</td>
+        <td>Emits search value when internal search is false</td>
+      </tr>
+      <tr>
+        <td>save</td>
+        <td>void</td>
+        <td>Emits when the user clicks save</td>
+      </tr>
+      <tr>
+        <td>fetch</td>
+        <td>string</td>
+        <td>Emit search value when internal search is false</td>
+      </tr>
+
+    </dato-api-table>
+
+  </div>
+</div>

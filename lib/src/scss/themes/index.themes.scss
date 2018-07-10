@@ -1,4 +1,4 @@
-$PRESERVE_THEMIFY: true;
+$PRESERVE_THEMIFY: false;
 @import '../../../../node_modules/@datorama/themify/themify.scss';
 
 $themeRules: (
@@ -33,3 +33,4 @@ Components Themes
 @import '../../toast/toast.theme';
 @import '../../select/trigger-single/trigger-single.theme';
 @import '../../select/trigger-multi/trigger-multi.theme';
+@import '../../options/options';

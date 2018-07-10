@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { mapTo, switchMap } from "rxjs/operators";
 import { Subject, timer } from "rxjs";
 import { DatoSnackbar } from "../../../../../../lib";
@@ -40,8 +40,23 @@ export class SelectPreviewComponent implements OnInit {
   options = [];
   optionsFromServer;
   infiniteOptions = [];
+  dayOfWeekOptions = [
+    { value: 1, label: "Sunday" },
+    { value: 2, label: "Monday" },
+    { value: 3, label: "Tuesday" },
+    { value: 4, label: "Wednesday" },
+    { value: 5, label: "Thursday" },
+    { value: 6, label: "Friday" },
+    { value: 7, label: "Saturday" }
+  ];
+  frequencyForm: FormGroup;
+  dayOfWeek;
+  constructor(private snackbar: DatoSnackbar, private builder: FormBuilder) {
+    this.dayOfWeek = new FormControl();
+    this.frequencyForm = this.builder.group({
+      dayOfWeek: this.builder.control([])
+    });
 
-  constructor(private snackbar: DatoSnackbar) {
     for (var i = 0, len = 15; i < len; i++) {
       this.options.push({
         label: `Item ${i + 1}`,

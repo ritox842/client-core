@@ -302,14 +302,15 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
       return data;
     }
     const groups = {};
-    data.forEach(datum => {
-      if (!(datum[this.groupBy] in groups)) {
-        groups[datum[this.groupBy]] = { children: [datum] };
-        groups[datum[this.groupBy]][this.labelKey] = datum[this.groupBy];
+    for (let datum of data) {
+      const groupKey = datum[this.groupBy];
+      if (groups[groupKey]) {
+        groups[groupKey].children.push(datum);
       } else {
-        groups[datum[this.groupBy]].children.push(datum);
+        groups[groupKey] = { children: [datum] };
+        groups[groupKey][this.labelKey] = groupKey;
       }
-    });
+    }
     return values(groups);
   }
 

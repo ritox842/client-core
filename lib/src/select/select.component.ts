@@ -24,6 +24,7 @@ import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
 import { getSelectOptionHeight } from './select-size';
 import { DatoTranslateService } from '../services/translate.service';
 import { zIndex } from '../internal/z-index';
+import { normalizeData } from '../internal/data-normalization';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -119,7 +120,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   @Input()
   set dataSet(data: any[]) {
     if (!this.initialRun) {
-      this._data = this.normalizeData(data);
+      this._data = normalizeData(data, this.labelKey, this.groupBy);
     } else {
       /** data normalization, if required, will be handled by ngOnInit in the initial run */
       this._data = data;
@@ -278,7 +279,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this._withActions = this.save.observers.length === 1;
     this._withInfiniteScroll = this.fetch.observers.length === 1;
     this.listenToSearch();
-    this._data = this.normalizeData(this._data);
+    this._data = normalizeData(this._data, this.labelKey, this.groupBy);
     this.initialRun = false;
   }
 
@@ -500,27 +501,6 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
         this.cdr.markForCheck();
         this.datoOverlay && this.datoOverlay.scheduleUpdate();
       });
-  }
-
-  /**
-   * Normalize data
-   * @param {any[]} data
-   */
-  private normalizeData(data: any[]): any[] {
-    if (!this.groupBy) {
-      return data;
-    }
-    const groups = {};
-    for (let datum of data) {
-      const groupKey = datum[this.groupBy];
-      if (groups[groupKey]) {
-        groups[groupKey].children.push(datum);
-      } else {
-        groups[groupKey] = { children: [datum] };
-        groups[groupKey][this.labelKey] = groupKey;
-      }
-    }
-    return values(groups);
   }
 
   /**

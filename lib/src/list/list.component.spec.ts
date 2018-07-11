@@ -138,16 +138,13 @@ describe('DatoList', () => {
       })
     );
 
-    it(
-      'should normalize data when groupBy is set',
-      fakeAsync(() => {
-        host = createHost(list);
-        host.component.groupBy = 'group';
-        host.hostComponent.options = flattenedOptionsData;
-        host.detectChanges();
-        expect(host.component.data).toEqual(normalizedOptionsData);
-      })
-    );
+    it('should normalize data when groupBy is set', () => {
+      host = createHost(list);
+      host.component.groupBy = 'group';
+      host.hostComponent.options = flattenedOptionsData;
+      host.detectChanges();
+      expect(host.component.data).toEqual(normalizedOptionsData);
+    });
   });
 });
 

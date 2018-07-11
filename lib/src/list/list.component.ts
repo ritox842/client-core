@@ -21,6 +21,7 @@ import { DatoAccordionComponent, DatoAccordionGroupComponent } from '../accordio
 import { query } from '../internal/helpers';
 import { getListOptionHeight } from './list-size';
 import { DatoListSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
+import { normalizeData } from '../internal/data-normalization';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -56,7 +57,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   @Input()
   set dataSet(data: any[]) {
     if (!this.initialRun) {
-      this._data = this.normalizeData(data);
+      this._data = normalizeData(data, this.labelKey, this.groupBy);
     } else {
       /** data normalization, if required, will be handled by ngOnInit in the initial run */
       this._data = data;
@@ -163,7 +164,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   ngOnInit() {
     this.listenToSearch();
-    this._data = this.normalizeData(this._data);
+    this._data = normalizeData(this._data, this.labelKey, this.groupBy);
     this.initialRun = false;
   }
 
@@ -292,27 +293,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
         match.active = true;
       }
     }
-  }
-
-  /**
-   * Normalize data
-   * @param {any[]} data
-   */
-  private normalizeData(data: any[]): any[] {
-    if (!this.groupBy) {
-      return data;
-    }
-    const groups = {};
-    for (let datum of data) {
-      const groupKey = datum[this.groupBy];
-      if (groups[groupKey]) {
-        groups[groupKey].children.push(datum);
-      } else {
-        groups[groupKey] = { children: [datum] };
-        groups[groupKey][this.labelKey] = groupKey;
-      }
-    }
-    return values(groups);
   }
 
   /**

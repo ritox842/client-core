@@ -10,7 +10,7 @@ import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
-import { coerceArray, toBoolean } from '@datorama/utils';
+import { coerceArray, toBoolean, values } from '@datorama/utils';
 import { debounceTime, mapTo } from 'rxjs/operators';
 import { DatoOptionComponent } from '../options/option.component';
 import { DatoGroupComponent } from '../options/group.component';
@@ -21,6 +21,7 @@ import { DatoAccordionComponent, DatoAccordionGroupComponent } from '../accordio
 import { query } from '../internal/helpers';
 import { getListOptionHeight } from './list-size';
 import { DatoListSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
+import { normalizeData } from '../internal/data-normalization';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -55,7 +56,12 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** The options to display in the list */
   @Input()
   set dataSet(data: any[]) {
-    this._data = data;
+    if (!this.initialRun) {
+      this._data = normalizeData(data, this.labelKey, this.groupBy);
+    } else {
+      /** data normalization, if required, will be handled by ngOnInit in the initial run */
+      this._data = data;
+    }
 
     /** If it's async updates, create micro task in order to re-subscribe to clicks */
     if (this._dataIsDirty) {
@@ -68,11 +74,11 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     this._dataIsDirty = true;
   }
 
-  /** Client search strategy */
-  @Input() searchStrategy: DatoListSearchStrategy = defaultClientSearchStrategy;
-
   /** Debounce time to emit search queries */
   @Input() debounceTime = 300;
+
+  /** If defined, indicates by which key the data should be normalized */
+  @Input() groupBy: string;
 
   /** The key that stores the option id */
   @Input() idKey = 'id';
@@ -86,15 +92,14 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Search groups as well as options */
   @Input() searchGroupLabels = true;
 
+  /** Client search strategy */
+  @Input() searchStrategy: DatoListSearchStrategy = defaultClientSearchStrategy;
+
   /**
    * Getters and Setters
    */
   get data() {
     return this._data;
-  }
-
-  set data(value: any[]) {
-    this._data = value;
   }
 
   get hasResults() {
@@ -141,6 +146,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Current index of active item (keyboard navigation) */
   private currentIndex;
 
+  /** true until ngOnInit */
+  private initialRun = true;
+
   /** Keyboard Manager */
   private keyboardEventsManager: ListKeyManager<DatoOptionComponent>;
 
@@ -156,6 +164,8 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   ngOnInit() {
     this.listenToSearch();
+    this._data = normalizeData(this._data, this.labelKey, this.groupBy);
+    this.initialRun = false;
   }
 
   ngAfterContentInit(): void {

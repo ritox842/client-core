@@ -8,23 +8,50 @@ import { DatoListComponent } from './list.component';
 import { DatoOptionsModule } from '../options/options.module';
 import { CommonModule } from '@angular/common';
 
+const optionsData = [
+  {
+    label: 'A',
+    children: [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }]
+  },
+  {
+    label: 'B',
+    children: [{ id: 4, label: 'klm' }]
+  },
+  {
+    label: 'C',
+    children: [{ id: 5, label: 'nop' }]
+  }
+];
+
+const flattenedOptionsData = [{ id: 1, label: 'abc', group: 'A' }, { id: 2, label: 'efg', group: 'A' }, { id: 3, label: 'hij', group: 'A' }, { id: 4, label: 'klm', group: 'B' }, { id: 5, label: 'nop', group: 'C' }];
+
+const normalizedOptionsData = [
+  {
+    label: 'A',
+    children: [
+      { id: 1, label: 'abc', group: 'A' },
+      { id: 2, label: 'efg', group: 'A' },
+      {
+        id: 3,
+        label: 'hij',
+        group: 'A'
+      }
+    ]
+  },
+  {
+    label: 'B',
+    children: [{ id: 4, label: 'klm', group: 'B' }]
+  },
+  {
+    label: 'C',
+    children: [{ id: 5, label: 'nop', group: 'C' }]
+  }
+];
+
 @Component({ selector: 'custom-host', template: '' })
 class CustomHostComponent {
   control = new FormControl();
-  options = [
-    {
-      label: 'A',
-      children: [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }]
-    },
-    {
-      label: 'B',
-      children: [{ id: 4, label: 'klm' }]
-    },
-    {
-      label: 'C',
-      children: [{ id: 5, label: 'nop' }]
-    }
-  ];
+  options: any[] = optionsData;
 }
 
 function createHostFactory<T>(host: Type<T>) {
@@ -110,6 +137,14 @@ describe('DatoList', () => {
         expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(0);
       })
     );
+
+    it('should normalize data when groupBy is set', () => {
+      host = createHost(list);
+      host.component.groupBy = 'group';
+      host.hostComponent.options = flattenedOptionsData;
+      host.detectChanges();
+      expect(host.component.data).toEqual(normalizedOptionsData);
+    });
   });
 });
 

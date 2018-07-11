@@ -121,6 +121,8 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
+     <div class="list-container-scrolling">
+
       <dato-list [formControl]="scrollingControl" [dataSet]="longOptions" #datoListWithScrolling>
 
           <dato-group *ngFor="let group of datoListWithScrolling.data">
@@ -133,7 +135,155 @@
           </dato-group>
 
         </dato-list>
+    </div>
+
     </textarea>
 
   </dato-tabs>
+  <dato-tabs show="css">
+    <textarea datoHighlight="css">
+    .list-container-scrolling .dato-list__options {
+    height: 250px;
+      }
+    </textarea>
+  </dato-tabs>
 </dato-preview>
+
+<dato-preview title="List - Normalize Flattened Data">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="list-container">
+        <dato-list [formControl]="flattenedControl" [dataSet]="flattenedOptions" [groupBy]="'group'"
+                   #datoListWithFlattenedData>
+
+          <dato-group *ngFor="let group of datoListWithFlattenedData.data">
+            <div groupLabel>{{group.label}}</div>
+
+            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+              {{option.label}}
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
+      </div>
+      <p datoFont class="mt-10">Control value: <span class="code">{{flattenedControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+<textarea datoHighlight="html">
+      <dato-list [formControl]="flattenedControl" [dataSet]="flattenedOptions" [groupBy]="'group'"
+                 #datoListWithFlattenedData>
+
+          <dato-group *ngFor="let group of datoListWithFlattenedData.data">
+            <div groupLabel>group.label</div>
+
+            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+              option.label
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
+    </textarea>
+
+  </dato-tabs>
+  <dato-tabs show="js">
+    <textarea datoHighlight="js">
+      flattenedOptions=[{ id: 1, label: 'abc', group: 'A' }, { id: 2, label: 'efg', group: 'A' }, { id: 3, label: 'hij', group: 'A' }, { id: 4, label: 'klm', group: 'B' }, { id: 5, label: 'nop', group: 'C' }];
+    /** turned into:  [
+    * { label: 'A',
+    *   children: [
+    *    { id: 1, label: 'abc', group: 'A' },
+    *    { id: 2, label: 'efg', group: 'A' },
+    *    { id: 3, label: 'hij', group: 'A' }
+    *  ]},
+    * { label: 'B',
+    *   children: [
+    *    { id: 4, label: 'klm', group: 'B' }
+    *  ]},
+    * { label: 'C',
+    *   children: [
+    *    { id: 5, label: 'nop', group: 'C' }
+    *  ]}
+    * ]
+      */
+    </textarea></dato-tabs>
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>autoFocus</td>
+        <td>boolean</td>
+        <td>true</td>
+        <td>
+          Autofocus on the search component inside the list
+        </td>
+      </tr>
+      <tr>
+        <td>dataSet</td>
+        <td>any[]</td>
+        <td>[]</td>
+        <td>
+          The data to display in the list
+        </td>
+      </tr>
+      <tr>
+        <td>debounceTime</td>
+        <td>number</td>
+        <td>300</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>groupBy</td>
+        <td>string</td>
+        <td>undefined</td>
+        <td>If defined, data normalization is performed on the dataSet</td>
+      </tr>
+      <tr>
+        <td>idKey</td>
+        <td>string</td>
+        <td>id</td>
+        <td>
+          The key that stores the option id
+        </td>
+      </tr>
+      <tr>
+        <td>isLoading</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Whether to show loading indicator</td>
+      </tr>
+      <tr>
+        <td>labelKey</td>
+        <td>string</td>
+        <td>label</td>
+        <td>The lookup key for the label</td>
+      </tr>
+      <tr>
+        <td>searchGroupLabels</td>
+        <td>boolean</td>
+        <td>true</td>
+        <td>Search group labels as well as options</td>
+      </tr>
+      <tr>
+        <td>searchStrategy</td>
+        <td>function</td>
+        <td>Case insensitive search if the label key</td>
+        <td>How to search the options and groups</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

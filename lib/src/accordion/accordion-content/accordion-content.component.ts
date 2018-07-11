@@ -30,7 +30,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
   animations: [trigger('slideInOut', [transition(':enter', [style({ height: '0px' }), animate('200ms', style({ height: '*' }))]), transition(':leave', [style({ height: '*' }), animate('200ms', style({ height: '0px' }))])])]
 })
 export class DatoAccordionContentComponent {
-  @ContentChild(TemplateRef) template: TemplateRef<any>;
+  @Input('tpl') template: TemplateRef<any>;
   _expanded: boolean = false;
 
   @Input()

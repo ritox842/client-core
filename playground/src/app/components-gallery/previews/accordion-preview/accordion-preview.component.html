@@ -8,8 +8,8 @@
       <dato-accordion-header>
         <div class="header">Title 1</div>
       </dato-accordion-header>
-      <dato-accordion-content>
-        <ng-template>
+      <dato-accordion-content [tpl]="accordionContent">
+        <ng-template #accordionContent>
           <div class="content">
             <hello></hello>
           </div>
@@ -56,8 +56,8 @@
          <dato-accordion-header>
            <div class="header">Title 1</div>
          </dato-accordion-header>
-        <dato-accordion-content>
-          <ng-template>
+        <dato-accordion-content [tpl]="accordionContent">
+          <ng-template #accordionContent>
             <div class="content">
               <hello></hello>
             </div>

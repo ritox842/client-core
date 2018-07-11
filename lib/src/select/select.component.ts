@@ -9,7 +9,7 @@
 import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
-import { coerceArray } from '@datorama/utils';
+import { coerceArray, values } from '@datorama/utils';
 import { SelectType } from './select.types';
 import { DatoOptionComponent } from '../options/option.component';
 import { fromEvent, merge } from 'rxjs';
@@ -79,6 +79,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this._noItemsLabel = this.translate.transform(value);
   }
 
+  /** If defined, indicates by which key the data should be normalized */
+  @Input() groupBy: string;
+
   /** Add/removes search input */
   @Input() isCombo = true;
 
@@ -115,7 +118,12 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** The options to display in the dropdown */
   @Input()
   set dataSet(data: any[]) {
-    this._data = data;
+    if (!this.initialRun) {
+      this._data = this.normalizeData(data);
+    } else {
+      /** data normalization, if required, will be handled by ngOnInit in the initial run */
+      this._data = data;
+    }
 
     /** If it's async updates, create micro task in order to re-subscribe to clicks */
     if (this._dataIsDirty) {
@@ -240,6 +248,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Whether is selectAll checked */
   _checked;
 
+  /** true until ngOnInit */
+  private initialRun = true;
+
   /** Search control subscription */
   private searchSubscription;
 
@@ -267,6 +278,8 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this._withActions = this.save.observers.length === 1;
     this._withInfiniteScroll = this.fetch.observers.length === 1;
     this.listenToSearch();
+    this._data = this.normalizeData(this._data);
+    this.initialRun = false;
   }
 
   /**
@@ -487,6 +500,27 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
         this.cdr.markForCheck();
         this.datoOverlay && this.datoOverlay.scheduleUpdate();
       });
+  }
+
+  /**
+   * Normalize data
+   * @param {any[]} data
+   */
+  private normalizeData(data: any[]): any[] {
+    if (!this.groupBy) {
+      return data;
+    }
+    const groups = {};
+    for (let datum of data) {
+      const groupKey = datum[this.groupBy];
+      if (groups[groupKey]) {
+        groups[groupKey].children.push(datum);
+      } else {
+        groups[groupKey] = { children: [datum] };
+        groups[groupKey][this.labelKey] = groupKey;
+      }
+    }
+    return values(groups);
   }
 
   /**

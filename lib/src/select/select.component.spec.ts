@@ -122,6 +122,31 @@ const OPTION_SELECTOR = 'dato-option';
 const GROUP_SELECTOR = 'dato-group';
 const SELECT_SELECTOR = 'dato-select';
 
+const flattenedOptionsData = [{ id: 1, label: 'abc', group: 'A' }, { id: 2, label: 'efg', group: 'A' }, { id: 3, label: 'hij', group: 'A' }, { id: 4, label: 'klm', group: 'B' }, { id: 5, label: 'nop', group: 'C' }];
+
+const normalizedOptionsData = [
+  {
+    label: 'A',
+    children: [
+      { id: 1, label: 'abc', group: 'A' },
+      { id: 2, label: 'efg', group: 'A' },
+      {
+        id: 3,
+        label: 'hij',
+        group: 'A'
+      }
+    ]
+  },
+  {
+    label: 'B',
+    children: [{ id: 4, label: 'klm', group: 'B' }]
+  },
+  {
+    label: 'C',
+    children: [{ id: 5, label: 'nop', group: 'C' }]
+  }
+];
+
 describe('DatoSelect', () => {
   describe('Select Single - No Search', () => {
     let host: SpectatorWithHost<DatoSelectComponent, CustomHostComponent>;
@@ -198,6 +223,14 @@ describe('DatoSelect', () => {
       host.detectChanges();
       expect(host.query(TRIGGER_SINGLE_SELECTOR).querySelector('.dato-select__placeholder')).not.toBeVisible();
       expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('Item 1');
+    });
+
+    it('should normalize data when groupBy is set', () => {
+      host = createHost(select);
+      host.component.groupBy = 'group';
+      host.hostComponent.options = flattenedOptionsData;
+      host.detectChanges();
+      expect(host.component.data).toEqual(normalizedOptionsData);
     });
   });
 

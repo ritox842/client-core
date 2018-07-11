@@ -35,6 +35,7 @@ export class SelectPreviewComponent implements OnInit {
     { id: 1, label: "Item 1" },
     { id: 2, label: "Item 2" }
   ]);
+  flattenedControl = new FormControl({ id: 2, label: "efg", group: "A" });
 
   options$ = this.subject.asObservable();
   options = [];
@@ -48,6 +49,13 @@ export class SelectPreviewComponent implements OnInit {
     { value: 5, label: "Thursday" },
     { value: 6, label: "Friday" },
     { value: 7, label: "Saturday" }
+  ];
+  flattenedOptions = [
+    { id: 1, label: "abc", group: "A" },
+    { id: 2, label: "efg", group: "A" },
+    { id: 3, label: "hij", group: "A" },
+    { id: 4, label: "klm", group: "B" },
+    { id: 5, label: "nop", group: "C" }
   ];
   frequencyForm: FormGroup;
   dayOfWeek;

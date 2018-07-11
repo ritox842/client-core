@@ -58,7 +58,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     if (!this.initialRun) {
       this._data = this.normalizeData(data);
     } else {
-      /** data normalization, if required, will be handled by ngAfterContentInit in the initial run */
+      /** data normalization, if required, will be handled by ngOnInit in the initial run */
       this._data = data;
     }
 
@@ -72,9 +72,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
     this._dataIsDirty = true;
   }
-
-  /** Client search strategy */
-  @Input() searchStrategy: DatoListSearchStrategy = defaultClientSearchStrategy;
 
   /** Debounce time to emit search queries */
   @Input() debounceTime = 300;
@@ -93,6 +90,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   /** Search groups as well as options */
   @Input() searchGroupLabels = true;
+
+  /** Client search strategy */
+  @Input() searchStrategy: DatoListSearchStrategy = defaultClientSearchStrategy;
 
   /**
    * Getters and Setters
@@ -145,6 +145,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Current index of active item (keyboard navigation) */
   private currentIndex;
 
+  /** true until ngOnInit */
   private initialRun = true;
 
   /** Keyboard Manager */

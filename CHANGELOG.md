@@ -1,3 +1,15 @@
+# [1.3.0](https://github.com/datorama/client-core/compare/v1.2.3...v1.3.0) (2018-07-11)
+
+
+### Bug Fixes
+
+* **accordion:** allow passing ng template ([96b61ad](https://github.com/datorama/client-core/commit/96b61ad))
+
+
+### Features
+
+* **datolist:** data normalizetion funcitonality ([b86e8e1](https://github.com/datorama/client-core/commit/b86e8e1))
+
 ## [1.2.3](https://github.com/datorama/client-core/compare/v1.2.2...v1.2.3) (2018-07-10)
 
 

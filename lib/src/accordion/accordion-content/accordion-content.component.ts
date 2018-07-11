@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Component, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectorRef, ChangeDetectionStrategy, ContentChild, TemplateRef } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
@@ -14,6 +14,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [@slideInOut] *ngIf="_expanded">
+      <ng-container [ngTemplateOutlet]="template"></ng-container>
       <ng-content></ng-content>
     </div>
   `,
@@ -29,6 +30,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
   animations: [trigger('slideInOut', [transition(':enter', [style({ height: '0px' }), animate('200ms', style({ height: '*' }))]), transition(':leave', [style({ height: '*' }), animate('200ms', style({ height: '0px' }))])])]
 })
 export class DatoAccordionContentComponent {
+  @ContentChild(TemplateRef) template: TemplateRef<any>;
   _expanded: boolean = false;
 
   @Input()

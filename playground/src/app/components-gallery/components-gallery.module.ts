@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { DatoCoreModule } from "../../../../lib";
 import { ListItemComponent } from "./list-item/list-item.component";
 import { NgContentComponent } from "../ng-content";
+import { HelloComponent } from "../hello.component";
 
 @NgModule({
   imports: [CommonModule, RouterModule, DatoCoreModule, ReactiveFormsModule],
@@ -31,6 +32,7 @@ import { NgContentComponent } from "../ng-content";
     ApiTableComponent,
     ListItemComponent,
     previews,
+    HelloComponent,
     NgContentComponent
   ]
 })

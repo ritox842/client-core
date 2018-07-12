@@ -22,6 +22,7 @@ import { FormControl } from "@angular/forms";
 })
 export class ListPreviewComponent {
   simpleControl = new FormControl({ id: 2, label: "efg" });
+  simpleNoGroupSearchControl = new FormControl({ id: 2, label: "efg" });
   accordionControl = new FormControl({ id: 2, label: "efg" });
   scrollingControl = new FormControl({ id: 2, label: "efg" });
   flattenedControl = new FormControl({ id: 2, label: "efg", group: "A" });

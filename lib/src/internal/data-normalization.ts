@@ -13,7 +13,7 @@ export function normalizeData<T, R>(data: T[], labelKey: string, groupByKey: str
   }
   const groups = {};
   for (let datum of data) {
-    const groupKey = datum[groupByKey];
+    const groupKey = datum[groupByKey].toString();
     if (groups[groupKey]) {
       groups[groupKey].children.push(datum);
     } else {

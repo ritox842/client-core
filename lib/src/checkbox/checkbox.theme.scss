@@ -70,6 +70,7 @@ dato-checkbox, .dato-checkbox {
     }
 
     .checkmark {
+      border-radius: 2px;
       position: absolute;
       top: 0;
       left: 0;
@@ -83,8 +84,8 @@ dato-checkbox, .dato-checkbox {
         display: none;
 
         position: absolute;
-        left: 6px;
-        top: 3px;
+        left: 5.5px;
+        top: 2px;
         width: 5px;
         height: 10px;
 

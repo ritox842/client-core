@@ -4,11 +4,11 @@ dato-button button {
 }
 
 dato-button button:hover {
-  background-color: themify((light: accent-500, dark: accent-300));
+  background-color: themify((light: accent-500, dark: accent-350));
 }
 
 dato-button button:active {
-  background-color: themify((light: accent-600, dark: accent-200));
+  background-color: themify((light: accent-600, dark: accent-300));
 }
 
 dato-button button[disabled] {
@@ -21,12 +21,12 @@ dato-button button[disabled] {
  */
 dato-button[datoType='secondary'] button {
   background-color: themify(primary-300, 0.15);
-  color: themify(primary-500);
+  color: themify(primary-400);
 }
 
 dato-button[datoType='secondary'] button:hover {
   background-color: themify(primary-300, 0.25);
-  color: themify(primary-600);
+  color: themify(primary-500);
 }
 
 dato-button[datoType='secondary'] button:active {

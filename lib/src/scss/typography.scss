@@ -3,22 +3,26 @@ $headline-font-size: 34px;
 $sub-headline-font-size: 18px;
 $simple-font-size: 14px;
 $note-font-size: 12px;
+$headline-line-height: 46px;
+$sub-headline-line-height: 24px;
+$simple-line-height: 19px;
+$note-line-height: 16px;
 
 $typography-map: (
-  headline: (size: $headline-font-size, weight: 300),
-  sub-headline: (size: $sub-headline-font-size, weight: 600),
-  simple: (size: $simple-font-size),
-  simple-bold: (size: $simple-font-size, weight: 600),
-  simple-italic: (size: $simple-font-size, style: italic),
-  note: (size: $note-font-size),
-  note-bold: (size: $note-font-size, weight: 600),
-  note-italic: (size: $note-font-size, style: italic),
+  headline: (size: $headline-font-size, weight: 300, lineHeight: $headline-line-height),
+  sub-headline: (size: $sub-headline-font-size, weight: 600, lineHeight: $sub-headline-line-height),
+  simple: (size: $simple-font-size, lineHeight: $simple-line-height),
+  simple-bold: (size: $simple-font-size, weight: 600, lineHeight: $simple-line-height),
+  simple-italic: (size: $simple-font-size, style: italic, lineHeight: $simple-line-height),
+  note: (size: $note-font-size, lineHeight: $note-line-height),
+  note-bold: (size: $note-font-size, weight: 600, lineHeight: $note-line-height),
+  note-italic: (size: $note-font-size, style: italic, lineHeight: $note-line-height),
 );
 
 /*
   Create a custom typography class
  */
-@mixin createTypography($font-size, $font-weight, $font-style) {
+@mixin createTypography($font-size, $font-weight, $font-style, $line-height) {
   @if ($font-size) {
     font-size: $font-size;
   }
@@ -27,6 +31,9 @@ $typography-map: (
   }
   @if ($font-style) {
     font-style: $font-style;
+  }
+  @if ($line-height) {
+    line-height: $line-height;
   }
 }
 
@@ -43,8 +50,9 @@ $typography-map: (
   $fontSize: map-get($val, size);
   $weight: map-get($val, weight);
   $style: map-get($val, style);
+  $line-height: map-get($val, lineHeight);
 
-  @include createTypography($fontSize, $weight, $style);
+  @include createTypography($fontSize, $weight, $style, $line-height);
 }
 
 /* Generate all typography classes */

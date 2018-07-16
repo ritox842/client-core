@@ -42,6 +42,50 @@
   </dato-tabs>
 </dato-preview>
 
+<dato-preview title="List - Simple, Search Only Options (No Groups)">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="list-container">
+        <dato-list [formControl]="simpleNoGroupSearchControl" [dataSet]="options" [searchGroupLabels]="false" #datoListNoGroupSearch>
+
+          <dato-group *ngFor="let group of datoListNoGroupSearch.data">
+            <div groupLabel>{{group.label}}</div>
+
+            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+              {{option.label}}
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
+      </div>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{simpleNoGroupSearchControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-list [formControl]="simpleNoGroupSearchControl" [dataSet]="options" #datoListNoGroupSearch>
+
+          <dato-group *ngFor="let group of datoListNoGroupSearch.data">
+            <div groupLabel>group.label</div>
+
+            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+              option.label
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
 
 <dato-preview title="List - Accordion">
 
@@ -211,7 +255,8 @@
     *  ]}
     * ]
       */
-    </textarea></dato-tabs>
+    </textarea>
+  </dato-tabs>
 </dato-preview>
 
 <div class="panel mt-4">

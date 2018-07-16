@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/datorama/client-core/compare/v1.3.0...v1.3.1) (2018-07-12)
+
+
+### Bug Fixes
+
+* **datolist:** group labels converted to strings ([976e73c](https://github.com/datorama/client-core/commit/976e73c))
+
 # [1.3.0](https://github.com/datorama/client-core/compare/v1.2.3...v1.3.0) (2018-07-11)
 
 

@@ -4,6 +4,7 @@ import { fromEvent } from 'rxjs';
 import { DatoTemplatePortal } from '../angular/overlay';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { IconRegistry } from '../services/icon-registry';
+import { default as Popper } from 'popper.js';
 
 @TakeUntilDestroy()
 @Directive({
@@ -25,7 +26,7 @@ export class DatoTooltipDirective implements OnInit, OnDestroy {
     }
   }
 
-  @Input() datoTooltipPosition = 'top';
+  @Input() datoTooltipPosition: Popper.Placement = 'top';
   @Input() datoTooltipDelay = 0;
   @Input() datoTooltipClass = '';
   @Input() datoTooltipOnOverflow = false;

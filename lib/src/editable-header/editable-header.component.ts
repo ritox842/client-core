@@ -6,10 +6,9 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Attribute, ChangeDetectionStrategy, Component, ElementRef, forwardRef, OnInit, Renderer2 } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
-import { assertString } from '../errors';
 import { toBoolean } from '@datorama/utils';
 import { query, setStyle } from '../internal/helpers';
 
@@ -27,6 +26,7 @@ const valueAccessor = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatoEditableHeaderComponent extends BaseCustomControl implements OnInit, ControlValueAccessor {
+  @Input() placeholder = '';
   private initialValue = '';
   private value = '';
 
@@ -75,7 +75,6 @@ export class DatoEditableHeaderComponent extends BaseCustomControl implements On
   }
 
   writeValue(value: string) {
-    assertString(value, this.constructor.name);
     this.initialValue = this.value = value;
     this.setInputValue(this.initialValue);
   }

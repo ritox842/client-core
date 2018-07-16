@@ -111,8 +111,8 @@
     "@semantic-release/changelog": "^2.0.1",
     "@semantic-release/git": "^4.0.1",
     "@semantic-release/npm": "^3.2.2",
-    "travis-deploy-once": "^5.0.0",
-    "semantic-release": "^15.6.0"
+    "travis-deploy-once": "^5.0.1",
+    "semantic-release": "^15.7.2"
   },
   "dependencies": {
     "@angular/animations": "^6.0.6",
@@ -143,7 +143,8 @@
     "sass-loader": "^6.0.7",
     "semantic-release-cli": "^4.0.5",
     "sortablejs": "^1.7.0",
-    "style-loader": "^0.20.3"
+    "style-loader": "^0.20.3",
+    "tooltip.js": "^1.2.0"
   },
   "repository": {
     "type": "git",

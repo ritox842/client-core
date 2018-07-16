@@ -40,8 +40,9 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
   @Input() debounceTime;
   @Input() isFocused = false;
   @Input() isLoading = false;
+  @Input() type = 'text';
 
-  constructor(@Attribute('type') public type, @Attribute('width') public width, @Attribute('height') public height, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {
+  constructor(@Attribute('width') public width, @Attribute('height') public height, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {
     super();
   }
 
@@ -70,6 +71,10 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
    */
   get showSearch() {
     return this.type === 'search' && !this.showDelete;
+  }
+
+  get isNumber() {
+    return this.type === 'number';
   }
 
   /**

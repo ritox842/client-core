@@ -6,13 +6,13 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-export const enum Dimensions {
+export enum Dimensions {
   LG = 'lg',
   MD = 'md',
   SM = 'sm'
 }
 
-export const enum Types {
+export enum Types {
   PRIMARY = 'primary',
   SECONDARY = 'secondary'
 }

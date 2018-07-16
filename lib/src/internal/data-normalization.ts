@@ -8,7 +8,7 @@ import { values } from '@datorama/utils';
  * @returns {T[] | R[]} - normalized data
  */
 export function normalizeData<T, R>(data: T[], labelKey: string, groupByKey: string): T[] | R[] {
-  if (!groupByKey) {
+  if (!data || !groupByKey) {
     return data;
   }
   const groups = {};

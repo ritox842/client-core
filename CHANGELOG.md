@@ -1,3 +1,17 @@
+# [1.4.0](https://github.com/datorama/client-core/compare/v1.3.1...v1.4.0) (2018-07-16)
+
+
+### Bug Fixes
+
+* **components:** styles ([0ba03d2](https://github.com/datorama/client-core/commit/0ba03d2))
+* **hooks:** remove npm package ([4a1b4f7](https://github.com/datorama/client-core/commit/4a1b4f7))
+* **normalize data:** added check for empty data (in async case) ([1a01fdf](https://github.com/datorama/client-core/commit/1a01fdf))
+
+
+### Features
+
+* **components:** add tooltip ([11eeb20](https://github.com/datorama/client-core/commit/11eeb20))
+
 ## [1.3.1](https://github.com/datorama/client-core/compare/v1.3.0...v1.3.1) (2018-07-12)
 
 

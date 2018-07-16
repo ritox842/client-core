@@ -1,6 +1,7 @@
 <section [class.initial]="!isValueChanged">
   <input type="text"
          class="ellipsis"
+         [placeholder]="placeholder"
          (input)="input($event)"
          (blur)="blur()"
          (focus)="focus($event)"

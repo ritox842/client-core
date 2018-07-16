@@ -1,0 +1,100 @@
+.dato-tooltip {
+  z-index: 30000;
+  max-width: 400px;
+  animation: fade 0.3s;
+  .tooltip-inner {
+    font-size: 12px;
+    word-break: break-word;
+    background-color: themify(primary-0);
+    box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+    color: themify(primary-500);
+    padding: 13px 48px 13px 20px;
+  }
+
+  .tooltip-arrow.show {
+    width: 0;
+    height: 0;
+    position: absolute;
+    border: 6px solid themify(primary-0);
+    transform-origin: 0 0;
+    transform: rotate(-45deg);
+  }
+  &.top,
+  &.top-start,
+  &.top-end {
+    top: -6px !important;
+    .tooltip-arrow.show {
+      top: 100%;
+      left: calc(50% - 6px);
+      border-right-color: transparent;
+      border-top-color: transparent;
+      box-shadow: -4px 4px 14px -4px rgba(0, 0, 0, 0.2);
+    }
+  }
+  &.right,
+  &.right-start,
+  &.right-end {
+    left: 6px !important;
+    .tooltip-arrow.show {
+      top: 50% !important;
+      left: -8px;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      box-shadow: -4px -4px 14px -4px rgba(0, 0, 0, 0.2);
+    }
+  }
+  &.bottom,
+  &.bottom-start,
+  &.bottom-end {
+    top: 6px !important;
+    .tooltip-arrow.show {
+      left: calc(50% - 6px);
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+      box-shadow: 4px -4px 14px -4px rgba(0, 0, 0, 0.2);
+    }
+  }
+  &.left,
+  &.left-start,
+  &.left-end {
+    left: -9px !important;
+    .tooltip-arrow.show {
+      top: 50% !important;
+      left: calc(100% - 9px);
+      border-left-color: transparent;
+      border-top-color: transparent;
+      box-shadow: 4px 4px 14px -4px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &.common-tooltip {
+    .tooltip-inner {
+      padding: 0px 6px;
+      height: 24px;
+      line-height: 24px;
+      background-color: themify(primary-500, 0.9);
+      color: themify(primary-0);
+      border-radius: 4px;
+      box-shadow: none;
+    }
+  }
+
+  .tooltip-content svg {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 9px;
+    right: 9px;
+    fill: themify(primary-300);
+    cursor: pointer;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

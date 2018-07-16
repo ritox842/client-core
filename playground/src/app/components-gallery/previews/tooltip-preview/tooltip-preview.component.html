@@ -1,0 +1,172 @@
+<dato-preview title="Tooltip">
+  <div>
+    <p datoTooltip="hello world" style="display: inline-block">Tooltip</p>
+  </div>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <p datoTooltip="hello world" style="display: inline-block">Tooltip</p>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Long Tooltip">
+
+  <div class="d-flex">
+    <p style="margin-right: 10px">Long Tooltip</p>
+    <dato-icon datoTooltip="A simple message, without title, explains some stuff and other stuff as well, to read more" datoIcon="plus-add" datoTooltipTrigger="click"
+               datoTooltipPosition="right"
+               datoTooltipType="long"></dato-icon>
+  </div>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-icon datoTooltip="A simple message, without title, explains some stuff and other stuff as well, to read more" datoIcon="plus-add" datoTooltipTrigger="click"
+               datoTooltipPosition="right"
+               datoTooltipType="long"></dato-icon>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Long Tooltip - Hover">
+
+  <div class="d-flex">
+    <p style="margin-right: 10px">Long Tooltip</p>
+    <dato-icon datoTooltip="A simple message, without title, explains some stuff and other stuff as well, to read more" datoIcon="plus-add"
+               datoTooltipPosition="right"
+               datoTooltipType="long"></dato-icon>
+  </div>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-icon datoTooltip="A simple message, without title, explains some stuff and other stuff as well, to read more" datoIcon="plus-add"
+               datoTooltipPosition="right"
+               datoTooltipType="long"></dato-icon>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Custom Template">
+  <p [datoTooltip]="tpl" datoTooltipTrigger="click" datoTooltipType="long" style="display: inline-block">Long
+    Tooltip</p>
+  <ng-template #tpl><a (click)="hello()">Hello world</a></ng-template>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <p [datoTooltip]="tpl" datoTooltipTrigger="click" datoTooltipType="long" style="display: inline-block">Long Tooltip</p>
+      <ng-template #tpl><a (click)="hello()">Hello world</a></ng-template>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Disabled">
+  <div class="d-flex">
+    <p style="margin-right: 10px">Long Tooltip</p>
+    <dato-icon datoTooltip="A simple message, without title, explains some stuff and other stuff as well, to read more" datoIcon="plus-add"
+               datoTooltipPosition="right"
+               [datoTooltipDisabled]="isDisabled"
+               datoTooltipType="long"></dato-icon>
+  </div>
+
+  <dato-button datoSize="sm" class="mt-10" (click)="isDisabled = !isDisabled">Toggle disabled</dato-button>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+        <dato-icon datoTooltip="A simple message, without title, explains some stuff and other stuff as well, to read more" datoIcon="plus-add"
+               datoTooltipPosition="right"
+               [datoTooltipDisabled]="isDisabled"
+               datoTooltipType="long"></dato-icon>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+
+<dato-preview title="Text Overflow">
+  <ul style="max-width: 100px;">
+    <li class="ellipsis" datoTooltip="Long Long All Text" datoTooltipPosition="right" datoTooltipOnOverflow="true" style="display: inline-block">Long Long All Text</li>
+    <li class="ellipsis" datoTooltip="Not visible" datoTooltipPosition="right" datoTooltipOnOverflow="true" style="display: inline-block">Short</li>
+  </ul>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <ul style="max-width: 100px;">
+        <li class="ellipsis" datoTooltip="Long Long All Text" datoTooltipPosition="right" datoTooltipOnOverflow="true" style="display: inline-block">Long Long All Text</li>
+        <li class="ellipsis" datoTooltip="Not visible" datoTooltipPosition="right" datoTooltipOnOverflow="true" style="display: inline-block">Short</li>
+      </ul>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>datoTooltipType</td>
+        <td>tooltip | long</td>
+        <td>tooltip</td>
+        <td>The type of the tooltip. tooltip is the black one</td>
+      </tr>
+      <tr>
+        <td>datoTooltip</td>
+        <td>string | TemplateRef</td>
+        <td></td>
+        <td>The tooltip content</td>
+      </tr>
+      <tr>
+        <td>datoTooltipPosition</td>
+        <td>One of Popper positions</td>
+        <td>top</td>
+        <td>The tooltip position</td>
+      </tr>
+      <tr>
+        <td>datoTooltipClass</td>
+        <td></td>
+        <td></td>
+        <td>Custom class to add to the tooltip</td>
+      </tr>
+      <tr>
+        <td>datoTooltipOnOverflow</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Whether to show the tooltip only if the text is overflow</td>
+      </tr>
+      <tr>
+        <td>datoTooltipDisabled</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Whether to disabled the tooltip</td>
+      </tr>
+      <tr>
+        <td>datoTooltipTrigger</td>
+        <td>click | hover | focus</td>
+        <td>hover</td>
+        <td>The tooltip trigger</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

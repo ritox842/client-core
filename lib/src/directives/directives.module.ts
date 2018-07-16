@@ -10,8 +10,9 @@ import { NgModule } from '@angular/core';
 import { DatoOriginDirective } from './origin.directive';
 import { DatoDraggableDirective } from './drag.directive';
 import { DatoAutoFocusDirective } from './auto-focus.directive';
+import { DatoTooltipDirective } from './tooltip.directive';
 
-const directives = [DatoOriginDirective, DatoDraggableDirective, DatoAutoFocusDirective];
+const directives = [DatoOriginDirective, DatoDraggableDirective, DatoAutoFocusDirective, DatoTooltipDirective];
 
 @NgModule({
   declarations: directives,

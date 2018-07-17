@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/datorama/client-core/compare/v1.4.0...v1.4.1) (2018-07-17)
+
+
+### Bug Fixes
+
+* **datoinput:** added box-sizing css rule ([4b1e1b2](https://github.com/datorama/client-core/commit/4b1e1b2))
+
 # [1.4.0](https://github.com/datorama/client-core/compare/v1.3.1...v1.4.0) (2018-07-16)
 
 

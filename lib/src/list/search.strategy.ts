@@ -21,5 +21,5 @@ export interface DatoListSearchStrategy {
  * @returns {boolean}
  */
 export const defaultClientSearchStrategy: DatoListSearchStrategy = (searchIn: any, searchValue: string, labelKey: string) => {
-  return searchIn[labelKey] ? searchIn[labelKey].toLowerCase().indexOf(searchValue) > -1 : false;
+  return searchIn[labelKey] ? searchIn[labelKey].toLowerCase().indexOf(searchValue.toLowerCase()) > -1 : false;
 };

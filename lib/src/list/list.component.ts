@@ -344,7 +344,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
       } else {
         let showGroup = false;
         group.children.forEach(option => {
-          const matchOption = option[this.labelKey].toLowerCase().indexOf(value) > -1;
+          const matchOption = this.searchStrategy(option, value, this.labelKey);
           if (matchOption) {
             showGroup = true;
             /** show option */

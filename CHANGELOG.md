@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/datorama/client-core/compare/v1.4.1...v1.4.2) (2018-07-23)
+
+
+### Bug Fixes
+
+* **datolist and datoselect:** bug in search strategy ([144f62b](https://github.com/datorama/client-core/commit/144f62b))
+
 ## [1.4.1](https://github.com/datorama/client-core/compare/v1.4.0...v1.4.1) (2018-07-17)
 
 

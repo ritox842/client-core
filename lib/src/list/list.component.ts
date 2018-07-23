@@ -331,29 +331,40 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   private searchOptions(value: string) {
     const results = [];
     const groupComponentsArray = this.getGroupComponentsArray();
-
-    this._data.forEach((group, index) => {
-      const matchGroup = this.searchStrategy(group, value, this.labelKey);
-      if (this.searchGroupLabels && matchGroup) {
-        /** show entire group */
-        group.children.forEach(option => {
-          results.push(option[this.idKey]);
-        });
-
-        groupComponentsArray[index]._hidden = false;
-      } else {
-        let showGroup = false;
-        group.children.forEach(option => {
-          const matchOption = this.searchStrategy(option, value, this.labelKey);
-          if (matchOption) {
-            showGroup = true;
-            /** show option */
+    if (groupComponentsArray.length) {
+      this._data.forEach((group, index) => {
+        const matchGroup = this.searchStrategy(group, value, this.labelKey);
+        if (this.searchGroupLabels && matchGroup) {
+          /** show entire group */
+          group.children.forEach(option => {
             results.push(option[this.idKey]);
-          }
-        });
-        groupComponentsArray[index]._hidden = !showGroup;
-      }
-    });
+          });
+
+          groupComponentsArray[index]._hidden = false;
+        } else {
+          let showGroup = false;
+          group.children.forEach(option => {
+            const matchOption = this.searchStrategy(option, value, this.labelKey);
+            if (matchOption) {
+              showGroup = true;
+              /** show option */
+              results.push(option[this.idKey]);
+            }
+          });
+          groupComponentsArray[index]._hidden = !showGroup;
+        }
+      });
+    } else {
+      /** flat list - no groups or accordions */
+      this._data.forEach(option => {
+        ``;
+        const matchOption = this.searchStrategy(option, value, this.labelKey);
+        if (matchOption) {
+          /** show option */
+          results.push(option[this.idKey]);
+        }
+      });
+    }
 
     for (let datoOption of this.options.toArray()) {
       if (results.indexOf(datoOption.option[this.idKey]) > -1) {

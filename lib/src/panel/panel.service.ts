@@ -32,7 +32,7 @@ export class DatoPanel {
   private nativeElement: HTMLElement;
   private destroy$ = new Subject();
 
-  constructor(private resolver: ComponentFactoryResolver, private translate: DatoTranslateService, private injector: Injector, private appRef: ApplicationRef, @Inject(DATO_CORE_CONFIG) private config: CoreConfig, @Inject(DOCUMENT) private document: Document) {}
+  constructor(private resolver: ComponentFactoryResolver, private translate: DatoTranslateService, private injector: Injector, private appRef: ApplicationRef, @Inject(DATO_CORE_CONFIG) private config: CoreConfig, @Inject(DOCUMENT) private document) {}
 
   open<E extends Element, T>(content: ContentType<T>, options: DatoPanelOptions<E> = {}) {
     const _relativeTo = this.resolveRelativeTo(options.relativeTo || this.config.sidenavSelector);

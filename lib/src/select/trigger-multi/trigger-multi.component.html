@@ -1,7 +1,13 @@
 <section class="d-flex d-flex-wrap flex-1">
 
-  <div class="dato-trigger-multi__active d-flex justify-between" *ngFor="let option of options;" (click)="removeFocus($event)">{{option[labelKey]}}
+  <div class="dato-trigger-multi__active d-flex justify-between" *ngFor="let option of options | slice: 0: limitTo"
+       (click)="removeFocus($event)">
+    <span [ngStyle]="{maxWidth: maxActiveElementWidth}">{{option[labelKey]}}</span>
     <dato-icon datoIcon="close" (click)="remove(option); removeFocus($event)"></dato-icon>
+  </div>
+
+  <div class="dato-trigger-multi__active d-flex justify-between dato-trigger-multi__rest" *ngIf="showRest">
+    +{{_restCount}}
   </div>
 
   <input type="text" class="dato-multi-search flex-1"
@@ -13,7 +19,8 @@
 
 </section>
 
-<dato-icon datoIcon="close" *ngIf="showClear && !isLoading" (click)="clearSearch()" class="dato-trigger-multi__clear"></dato-icon>
+<dato-icon datoIcon="close" *ngIf="showClear && !isLoading" (click)="clearSearch()"
+           class="dato-trigger-multi__clear"></dato-icon>
 <dato-icon datoIcon="arrow-down" datoSize="sm" *ngIf="!showClear"></dato-icon>
 <span class="dato-input__spinner" *ngIf="isLoading"></span>
 

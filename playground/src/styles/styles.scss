@@ -23,5 +23,5 @@ $navbar-to-color: #001026;
 .navbar {
   background-image: linear-gradient(to right, $navbar-from-color 0%, $navbar-to-color 100%) !important;
   position: relative;
-  z-index: 1000;
+  z-index: 500000;
 }

@@ -16,10 +16,14 @@ import { DatoCoreModule } from "../../../../lib";
 import { ListItemComponent } from "./list-item/list-item.component";
 import { NgContentComponent } from "../ng-content";
 import { HelloComponent } from "../hello.component";
+import {
+  PanelDemoAkitaComponent,
+  PanelDemoComponent
+} from "./previews/panel-preview/panel-demo.component";
 
 @NgModule({
   imports: [CommonModule, RouterModule, DatoCoreModule, ReactiveFormsModule],
-  entryComponents: [previews],
+  entryComponents: [previews, PanelDemoComponent, PanelDemoAkitaComponent],
   declarations: [
     SideNavComponent,
     ComponentsGalleryComponent,
@@ -33,7 +37,9 @@ import { HelloComponent } from "../hello.component";
     ListItemComponent,
     previews,
     HelloComponent,
-    NgContentComponent
+    NgContentComponent,
+    PanelDemoComponent,
+    PanelDemoAkitaComponent
   ]
 })
 export class ComponentsGalleryModule {}

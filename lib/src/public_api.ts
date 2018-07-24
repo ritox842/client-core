@@ -28,6 +28,7 @@ export * from './options/public_api';
 export * from './tabs/public_api';
 export * from './dialog/public_api';
 export * from './toast/public_api';
+export * from './panel/public_api';
 export * from './angular/public_api';
 
 export * from './services/public_api';

@@ -6,9 +6,5 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-export * from './icon-registry';
-export * from './themes.manager';
-export * from './tokens';
-export * from './translate.service';
-export * from './utils';
-export { DatoPanel } from '../panel/panel.service';
+export * from './panel.component';
+export * from './panel.module';

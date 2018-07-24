@@ -1,0 +1,102 @@
+<dato-preview title="Panel">
+
+  <section class="mb-6">
+    <dato-button (click)="open()" datoSize="sm" class="mr-5">Open panel</dato-button>
+    <dato-button datoSize="sm" (click)="open2()" class="mr-5">Open panel 2</dato-button>
+  </section>
+
+  <section>
+    <nav>Nav</nav>
+    <section class="flex">
+      <div class="sidenav">Sidenav</div>
+      <main><h1>Main</h1></main>
+    </section>
+  </section>
+
+
+  <dato-tabs show="js">
+
+    <textarea datoHighlight="js">
+      constructor( private datoPanel: DatoPanel ) {}
+
+      open() {
+        this.datoPanel.open(PanelDemoComponent);
+      }
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+
+<dato-preview title="Custom Relative">
+
+  <section>
+    <nav>Nav</nav>
+    <section class="flex">
+      <div class="sidenav">
+        <dato-button class="custom-relative" (click)="openSmall()">Relative to me</dato-button>
+      </div>
+      <main><h1>Main</h1></main>
+    </section>
+  </section>
+
+
+  <dato-tabs show="js">
+
+    <textarea datoHighlight="js">
+
+      constructor( private datoPanel: DatoPanel ) {}
+
+      open() {
+         this.datoPanel.open(PanelDemoComponent, { relativeTo: '.custom-relative', height: '200px', offset: { left: 32 } });
+      }
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>relativeTo</td>
+        <td>selector or DOM element</td>
+        <td>App sidenav selector</td>
+        <td>The relative element in which the panel will open</td>
+      </tr>
+      <tr>
+        <td>height</td>
+        <td>string</td>
+        <td>The realtive element height</td>
+        <td>The panel height</td>
+      </tr>
+      <tr>
+        <td>width</td>
+        <td>string</td>
+        <td>min-width: 400px</td>
+        <td>The panel width</td>
+      </tr>
+      <tr>
+        <td>offset</td>
+        <td>object with top and left</td>
+        <td>null</td>
+        <td>The panel offset</td>
+      </tr>
+      <tr>
+        <td>viewContainerRef</td>
+        <td></td>
+        <td>null</td>
+        <td>Pass the current viewContainerRef when you need the current injector</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

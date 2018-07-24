@@ -69,12 +69,11 @@
 
   &.common-tooltip {
     .tooltip-inner {
-      padding: 0px 6px;
-      height: 24px;
-      line-height: 24px;
+      padding: 4px 6px;
       background-color: themify(primary-500, 0.9);
       color: themify(primary-0);
       border-radius: 4px;
+      font-size: 11px;
       box-shadow: none;
     }
   }

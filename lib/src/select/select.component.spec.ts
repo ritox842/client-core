@@ -854,7 +854,7 @@ describe('DatoSelect', () => {
         host.detectChanges();
         expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).toBeChecked();
         expect(host.hostComponent.control.value.length).toEqual(15);
-        expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(15);
+        expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(11);
         query('.dato-select__header').click();
         host.detectChanges();
         expect(host.hostComponent.control.value.length).toEqual(0);
@@ -874,13 +874,13 @@ describe('DatoSelect', () => {
         expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).toBeChecked();
         expect(query(`${DROPDOWN_SELECTOR} .dato-select__header`)).toHaveText('15/15');
         expect(host.hostComponent.control.value.length).toEqual(15);
-        expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(15);
+        expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(11);
         query(OPTION_SELECTOR).click();
         tick(11);
         host.detectChanges();
         expect(host.hostComponent.control.value.length).toEqual(14);
         expect(query(`${DROPDOWN_SELECTOR} .dato-select__header`)).toHaveText('14/15');
-        expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(14);
+        expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(11);
         expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).not.toBeChecked();
       })
     );

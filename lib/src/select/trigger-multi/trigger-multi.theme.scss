@@ -103,6 +103,10 @@ dato-select dato-trigger-multi {
     margin-right: map-get($md, selectedMargin);
   }
 
+  .dato-trigger-multi__rest {
+    padding: 7px;
+  }
+
   .dato-icon-close {
     width: 23px;
   }
@@ -120,6 +124,12 @@ dato-select dato-trigger-multi {
 
   .dato-input__spinner {
     top: 9px;
+  }
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
 }

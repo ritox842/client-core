@@ -1,0 +1,68 @@
+dato-panel {
+  position: absolute;
+  z-index: 99999;
+}
+
+.panel-container ng-component {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 600;
+  .dato-icon-close {
+    cursor: pointer;
+    transform: translateX(15px);
+  }
+}
+
+.panel-content, .panel-header {
+  padding: 12px 24px 10px 30px;
+}
+
+.panel-container {
+  animation: panelSlideIn 0.2s ease-out;
+  min-width: 400px;
+  transform-origin: left;
+  height: 100%;
+  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+}
+
+dato-panel-content {
+  flex: 1;
+  font-size: 14px;
+}
+
+.panel-footer {
+  padding: 17px 30px 16px;
+  height: 70px;
+  dato-button {
+    margin-left: 10px;
+  }
+}
+
+@keyframes panelSlideIn {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes panelSlideOut {
+  from {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  to {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}

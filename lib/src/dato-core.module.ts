@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 import { DatoButtonModule } from './button/button.module';
 import { DatoThemesModule } from './themes/themes.module';
 import { ThemeManager } from './services/themes.manager';
@@ -35,20 +35,23 @@ import { DatoToast } from './toast/toast.service';
 import { DatoToastModule } from './toast/toast.module';
 import { DatoListModule } from './list/list.module';
 import { DatoOptionsModule } from './options/options.module';
+import { DatoPanel } from './panel/panel.service';
+import { DatoPanelModule } from './panel/panel.module';
+import { CoreConfig, DATO_CORE_CONFIG } from './config';
 
-const modules = [DatoDirectivesModule, DatoSelectModule, DatoToastModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule, DatoDynamicContentModule, DatoListModule, DatoOptionsModule];
+const modules = [DatoDirectivesModule, DatoPanelModule, DatoSelectModule, DatoToastModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule, DatoDynamicContentModule, DatoListModule, DatoOptionsModule];
 
-const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService, DatoToast];
+const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService, DatoToast, DatoPanel];
 
 @NgModule({
   imports: [],
   exports: [modules]
 })
 export class DatoCoreModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(config: CoreConfig): ModuleWithProviders {
     return {
       ngModule: DatoCoreModule,
-      providers: [providers]
+      providers: [providers, { provide: DATO_CORE_CONFIG, useValue: config }]
     };
   }
 }

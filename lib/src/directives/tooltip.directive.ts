@@ -54,7 +54,7 @@ export class DatoTooltipDirective implements OnInit, OnDestroy {
 
   constructor(private host: ElementRef, private iconRegistry: IconRegistry) {}
 
-  ngOnInit() {
+  ngAfterContentInit() {
     const { on, off } = this.eventsMap[this.datoTooltipTrigger];
 
     if (this.datoTooltipOnOverflow && !this.isElementOverflow(this.host.nativeElement)) return;

@@ -9,6 +9,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { last } from '@datorama/utils';
+import { setStyle } from '../../internal/helpers';
 
 @Component({
   selector: 'dato-trigger-multi',
@@ -16,8 +17,11 @@ import { last } from '@datorama/utils';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatoTriggerMulti implements OnInit {
+  maxActiveElementWidth: string;
+
   @ViewChild('input') input: ElementRef;
 
+  _restCount = 0;
   private _isFocused = false;
 
   @HostBinding('class.dato-trigger-multi--focused')
@@ -72,6 +76,11 @@ export class DatoTriggerMulti implements OnInit {
   @Input()
   set options(value: any[]) {
     this._options = value;
+    this._restCount = Math.abs(this.limitTo - this.options.length);
+  }
+
+  get showRest() {
+    return this.options.length > this.limitTo;
   }
 
   /**
@@ -137,6 +146,8 @@ export class DatoTriggerMulti implements OnInit {
     Promise.resolve().then(() => this.input.nativeElement.focus());
   }
 
+  constructor(private host: ElementRef<HTMLElement>) {}
+
   ngOnInit() {
     const BASE_LENGTH = 13;
     this.inputWidth = this.placeholder.length * BASE_LENGTH;
@@ -186,5 +197,10 @@ export class DatoTriggerMulti implements OnInit {
       const lastOption = last(this.options);
       this.removeOption.emit(lastOption);
     }
+  }
+
+  ngAfterViewInit() {
+    const SPACES = 100;
+    this.maxActiveElementWidth = `${this.host.nativeElement.getBoundingClientRect().width - SPACES}px`;
   }
 }

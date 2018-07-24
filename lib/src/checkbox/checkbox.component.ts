@@ -89,6 +89,7 @@ export class DatoCheckboxComponent extends BaseCustomControl implements OnInit, 
     }
 
     const normalizedValue = value === this.trueValue ? true : false;
+    this.checked = normalizedValue;
     this.setInputValue(normalizedValue);
   }
 

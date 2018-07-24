@@ -9,7 +9,7 @@
 import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
-import { coerceArray, values } from '@datorama/utils';
+import { coerceArray } from '@datorama/utils';
 import { SelectType } from './select.types';
 import { DatoOptionComponent } from '../options/option.component';
 import { fromEvent, merge } from 'rxjs';
@@ -269,7 +269,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Current index of active item (keyboard navigation) */
   private currentIndex;
 
-  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
+  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef<HTMLElement>, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
     super();
     this.size = size || 'md';
     this._dropdownClass = `dato-select-${this.size}`;
@@ -369,8 +369,8 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       this.activateInfiniteScroll();
     }
 
-    this.datoOverlay.scheduleUpdate();
     setStyle(query('.dato-overlay'), 'zIndex', zIndex.select.toString());
+    setStyle(query('.dato-select__dropdown-container'), 'width', `${this.host.nativeElement.getBoundingClientRect().width}px`);
   }
 
   ngAfterContentInit(): void {
@@ -629,13 +629,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       placement: this.placement,
       modifiers: {
         hide: { enabled: false },
-        preventOverflow: { enabled: false },
-        applyStyle: {
-          onLoad: (origin: HTMLElement, dropdown: HTMLElement) => {
-            const { width } = origin.getBoundingClientRect();
-            setStyle(dropdown.querySelector('.dato-select__dropdown-container'), 'width', `${width}px`);
-          }
-        }
+        preventOverflow: { enabled: false }
       }
     };
   }

@@ -29,7 +29,10 @@ import { APP_TRANSLATE } from "../../../lib/src/services/tokens";
       useHash: Boolean(history.pushState) === false,
       preloadingStrategy: PreloadAllModules
     }),
-    DatoCoreModule.forRoot(),
+    DatoCoreModule.forRoot({
+      appSelector: "app",
+      sidenavSelector: ".sidenav"
+    }),
     ComponentsGalleryModule
   ],
   /**

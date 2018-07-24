@@ -1,0 +1,14 @@
+dato-panel {
+  .panel-container {
+    background-color: themify(primary-0);
+  }
+  .panel-footer {
+    border-top: 1px solid themify(primary-100);
+  }
+  .panel-header {
+    color: themify(primary-600);
+    .dato-icon-close {
+      color: themify(primary-300);
+    }
+  }
+}

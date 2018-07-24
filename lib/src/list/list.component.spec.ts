@@ -144,7 +144,7 @@ describe('DatoList', () => {
     it(
       'should filter by search term',
       fakeAsync(() => {
-        host = createHost(flatList);
+        host = createHost(list);
         host.click(query(SEARCH_SELECTOR));
         typeInElement('nop', query(SEARCH_SELECTOR));
         host.click(query('div'));
@@ -164,7 +164,7 @@ describe('DatoList', () => {
     it(
       'should filter flat lists by search term',
       fakeAsync(() => {
-        host = createHost(list);
+        host = createHost(flatList);
         host.hostComponent.options = flatOptionsData;
         host.detectChanges();
         host.click(query(SEARCH_SELECTOR));

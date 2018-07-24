@@ -357,7 +357,6 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     } else {
       /** flat list - no groups or accordions */
       this._data.forEach(option => {
-        ``;
         const matchOption = this.searchStrategy(option, value, this.labelKey);
         if (matchOption) {
           /** show option */

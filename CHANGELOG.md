@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/datorama/client-core/compare/v1.4.2...v1.5.0) (2018-07-24)
+
+
+### Features
+
+* **datolist:** flat list option (no groups, accordions) ([e579281](https://github.com/datorama/client-core/commit/e579281))
+
 ## [1.4.2](https://github.com/datorama/client-core/compare/v1.4.1...v1.4.2) (2018-07-23)
 
 

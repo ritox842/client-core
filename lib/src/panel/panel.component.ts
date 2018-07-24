@@ -7,6 +7,8 @@
  */
 
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
+import { setStyle } from '../internal/helpers';
+import { zIndex } from '../internal/z-index';
 
 @Component({
   selector: 'dato-panel',
@@ -24,4 +26,8 @@ export class DatoPanelComponent {
   }
 
   constructor(private host: ElementRef) {}
+
+  ngOnInit() {
+    setStyle(this.host.nativeElement, 'zIndex', `${zIndex.panel}`);
+  }
 }

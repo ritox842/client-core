@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { Directive, ElementRef, Input, OnDestroy, TemplateRef } from '@angular/core';
 import Tooltip from 'tooltip.js';
 import { fromEvent } from 'rxjs';
 import { DatoTemplatePortal } from '../angular/overlay';
@@ -10,7 +10,7 @@ import { default as Popper } from 'popper.js';
 @Directive({
   selector: '[datoTooltip]'
 })
-export class DatoTooltipDirective implements OnInit, OnDestroy {
+export class DatoTooltipDirective implements OnDestroy {
   @Input() datoTooltipType: 'tooltip' | 'long' = 'tooltip';
 
   @Input()

@@ -9,6 +9,8 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import { SnackbarOptions, SnackbarType } from './snackbar.types';
 import { SnackbarRefDismiss } from './snackbar-ref';
+import { setStyle } from '../internal/helpers';
+import { zIndex } from '../internal/z-index';
 
 @Component({
   selector: 'dato-snackbar',
@@ -52,6 +54,7 @@ export class DatoSnackbarComponent implements OnInit {
   constructor(private renderer: Renderer2, private host: ElementRef) {}
 
   ngOnInit() {
+    setStyle(this.host.nativeElement, 'zIndex', `${zIndex.snackbar}`);
     this.showLeftIcon = !this.isInfo(this.type);
     this.animate = value => this.renderer.setStyle(this.element, 'animation', value);
     this.icon = this.resolveIcon(this.type);

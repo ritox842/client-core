@@ -10,7 +10,7 @@ import { DOCUMENT } from '@angular/common';
 import { ContentType } from '../dynamic-content/dynamic-content.types';
 import { ContentRef, createComponent, ngContentResolver } from '../angular/dynamic-components';
 import { fromEvent, Subject } from 'rxjs';
-import { filter, take, takeUntil } from 'rxjs/operators';
+import { filter, take, takeUntil, throttleTime } from 'rxjs/operators';
 import { isString } from '@datorama/utils';
 import { DatoTranslateService } from '../services/translate.service';
 import { DatoPanelComponent } from './panel.component';
@@ -76,9 +76,8 @@ export class DatoPanel {
     this.component.hostView.detectChanges();
 
     this.document.body.appendChild(nativeElement);
-    //throttleTime(10),
     fromEvent(window, 'scroll', { capture: true })
-      .pipe(takeUntil(this.destroy$))
+      .pipe(throttleTime(10), takeUntil(this.destroy$))
       .subscribe(() => {
         this.calcPosition(relativeTo, options);
       });
@@ -88,7 +87,7 @@ export class DatoPanel {
       .subscribe(event => {
         const main = this.document.querySelector(this.config.appSelector);
         const notAppendedToBody = main.contains(event.target as HTMLElement);
-        const isSideNav = this.document.querySelector('.sidenav').contains(event.target as HTMLElement);
+        const isSideNav = this.document.querySelector(this.config.sidenavSelector).contains(event.target as HTMLElement);
         if (notAppendedToBody && !isSideNav) {
           this.close();
         }

@@ -1,3 +1,16 @@
+# [1.6.0](https://github.com/datorama/client-core/compare/v1.5.0...v1.6.0) (2018-07-24)
+
+
+### Bug Fixes
+
+* **build:** fix exports ([2955417](https://github.com/datorama/client-core/commit/2955417))
+* **components:** link ([7d88e4b](https://github.com/datorama/client-core/commit/7d88e4b))
+
+
+### Features
+
+* **components:** add panel component ([2acf78b](https://github.com/datorama/client-core/commit/2acf78b))
+
 # [1.5.0](https://github.com/datorama/client-core/compare/v1.4.2...v1.5.0) (2018-07-24)
 
 

@@ -258,6 +258,40 @@
     </textarea>
   </dato-tabs>
 </dato-preview>
+<dato-preview title="List - Flat Data (No Groups)">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="list-container">
+        <dato-list [formControl]="flatListControl" [dataSet]="flatListOptions" #datoListFlatList>
+
+            <dato-option *ngFor="let option of datoListFlatList.data; index as index" [option]="option" multi>
+              {{option.label}}
+            </dato-option>
+
+        </dato-list>
+      </div>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{flatListControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-list [formControl]="flatListControl" [dataSet]="options" #datoListFlatList>
+
+          <dato-option *ngFor="let option of datoListFlatList.data; index as index" [option]="option" multi>
+              option.label
+            </dato-option>
+
+        </dato-list>
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
 
 <div class="panel mt-4">
 

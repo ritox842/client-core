@@ -1,3 +1,38 @@
+# [1.5.0](https://github.com/datorama/client-core/compare/v1.4.2...v1.5.0) (2018-07-24)
+
+
+### Features
+
+* **datolist:** flat list option (no groups, accordions) ([e579281](https://github.com/datorama/client-core/commit/e579281))
+
+## [1.4.2](https://github.com/datorama/client-core/compare/v1.4.1...v1.4.2) (2018-07-23)
+
+
+### Bug Fixes
+
+* **datolist and datoselect:** bug in search strategy ([144f62b](https://github.com/datorama/client-core/commit/144f62b))
+
+## [1.4.1](https://github.com/datorama/client-core/compare/v1.4.0...v1.4.1) (2018-07-17)
+
+
+### Bug Fixes
+
+* **datoinput:** added box-sizing css rule ([4b1e1b2](https://github.com/datorama/client-core/commit/4b1e1b2))
+
+# [1.4.0](https://github.com/datorama/client-core/compare/v1.3.1...v1.4.0) (2018-07-16)
+
+
+### Bug Fixes
+
+* **components:** styles ([0ba03d2](https://github.com/datorama/client-core/commit/0ba03d2))
+* **hooks:** remove npm package ([4a1b4f7](https://github.com/datorama/client-core/commit/4a1b4f7))
+* **normalize data:** added check for empty data (in async case) ([1a01fdf](https://github.com/datorama/client-core/commit/1a01fdf))
+
+
+### Features
+
+* **components:** add tooltip ([11eeb20](https://github.com/datorama/client-core/commit/11eeb20))
+
 ## [1.3.1](https://github.com/datorama/client-core/compare/v1.3.0...v1.3.1) (2018-07-12)
 
 

@@ -22,5 +22,5 @@ export interface DatoSelectSearchStrategy {
  * @returns {boolean}
  */
 export const defaultClientSearchStrategy: DatoSelectSearchStrategy = (datoOption: DatoOptionComponent, searchValue: string, labelKey: string) => {
-  return datoOption.option[labelKey].toLowerCase().indexOf(searchValue) > -1;
+  return datoOption.option[labelKey].toLowerCase().indexOf(searchValue.toLowerCase()) > -1;
 };

@@ -1,0 +1,32 @@
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+nav {
+  height: 60px;
+  background-color: #2e2f30;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.sidenav {
+  width: 200px;
+  background: #4f5053;
+  height: 600px;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+main {
+  background: #fff;
+  flex: 1;
+  padding: 20px;
+}

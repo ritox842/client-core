@@ -20,6 +20,8 @@ import {
   PanelDemoAkitaComponent,
   PanelDemoComponent
 } from "./previews/panel-preview/panel-demo.component";
+import { SidenavDemoComponent } from "./previews/sidenav-preview/sidenav-demo.component";
+import { SIDENAV_DEFAULT } from "../../../../lib/src/sidenav/sidenav-default.provider";
 
 @NgModule({
   imports: [CommonModule, RouterModule, DatoCoreModule, ReactiveFormsModule],
@@ -39,7 +41,9 @@ import {
     HelloComponent,
     NgContentComponent,
     PanelDemoComponent,
-    PanelDemoAkitaComponent
-  ]
+    PanelDemoAkitaComponent,
+    SidenavDemoComponent
+  ],
+  providers: [{ provide: SIDENAV_DEFAULT, useValue: SidenavDemoComponent }]
 })
 export class ComponentsGalleryModule {}

@@ -13,6 +13,7 @@ import { AtomicPageComponent } from "./atomic-page.component";
 import { UtilsPageComponent } from "app/utils-page.component";
 import { TranslatePipe } from "./translate.pipe";
 import { APP_TRANSLATE } from "../../../lib/src/services/tokens";
+import { SidenavDemoComponent } from "./components-gallery/previews/sidenav-preview/sidenav-demo.component";
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -31,7 +32,8 @@ import { APP_TRANSLATE } from "../../../lib/src/services/tokens";
     }),
     DatoCoreModule.forRoot({
       appSelector: "app",
-      sidenavSelector: ".sidenav"
+      sidenavSelector: ".sidenav",
+      sidenavComponents: [SidenavDemoComponent]
     }),
     ComponentsGalleryModule
   ],

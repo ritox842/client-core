@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
+import { ANALYZE_FOR_ENTRY_COMPONENTS, ModuleWithProviders, NgModule } from '@angular/core';
 import { DatoButtonModule } from './button/button.module';
 import { DatoThemesModule } from './themes/themes.module';
 import { ThemeManager } from './services/themes.manager';
@@ -38,10 +38,12 @@ import { DatoOptionsModule } from './options/options.module';
 import { DatoPanel } from './panel/panel.service';
 import { DatoPanelModule } from './panel/panel.module';
 import { CoreConfig, DATO_CORE_CONFIG } from './config';
+import { DatoSidenavModule } from './sidenav/sidenav.module';
+import { DatoSidenav } from './sidenav/sidenav.service';
 
-const modules = [DatoDirectivesModule, DatoPanelModule, DatoSelectModule, DatoToastModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule, DatoDynamicContentModule, DatoListModule, DatoOptionsModule];
+const modules = [DatoDirectivesModule, DatoSidenavModule, DatoPanelModule, DatoSelectModule, DatoToastModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule, DatoDynamicContentModule, DatoListModule, DatoOptionsModule];
 
-const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService, DatoToast, DatoPanel];
+const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService, DatoToast, DatoPanel, DatoSidenav];
 
 @NgModule({
   imports: [],
@@ -51,7 +53,15 @@ export class DatoCoreModule {
   static forRoot(config: CoreConfig): ModuleWithProviders {
     return {
       ngModule: DatoCoreModule,
-      providers: [providers, { provide: DATO_CORE_CONFIG, useValue: config }]
+      providers: [
+        providers,
+        { provide: DATO_CORE_CONFIG, useValue: config },
+        {
+          provide: ANALYZE_FOR_ENTRY_COMPONENTS,
+          multi: true,
+          useValue: config.sidenavComponents || []
+        }
+      ]
     };
   }
 }

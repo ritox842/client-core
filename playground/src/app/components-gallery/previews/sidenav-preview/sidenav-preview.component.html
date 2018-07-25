@@ -1,0 +1,39 @@
+<dato-preview title="Sidenav">
+
+  <section>
+    <nav>
+      <dato-button (click)="open()">Open sidenav</dato-button>
+    </nav>
+    <section class="flex">
+      <dato-sidenav></dato-sidenav>
+      <main><h1>Main</h1></main>
+    </section>
+  </section>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-sidenav></dato-sidenav>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>datoSize</td>
+        <td>lg, md, sm</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

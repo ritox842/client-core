@@ -19,10 +19,4 @@ export class CarouselPreviewComponent {
     { icon: "datosearch" },
     { icon: "pin" }
   ];
-
-  addSlide() {
-    this.items.push({
-      icon: `Slide 4`
-    });
-  }
 }

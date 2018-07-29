@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, QueryList, ContentChildren, AfterViewInit, ElementRef, ViewChildren, ViewChild, Input, Directive, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Directive, ElementRef, Input, OnDestroy, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { DatoCarouselItemDirective } from './carousel-item.directive';
 import { animate, AnimationBuilder, AnimationFactory, AnimationPlayer, style } from '@angular/animations';
 import { isNumber } from '@datorama/utils';
@@ -32,6 +32,7 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
   @Input() loop = false;
   @Input() showControls = true;
   @Input() timing = '250ms ease-in';
+  carouselUlStyle = {};
   carouselWrapperStyle = {};
   @ViewChildren(DatoCarouselItemElement, { read: ElementRef })
   private itemElements: QueryList<ElementRef>;
@@ -47,6 +48,9 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
       this.itemWidth = this.itemElements.first.nativeElement.getBoundingClientRect().width;
       this.carouselWrapperStyle = {
         width: `${this.itemWidth}px`
+      };
+      this.carouselUlStyle = {
+        width: `${this.itemWidth * this.itemElements.length}px`
       };
       this.cdr.detectChanges();
     }

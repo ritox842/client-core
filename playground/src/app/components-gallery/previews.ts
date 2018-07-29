@@ -18,6 +18,7 @@ import { ListPreviewComponent } from "./previews/list-preview/list-preview.compo
 import { ToastPreviewComponent } from "./previews/toast-preview/toast-preview.component";
 import { TooltipPreviewComponent } from "./previews/tooltip-preview/tooltip-preview.component";
 import { PanelPreviewComponent } from "./previews/panel-preview/panel-preview.component";
+import { CarouselPreviewComponent } from "./previews/carousel-preview/carousel-preview.component";
 
 export const previews = [
   ButtonsPreviewComponent,
@@ -31,6 +32,7 @@ export const previews = [
   TabsPreviewComponent,
   LayoutPreviewComponent,
   ListPreviewComponent,
+  CarouselPreviewComponent,
   SnackbarPreviewComponent,
   SelectPreviewComponent,
   ToastPreviewComponent,
@@ -53,6 +55,7 @@ export const routeToComponent = {
   tabs: TabsPreviewComponent,
   layout: LayoutPreviewComponent,
   list: ListPreviewComponent,
+  carousel: CarouselPreviewComponent,
   snackbar: SnackbarPreviewComponent,
   dialog: DialogPreviewComponent,
   select: SelectPreviewComponent,

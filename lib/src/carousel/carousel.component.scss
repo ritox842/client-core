@@ -1,0 +1,44 @@
+:host {
+  $size: 54px;
+  button {
+    bottom: calc(50% -  #{$size});
+    height: $size * 2;
+    opacity: 0.3;
+    width: $size;
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &.next {
+      border-bottom-left-radius: $size * 2;
+      border-top-left-radius: $size * 2;
+      right: 0;
+    }
+
+    &.prev {
+      border-bottom-right-radius: $size * 2;
+      border-top-right-radius: $size * 2;
+      left: 0;
+    }
+  }
+
+  .carousel-inner {
+    display: flex;
+  }
+
+  .carousel-wrapper {
+    overflow: hidden;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 6000px;
+  }
+
+  li {
+    min-height: $size * 2;
+    min-width: $size * 2;
+  }
+}

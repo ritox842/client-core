@@ -1,0 +1,17 @@
+<div class="relative">
+    <section class="carousel-wrapper" [ngStyle]="carouselWrapperStyle">
+        <ul class="carousel-inner" #carousel>
+            <li *ngFor="let item of items;" class="dato-carousel-item">
+                <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
+            </li>
+        </ul>
+    </section>
+    <span *ngIf="showControls">
+            <button (click)="prev()" class="absolute prev">
+                <dato-icon datoIcon="arrow-left" datoSize="lg" datoColor="primary-0"></dato-icon>
+            </button>
+            <button (click)="next()" class="absolute next">
+                <dato-icon datoIcon="arrow-right" datoSize="lg" datoColor="primary-0"></dato-icon>
+            </button>
+    </span>
+</div>

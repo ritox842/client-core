@@ -1,0 +1,93 @@
+<dato-preview title="Carousel - Simple">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="carousel-container">
+        <dato-carousel>
+          <ng-container *ngFor="let item of items;">
+            <ng-container *datoCarouselItem>
+              <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
+            </ng-container>
+          </ng-container>
+        </dato-carousel>
+      </div>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+ <dato-carousel>
+          <ng-container *ngFor="let item of items;">
+            <ng-container *datoCarouselItem>
+              <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
+            </ng-container>
+          </ng-container>
+        </dato-carousel>
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+<dato-preview title="Carousel - No Controls + Autorun">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="carousel-container">
+        <dato-carousel [showControls]="false" [autoRun]="5">
+          <ng-container *ngFor="let item of items;">
+            <ng-container *datoCarouselItem>
+              <dato-icon [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
+            </ng-container>
+          </ng-container>
+        </dato-carousel>
+      </div>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+ <dato-carousel [showControls]="false" [autoRun]="5">
+          <ng-container *ngFor="let item of items;">
+            <ng-container *datoCarouselItem>
+              <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
+            </ng-container>
+          </ng-container>
+        </dato-carousel>
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+<dato-preview title="Carousel - With Looping">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="carousel-container">
+        <dato-carousel [loop]="true">
+          <ng-container *ngFor="let item of items;">
+            <ng-container *datoCarouselItem>
+              <dato-icon [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
+            </ng-container>
+          </ng-container>
+        </dato-carousel>
+      </div>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+ <dato-carousel [loop]="true">
+          <ng-container *ngFor="let item of items;">
+            <ng-container *datoCarouselItem>
+              <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
+            </ng-container>
+          </ng-container>
+        </dato-carousel>
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>

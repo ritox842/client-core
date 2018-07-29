@@ -43,7 +43,6 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
   constructor(private animationBuilder: AnimationBuilder, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
-    const millisecondsPerSecond = 1000;
     if (this.itemElements.length) {
       this.itemWidth = this.itemElements.first.nativeElement.getBoundingClientRect().width;
       this.carouselWrapperStyle = {
@@ -52,6 +51,7 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
       this.cdr.detectChanges();
     }
     if (this.autoRun) {
+      const millisecondsPerSecond = 1000;
       const source = interval(isNumber(this.autoRun) ? (this.autoRun as number) * millisecondsPerSecond : this.defaultAutoRun * millisecondsPerSecond);
       source.pipe(untilDestroyed(this)).subscribe(() => this.next());
     }

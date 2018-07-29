@@ -1,7 +1,7 @@
 <div class="relative">
     <section class="carousel-wrapper" [ngStyle]="carouselWrapperStyle">
         <ul class="carousel-inner" #carousel>
-            <li *ngFor="let item of items;" class="dato-carousel-item">
+            <li *ngFor="let item of items; trackBy: trackByFunc;" class="dato-carousel-item">
                 <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
             </li>
         </ul>

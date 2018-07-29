@@ -10,34 +10,54 @@ import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, QueryList, Conte
 import { DatoCarouselItemDirective } from './carousel-item.directive';
 import { animate, AnimationBuilder, AnimationFactory, AnimationPlayer, style } from '@angular/animations';
 import { isNumber } from '@datorama/utils';
+import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { interval } from 'rxjs';
 
 @Directive({
   selector: '.dato-carousel-item'
 })
 export class DatoCarouselItemElement {}
 
+@TakeUntilDestroy()
 @Component({
   selector: 'dato-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatoCarouselComponent implements AfterViewInit {
+export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
   @ContentChildren(DatoCarouselItemDirective) items: QueryList<DatoCarouselItemDirective>;
-  @ViewChildren(DatoCarouselItemElement, { read: ElementRef })
-  private itemsElements: QueryList<ElementRef>;
   @ViewChild('carousel') private carousel: ElementRef;
   @Input() autoRun: number | boolean = false;
   @Input() loop = false;
   @Input() showControls = true;
   @Input() timing = '250ms ease-in';
+  carouselWrapperStyle = {};
+  @ViewChildren(DatoCarouselItemElement, { read: ElementRef })
+  private itemElements: QueryList<ElementRef>;
   private player: AnimationPlayer;
   private itemWidth: number;
   private currentSlide = 0;
   private defaultAutoRun = 10;
-  carouselWrapperStyle = {};
 
   constructor(private animationBuilder: AnimationBuilder, private cdr: ChangeDetectorRef) {}
+
+  ngAfterViewInit() {
+    const millisecondsPerSecond = 1000;
+    if (this.itemElements.length) {
+      this.itemWidth = this.itemElements.first.nativeElement.getBoundingClientRect().width;
+      this.carouselWrapperStyle = {
+        width: `${this.itemWidth}px`
+      };
+      this.cdr.detectChanges();
+    }
+    if (this.autoRun) {
+      const source = interval(isNumber(this.autoRun) ? (this.autoRun as number) * millisecondsPerSecond : this.defaultAutoRun * millisecondsPerSecond);
+      source.pipe(untilDestroyed(this)).subscribe(() => this.next());
+    }
+  }
+
+  ngOnDestroy() {}
 
   next() {
     if (!this.loop && this.currentSlide + 1 === this.items.length) return;
@@ -46,10 +66,6 @@ export class DatoCarouselComponent implements AfterViewInit {
     const myAnimation: AnimationFactory = this.buildAnimation(offset);
     this.player = myAnimation.create(this.carousel.nativeElement);
     this.player.play();
-  }
-
-  private buildAnimation(offset) {
-    return this.animationBuilder.build([animate(this.timing, style({ transform: `translateX(-${offset}px)` }))]);
   }
 
   prev() {
@@ -63,15 +79,11 @@ export class DatoCarouselComponent implements AfterViewInit {
     this.player.play();
   }
 
-  ngAfterViewInit() {
-    this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
-    this.carouselWrapperStyle = {
-      width: `${this.itemWidth}px`
-    };
-    this.cdr.detectChanges();
-    if (this.autoRun) {
-      const interval = isNumber(this.autoRun) ? (this.autoRun as number) * 1000 : this.defaultAutoRun * 1000;
-      setInterval(this.next.bind(this), interval);
-    }
+  trackByFunc(index: number) {
+    return index;
+  }
+
+  private buildAnimation(offset) {
+    return this.animationBuilder.build([animate(this.timing, style({ transform: `translateX(-${offset}px)` }))]);
   }
 }

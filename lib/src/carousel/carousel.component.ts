@@ -44,21 +44,23 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
   constructor(private animationBuilder: AnimationBuilder, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
-    if (this.itemElements.length) {
-      this.itemWidth = this.itemElements.first.nativeElement.getBoundingClientRect().width;
-      this.carouselWrapperStyle = {
-        width: `${this.itemWidth}px`
-      };
-      this.carouselUlStyle = {
-        width: `${this.itemWidth * this.itemElements.length}px`
-      };
-      this.cdr.detectChanges();
-    }
-    if (this.autoRun) {
-      const millisecondsPerSecond = 1000;
-      const source = interval((isNumber(this.autoRun) ? (this.autoRun as number) : this.defaultAutoRun) * millisecondsPerSecond);
-      source.pipe(untilDestroyed(this)).subscribe(() => this.next());
-    }
+    setTimeout(() => {
+      if (this.itemElements.length) {
+        this.itemWidth = this.itemElements.first.nativeElement.getBoundingClientRect().width;
+        this.carouselWrapperStyle = {
+          width: `${this.itemWidth}px`
+        };
+        this.carouselUlStyle = {
+          width: `${this.itemWidth * this.itemElements.length}px`
+        };
+        this.cdr.detectChanges();
+      }
+      if (this.autoRun) {
+        const millisecondsPerSecond = 1000;
+        const source = interval((isNumber(this.autoRun) ? (this.autoRun as number) : this.defaultAutoRun) * millisecondsPerSecond);
+        source.pipe(untilDestroyed(this)).subscribe(() => this.next());
+      }
+    });
   }
 
   ngOnDestroy() {

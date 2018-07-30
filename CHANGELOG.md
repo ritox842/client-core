@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/datorama/client-core/compare/v1.6.0...v1.7.0) (2018-07-30)
+
+
+### Features
+
+* **datocarousel:** carousel component ([5053542](https://github.com/datorama/client-core/commit/5053542))
+
 # [1.6.0](https://github.com/datorama/client-core/compare/v1.5.0...v1.6.0) (2018-07-24)
 
 

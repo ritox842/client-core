@@ -4,7 +4,7 @@ import { DatoIconModule, IconRegistry } from '../../index';
 import { Component, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DatoCarouselItemDirective } from './carousel-item.directive';
-import { fakeAsync, tick } from '@angular/core/testing';
+import { discardPeriodicTasks, fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
 
 @Component({ selector: 'custom-host', template: '' })
 class CustomHostComponent {
@@ -79,32 +79,33 @@ describe('DatoCarousel', () => {
     });
   });
 
-  // describe('List with Autorun', () => {
-  //
-  //     let host: SpectatorWithHost<DatoCarouselComponent>;
-  //
-  //     const createHost = createHostFactory(CustomHostComponent);
-  //
-  //
-  //     const carouselAutoRun = `
-  //
-  //     <dato-carousel [autoRun]="0.5">
-  //       <ng-container *ngFor="let item of items;">
-  //         <ng-container *datoCarouselItem>
-  //           <dato-icon [datoIcon]="item.icon"></dato-icon>
-  //         </ng-container>
-  //       </ng-container>
-  //     </dato-carousel>
-  // `;
-  //
-  //     it("should call next automatically after .5 seconds", fakeAsync(() => {
-  //         host = createHost(carouselAutoRun);
-  //         expect(host.component.currentSlide).toEqual(0);
-  //         tick(750);
-  //         expect(host.component.currentSlide).toEqual(1);
-  //     }));
-  //
-  // });
+  describe('List with Autorun', () => {
+    let host: SpectatorWithHost<DatoCarouselComponent>;
+
+    const createHost = createHostFactory(CustomHostComponent);
+
+    const carouselAutoRun = `
+
+      <dato-carousel [autoRun]="0.5">
+        <ng-container *ngFor="let item of items;">
+          <ng-container *datoCarouselItem>
+            <dato-icon [datoIcon]="item.icon"></dato-icon>
+          </ng-container>
+        </ng-container>
+      </dato-carousel>
+  `;
+
+    it(
+      'should call next automatically after .5 seconds',
+      fakeAsync(() => {
+        host = createHost(carouselAutoRun);
+        expect(host.component.currentSlide).toEqual(0);
+        tick(750);
+        discardPeriodicTasks();
+        expect(host.component.currentSlide).toEqual(1);
+      })
+    );
+  });
 
   describe('List with Loop', () => {
     let host: SpectatorWithHost<DatoCarouselComponent>;

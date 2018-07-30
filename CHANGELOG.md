@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/datorama/client-core/compare/v1.7.0...v1.7.1) (2018-07-30)
+
+
+### Bug Fixes
+
+* **datocarousel:** added timeout for size calculations to ensure success ([b19d21c](https://github.com/datorama/client-core/commit/b19d21c))
+
 # [1.7.0](https://github.com/datorama/client-core/compare/v1.6.0...v1.7.0) (2018-07-30)
 
 

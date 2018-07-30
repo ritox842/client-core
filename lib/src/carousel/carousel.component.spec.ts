@@ -88,6 +88,8 @@ describe('DatoCarousel', () => {
 
       <dato-carousel [autoRun]="0.5">
         <ng-container *ngFor="let item of items;">
+        
+        
           <ng-container *datoCarouselItem>
             <dato-icon [datoIcon]="item.icon"></dato-icon>
           </ng-container>

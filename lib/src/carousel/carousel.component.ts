@@ -39,7 +39,7 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
   private player: AnimationPlayer;
   private itemWidth: number;
   private currentSlide = 0;
-  private defaultAutoRun = 10;
+  private readonly defaultAutoRun = 10;
 
   constructor(private animationBuilder: AnimationBuilder, private cdr: ChangeDetectorRef) {}
 
@@ -56,31 +56,27 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
     }
     if (this.autoRun) {
       const millisecondsPerSecond = 1000;
-      const source = interval(isNumber(this.autoRun) ? (this.autoRun as number) * millisecondsPerSecond : this.defaultAutoRun * millisecondsPerSecond);
+      const source = interval((isNumber(this.autoRun) ? (this.autoRun as number) : this.defaultAutoRun) * millisecondsPerSecond);
       source.pipe(untilDestroyed(this)).subscribe(() => this.next());
     }
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    if (this.player) {
+      this.player.destroy();
+    }
+  }
 
   next() {
     if (!this.loop && this.currentSlide + 1 === this.items.length) return;
     this.currentSlide = (this.currentSlide + 1) % this.items.length;
-    const offset = this.currentSlide * this.itemWidth;
-    const myAnimation: AnimationFactory = this.buildAnimation(offset);
-    this.player = myAnimation.create(this.carousel.nativeElement);
-    this.player.play();
+    this.preformSlideTransition();
   }
 
   prev() {
     if (!this.loop && this.currentSlide === 0) return;
-
     this.currentSlide = (this.currentSlide - 1 + this.items.length) % this.items.length;
-    const offset = this.currentSlide * this.itemWidth;
-
-    const myAnimation: AnimationFactory = this.buildAnimation(offset);
-    this.player = myAnimation.create(this.carousel.nativeElement);
-    this.player.play();
+    this.preformSlideTransition();
   }
 
   trackByFunc(index: number) {
@@ -89,5 +85,12 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
 
   private buildAnimation(offset) {
     return this.animationBuilder.build([animate(this.timing, style({ transform: `translateX(-${offset}px)` }))]);
+  }
+
+  private preformSlideTransition() {
+    const offset = this.currentSlide * this.itemWidth;
+    const myAnimation: AnimationFactory = this.buildAnimation(offset);
+    this.player = myAnimation.create(this.carousel.nativeElement);
+    this.player.play();
   }
 }

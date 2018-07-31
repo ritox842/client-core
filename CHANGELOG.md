@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/datorama/client-core/compare/v1.7.1...v1.7.2) (2018-07-31)
+
+
+### Bug Fixes
+
+* **component:** typo ([f9672ab](https://github.com/datorama/client-core/commit/f9672ab))
+
 ## [1.7.1](https://github.com/datorama/client-core/compare/v1.7.0...v1.7.1) (2018-07-30)
 
 

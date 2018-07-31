@@ -1,3 +1,10 @@
+## [1.7.4](https://github.com/datorama/client-core/compare/v1.7.3...v1.7.4) (2018-07-31)
+
+
+### Bug Fixes
+
+* **datocarousel:** added api export ([0f03956](https://github.com/datorama/client-core/commit/0f03956))
+
 ## [1.7.3](https://github.com/datorama/client-core/compare/v1.7.2...v1.7.3) (2018-07-31)
 
 

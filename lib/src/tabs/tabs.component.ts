@@ -84,6 +84,8 @@ export interface DatoTabChangeEvent {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatoTabset implements AfterContentChecked, AfterContentInit {
+  fontSize_: string;
+
   @ContentChildren(DatoTab) tabs: QueryList<DatoTab>;
 
   /**
@@ -100,10 +102,16 @@ export class DatoTabset implements AfterContentChecked, AfterContentInit {
    * A tab change event fired right before the tab selection happens. See DatoTabChangeEvent for payload details
    */
   @Output() tabChange = new EventEmitter<DatoTabChangeEvent>();
+  /**
+   *  different size for tabs
+   */
+  @Input() datoSize = 'lg' || 'md';
 
   constructor(private cdr: ChangeDetectorRef, private host: ElementRef, @Attribute('datoVertical') public datoVertical, @Attribute('datoNakedActive') public datoNakedActive) {
     this.datoVertical && addClass(this.host.nativeElement, 'dato-tabs--vertical');
     this.datoNakedActive && addClass(this.host.nativeElement, 'dato-tabs--clean');
+    this.datoSize = this.datoSize || 'md';
+    this.fontSize_ = `tab-${this.datoSize}`;
   }
 
   /**

@@ -14,7 +14,7 @@ export interface DatoListSearchStrategy {
 }
 
 /**
- * The default search strategy is compare lowercased strings
+ * The default search stratrgy is compare lowercased strings
  * @param {searchIn} item to search in
  * @param {string} searchValue
  * @param {string} labelKey

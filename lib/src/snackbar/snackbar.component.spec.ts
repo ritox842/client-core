@@ -54,7 +54,7 @@ describe('DatoSnackbar', () => {
     expect(query('.dato-snack-content')).toHaveText('Error');
     expect(query('dato-snackbar')).toHaveClass('dato-snackbar-error');
     expect(query('dato-snackbar')).toExist();
-    expect(query('.dato-icon-close')).toExist();
+    expect(query('.dato-icon-alert')).toExist();
     expect(query('.dato-snackbar-circle')).toExist();
   });
 
@@ -74,7 +74,7 @@ describe('DatoSnackbar', () => {
     expect(query('.dato-snack-content')).toHaveText('Dramatic Error');
     expect(query('dato-snackbar')).toHaveClass('dato-snackbar-dramatic-error');
     expect(query('dato-snackbar')).toExist();
-    expect(query('.dato-icon-close')).toExist();
+    expect(query('.dato-icon-alert')).toExist();
     expect(query('.dato-snackbar-circle')).toExist();
   });
 
@@ -86,7 +86,7 @@ describe('DatoSnackbar', () => {
       expect(query('dato-snackbar')).toHaveClass('dato-snackbar-info');
       expect(query('dato-snackbar')).toExist();
       expect(query('.dato-snackbar-circle')).not.toExist();
-      expect(query('.dato-icon-close')).toExist();
+      expect(query('.dato-icon-alert')).toExist();
     });
 
     it('should close when animation done', () => {
@@ -113,7 +113,7 @@ describe('DatoSnackbar', () => {
       spectator = createComponent();
       const spy = jasmine.createSpy();
       spectator.component.snackbar.info('Info', { dismissible: true }).afterDismissed.subscribe(spy);
-      query('.dato-icon-close').click();
+      query('.dato-icon-alert').click();
       query('dato-snackbar').style.animation = 'none';
       query('dato-snackbar').dispatchEvent(new AnimationEvent('animationend', { animationName: 'snackbarOut' }));
       expect(query('dato-snackbar')).not.toExist();

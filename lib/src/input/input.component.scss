@@ -27,15 +27,27 @@
 
 :host[datoSize='sm'] dato-icon {
   right: 3px;
+  height: 18px;
+}
+
+:host[datoSize='md'] dato-icon {
+  right: 5px;
+  height: 24px;
 }
 
 :host[datoSize='lg'] dato-icon {
   right: 5px;
+  height: 24px;
 }
 
 :host .dato-icon-close {
   cursor: pointer;
   z-index: 1002;
+}
+
+:host input:disabled {
+  border: none;
+  cursor: default;
 }
 
 @include size(input, sm) {

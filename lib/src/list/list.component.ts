@@ -95,6 +95,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Client search strategy */
   @Input() searchStrategy: DatoListSearchStrategy = defaultClientSearchStrategy;
 
+  /** available sizes */
+  @Input() datoSize: 'sm' | 'md';
+
   /**
    * Getters and Setters
    */
@@ -140,6 +143,8 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   _searchPlaceholder = this.translate.transform('general.search');
 
+  _listClass: string;
+
   /** Clicks options subscription */
   private clicksSubscription;
 
@@ -166,6 +171,8 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     this.listenToSearch();
     this._data = normalizeData(this._data, this.labelKey, this.groupBy);
     this.initialRun = false;
+    this.datoSize = this.datoSize || 'md';
+    this._listClass = `list-${this.datoSize}`;
   }
 
   ngAfterContentInit(): void {

@@ -1,5 +1,4 @@
 @import './input-helper.scss';
-
 dato-input {
   input {
     @include input-like-theme();
@@ -35,5 +34,11 @@ dato-input:hover dato-icon path {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+dato-input {
+  input:disabled::placeholder {
+    color: themify(primary-200);
   }
 }

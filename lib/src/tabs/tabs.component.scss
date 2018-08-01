@@ -1,6 +1,7 @@
 
 $tab-header-y-padding: 5px;
 :host {
+
   ul {
     display: flex;
     padding: 0;
@@ -19,8 +20,8 @@ $tab-header-y-padding: 5px;
 
     a {
       text-decoration: none;
-      font-size: 12px;
     }
+ 
   }
 
   .active a {
@@ -55,4 +56,11 @@ $tab-header-y-padding: 5px;
   .tab-pointer {
     display: none;
   }
+}
+
+.tab-md {
+  font-size: 12px;
+}
+.tab-lg {
+  font-size: 14px;
 }

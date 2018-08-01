@@ -1,3 +1,5 @@
+import { SafeStyle } from './../../../playground/node_modules/@angular/platform-browser/src/security/dom_sanitization_service.d';
+import { style } from '@angular/animations';
 /**
  * @license
  * Copyright Datorama. All Rights Reserved.
@@ -33,6 +35,15 @@ export class DatoButtonComponent {
 
   ngOnInit() {
     const button = query('button', this.host.nativeElement);
+    const firstChild = button.childNodes[0] as HTMLElement;
+    const firstChildTagName = firstChild.tagName;
+    if (firstChildTagName === 'DATO-ICON') {
+      firstChild.style.marginRight = '4px';
+    }
+    const lastChild = button.lastChild as HTMLElement;
+    if (lastChild.tagName === 'DATO-ICON') {
+      lastChild.style.marginLeft = '4px';
+    }
     setDimensions(this.width, this.height, button);
   }
 }

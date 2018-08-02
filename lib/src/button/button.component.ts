@@ -35,15 +35,17 @@ export class DatoButtonComponent {
 
   ngOnInit() {
     const button = query('button', this.host.nativeElement);
-    const firstChild = button.childNodes[0] as HTMLElement;
-    const firstChildTagName = firstChild.tagName;
-    if (firstChildTagName === 'DATO-ICON') {
-      firstChild.style.marginRight = '4px';
-    }
-    const lastChild = button.lastChild as HTMLElement;
-    if (lastChild.tagName === 'DATO-ICON') {
-      lastChild.style.marginLeft = '4px';
-    }
     setDimensions(this.width, this.height, button);
+
+    const childLength = button.childNodes.length;
+    if (childLength > 1) {
+      const firstChild = button.firstChild as HTMLElement;
+      const lastChild = button.lastChild as HTMLElement;
+      if (firstChild.tagName === 'DATO-ICON') {
+        firstChild.classList.add('mr-4');
+      } else if (lastChild.tagName === 'DATO-ICON') {
+        firstChild.classList.add('ml-4');
+      }
+    }
   }
 }

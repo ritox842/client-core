@@ -39,6 +39,6 @@ dato-input:hover dato-icon path {
 
 dato-input {
   input:disabled::placeholder {
-    color: themify(primary-200);
+    @include input-disabled();
   }
 }

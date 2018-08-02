@@ -19,7 +19,7 @@ dato-select__not-found,
 }
 
 .dato-select__group-container:not(:first-child) .dato-select__group {
-  border-top: solid 1px themify(primary-200);
+  border-top: themify(primary-200) 1px solid;
 }
 
 .dato-select__option--simple:not(.dato-select__option--disabled) {

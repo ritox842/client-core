@@ -30,12 +30,7 @@
   height: 18px;
 }
 
-:host[datoSize='md'] dato-icon {
-  right: 5px;
-  height: 24px;
-}
-
-:host[datoSize='lg'] dato-icon {
+:host[datoSize='md'][datoSize='lg'] dato-icon {
   right: 5px;
   height: 24px;
 }

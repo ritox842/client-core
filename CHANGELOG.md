@@ -1,3 +1,10 @@
+## [1.7.5](https://github.com/datorama/client-core/compare/v1.7.4...v1.7.5) (2018-08-02)
+
+
+### Bug Fixes
+
+* **datocarousel:** reversed control arrows ([926bd81](https://github.com/datorama/client-core/commit/926bd81))
+
 ## [1.7.4](https://github.com/datorama/client-core/compare/v1.7.3...v1.7.4) (2018-07-31)
 
 

@@ -3,3 +3,14 @@ dato-list {
     color: themify(primary-400);
   }
 }
+.dato-list__options {
+  .dato-select__option .dato-checkbox input:not(:checked)~.checkmark {
+    background: themify(primary-0);
+  }
+  dato-option:hover {
+    .dato-select__option {
+      background: themify(primary-100) !important;
+      color: themify((light: primary-700, dark: primary-0));
+    }
+  }
+}

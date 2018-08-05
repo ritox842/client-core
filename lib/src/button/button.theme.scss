@@ -77,3 +77,8 @@ dato-button[datoType='none'] button:active:not([disabled]) {
 :root dato-button[datoType='none'] button:active {
   background-color: transparent;
 }
+dato-icon-button:not([datoCircle]):active{
+  svg {
+    fill: themify(accent-600);
+  }
+}

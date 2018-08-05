@@ -1,3 +1,5 @@
+import { SafeStyle } from './../../../playground/node_modules/@angular/platform-browser/src/security/dom_sanitization_service.d';
+import { style } from '@angular/animations';
 /**
  * @license
  * Copyright Datorama. All Rights Reserved.

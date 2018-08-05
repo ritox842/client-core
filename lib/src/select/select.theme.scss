@@ -1,21 +1,20 @@
 .dato-select__dropdown-container {
-  background-color: themify(primary-0);
+  background-color: themify((light: primary-0, dark: primary-700));
 }
 
 .dato-option--active {
-  background-color: themify(accent-200);
+  background-color: themify((light: accent-200, dark: accent-700));
   font-weight: 500;
 }
 
 .dato-option--keyboard-active {
-  background-color: themify(primary-100);
+  background-color: themify((light: primary-100, dark: primary-500));
 }
 
-.dato-select__option--hover:not(.dato-option--active):not(.dato-option--keyboard-active):hover {
-  background-color: themify(primary-100);
-}
-
-.dato-select__placeholder, .dato-select__option--disabled, dato-select__not-found, .dato-select__group {
+.dato-select__placeholder,
+.dato-select__option--disabled,
+dato-select__not-found,
+.dato-select__group {
   color: themify(primary-300);
 }
 
@@ -24,7 +23,7 @@
 }
 
 .dato-select__option--simple:not(.dato-select__option--disabled) {
-  color: themify(primary-600);
+  color: themify((light: primary-600, dark: primary-100));
 }
 
 .dato-select__placeholder {
@@ -33,37 +32,34 @@
 
 .dato-select--disabled {
   pointer-events: none;
-
-  dato-trigger-single, dato-trigger-multi {
+  dato-trigger-single,
+  dato-trigger-multi {
     @include input-disabled();
   }
-
   .dato-select__placeholder {
-    color: themify(primary-200);
+    color: themify((light: primary-200, dark: primary-400));
   }
-
-  dato-trigger-single dato-icon path, dato-trigger-multi dato-icon path {
+  dato-trigger-single dato-icon path,
+  dato-trigger-multi dato-icon path {
     fill: themify(primary-200);
   }
-
   .dato-trigger-multi__active {
     background-color: themify(primary-300, 0.1);
-    color: themify(primary-200);
+    color: themify((light: primary-200, dark: primary-400));
     .dato-icon-close {
-      fill: themify(primary-200);
+      fill: themify((light: primary-200, dark: primary-400));
     }
   }
-
   .dato-multi-search {
     @include placeholder() {
-      color: themify(primary-200);
+      color: themify((light: primary-200, dark: primary-400));
     }
   }
 }
 
 .dato-select__footer {
-  background-color: themify(primary-0);
-  border-top: 1px solid themify(primary-100);
+  background-color: themify((light: primary-0, dark: primary-700));
+  border-top: 1px solid themify((light: primary-100, dark: primary-500));
 }
 
 .dato-select__footer.with-actions {
@@ -76,7 +72,7 @@
 
 .dato-select__header {
   cursor: pointer;
-  border-bottom: themify(primary-100) 2px solid;
+  border-bottom: 2px solid themify((light: primary-100, dark: primary-500));
   padding-left: 10px;
   align-items: center;
   .dato-select__option {
@@ -97,3 +93,33 @@
     margin-top: 0;
   }
 }
+
+.dato-select__dropdown-container {
+  .dato-select__option:not(.dato-select__option--disabled):not(.dato-select__header) {
+    color: themify((light: primary-700, dark: primary-0));
+    .dato-checkbox {
+      p {
+        color: themify((light: primary-700, dark: primary-0));
+      }
+      label > input:not(:checked) ~ .checkmark {
+        background: themify((light: primary-0, dark: primary-700));
+      }
+    }
+    &:hover:not(.dato-option--active) {
+      background: themify((light: primary-100, dark: primary-500));
+      color: themify((light: primary-700, dark: primary-0));
+    }
+  }
+}
+
+.dato-select__header {
+  label > input:not(:checked) ~ .checkmark {
+    background: themify((light: primary-0, dark: primary-700));
+  }
+  .dato-select__option--simple:hover {
+    background: transparent !important;
+  }
+}
+
+
+

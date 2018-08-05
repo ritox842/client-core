@@ -20,3 +20,9 @@ dato-tabset:not(.dato-tabs--clean) {
 
 }
 
+dato-tabset:not([datoVertical = "true"]) {
+  .nav-item:not(.active) {
+    border-bottom: solid 1px themify(primary-200);
+  }
+}
+

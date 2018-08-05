@@ -1,4 +1,4 @@
-
+@import '../scss/typography.scss';
 $tab-header-y-padding: 5px;
 :host {
   ul {
@@ -9,36 +9,30 @@ $tab-header-y-padding: 5px;
     position: relative;
     flex-shrink: 0;
   }
-
   li {
     cursor: pointer;
     flex: 1;
     text-align: center;
     border-bottom: 2px solid transparent;
     padding: $tab-header-y-padding 0;
-
     a {
       text-decoration: none;
-      font-size: 12px;
     }
   }
-
   .active a {
     font-weight: 600;
   }
-
   &[datoNativeWidth] {
     li {
       flex: none;
       padding: $tab-header-y-padding 20px;
     }
   }
-
   .tab-pointer {
     height: 2px;
     position: absolute;
     left: 0;
-    bottom:0;
+    bottom: 0;
     transition: transform 0.2s ease, width 0.2s ease;
   }
 }
@@ -55,4 +49,12 @@ $tab-header-y-padding: 5px;
   .tab-pointer {
     display: none;
   }
+}
+
+.tab-md {
+  @include typography(note);
+}
+
+.tab-lg {
+  @include typography(simple);
 }

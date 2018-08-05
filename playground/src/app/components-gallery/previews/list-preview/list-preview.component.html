@@ -1,9 +1,168 @@
+<p datoFont="headline">Dato List</p>
+Use the <code>Dato List</code> component, to display a list of items. <br/>
+The list can display a hierarchy data structure, or just a simple flat list. <br/><br/>
+
+<strong>Always</strong> use <code>TrackBy</code> in <code>ngFor</code>, to optimize rendering performance.
+
+<br /><br /><br />
+<p datoFont="sub-headline">Flat List</p>
+
+<dato-preview title="List - Normalize Flattened Data">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="list-container">
+        <dato-list [formControl]="flattenedControl" [dataSet]="flattenedOptions" [groupBy]="'group'"
+                   #datoListWithFlattenedData>
+
+          <dato-group *ngFor="let group of datoListWithFlattenedData.data; trackBy: datoListWithFlattenedData.trackByFn">
+            <div groupLabel>{{group.label}}</div>
+
+            <dato-option *ngFor="let option of group.children; trackBy: datoListWithFlattenedData.trackByFn" [option]="option" multi>
+              {{option.label}}
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
+      </div>
+      <p datoFont class="mt-10">Control value: <span class="code">{{flattenedControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+<textarea datoHighlight="html">
+      <dato-list [formControl]="flattenedControl" [dataSet]="flattenedOptions" [groupBy]="'group'"
+                 [autoFocus]="false" #datoListWithFlattenedData>
+
+          <dato-group *ngFor="let group of datoListWithFlattenedData.data; trackBy: datoListWithFlattenedData.trackByFn">
+            <div groupLabel>group.label</div>
+
+            <dato-option *ngFor="let option of group.children; trackBy: datoListWithFlattenedData.trackByFn" [option]="option" multi>
+              option.label
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
+    </textarea>
+
+  </dato-tabs>
+  <dato-tabs show="js">
+    <textarea datoHighlight="js">
+      flattenedOptions=[{ id: 1, label: 'abc', group: 'A' }, { id: 2, label: 'efg', group: 'A' }, { id: 3, label: 'hij', group: 'A' }, { id: 4, label: 'klm', group: 'B' }, { id: 5, label: 'nop', group: 'C' }];
+    /** turned into:  [
+    * { label: 'A',
+    *   children: [
+    *    { id: 1, label: 'abc', group: 'A' },
+    *    { id: 2, label: 'efg', group: 'A' },
+    *    { id: 3, label: 'hij', group: 'A' }
+    *  ]},
+    * { label: 'B',
+    *   children: [
+    *    { id: 4, label: 'klm', group: 'B' }
+    *  ]},
+    * { label: 'C',
+    *   children: [
+    *    { id: 5, label: 'nop', group: 'C' }
+    *  ]}
+    * ]
+      */
+    </textarea>
+  </dato-tabs>
+</dato-preview>
+
+
+<dato-preview title="List - Flat Data (No Groups)">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="list-container">
+        <dato-list [formControl]="flatListControl" [dataSet]="flatListOptions"
+                   [autoFocus]="false" #datoListFlatList>
+
+          <dato-option *ngFor="let option of datoListFlatList.data; trackBy: datoListFlatList.trackByFn" [option]="option" multi>
+            {{option.label}}
+          </dato-option>
+
+        </dato-list>
+      </div>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{flatListControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-list [formControl]="flatListControl" [dataSet]="options"
+                 [autoFocus]="false" #datoListFlatList>
+
+          <dato-option *ngFor="let option of datoListFlatList.data; trackBy: datoListFlatList.trackByFn" [option]="option" multi>
+              option.label
+            </dato-option>
+
+        </dato-list>
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="List - With No Results Template">
+
+  <section class="d-flex">
+    <div class="select-preview">
+
+      It's possible to override the default message, when no results available. <br/>
+      Search for non-exists label, to see it in action.<br/>
+
+      <div class="list-container">
+        <dato-list [formControl]="flatListControl2" [dataSet]="flatListOptions2"
+                   [autoFocus]="false" #datoListFlatList2>
+          <dato-option *ngFor="let option of datoListFlatList2.data; trackBy: datoListFlatList2.trackByFn" [option]="option" multi>
+            {{option.label}}
+          </dato-option>
+          <div class="no-search-results">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgUoXM2au14enIOUkaw6xBQucUkko5lcLOppo1j0ZtbB2gqOyz">
+            <div>No Results here!</div>
+          </div>
+        </dato-list>
+      </div>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{flatListControl2.value | json}}</span></p>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+       <dato-list [formControl]="flatListControl2" [dataSet]="flatListOptions2" #datoListFlatList2>
+          <dato-option *ngFor="let option of datoListFlatList2.data; trackBy: datoListFlatList2.trackByFn" [option]="option" multi>
+            option.label
+          </dato-option>
+          <div class="no-search-results">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgUoXM2au14enIOUkaw6xBQucUkko5lcLOppo1j0ZtbB2gqOyz">
+            <div>No Results here!</div>
+          </div>
+        </dato-list>
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
+<p datoFont="sub-headline">Groups</p>
+<br />
+
 <dato-preview title="List - Simple">
 
   <section class="d-flex">
     <div class="select-preview">
       <div class="list-container">
-        <dato-list [formControl]="simpleControl" [dataSet]="options" #datoList>
+        <dato-list [formControl]="simpleControl" [dataSet]="options"
+                   [autoFocus]="false" #datoList>
 
           <dato-group *ngFor="let group of datoList.data; trackBy: datoList.trackByFn">
             <div groupLabel>{{group.label}}</div>
@@ -48,7 +207,7 @@
     <div class="select-preview">
       <div class="list-container">
         <dato-list [formControl]="simpleNoGroupSearchControl" [dataSet]="options" [searchGroupLabels]="false"
-                   #datoListNoGroupSearch>
+                   [autoFocus]="false" #datoListNoGroupSearch>
 
           <dato-group *ngFor="let group of datoListNoGroupSearch.data; trackBy: datoListNoGroupSearch.trackByFn">
             <div groupLabel>{{group.label}}</div>
@@ -70,7 +229,8 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <dato-list [formControl]="simpleNoGroupSearchControl" [dataSet]="options" #datoListNoGroupSearch>
+      <dato-list [formControl]="simpleNoGroupSearchControl" [dataSet]="options"
+                 [autoFocus]="false" #datoListNoGroupSearch>
 
           <dato-group *ngFor="let group of datoListNoGroupSearch.data; trackBy: datoListNoGroupSearch.trackByFn">
             <div groupLabel>group.label</div>
@@ -88,12 +248,81 @@
 </dato-preview>
 
 
+<dato-preview title="List - With Scrolling">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="list-container-scrolling">
+        <dato-list [formControl]="scrollingControl" [dataSet]="longOptions"
+                   [autoFocus]="false" #datoListWithScrolling>
+
+          <dato-group *ngFor="let group of datoListWithScrolling.data; trackBy: datoListWithScrolling.trackByFn">
+            <div groupLabel>{{group.label}}</div>
+
+            <dato-option *ngFor="let option of group.children; trackBy: datoListWithScrolling.trackByFn" [option]="option" multi>
+              {{option.label}}
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
+      </div>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{scrollingControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+     <div class="list-container-scrolling">
+
+      <dato-list [formControl]="scrollingControl" [dataSet]="longOptions" #datoListWithScrolling>
+
+          <dato-group *ngFor="let group of datoListWithScrolling.data; trackBy: datoListWithScrolling.trackByFn">
+            <div groupLabel>group.label</div>
+
+            <dato-option *ngFor="let option of group.children; trackBy: datoListWithScrolling.trackByFn" [option]="option" multi>
+              option.label
+            </dato-option>
+
+          </dato-group>
+
+        </dato-list>
+    </div>
+
+    </textarea>
+
+  </dato-tabs>
+  <dato-tabs show="css">
+    <textarea datoHighlight="css">
+    .list-container-scrolling .dato-list__options {
+    height: 250px;
+      }
+    </textarea>
+  </dato-tabs>
+</dato-preview>
+
+
+
+
+
+<p datoFont="sub-headline">Accordion</p>
+<br />
+
+When using the <code>Accordion</code> component inside the <code>DatoList</code>, it's recommended to wrap the inner
+content of <code>dato-accordion-content</code> in <code>ng-template</code>, to gain a performance boost. <br/>
+Otherwise, the content of each accordion group, will still be instantiated (though you won't see it in the DOM),
+which may cause a performance overhead with many items.
+
 <dato-preview title="List - Accordion">
 
   <section class="d-flex">
     <div class="select-preview">
       <div class="list-container">
-        <dato-list [formControl]="accordionControl" [dataSet]="options" #datoListAccordion accordion>
+        <dato-list [formControl]="accordionControl" [dataSet]="options" [autoFocus]="false"
+                   #datoListAccordion accordion>
           <dato-accordion [expandAll]="true" [includeArrows]="true">
             <dato-accordion-group *ngFor="let group of datoListAccordion.data; trackBy: datoListAccordion.trackByFn">
               <dato-accordion-header>
@@ -148,17 +377,18 @@
   <section class="d-flex">
     <div class="select-preview">
       <div class="list-container">
-        <dato-list [formControl]="accordionControl" [dataSet]="options" #datoListAccordion accordion>
+        <dato-list [formControl]="accordionControl2" [dataSet]="options"
+                   [autoFocus]="false"  #datoListAccordion2 accordion>
           <dato-accordion [includeArrows]="true">
-            <dato-accordion-group *ngFor="let group of datoListAccordion.data; trackBy: datoListAccordion.trackByFn">
+            <dato-accordion-group *ngFor="let group of datoListAccordion2.data; trackBy: datoListAccordion2.trackByFn">
               <dato-accordion-header>
-                <div class="header" [innerHTML]="group.label | datoHighlight: datoListAccordion.searchTerm"></div>
+                <div class="header" [innerHTML]="group.label | datoHighlight: datoListAccordion2.searchTerm"></div>
               </dato-accordion-header>
               <dato-accordion-content [tpl]="accordionContent">
                 <ng-template #accordionContent>
                   <div class="content">
-                    <dato-option *ngFor="let option of group.children; trackBy: datoListAccordion.trackByFn" [option]="option" multi>
-                      <span [innerHTML]="option.label | datoHighlight: datoListAccordion.searchTerm"></span>
+                    <dato-option *ngFor="let option of group.children; trackBy: datoListAccordion2.trackByFn" [option]="option" multi>
+                      <span [innerHTML]="option.label | datoHighlight: datoListAccordion2.searchTerm"></span>
                     </dato-option>
                   </div>
                 </ng-template>
@@ -167,7 +397,7 @@
           </dato-accordion>
         </dato-list>
       </div>
-      <p datoFont class="mt-10">Control value: <span class="code">{{accordionControl.value | json}}</span></p>
+      <p datoFont class="mt-10">Control value: <span class="code">{{accordionControl2.value | json}}</span></p>
 
     </div>
 
@@ -175,177 +405,23 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-       <dato-list [formControl]="accordionControl" [dataSet]="options" #datoListAccordion accordion>
+       <dato-list [formControl]="accordionControl2" [dataSet]="options" #datoListAccordion2 accordion>
           <dato-accordion [includeArrows]="true">
-            <dato-accordion-group *ngFor="let group of datoListAccordion.data">
+            <dato-accordion-group *ngFor="let group of datoListAccordion2.data; trackBy: datoListAccordion2.trackByFn">
               <dato-accordion-header>
-                <div class="header" [innerHTML]="group.label | datoHighlight: datoListAccordion.searchTerm"></div>
+                <div class="header" [innerHTML]="group.label | datoHighlight: datoListAccordion2.searchTerm"></div>
               </dato-accordion-header>
               <dato-accordion-content [tpl]="accordionContent">
                 <ng-template #accordionContent>
                   <div class="content">
-                    <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
-                      <span [innerHTML]="option.label | datoHighlight: datoListAccordion.searchTerm"></span>
+                    <dato-option *ngFor="let option of group.children; trackBy: datoListAccordion2.trackByFn" [option]="option" multi>
+                      <span [innerHTML]="option.label | datoHighlight: datoListAccordion2.searchTerm"></span>
                     </dato-option>
                   </div>
                 </ng-template>
               </dato-accordion-content>
             </dato-accordion-group>
           </dato-accordion>
-        </dato-list>
-    </textarea>
-
-  </dato-tabs>
-</dato-preview>
-
-<dato-preview title="List - With Scrolling">
-
-  <section class="d-flex">
-    <div class="select-preview">
-      <div class="list-container-scrolling">
-        <dato-list [formControl]="scrollingControl" [dataSet]="longOptions" #datoListWithScrolling>
-
-          <dato-group *ngFor="let group of datoListWithScrolling.data; trackBy: datoListWithScrolling.trackByFn">
-            <div groupLabel>{{group.label}}</div>
-
-            <dato-option *ngFor="let option of group.children; trackBy: datoListWithScrolling.trackByFn" [option]="option" multi>
-              {{option.label}}
-            </dato-option>
-
-          </dato-group>
-
-        </dato-list>
-      </div>
-
-      <p datoFont class="mt-10">Control value: <span class="code">{{scrollingControl.value | json}}</span></p>
-
-    </div>
-
-  </section>
-  <dato-tabs show="html">
-
-    <textarea datoHighlight="html">
-     <div class="list-container-scrolling">
-
-      <dato-list [formControl]="scrollingControl" [dataSet]="longOptions" #datoListWithScrolling>
-
-          <dato-group *ngFor="let group of datoListWithScrolling.data; trackBy: datoListWithScrolling.trackByFn">
-            <div groupLabel>group.label</div>
-
-            <dato-option *ngFor="let option of group.children; trackBy: datoListWithScrolling.trackByFn" [option]="option" multi>
-              option.label
-            </dato-option>
-
-          </dato-group>
-
-        </dato-list>
-    </div>
-
-    </textarea>
-
-  </dato-tabs>
-  <dato-tabs show="css">
-    <textarea datoHighlight="css">
-    .list-container-scrolling .dato-list__options {
-    height: 250px;
-      }
-    </textarea>
-  </dato-tabs>
-</dato-preview>
-
-<dato-preview title="List - Normalize Flattened Data">
-
-  <section class="d-flex">
-    <div class="select-preview">
-      <div class="list-container">
-        <dato-list [formControl]="flattenedControl" [dataSet]="flattenedOptions" [groupBy]="'group'"
-                   #datoListWithFlattenedData>
-
-          <dato-group *ngFor="let group of datoListWithFlattenedData.data; trackBy: datoListWithFlattenedData.trackByFn">
-            <div groupLabel>{{group.label}}</div>
-
-            <dato-option *ngFor="let option of group.children; trackBy: datoListWithFlattenedData.trackByFn" [option]="option" multi>
-              {{option.label}}
-            </dato-option>
-
-          </dato-group>
-
-        </dato-list>
-      </div>
-      <p datoFont class="mt-10">Control value: <span class="code">{{flattenedControl.value | json}}</span></p>
-
-    </div>
-
-  </section>
-  <dato-tabs show="html">
-<textarea datoHighlight="html">
-      <dato-list [formControl]="flattenedControl" [dataSet]="flattenedOptions" [groupBy]="'group'"
-                 #datoListWithFlattenedData>
-
-          <dato-group *ngFor="let group of datoListWithFlattenedData.data; trackBy: datoListWithFlattenedData.trackByFn">
-            <div groupLabel>group.label</div>
-
-            <dato-option *ngFor="let option of group.children; trackBy: datoListWithFlattenedData.trackByFn" [option]="option" multi>
-              option.label
-            </dato-option>
-
-          </dato-group>
-
-        </dato-list>
-    </textarea>
-
-  </dato-tabs>
-  <dato-tabs show="js">
-    <textarea datoHighlight="js">
-      flattenedOptions=[{ id: 1, label: 'abc', group: 'A' }, { id: 2, label: 'efg', group: 'A' }, { id: 3, label: 'hij', group: 'A' }, { id: 4, label: 'klm', group: 'B' }, { id: 5, label: 'nop', group: 'C' }];
-    /** turned into:  [
-    * { label: 'A',
-    *   children: [
-    *    { id: 1, label: 'abc', group: 'A' },
-    *    { id: 2, label: 'efg', group: 'A' },
-    *    { id: 3, label: 'hij', group: 'A' }
-    *  ]},
-    * { label: 'B',
-    *   children: [
-    *    { id: 4, label: 'klm', group: 'B' }
-    *  ]},
-    * { label: 'C',
-    *   children: [
-    *    { id: 5, label: 'nop', group: 'C' }
-    *  ]}
-    * ]
-      */
-    </textarea>
-  </dato-tabs>
-</dato-preview>
-<dato-preview title="List - Flat Data (No Groups)">
-
-  <section class="d-flex">
-    <div class="select-preview">
-      <div class="list-container">
-        <dato-list [formControl]="flatListControl" [dataSet]="flatListOptions" #datoListFlatList>
-
-          <dato-option *ngFor="let option of datoListFlatList.data; trackBy: datoListFlatList.trackByFn" [option]="option" multi>
-            {{option.label}}
-          </dato-option>
-
-        </dato-list>
-      </div>
-
-      <p datoFont class="mt-10">Control value: <span class="code">{{flatListControl.value | json}}</span></p>
-
-    </div>
-
-  </section>
-  <dato-tabs show="html">
-
-    <textarea datoHighlight="html">
-      <dato-list [formControl]="flatListControl" [dataSet]="options" #datoListFlatList>
-
-          <dato-option *ngFor="let option of datoListFlatList.data; trackBy: datoListFlatList.trackByFn" [option]="option" multi>
-              option.label
-            </dato-option>
-
         </dato-list>
     </textarea>
 

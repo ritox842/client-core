@@ -1,3 +1,56 @@
+## [1.7.6](https://github.com/datorama/client-core/compare/v1.7.5...v1.7.6) (2018-08-05)
+
+
+### Bug Fixes
+
+* **component import:** removed safeStyle from button.component ([54b3ede](https://github.com/datorama/client-core/commit/54b3ede))
+* **components:** fixed various design issues across components ([8d50a8c](https://github.com/datorama/client-core/commit/8d50a8c))
+* **dato-buttons:** margin between text and dato-icon ([2bb4155](https://github.com/datorama/client-core/commit/2bb4155))
+* **pr comments:** fixed pr comments from amit ([9054b1d](https://github.com/datorama/client-core/commit/9054b1d))
+* **test:** fixed test that failed after design fix ([48f4ad3](https://github.com/datorama/client-core/commit/48f4ad3))
+
+## [1.7.5](https://github.com/datorama/client-core/compare/v1.7.4...v1.7.5) (2018-08-02)
+
+
+### Bug Fixes
+
+* **datocarousel:** reversed control arrows ([926bd81](https://github.com/datorama/client-core/commit/926bd81))
+
+## [1.7.4](https://github.com/datorama/client-core/compare/v1.7.3...v1.7.4) (2018-07-31)
+
+
+### Bug Fixes
+
+* **datocarousel:** added api export ([0f03956](https://github.com/datorama/client-core/commit/0f03956))
+
+## [1.7.3](https://github.com/datorama/client-core/compare/v1.7.2...v1.7.3) (2018-07-31)
+
+
+### Bug Fixes
+
+* **datocarousel:** removed redundant styles ([630b6f1](https://github.com/datorama/client-core/commit/630b6f1))
+
+## [1.7.2](https://github.com/datorama/client-core/compare/v1.7.1...v1.7.2) (2018-07-31)
+
+
+### Bug Fixes
+
+* **component:** typo ([f9672ab](https://github.com/datorama/client-core/commit/f9672ab))
+
+## [1.7.1](https://github.com/datorama/client-core/compare/v1.7.0...v1.7.1) (2018-07-30)
+
+
+### Bug Fixes
+
+* **datocarousel:** added timeout for size calculations to ensure success ([b19d21c](https://github.com/datorama/client-core/commit/b19d21c))
+
+# [1.7.0](https://github.com/datorama/client-core/compare/v1.6.0...v1.7.0) (2018-07-30)
+
+
+### Features
+
+* **datocarousel:** carousel component ([5053542](https://github.com/datorama/client-core/commit/5053542))
+
 # [1.6.0](https://github.com/datorama/client-core/compare/v1.5.0...v1.6.0) (2018-07-24)
 
 

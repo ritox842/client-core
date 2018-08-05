@@ -7,12 +7,22 @@
                 [formControl]="searchControl"
                 type="search">
     </dato-input>
-    <div class="overflow-y-scroll dato-list__options">
+    <div class="overflow-y-scroll dato-list__options" [ngClass]="_listClass" [class.hide]="!hasSearchResults">
         <ng-content></ng-content>
     </div>
 
-    <span *ngIf="!hasSearchResults" class="note">
-        <p>No results found...</p>
-        <p>Please try a different keyword</p>
-    </span>
+    <div *ngIf="!hasSearchResults" class="note d-flex-column align-center">
+        <!-- Custom Template -->
+        <div class="d-flex-1 d-flex-column align-center" #noResultsRef>
+            <ng-content select=".no-search-results"></ng-content>
+        </div>
+        <!-- Default Template -->
+        <div class="d-flex-1 d-flex-column align-center" *ngIf="noResultsRef.children.length === 0">
+            <p class="note-bold mt-10 mb-10" datoFont="primary-400">No results found...</p>
+            <p datoFont="primary-300">Please try a different keyword</p>
+        </div>
+    </div>
 </div>
+
+
+

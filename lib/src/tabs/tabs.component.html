@@ -4,7 +4,7 @@
       (click)="!!select(tab.id)"
       [class.active]="tab.id === activeId"
       [class.disabled]="tab.disabled">
-    <a [id]="tab.id" class="nav-link" href role="tab"
+    <a [id]="tab.id" class="nav-link" [ngClass]="fontSize_" href role="tab"
        [attr.tabindex]="(tab.disabled ? '-1': undefined)"
        [attr.aria-controls]="(!destroyOnHide || tab.id === activeId ? tab.id + '-panel' : null)"
        [attr.aria-expanded]="tab.id === activeId"

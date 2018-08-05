@@ -15,7 +15,7 @@ export interface DatoSelectSearchStrategy {
 }
 
 /**
- * The default search stratrgy is compare lowercased strings
+ * The default search strategy is compare lowercased strings
  * @param {DatoOptionComponent} datoOption
  * @param {string} searchValue
  * @param {string} labelKey

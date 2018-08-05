@@ -5,11 +5,15 @@ dato-dialog-header {
 
   dato-icon-button.x-button {
     position: absolute;
-    right: 8px;
-    top: 8px;
+    right: 10px;
+    top: 10px;
 
     .dato-icon-close {
       padding: 0 !important;
+      svg {
+        width: 24px;
+        height: 24px;
+      }
     }
   }
 }

@@ -72,14 +72,13 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     toArray.forEach(index => {
       const group = this.groups.toArray()[index];
       if (!this.parent && !group._disabled) {
-        this.toggleGroup(group);
+        this.onGroupClick(group);
       }
     });
   }
 
   ngAfterContentInit() {
-    this.initialOpen(this.activeIds);
-    this.groups.changes.subscribe(() => {
+    this.groups.changes.pipe(untilDestroyed(this)).subscribe(() => {
       this.register();
     });
 
@@ -89,6 +88,10 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
       // register to groups changes
       this.groups.changes.pipe(untilDestroyed(this)).subscribe(this.updateIncludeArrows.bind(this));
     }
+
+    setTimeout(() => {
+      this.initialOpen(this.activeIds);
+    });
   }
 
   private updateIncludeArrows() {
@@ -133,7 +136,8 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
   }
 
   private toggleGroup(group: DatoAccordionGroupComponent, expanded = true) {
-    group.expand(expanded);
+    group.content.expanded = expanded;
+    group.header.expanded = expanded;
   }
 
   private getChildAccordionsComponents() {

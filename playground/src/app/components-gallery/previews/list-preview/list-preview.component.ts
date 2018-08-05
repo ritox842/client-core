@@ -24,9 +24,11 @@ export class ListPreviewComponent {
   simpleControl = new FormControl({ id: 2, label: "efg" });
   simpleNoGroupSearchControl = new FormControl({ id: 2, label: "efg" });
   accordionControl = new FormControl({ id: 2, label: "efg" });
+  accordionControl2 = new FormControl({ id: 2, label: "efg" });
   scrollingControl = new FormControl({ id: 2, label: "efg" });
   flattenedControl = new FormControl({ id: 2, label: "efg", group: "A" });
   flatListControl = new FormControl({ id: 2, label: "efg", group: "A" });
+  flatListControl2 = new FormControl({ id: 2, label: "efg", group: "A" });
 
   options = [
     {
@@ -88,6 +90,14 @@ export class ListPreviewComponent {
   ];
 
   flatListOptions = [
+    { id: 1, label: "abc" },
+    { id: 2, label: "efg" },
+    { id: 3, label: "hij" },
+    { id: 4, label: "klm" },
+    { id: 5, label: "nop" }
+  ];
+
+  flatListOptions2 = [
     { id: 1, label: "abc" },
     { id: 2, label: "efg" },
     { id: 3, label: "hij" },

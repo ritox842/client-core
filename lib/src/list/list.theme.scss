@@ -8,4 +8,17 @@ dato-list {
   & dato-accordion dato-accordion-group:not(:last-child) {
     border-bottom: themify(primary-100) solid 1px;
   }
+
+  .dato-list__options {
+    .dato-select__option .dato-checkbox input:not(:checked)~.checkmark {
+      background: themify(primary-0);
+    }
+    dato-option:hover {
+      .dato-select__option {
+        background: themify(primary-100) !important;
+        color: themify((light: primary-700, dark: primary-0));
+      }
+    }
+  }
+
 }

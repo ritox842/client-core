@@ -54,7 +54,7 @@ describe('DatoSnackbar', () => {
     expect(query('.dato-snack-content')).toHaveText('Error');
     expect(query('dato-snackbar')).toHaveClass('dato-snackbar-error');
     expect(query('dato-snackbar')).toExist();
-    expect(query('.dato-icon-close')).toExist();
+    expect(query('.dato-icon-alert')).toExist();
     expect(query('.dato-snackbar-circle')).toExist();
   });
 
@@ -74,7 +74,7 @@ describe('DatoSnackbar', () => {
     expect(query('.dato-snack-content')).toHaveText('Dramatic Error');
     expect(query('dato-snackbar')).toHaveClass('dato-snackbar-dramatic-error');
     expect(query('dato-snackbar')).toExist();
-    expect(query('.dato-icon-close')).toExist();
+    expect(query('.dato-icon-alert')).toExist();
     expect(query('.dato-snackbar-circle')).toExist();
   });
 

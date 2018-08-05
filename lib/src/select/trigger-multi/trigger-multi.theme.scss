@@ -1,25 +1,25 @@
 $sm: (
-  height: 25px,
-  selectedHeight: 17px,
-  optionHeight: 30px,
-  selectedMargin: 3px,
-  font: 12px
+        height: 25px,
+        selectedHeight: 17px,
+        optionHeight: 30px,
+        selectedMargin: 3px,
+        font: 12px
 );
 
 $md: (
-  height: 35px,
-  selectedHeight: 25px,
-  optionHeight: 35px,
-  selectedMargin: 5px,
-  font: 14px
+        height: 35px,
+        selectedHeight: 25px,
+        optionHeight: 35px,
+        selectedMargin: 5px,
+        font: 14px
 );
 
 $lg: (
-  height: 45px,
-  selectedHeight: 29px,
-  optionHeight: 35px,
-  selectedMargin: 10px,
-  font: 14px
+        height: 45px,
+        selectedHeight: 29px,
+        optionHeight: 35px,
+        selectedMargin: 10px,
+        font: 14px
 );
 
 $max-items: 4;
@@ -201,7 +201,7 @@ dato-trigger-multi {
     height: 29px;
     padding: 0px 10px;
     border-radius: 5px;
-    color: themify(primary-0);
+    color: themify((light: primary-0, dark: primary-700));
     background-color: themify(accent-400);
     user-select: none;
     padding: 4px;
@@ -209,14 +209,14 @@ dato-trigger-multi {
     align-items: center;
     padding-left: 10px;
     &:hover {
-      background-color: themify(accent-500);
+      background-color: themify((light: accent-500, dark: accent-350));
       .dato-icon-close {
-        color: themify(accent-200);
+        color: themify((light: accent-200, dark: accent-700));
       }
     }
 
     .dato-icon-close {
-      color: themify(accent-300);
+      color: themify((light: accent-300, dark: accent-600));
       cursor: pointer;
       transform: translateX(3px);
       margin-left: 10px;
@@ -251,5 +251,5 @@ dato-trigger-multi {
 }
 
 .dato-trigger-multi--focused {
-  border-color: themify(accent-400) !important;
+  border-color: themify((light: accent-400, dark: accent-500)) !important;
 }

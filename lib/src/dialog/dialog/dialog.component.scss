@@ -17,21 +17,19 @@
   min-height: 160px;
   position: relative;
   transform: none;
+  border-radius: 2px;
   opacity: 1;
   animation: open 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
-
-  & > * {
+  &>* {
     display: flex;
     flex-direction: column;
     flex: 0 1 100%;
-  }
-
-  // fix IE11 bug with min-height and flex-item
-  &:after{
+  } // fix IE11 bug with min-height and flex-item
+  &:after {
     content: '&nbsp;';
     display: inline;
-    min-height:inherit;
-    font-size:0;
+    min-height: inherit;
+    font-size: 0;
   }
 }
 
@@ -40,7 +38,6 @@
     opacity: 0;
     transform: translate3d(0, 25%, 0) scale(0.9);
   }
-
   100% {
     opacity: 1;
     transform: none;

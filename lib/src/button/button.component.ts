@@ -1,3 +1,4 @@
+import { style } from '@angular/animations';
 /**
  * @license
  * Copyright Datorama. All Rights Reserved.

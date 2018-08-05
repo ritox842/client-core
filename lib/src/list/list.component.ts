@@ -106,6 +106,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Client sort */
   @Input() sort = true;
 
+  /** available sizes */
+  @Input() datoSize: 'sm' | 'md';
+
   /**
    * Getters and Setters
    */
@@ -157,6 +160,8 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Store the active options */
   private _model = [];
 
+  _listClass: string;
+
   /** Clicks options subscription */
   private clicksSubscription;
 
@@ -180,8 +185,11 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   ngOnInit() {
     this.listenToSearch();
+
     this._data = this.normalizeData(this._data);
     this.initialRun = false;
+    this.datoSize = this.datoSize || 'md';
+    this._listClass = `list-${this.datoSize}`;
   }
 
   /**
@@ -196,12 +204,8 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   }
 
   ngAfterContentInit(): void {
-    /* Subscribing to options change, and re-init the options.
-     * This is needed only for the accordion, cause his children are not on the DOM yet
-     */
-    if (this.isAccordionGroup()) {
-      this.options.changes.pipe(untilDestroyed(this)).subscribe(_ => this.initOptions());
-    }
+    /* Subscribing to options change, and re-init the options */
+    this.options.changes.pipe(untilDestroyed(this)).subscribe(_ => this.initOptions());
 
     this.keyboardEventsManager = new ListKeyManager(this.options).withWrap().withVerticalOrientation(true);
     this.keyboardEventsManagerSubscription = this.keyboardEventsManager.change.pipe(untilDestroyed(this)).subscribe(index => {

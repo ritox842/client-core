@@ -19,20 +19,17 @@ import { ListKeyManager } from '@angular/cdk/a11y';
 import { merge } from 'rxjs';
 import { DatoAccordionComponent, DatoAccordionGroupComponent } from '../accordion/public_api';
 import { query } from '../internal/helpers';
-import { getListOptionHeight } from './list-size';
+import { getListOptionHeight, ListGroupComponent, ListSearchResult } from './list.types';
 import { DatoListSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { normalizeData } from '../internal/data-normalization';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { DatoListSortComparator, defaultClientSortComparator } from './sort.comparator';
-import { delay } from 'helpful-decorators';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => DatoListComponent),
   multi: true
 };
-
-export type ListGroupComponent = DatoAccordionGroupComponent | DatoGroupComponent;
 
 @TakeUntilDestroy()
 @Component({
@@ -144,6 +141,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Store the initial data */
   private _data = [];
 
+  /** Store filtered data after performing a search */
   private _searchData = [];
 
   /** Indicates whether we already initialized the data,
@@ -177,6 +175,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Keyboard subscription */
   private keyboardEventsManagerSubscription;
 
+  /** Whether we're in a search mode */
   private isSearching = false;
 
   constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef) {
@@ -369,12 +368,14 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     this.searchControl.valueChanges.pipe(debounceTime(this.debounceTime), untilDestroyed(this)).subscribe((value: string) => {
       if (this.isEmpty(value)) {
         this.isSearching = false;
-        //this._hasSearchResults = false;
 
         const isAccordion = this.isAccordionGroup();
         this.getGroupComponentsArray().forEach((groupComponent: ListGroupComponent) => {
           groupComponent._hidden = false;
 
+          /* If this accordion group has been expended by the search function,
+             then collapse it to the original state
+          */
           if (isAccordion) {
             const anyGroup = groupComponent as any;
             if (anyGroup.__expended) {
@@ -384,14 +385,11 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
           }
         });
       } else {
-        const result = this.search(value);
+        const result: ListSearchResult = this.search(value);
         this._searchData = this._sort(result.results);
         this._hasSearchResults = result.hasResults;
         this.isSearching = true;
       }
-
-      /* due to the sorting behaviour when searching, we need to sort again */
-      //this.data = this._sort(data);
 
       this.cdr.markForCheck();
 
@@ -448,7 +446,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * @param {string} searchTerm
    * @returns {boolean}
    */
-  private search(searchTerm: string): { results: any[]; hasResults: boolean } {
+  private search(searchTerm: string): ListSearchResult {
     const groupComponentsArray = this.getGroupComponentsArray();
     const isAccordion = this.isAccordionGroup();
 
@@ -463,10 +461,12 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
         /* Add the entire group */
         previousValue.push(group);
 
+        /* Match the whole group */
         if (this.searchGroupLabels && this.searchStrategy(currValue, searchTerm, this.labelKey)) {
           showGroup = true;
           group.children = children;
         } else {
+          /* Match an item from the group */
           group.children = children.filter(option => {
             return this.searchStrategy(option, searchTerm, this.labelKey);
           });
@@ -477,17 +477,21 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
         }
 
         const groupComponent = groupComponentsArray[currentIndex];
-
+        /* Show/hide the group */
         groupComponent._hidden = !showGroup;
         if (showGroup) {
           hasResults = true;
         }
 
-        if (isAccordion && showGroup && !(groupComponent as DatoAccordionGroupComponent).content._expanded) {
-          /* Expend the accordion */
-          (groupComponent as DatoAccordionGroupComponent).expand(true);
-          /* Mark the accordion as expended, so we can return to the default state later */
-          (groupComponent as any).__expended = true;
+        /* Expand the accordion on matching results */
+        if (isAccordion && showGroup) {
+          const accordionGroup = groupComponent as DatoAccordionGroupComponent;
+          if (!accordionGroup.expanded) {
+            /* Expand the accordion */
+            accordionGroup.expand(true);
+            /* Mark the accordion as expanded, so we can return to the default state later */
+            (groupComponent as any).__expended = true;
+          }
         }
       } else {
         /* Filter Flat List */

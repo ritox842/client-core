@@ -1,3 +1,14 @@
+## [1.7.6](https://github.com/datorama/client-core/compare/v1.7.5...v1.7.6) (2018-08-05)
+
+
+### Bug Fixes
+
+* **component import:** removed safeStyle from button.component ([54b3ede](https://github.com/datorama/client-core/commit/54b3ede))
+* **components:** fixed various design issues across components ([8d50a8c](https://github.com/datorama/client-core/commit/8d50a8c))
+* **dato-buttons:** margin between text and dato-icon ([2bb4155](https://github.com/datorama/client-core/commit/2bb4155))
+* **pr comments:** fixed pr comments from amit ([9054b1d](https://github.com/datorama/client-core/commit/9054b1d))
+* **test:** fixed test that failed after design fix ([48f4ad3](https://github.com/datorama/client-core/commit/48f4ad3))
+
 ## [1.7.5](https://github.com/datorama/client-core/compare/v1.7.4...v1.7.5) (2018-08-02)
 
 

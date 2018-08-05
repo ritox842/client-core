@@ -16,7 +16,9 @@ export class DatoAutoFocusDirective {
   @Input()
   public set datoAutoFocus(value) {
     if (toBoolean(value)) {
-      this.host.nativeElement.focus();
+      setTimeout(() => {
+        this.host.nativeElement.focus();
+      });
     }
   }
 

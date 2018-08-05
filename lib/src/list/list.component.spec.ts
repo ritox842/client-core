@@ -147,17 +147,20 @@ describe('DatoList', () => {
         host = createHost(list);
         host.click(query(SEARCH_SELECTOR));
         typeInElement('nop', query(SEARCH_SELECTOR));
+        host.detectChanges();
         host.click(query('div'));
         tick(301);
-        expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(4);
-        expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(4);
-        expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(4);
+        host.detectChanges();
+        // expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(4);
+        // expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(4);
+        expect(getOptionsAsArray().length).toEqual(1);
         typeInElement('', query(SEARCH_SELECTOR));
+        host.detectChanges();
         tick(301);
+        host.detectChanges();
+
         /** search cleared  */
-        expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(0);
-        expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(0);
-        expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(0);
+        expect(getOptionsAsArray().length).toEqual(5);
       })
     );
 
@@ -169,17 +172,17 @@ describe('DatoList', () => {
         host.detectChanges();
         host.click(query(SEARCH_SELECTOR));
         typeInElement('nop', query(SEARCH_SELECTOR));
+        host.detectChanges();
         host.click(query('div'));
         tick(301);
-        expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(4);
-        expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(4);
-        expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(4);
+        host.detectChanges();
+        expect(getOptionsAsArray().length).toEqual(1);
         typeInElement('', query(SEARCH_SELECTOR));
+        host.detectChanges();
         tick(301);
+        host.detectChanges();
         /** search cleared  */
-        expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(0);
-        expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(0);
-        expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(0);
+        expect(getOptionsAsArray().length).toEqual(5);
       })
     );
 

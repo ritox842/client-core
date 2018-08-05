@@ -1,6 +1,7 @@
 $md: ( height: 35px, selectedHeight: 25px, optionHeight: 35px, selectedMargin: 5px, font: 14px);
 $simple-font-size: 14px;
 $text-bold-weight: 600;
+
 dato-list {
   & .dato-select__option {
     height: map-get($md, optionHeight);
@@ -14,18 +15,22 @@ dato-list {
     font-size: $simple-font-size;
     font-weight: $text-bold-weight;
   }
-}
 
-.list-sm {
-  .dato-select__option {
-    height: 30px;
-    line-height: 30px;
+  .dato-list__options.hide {
+    display: none;
   }
-}
 
-.list-md {
-  .dato-select__option {
-    height: map-get($md, optionHeight);
-    line-height: map-get($md, optionHeight);
+  .list-sm {
+    .dato-select__option {
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+
+  .list-md {
+    .dato-select__option {
+      height: map-get($md, optionHeight);
+      line-height: map-get($md, optionHeight);
+    }
   }
 }

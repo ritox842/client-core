@@ -24,13 +24,30 @@ export class DatoAccordionGroupComponent {
 
   @Output() toggle = new EventEmitter<{ expanded: boolean }>();
 
-  constructor(private cdr: ChangeDetectorRef) {}
-
   @Input()
   set disabled(value) {
     this._disabled = value;
     this.content.expanded = false;
     this.header.expanded = false;
     this.cdr.detectChanges();
+  }
+
+  /**
+   * Whether the group has been expanded
+   * @return {boolean}
+   */
+  get expanded(): boolean {
+    return this.content && this.content._expanded;
+  }
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  /**
+   * Expand or collapse the group
+   * @param {boolean} expanded
+   */
+  expand(expanded: boolean) {
+    this.content.expanded = expanded;
+    this.header.expanded = expanded;
   }
 }

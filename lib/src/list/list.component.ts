@@ -370,20 +370,21 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
         this.isSearching = false;
 
         const isAccordion = this.isAccordionGroup();
-        this.getGroupComponentsArray().forEach((groupComponent: ListGroupComponent) => {
-          groupComponent._hidden = false;
+        if (isAccordion) {
+          this.getGroupComponentsArray().forEach((groupComponent: ListGroupComponent) => {
+            groupComponent._hidden = false;
 
-          /* If this accordion group has been expended by the search function,
-             then collapse it to the original state
-          */
-          if (isAccordion) {
+            /* If this accordion group has been expended by the search function,
+               then collapse it to the original state
+            */
+
             const anyGroup = groupComponent as any;
             if (anyGroup.__expended) {
               anyGroup.__expended = false;
               (anyGroup as DatoAccordionGroupComponent).expand(false);
             }
-          }
-        });
+          });
+        }
       } else {
         const result: ListSearchResult = this.search(value);
         this._searchData = this._sort(result.results);

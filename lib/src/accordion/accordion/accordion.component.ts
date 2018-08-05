@@ -136,8 +136,7 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
   }
 
   private toggleGroup(group: DatoAccordionGroupComponent, expanded = true) {
-    group.content.expanded = expanded;
-    group.header.expanded = expanded;
+    group.expand(expanded);
   }
 
   private getChildAccordionsComponents() {

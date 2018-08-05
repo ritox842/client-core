@@ -10,7 +10,7 @@ import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DatoTranslateService } from '../services/translate.service';
 import { BaseCustomControl } from '../internal/base-custom-control';
-import { coerceArray, toBoolean, values } from '@datorama/utils';
+import { coerceArray } from '@datorama/utils';
 import { debounceTime, mapTo } from 'rxjs/operators';
 import { DatoOptionComponent } from '../options/option.component';
 import { DatoGroupComponent } from '../options/group.component';
@@ -22,6 +22,9 @@ import { query } from '../internal/helpers';
 import { getListOptionHeight } from './list-size';
 import { DatoListSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { normalizeData } from '../internal/data-normalization';
+import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { DatoListSortComparator, defaultClientSortComparator } from './sort.comparator';
+import { delay } from 'helpful-decorators';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -29,6 +32,9 @@ const valueAccessor = {
   multi: true
 };
 
+export type ListGroupComponent = DatoAccordionGroupComponent | DatoGroupComponent;
+
+@TakeUntilDestroy()
 @Component({
   selector: 'dato-list',
   templateUrl: './list.component.html',
@@ -57,7 +63,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   @Input()
   set dataSet(data: any[]) {
     if (!this.initialRun) {
-      this._data = normalizeData(data, this.labelKey, this.groupBy);
+      this._data = this.normalizeData(data);
     } else {
       /** data normalization, if required, will be handled by ngOnInit in the initial run */
       this._data = data;
@@ -66,8 +72,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     /** If it's async updates, create micro task in order to re-subscribe to clicks */
     if (this._dataIsDirty) {
       Promise.resolve().then(() => {
-        this.subscribeToOptionClick(this.options);
-        this.markAsActive(this._model);
+        this.initOptions();
       });
     }
 
@@ -95,50 +100,62 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Client search strategy */
   @Input() searchStrategy: DatoListSearchStrategy = defaultClientSearchStrategy;
 
+  /** Client sort comparator */
+  @Input() sortComparator: DatoListSortComparator = defaultClientSortComparator;
+
+  /** Client sort */
+  @Input() sort = true;
+
   /**
    * Getters and Setters
    */
   get data() {
-    return this._data;
+    return this.isSearching ? this._searchData : this._data;
+  }
+
+  get hasSearchResults() {
+    return !this.isSearching || this._hasSearchResults;
   }
 
   get hasResults() {
-    return this._hasResults;
-  }
-
-  set hasResults(value: boolean) {
-    this._hasResults = value;
+    return this.data.length > 0;
   }
 
   get hasValue() {
     return this._model.length;
   }
 
+  get searchTerm() {
+    return (this.searchControl.value || '').trim();
+  }
+
   /** FormControl which listens for search value changes */
   searchControl = new FormControl();
+
+  _searchPlaceholder = this.translate.transform('general.search');
 
   /**
    * Private Properties
    */
 
   /** Store the initial data */
-  _data = [];
+  private _data = [];
+
+  private _searchData = [];
 
   /** Indicates whether we already initialized the data,
    *  This is optimization for non async calls.
    * */
-  _dataIsDirty = false;
+  private _dataIsDirty = false;
 
   /** Enable/disable the select-trigger */
-  _disabled;
+  private _disabled;
 
   /** Whether we have search results */
-  _hasResults = true;
+  private _hasSearchResults = true;
 
   /** Store the active options */
-  _model = [];
-
-  _searchPlaceholder = this.translate.transform('general.search');
+  private _model = [];
 
   /** Clicks options subscription */
   private clicksSubscription;
@@ -155,8 +172,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   /** Keyboard subscription */
   private keyboardEventsManagerSubscription;
 
-  /** Search control subscription */
-  private searchSubscription;
+  private isSearching = false;
 
   constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef) {
     super();
@@ -164,24 +180,46 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
   ngOnInit() {
     this.listenToSearch();
-    this._data = normalizeData(this._data, this.labelKey, this.groupBy);
+    this._data = this.normalizeData(this._data);
     this.initialRun = false;
   }
 
+  /**
+   * A public helper function for trackBy.
+   * This is in use by the developer.
+   * @param index
+   * @param option
+   * @return {any}
+   */
+  trackByFn(index, option) {
+    return option ? option[this.idKey] : index;
+  }
+
   ngAfterContentInit(): void {
-    this.subscribeToOptionClick(this.options);
+    /* Subscribing to options change, and re-init the options.
+     * This is needed only for the accordion, cause his children are not on the DOM yet
+     */
+    if (this.isAccordionGroup()) {
+      this.options.changes.pipe(untilDestroyed(this)).subscribe(_ => this.initOptions());
+    }
+
     this.keyboardEventsManager = new ListKeyManager(this.options).withWrap().withVerticalOrientation(true);
-    this.keyboardEventsManagerSubscription = this.keyboardEventsManager.change.subscribe(index => {
+    this.keyboardEventsManagerSubscription = this.keyboardEventsManager.change.pipe(untilDestroyed(this)).subscribe(index => {
       const options = this.options.toArray();
       if (options.length) {
         options.forEach(datoOption => (datoOption.activeByKeyboard = false));
         options[index].activeByKeyboard = true;
+
         this.scrollToElement(index);
       }
     });
+
+    this.subscribeToOptionClick(this.options);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    /* @TakeUntilDestroy */
+  }
 
   /**
    *
@@ -193,11 +231,13 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
     if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
       this.keyboardEventsManager.onKeydown(event);
+
       return false;
     } else if (event.keyCode === ENTER) {
       const index = this.keyboardEventsManager.activeItemIndex;
       const active = this.options.toArray()[index];
       this.handleClick(active);
+
       return false;
     }
   }
@@ -231,8 +271,64 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
     this.cdr.markForCheck();
   }
 
-  private getGroupComponentsArray(): DatoAccordionGroupComponent[] | DatoGroupComponent[] {
-    return this.accordion.length ? this.accordion.first.groups.toArray() : this.groups.toArray();
+  /**
+   * Subscribe to options click events and mark the relevant DatoOptions as active
+   */
+  private initOptions() {
+    this.subscribeToOptionClick(this.options);
+    this.markAsActive(this._model);
+  }
+
+  /**
+   * Normalize a flatten and sorting a data set
+   * @param data
+   * @return {any[]}
+   */
+  private normalizeData(data) {
+    return this._sort(normalizeData(data, this.labelKey, this.groupBy));
+  }
+
+  /**
+   * Sort the groups and their children with the default comparator
+   * @param {any[]} data
+   * @return {any[]}
+   * @private
+   */
+  private _sort(data: any[]): any[] {
+    data = data || [];
+
+    if (this.sort) {
+      const searchTerm = this.searchTerm.toLowerCase();
+      // first level sorting
+      data.sort((a, b) => {
+        return this.sortComparator(a[this.labelKey], b[this.labelKey], searchTerm);
+      });
+
+      // second level sorting
+      data.forEach(node => {
+        if (node.children) {
+          this._sort(node.children);
+        }
+      });
+    }
+
+    return data;
+  }
+
+  /**
+   * Whether the group component is Accordion
+   * @return {number}
+   */
+  private isAccordionGroup() {
+    return this.accordion.length;
+  }
+
+  /**
+   * Retrieve an array of the group components
+   * @return {ListGroupComponent[]}
+   */
+  private getGroupComponentsArray(): ListGroupComponent[] {
+    return this.isAccordionGroup() ? this.accordion.first.groups.toArray() : this.groups.toArray();
   }
 
   /**
@@ -242,11 +338,13 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   private handleClick(datoOption: DatoOptionComponent) {
     datoOption.active = !datoOption.active;
     const rawOption = datoOption.option;
+
     if (datoOption.active) {
       this._model = this._model.concat(rawOption);
     } else {
       this._model = this._model.filter(current => current[this.idKey] !== rawOption[this.idKey]);
     }
+
     this.onChange(this._model);
     this.cdr.markForCheck();
   }
@@ -257,27 +355,46 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * @returns {boolean}
    */
   private isEmpty(value: string) {
-    return value === '';
+    return value.trim() === '';
   }
 
   /**
    * Subscribe to search changes and filter the list
    */
   private listenToSearch() {
-    this.searchSubscription = this.searchControl.valueChanges.pipe(debounceTime(this.debounceTime)).subscribe(value => {
+    this.searchControl.valueChanges.pipe(debounceTime(this.debounceTime), untilDestroyed(this)).subscribe((value: string) => {
       if (this.isEmpty(value)) {
-        this.showAll();
-        this.hasResults = true;
-        const groupComponentsArray = this.getGroupComponentsArray();
-        (groupComponentsArray as any[]).forEach((groupComponent: DatoGroupComponent | DatoAccordionGroupComponent) => {
+        this.isSearching = false;
+        //this._hasSearchResults = false;
+
+        const isAccordion = this.isAccordionGroup();
+        this.getGroupComponentsArray().forEach((groupComponent: ListGroupComponent) => {
           groupComponent._hidden = false;
+
+          if (isAccordion) {
+            const anyGroup = groupComponent as any;
+            if (anyGroup.__expended) {
+              anyGroup.__expended = false;
+              (anyGroup as DatoAccordionGroupComponent).expand(false);
+            }
+          }
         });
       } else {
-        this.hasResults = this.searchOptions(value);
+        const result = this.search(value);
+        this._searchData = this._sort(result.results);
+        this._hasSearchResults = result.hasResults;
+        this.isSearching = true;
       }
-      this.keyboardEventsManager.setActiveItem(0);
+
+      /* due to the sorting behaviour when searching, we need to sort again */
+      //this.data = this._sort(data);
 
       this.cdr.markForCheck();
+
+      /* selecting the first item on the next tick */
+      setTimeout(() => {
+        this.keyboardEventsManager.setActiveItem(0);
+      });
     });
   }
 
@@ -286,9 +403,8 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * @param model
    */
   private markAsActive(model: any[]) {
-    const asArray = this.options.toArray();
     for (const option of model) {
-      const match = asArray.find(current => current.option[this.idKey] === option[this.idKey]);
+      const match = this.options.find(opt => opt.option[this.idKey] === option[this.idKey]);
       if (match) {
         match.active = true;
       }
@@ -324,65 +440,64 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   }
 
   /**
-   * Search for options and returns if we have result
-   * @param {string} value
+   * Search for matching results
+   * @param {string} searchTerm
    * @returns {boolean}
    */
-  private searchOptions(value: string) {
-    const results = [];
+  private search(searchTerm: string): { results: any[]; hasResults: boolean } {
     const groupComponentsArray = this.getGroupComponentsArray();
-    if (groupComponentsArray.length) {
-      this._data.forEach((group, index) => {
-        const matchGroup = this.searchStrategy(group, value, this.labelKey);
-        if (this.searchGroupLabels && matchGroup) {
-          /** show entire group */
-          group.children.forEach(option => {
-            results.push(option[this.idKey]);
-          });
+    const isAccordion = this.isAccordionGroup();
 
-          groupComponentsArray[index]._hidden = false;
+    let hasResults = false;
+    const results = this._data.reduce((previousValue, currValue, currentIndex) => {
+      /* Filter Groups */
+      if (groupComponentsArray.length) {
+        const children = currValue.children;
+        const group = { ...{}, ...currValue, children: [] };
+        let showGroup = false;
+
+        /* Add the entire group */
+        previousValue.push(group);
+
+        if (this.searchGroupLabels && this.searchStrategy(currValue, searchTerm, this.labelKey)) {
+          showGroup = true;
+          group.children = children;
         } else {
-          let showGroup = false;
-          group.children.forEach(option => {
-            const matchOption = this.searchStrategy(option, value, this.labelKey);
-            if (matchOption) {
-              showGroup = true;
-              /** show option */
-              results.push(option[this.idKey]);
-            }
+          group.children = children.filter(option => {
+            return this.searchStrategy(option, searchTerm, this.labelKey);
           });
-          groupComponentsArray[index]._hidden = !showGroup;
-        }
-      });
-    } else {
-      /** flat list - no groups or accordions */
-      this._data.forEach(option => {
-        const matchOption = this.searchStrategy(option, value, this.labelKey);
-        if (matchOption) {
-          /** show option */
-          results.push(option[this.idKey]);
-        }
-      });
-    }
 
-    for (let datoOption of this.options.toArray()) {
-      if (results.indexOf(datoOption.option[this.idKey]) > -1) {
-        datoOption.hideAndDisabled(false);
+          if (group.children.length) {
+            showGroup = true;
+          }
+        }
+
+        const groupComponent = groupComponentsArray[currentIndex];
+
+        groupComponent._hidden = !showGroup;
+        if (showGroup) {
+          hasResults = true;
+        }
+
+        if (isAccordion && showGroup && !(groupComponent as DatoAccordionGroupComponent).content._expanded) {
+          /* Expend the accordion */
+          (groupComponent as DatoAccordionGroupComponent).expand(true);
+          /* Mark the accordion as expended, so we can return to the default state later */
+          (groupComponent as any).__expended = true;
+        }
       } else {
-        datoOption.hideAndDisabled(true);
+        /* Filter Flat List */
+        const matchOption = this.searchStrategy(currValue, searchTerm, this.labelKey);
+        if (matchOption) {
+          previousValue.push(currValue);
+          hasResults = true;
+        }
       }
-    }
 
-    return toBoolean(results.length);
-  }
+      return previousValue;
+    }, []);
 
-  /**
-   * Show all options
-   */
-  private showAll() {
-    for (let datoOption of this.options.toArray()) {
-      datoOption.hideAndDisabled(false);
-    }
+    return { results, hasResults };
   }
 
   /**
@@ -397,7 +512,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
     /** Consider change it to use event delegation */
     this.clicksSubscription = merge(...clicks$)
-      .pipe(debounceTime(10))
+      .pipe(debounceTime(10), untilDestroyed(this))
       .subscribe((datoOption: DatoOptionComponent) => {
         if (datoOption.disabled) return;
         this.handleClick(datoOption);

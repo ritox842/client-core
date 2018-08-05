@@ -5,10 +5,10 @@
       <div class="list-container">
         <dato-list [formControl]="simpleControl" [dataSet]="options" #datoList>
 
-          <dato-group *ngFor="let group of datoList.data">
+          <dato-group *ngFor="let group of datoList.data; trackBy: datoList.trackByFn">
             <div groupLabel>{{group.label}}</div>
 
-            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+            <dato-option *ngFor="let option of group.children; trackBy: datoList.trackByFn" [option]="option" multi>
               {{option.label}}
             </dato-option>
 
@@ -27,10 +27,10 @@
     <textarea datoHighlight="html">
       <dato-list [formControl]="simpleControl" [dataSet]="options" #datoList>
 
-          <dato-group *ngFor="let group of datoList.data">
+          <dato-group *ngFor="let group of datoList.data; trackBy: datoList.trackByFn">
             <div groupLabel>group.label</div>
 
-            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+            <dato-option *ngFor="let option of group.children; trackBy: datoList.trackByFn" [option]="option" multi>
               option.label
             </dato-option>
 
@@ -47,12 +47,13 @@
   <section class="d-flex">
     <div class="select-preview">
       <div class="list-container">
-        <dato-list [formControl]="simpleNoGroupSearchControl" [dataSet]="options" [searchGroupLabels]="false" #datoListNoGroupSearch>
+        <dato-list [formControl]="simpleNoGroupSearchControl" [dataSet]="options" [searchGroupLabels]="false"
+                   #datoListNoGroupSearch>
 
-          <dato-group *ngFor="let group of datoListNoGroupSearch.data">
+          <dato-group *ngFor="let group of datoListNoGroupSearch.data; trackBy: datoListNoGroupSearch.trackByFn">
             <div groupLabel>{{group.label}}</div>
 
-            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+            <dato-option *ngFor="let option of group.children; trackBy: datoListNoGroupSearch.trackByFn" [option]="option" multi>
               {{option.label}}
             </dato-option>
 
@@ -71,10 +72,10 @@
     <textarea datoHighlight="html">
       <dato-list [formControl]="simpleNoGroupSearchControl" [dataSet]="options" #datoListNoGroupSearch>
 
-          <dato-group *ngFor="let group of datoListNoGroupSearch.data">
+          <dato-group *ngFor="let group of datoListNoGroupSearch.data; trackBy: datoListNoGroupSearch.trackByFn">
             <div groupLabel>group.label</div>
 
-            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+            <dato-option *ngFor="let option of group.children; trackBy: datoListNoGroupSearch.trackByFn" [option]="option" multi>
               option.label
             </dato-option>
 
@@ -94,16 +95,18 @@
       <div class="list-container">
         <dato-list [formControl]="accordionControl" [dataSet]="options" #datoListAccordion accordion>
           <dato-accordion [expandAll]="true" [includeArrows]="true">
-            <dato-accordion-group *ngFor="let group of datoListAccordion.data">
+            <dato-accordion-group *ngFor="let group of datoListAccordion.data; trackBy: datoListAccordion.trackByFn">
               <dato-accordion-header>
                 <div class="header">{{group.label}}</div>
               </dato-accordion-header>
-              <dato-accordion-content>
-                <div class="content">
-                  <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
-                    {{option.label}}
-                  </dato-option>
-                </div>
+              <dato-accordion-content [tpl]="accordionContent">
+                <ng-template #accordionContent>
+                  <div class="content">
+                    <dato-option *ngFor="let option of group.children; trackBy: datoListAccordion.trackByFn" [option]="option" multi>
+                      {{option.label}}
+                    </dato-option>
+                  </div>
+                </ng-template>
               </dato-accordion-content>
             </dato-accordion-group>
           </dato-accordion>
@@ -119,16 +122,73 @@
     <textarea datoHighlight="html">
         <dato-list [formControl]="accordionControl" [dataSet]="options" #datoListAccordion accordion>
           <dato-accordion [expandAll]="true" [includeArrows]="true">
-            <dato-accordion-group *ngFor="let group of datoListAccordion.data">
+            <dato-accordion-group *ngFor="let group of datoListAccordion.data; trackBy: datoListAccordion.trackByFn">
               <dato-accordion-header>
                 <div class="header">group.label</div>
               </dato-accordion-header>
-              <dato-accordion-content>
-                <div class="content">
-                  <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
-                    option.label
-                  </dato-option>
-                </div>
+              <dato-accordion-content [tpl]="accordionContent">
+                <ng-template #accordionContent>
+                  <div class="content">
+                    <dato-option *ngFor="let option of group.children; trackBy: datoListAccordion.trackByFn" [option]="option" multi>
+                      option.label
+                    </dato-option>
+                  </div>
+                </ng-template>
+              </dato-accordion-content>
+            </dato-accordion-group>
+          </dato-accordion>
+        </dato-list>
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>
+
+<dato-preview title="List - Accordion with Highlight Search">
+
+  <section class="d-flex">
+    <div class="select-preview">
+      <div class="list-container">
+        <dato-list [formControl]="accordionControl" [dataSet]="options" #datoListAccordion accordion>
+          <dato-accordion [includeArrows]="true">
+            <dato-accordion-group *ngFor="let group of datoListAccordion.data; trackBy: datoListAccordion.trackByFn">
+              <dato-accordion-header>
+                <div class="header" [innerHTML]="group.label | datoHighlight: datoListAccordion.searchTerm"></div>
+              </dato-accordion-header>
+              <dato-accordion-content [tpl]="accordionContent">
+                <ng-template #accordionContent>
+                  <div class="content">
+                    <dato-option *ngFor="let option of group.children; trackBy: datoListAccordion.trackByFn" [option]="option" multi>
+                      <span [innerHTML]="option.label | datoHighlight: datoListAccordion.searchTerm"></span>
+                    </dato-option>
+                  </div>
+                </ng-template>
+              </dato-accordion-content>
+            </dato-accordion-group>
+          </dato-accordion>
+        </dato-list>
+      </div>
+      <p datoFont class="mt-10">Control value: <span class="code">{{accordionControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+       <dato-list [formControl]="accordionControl" [dataSet]="options" #datoListAccordion accordion>
+          <dato-accordion [includeArrows]="true">
+            <dato-accordion-group *ngFor="let group of datoListAccordion.data">
+              <dato-accordion-header>
+                <div class="header" [innerHTML]="group.label | datoHighlight: datoListAccordion.searchTerm"></div>
+              </dato-accordion-header>
+              <dato-accordion-content [tpl]="accordionContent">
+                <ng-template #accordionContent>
+                  <div class="content">
+                    <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+                      <span [innerHTML]="option.label | datoHighlight: datoListAccordion.searchTerm"></span>
+                    </dato-option>
+                  </div>
+                </ng-template>
               </dato-accordion-content>
             </dato-accordion-group>
           </dato-accordion>
@@ -145,10 +205,10 @@
       <div class="list-container-scrolling">
         <dato-list [formControl]="scrollingControl" [dataSet]="longOptions" #datoListWithScrolling>
 
-          <dato-group *ngFor="let group of datoListWithScrolling.data">
+          <dato-group *ngFor="let group of datoListWithScrolling.data; trackBy: datoListWithScrolling.trackByFn">
             <div groupLabel>{{group.label}}</div>
 
-            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+            <dato-option *ngFor="let option of group.children; trackBy: datoListWithScrolling.trackByFn" [option]="option" multi>
               {{option.label}}
             </dato-option>
 
@@ -169,10 +229,10 @@
 
       <dato-list [formControl]="scrollingControl" [dataSet]="longOptions" #datoListWithScrolling>
 
-          <dato-group *ngFor="let group of datoListWithScrolling.data">
+          <dato-group *ngFor="let group of datoListWithScrolling.data; trackBy: datoListWithScrolling.trackByFn">
             <div groupLabel>group.label</div>
 
-            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+            <dato-option *ngFor="let option of group.children; trackBy: datoListWithScrolling.trackByFn" [option]="option" multi>
               option.label
             </dato-option>
 
@@ -201,10 +261,10 @@
         <dato-list [formControl]="flattenedControl" [dataSet]="flattenedOptions" [groupBy]="'group'"
                    #datoListWithFlattenedData>
 
-          <dato-group *ngFor="let group of datoListWithFlattenedData.data">
+          <dato-group *ngFor="let group of datoListWithFlattenedData.data; trackBy: datoListWithFlattenedData.trackByFn">
             <div groupLabel>{{group.label}}</div>
 
-            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+            <dato-option *ngFor="let option of group.children; trackBy: datoListWithFlattenedData.trackByFn" [option]="option" multi>
               {{option.label}}
             </dato-option>
 
@@ -222,10 +282,10 @@
       <dato-list [formControl]="flattenedControl" [dataSet]="flattenedOptions" [groupBy]="'group'"
                  #datoListWithFlattenedData>
 
-          <dato-group *ngFor="let group of datoListWithFlattenedData.data">
+          <dato-group *ngFor="let group of datoListWithFlattenedData.data; trackBy: datoListWithFlattenedData.trackByFn">
             <div groupLabel>group.label</div>
 
-            <dato-option *ngFor="let option of group.children; index as index" [option]="option" multi>
+            <dato-option *ngFor="let option of group.children; trackBy: datoListWithFlattenedData.trackByFn" [option]="option" multi>
               option.label
             </dato-option>
 
@@ -265,9 +325,9 @@
       <div class="list-container">
         <dato-list [formControl]="flatListControl" [dataSet]="flatListOptions" #datoListFlatList>
 
-            <dato-option *ngFor="let option of datoListFlatList.data; index as index" [option]="option" multi>
-              {{option.label}}
-            </dato-option>
+          <dato-option *ngFor="let option of datoListFlatList.data; trackBy: datoListFlatList.trackByFn" [option]="option" multi>
+            {{option.label}}
+          </dato-option>
 
         </dato-list>
       </div>
@@ -282,7 +342,7 @@
     <textarea datoHighlight="html">
       <dato-list [formControl]="flatListControl" [dataSet]="options" #datoListFlatList>
 
-          <dato-option *ngFor="let option of datoListFlatList.data; index as index" [option]="option" multi>
+          <dato-option *ngFor="let option of datoListFlatList.data; trackBy: datoListFlatList.trackByFn" [option]="option" multi>
               option.label
             </dato-option>
 

@@ -11,16 +11,18 @@ import { DatoAccordionGroupComponent } from '../accordion-group/accordion-group.
 import { merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { toBoolean } from '@datorama/utils';
+import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 
+@TakeUntilDestroy()
 @Component({
   selector: 'dato-accordion',
   template: '<ng-content></ng-content>',
   exportAs: 'datoAccordion',
   styles: [
     `
-            :host {
-                display: block;
-            }`
+          :host {
+              display: block;
+          }`
   ]
 })
 export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
@@ -62,19 +64,37 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     }
   }
 
+  setExpandAll(ids?: any[]) {
+    let toArray = ids;
+    if (!toArray) {
+      toArray = this.groups.toArray().map((_, i) => i);
+    }
+    toArray.forEach(index => {
+      const group = this.groups.toArray()[index];
+      if (!this.parent && !group._disabled) {
+        this.toggleGroup(group);
+      }
+    });
+  }
+
   ngAfterContentInit() {
     this.initialOpen(this.activeIds);
     this.groups.changes.subscribe(() => {
       this.register();
     });
 
-    if (this.includeArrows) {
-      this.groups.forEach(group => {
-        group.header.includeArrow = true;
-      });
-    }
-
     this.register();
+    if (this.includeArrows) {
+      this.updateIncludeArrows();
+      // register to groups changes
+      this.groups.changes.pipe(untilDestroyed(this)).subscribe(this.updateIncludeArrows.bind(this));
+    }
+  }
+
+  private updateIncludeArrows() {
+    this.groups.forEach(group => {
+      group.header.includeArrow = true;
+    });
   }
 
   private register() {
@@ -112,13 +132,12 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  private getChildAccordionsComponents() {
-    return this.childAccordion.filter(child => child !== this);
+  private toggleGroup(group: DatoAccordionGroupComponent, expanded = true) {
+    group.expand(expanded);
   }
 
-  private toggleGroup(group: DatoAccordionGroupComponent, expanded = true) {
-    group.content.expanded = expanded;
-    group.header.expanded = expanded;
+  private getChildAccordionsComponents() {
+    return this.childAccordion.filter(child => child !== this);
   }
 
   private coerceArray<T>(value): T[] {
@@ -128,19 +147,6 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
   private initialOpen(activeIds: number | number[]) {
     const toArray = this.expandAll ? this.groups.toArray().map((_, i) => i) : this.coerceArray<number>(activeIds);
     this.setExpandAll(toArray);
-  }
-
-  setExpandAll(ids?: any[]) {
-    let toArray = ids;
-    if (!toArray) {
-      toArray = this.groups.toArray().map((_, i) => i);
-    }
-    toArray.forEach(index => {
-      const group = this.groups.toArray()[index];
-      if (!this.parent && !group._disabled) {
-        this.toggleGroup(group);
-      }
-    });
   }
 
   private emitToggle(group: DatoAccordionGroupComponent, value?: boolean) {

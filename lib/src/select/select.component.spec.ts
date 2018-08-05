@@ -595,6 +595,7 @@ describe('DatoSelect', () => {
         tick(501);
         host.click(TRIGGER_SINGLE_SELECTOR);
         host.detectChanges();
+        tick(11);
         const groups = queryAll(GROUP_SELECTOR);
         expect(groups.length).toEqual(3);
         expect(groups[0].querySelector('[groupLabel]')).toHaveText('Group A');

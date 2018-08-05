@@ -24,13 +24,18 @@ export class DatoAccordionGroupComponent {
 
   @Output() toggle = new EventEmitter<{ expanded: boolean }>();
 
-  constructor(private cdr: ChangeDetectorRef) {}
-
   @Input()
   set disabled(value) {
     this._disabled = value;
     this.content.expanded = false;
     this.header.expanded = false;
     this.cdr.detectChanges();
+  }
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  expand(expanded: boolean) {
+    this.content.expanded = expanded;
+    this.header.expanded = expanded;
   }
 }

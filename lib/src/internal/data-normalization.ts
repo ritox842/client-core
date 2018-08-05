@@ -11,6 +11,7 @@ export function normalizeData<T, R>(data: T[], labelKey: string, groupByKey: str
   if (!data || !groupByKey) {
     return data;
   }
+
   const groups = {};
   for (let datum of data) {
     const groupKey = datum[groupByKey].toString();

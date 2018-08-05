@@ -1,5 +1,11 @@
 dato-list {
   & dato-accordion dato-accordion-header {
     color: themify(primary-400);
+    &.dato-accordion-open {
+      color: themify(primary-600);
+    }
+  }
+  & dato-accordion dato-accordion-group:not(:last-child) {
+    border-bottom: themify(primary-100) solid 1px;
   }
 }

@@ -11,13 +11,13 @@ import { DatoAccordionGroupComponent } from './accordion-group.component';
 import { DatoAccordionContentComponent } from '../accordion-content/accordion-content.component';
 import { DatoAccordionHeaderComponent } from '../accordion-header/accordion-header.component';
 import { EventEmitter } from '@angular/core';
-import { DatoIconModule, IconRegistry } from '../../../';
+import { DatoAccordionComponent, DatoIconModule, IconRegistry } from '../../../';
 
 describe('DatoAccordionGroupComponent', () => {
   let host: SpectatorWithHost<DatoAccordionGroupComponent>;
   let createHost = createHostComponentFactory<DatoAccordionGroupComponent>({
     component: DatoAccordionGroupComponent,
-    declarations: [DatoAccordionContentComponent, DatoAccordionHeaderComponent],
+    declarations: [DatoAccordionContentComponent, DatoAccordionHeaderComponent, DatoAccordionComponent],
     imports: [DatoIconModule],
     providers: [IconRegistry]
   });

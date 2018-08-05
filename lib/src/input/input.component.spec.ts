@@ -40,10 +40,14 @@ describe('DatoInputComponent', () => {
     expect(host.query('input')).toHaveAttr({ attr: 'placeholder', val: 'Search' });
   });
 
-  it('should support autofocus', function() {
-    host = createHost(`<dato-input [formControl]="control" [isFocused]="true"></dato-input>`);
-    expect(host.query('input')).toBeFocused();
-  });
+  it(
+    'should support autofocus',
+    fakeAsync(() => {
+      host = createHost(`<dato-input [formControl]="control" [isFocused]="true"></dato-input>`);
+      tick(0);
+      expect(host.query('input')).toBeFocused();
+    })
+  );
 
   it('should update the control', () => {
     host = createHost(`<dato-input [formControl]="control"></dato-input>`);

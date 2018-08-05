@@ -77,6 +77,7 @@ dato-checkbox, .dato-checkbox {
       height: $checkbox-size;
       width: $checkbox-size;
       transition: background 0.2s ease;
+      margin-top: 2px;
 
       /* Create the checkmark/indicator (hidden when not checked) */
       &:after {

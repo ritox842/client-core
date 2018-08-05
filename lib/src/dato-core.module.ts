@@ -38,8 +38,9 @@ import { DatoOptionsModule } from './options/options.module';
 import { DatoPanel } from './panel/panel.service';
 import { DatoPanelModule } from './panel/panel.module';
 import { CoreConfig, DATO_CORE_CONFIG } from './config';
+import { DatoPipesModule } from './pipes/pipes.module';
 
-const modules = [DatoDirectivesModule, DatoPanelModule, DatoSelectModule, DatoToastModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule, DatoDynamicContentModule, DatoListModule, DatoOptionsModule];
+const modules = [DatoDirectivesModule, DatoPanelModule, DatoSelectModule, DatoToastModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule, DatoDynamicContentModule, DatoListModule, DatoOptionsModule, DatoPipesModule];
 
 const providers = [IconRegistry, ThemeManager, DatoSnackbar, DatoTranslateService, DatoToast, DatoPanel];
 

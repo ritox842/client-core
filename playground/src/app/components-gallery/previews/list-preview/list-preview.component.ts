@@ -30,22 +30,24 @@ export class ListPreviewComponent {
 
   options = [
     {
-      label: "A",
-      children: [
-        { id: 1, label: "abc" },
-        { id: 2, label: "efg" },
-        { id: 3, label: "hij" }
-      ]
-    },
-    {
       label: "B",
       children: [{ id: 4, label: "klm" }]
+    },
+    {
+      label: "A",
+      children: [
+        { id: 2, label: "a hello" },
+        { id: 4, label: "hello wor" },
+        { id: 3, label: "hello" },
+        { id: 1, label: "world hello" }
+      ]
     },
     {
       label: "C",
       children: [{ id: 5, label: "nop" }]
     }
   ];
+
   longOptions = [
     {
       label: "A",
@@ -76,6 +78,7 @@ export class ListPreviewComponent {
       children: [{ id: 8, label: "wxyz" }]
     }
   ];
+
   flattenedOptions = [
     { id: 1, label: "abc", group: "A" },
     { id: 2, label: "efg", group: "A" },
@@ -91,4 +94,6 @@ export class ListPreviewComponent {
     { id: 4, label: "klm" },
     { id: 5, label: "nop" }
   ];
+
+  constructor() {}
 }

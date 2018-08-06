@@ -1,3 +1,16 @@
+# [1.8.0](https://github.com/datorama/client-core/compare/v1.7.6...v1.8.0) (2018-08-06)
+
+
+### Bug Fixes
+
+* **component:** add missing observable ([e997fe7](https://github.com/datorama/client-core/commit/e997fe7))
+* **component:** fix integration with the accordion ([9555031](https://github.com/datorama/client-core/commit/9555031))
+
+
+### Features
+
+* **component:** list - sort and various fixes ([16009b4](https://github.com/datorama/client-core/commit/16009b4))
+
 ## [1.7.6](https://github.com/datorama/client-core/compare/v1.7.5...v1.7.6) (2018-08-05)
 
 

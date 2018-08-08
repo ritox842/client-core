@@ -4,43 +4,43 @@
 
     <section class="d-flex d-flex-wrap">
       <div *ngFor="let color of group.primary">
-        <span class="tag is-warning">{{color}}</span>
-        <div class="{{color}}-background-color box"></div>
+        <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
+        <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
     <section class="d-flex d-flex-wrap">
       <div *ngFor="let color of group.accent">
-        <span class="tag is-warning">{{color}}</span>
-        <div class="{{color}}-background-color box"></div>
+        <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
+        <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
     <section class="d-flex d-flex-wrap">
       <div *ngFor="let color of group.green">
-        <span class="tag is-warning">{{color}}</span>
-        <div class="{{color}}-background-color box"></div>
+        <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
+        <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
     <section class="d-flex d-flex-wrap">
       <div *ngFor="let color of group.yellow">
-        <span class="tag is-warning">{{color}}</span>
-        <div class="{{color}}-background-color box"></div>
+        <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
+        <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
     <section class="d-flex d-flex-wrap">
       <div *ngFor="let color of group.red">
-        <span class="tag is-warning">{{color}}</span>
-        <div class="{{color}}-background-color box"></div>
+        <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
+        <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
     <section class="d-flex d-flex-wrap">
       <div *ngFor="let color of group.orange">
-        <span class="tag is-warning">{{color}}</span>
-        <div class="{{color}}-background-color box"></div>
+        <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
+        <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
@@ -50,26 +50,19 @@
 
     <textarea datoHighlight="html">
 
-       <div datoColor="primary-100"></div>
+      <div datoColor="primary-100"></div>
 
-       <div datoColor="accent-100, accent-200 border-left border-right"></div>
+      <div datoColor="accent-100, accent-200 border-left border-right"></div>
 
-       <section datoPalette="dark"></section>
+      <section datoPalette="dark"></section>
 
-       <section [datoPalette]="dynmaic"></section>
+      <section [datoPalette]="dynmaic"></section>
 
     </textarea>
 
     <textarea datoHighlight="css">
-        .my-awesome-rule {
-          background-color: themify(primary-100);
-          border: solid 1px themify(accent-400, 0.5);
-          border: 1px solid themify(primary-200);
-        }
-
-      .custom {
-          background-color: themify((dark: primary-300, light: [accent-400, 0.4]));
-       }
+      .my-awesome-rule { background-color: themify(primary-100); border: solid 1px themify(accent-400, 0.5); border: 1px solid
+      themify(primary-200); } .custom { background-color: themify((dark: primary-300, light: [accent-400, 0.4])); }
 
     </textarea>
 

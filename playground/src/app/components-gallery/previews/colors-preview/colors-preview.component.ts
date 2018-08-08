@@ -13,7 +13,11 @@ export class ColorsPreviewComponent {
   group: any = this.colors.reduce((acc, color) => {
     const [type] = color.split("-");
     acc[type] = acc[type] || [];
-    acc[type].push(color);
+
+    acc[type].push({
+      color,
+      hex: light[color]
+    });
     return acc;
   }, {});
 }

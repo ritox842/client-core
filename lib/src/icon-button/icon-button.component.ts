@@ -24,7 +24,7 @@ export class DatoIconButtonComponent {
   constructor(@Attribute('datoSize') public datoSize, @Attribute('datoType') public datoType, @Attribute('datoCircle') public datoCircle, @Attribute('width') public width, @Attribute('height') public height, private host: ElementRef) {}
 
   ngOnInit() {
-    if (this.datoType === 'none') {
+    if (this.width || this.height) {
       const button = query('button', this.host.nativeElement);
       const icon = query('dato-icon', this.host.nativeElement);
       setDimensions(this.width, this.height, button);

@@ -5,6 +5,7 @@ import { DatoTemplatePortal } from '../angular/overlay';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { IconRegistry } from '../services/icon-registry';
 import { default as Popper } from 'popper.js';
+import { toBoolean } from '@datorama/utils';
 
 @TakeUntilDestroy()
 @Directive({
@@ -31,6 +32,7 @@ export class DatoTooltipDirective implements OnDestroy {
   @Input() datoTooltipClass = '';
   @Input() datoTooltipOnOverflow = false;
   @Input() datoTooltipDisabled = false;
+  @Input() datoTooltipOffset;
   @Input() datoTooltipTrigger: 'click' | 'hover' | 'focus' = 'hover';
 
   private content: string | HTMLElement;
@@ -124,7 +126,7 @@ export class DatoTooltipDirective implements OnDestroy {
       container: document.body,
       title: this.content,
       html: true,
-      offset: this.isLongTooltip ? '0 10' : 0, // 0 10 => x y
+      offset: toBoolean(this.datoTooltipOffset) ? this.datoTooltipOffset : this.isLongTooltip ? '0 10' : 0, // 0 10 => x y
       trigger: this.datoTooltipTrigger,
       delay: this.datoTooltipDelay,
       template: this.getTpl(xIcon)

@@ -1,3 +1,5 @@
+import { zIndex } from './../internal/z-index';
+
 /**
  * @license
  * Copyright Datorama. All Rights Reserved.
@@ -9,7 +11,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, ViewEncapsulation, TemplateRef, Type } from '@angular/core';
 import { ToastRefDismiss } from './toast-ref';
 import { ToastOptions } from './toast.types';
-import { setStyle } from '../internal/helpers';
+import { setStyle, query } from '../internal/helpers';
 
 @Component({
   selector: 'dato-toast',
@@ -53,6 +55,7 @@ export class DatoToastComponent implements OnInit {
   constructor(private host: ElementRef) {}
 
   ngOnInit() {
+    setStyle(query('.dato-toasts-container'), 'zIndex', zIndex.toast.toString());
     setStyle(this.element, 'animation', `toastIn 0.4s, toastOut 0.5s ${this.duration}ms`);
   }
 

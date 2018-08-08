@@ -23,7 +23,7 @@ export class DatoSnackbarComponent implements OnInit {
   @Input() options: SnackbarOptions;
   @Input() type: SnackbarType;
 
-  icon: 'checkmark' | 'alert';
+  icon: 'checkmark' | 'alert' | string;
   showLeftIcon = false;
   close = new EventEmitter<SnackbarRefDismiss>();
 
@@ -57,7 +57,7 @@ export class DatoSnackbarComponent implements OnInit {
     setStyle(this.host.nativeElement, 'zIndex', `${zIndex.snackbar}`);
     this.showLeftIcon = !this.isInfo(this.type);
     this.animate = value => this.renderer.setStyle(this.element, 'animation', value);
-    this.icon = this.resolveIcon(this.type);
+    this.icon = this.options.icon || this.resolveIcon(this.type);
     this.renderer.addClass(this.element, `dato-snackbar-${this.type.toLowerCase()}`);
 
     if (this.dismissible) {

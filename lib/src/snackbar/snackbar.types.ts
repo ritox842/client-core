@@ -26,6 +26,7 @@ export type SnackbarOptions = {
    * Whether to allow the X button
    */
   dismissible: boolean;
+  icon?: string;
 };
 
 /**

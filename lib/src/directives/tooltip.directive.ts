@@ -157,7 +157,7 @@ export class DatoTooltipDirective implements OnDestroy {
 
   private getTpl(xIcon) {
     return `<div class="tooltip dato-tooltip ${this.isLongTooltip ? '' : 'common-tooltip'} ${this.datoTooltipClass} ${this.datoTooltipPosition}" role="tooltip">
-                  <div class="tooltip-arrow ${this.isLongTooltip ? 'show' : ''}"></div>
+                  ${this.isLongTooltip ? '<div class="tooltip-arrow show"></div>' : ''}
                   <div class="tooltip-content">
                     <div class="tooltip-inner"></div>
                     ${this.isLongTooltip && this.datoTooltipTrigger === 'click' ? xIcon : ''}

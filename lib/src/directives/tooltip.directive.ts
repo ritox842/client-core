@@ -6,6 +6,7 @@ import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
 import { IconRegistry } from '../services/icon-registry';
 import { default as Popper } from 'popper.js';
 import { toBoolean } from '@datorama/utils';
+import { TooltipOptions, TooltipTrigger } from './tooltip.model';
 
 @TakeUntilDestroy()
 @Directive({
@@ -32,8 +33,9 @@ export class DatoTooltipDirective implements OnDestroy {
   @Input() datoTooltipClass = '';
   @Input() datoTooltipOnOverflow = false;
   @Input() datoTooltipDisabled = false;
+  @Input() datoTooltipOverflow = false;
   @Input() datoTooltipOffset;
-  @Input() datoTooltipTrigger: 'click' | 'hover' | 'focus' = 'hover';
+  @Input() datoTooltipTrigger: TooltipTrigger = 'hover';
 
   private content: string | HTMLElement;
   private tplPortal: DatoTemplatePortal;
@@ -120,8 +122,7 @@ export class DatoTooltipDirective implements OnDestroy {
    */
   private createTooltipInstance(container: HTMLElement) {
     const xIcon = `<div class="tooltip-close-icon">${this.iconRegistry.getSvg('close')}</div>`;
-
-    return new Tooltip(container, {
+    const tooltipOptions: TooltipOptions = {
       placement: this.datoTooltipPosition,
       container: document.body,
       title: this.content,
@@ -130,7 +131,15 @@ export class DatoTooltipDirective implements OnDestroy {
       trigger: this.datoTooltipTrigger,
       delay: this.datoTooltipDelay,
       template: this.getTpl(xIcon)
-    });
+    };
+    if (this.datoTooltipOverflow || toBoolean(this.datoTooltipOffset)) {
+      tooltipOptions.popperOptions = {
+        modifiers: {
+          preventOverflow: { enabled: false }
+        }
+      };
+    }
+    return new Tooltip(container, tooltipOptions);
   }
 
   /**

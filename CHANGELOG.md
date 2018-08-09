@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/datorama/client-core/compare/v1.9.1...v1.9.2) (2018-08-09)
+
+
+### Bug Fixes
+
+* **dato-tooltip-arrow:** arrow element was added when not in need which effected the offset settings due to distance protection the lib has ([99dd144](https://github.com/datorama/client-core/commit/99dd144))
+
 ## [1.9.1](https://github.com/datorama/client-core/compare/v1.9.0...v1.9.1) (2018-08-09)
 
 

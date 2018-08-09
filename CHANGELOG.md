@@ -1,3 +1,18 @@
+# [1.9.0](https://github.com/datorama/client-core/compare/v1.8.0...v1.9.0) (2018-08-08)
+
+
+### Bug Fixes
+
+* **colors:** add hex ([68097ad](https://github.com/datorama/client-core/commit/68097ad)), closes [#72](https://github.com/datorama/client-core/issues/72)
+* **icon-button:** allow custom height and width ([5db2589](https://github.com/datorama/client-core/commit/5db2589)), closes [#61](https://github.com/datorama/client-core/issues/61)
+* **snackbar:** allow pass custom icon ([8203a76](https://github.com/datorama/client-core/commit/8203a76)), closes [#40](https://github.com/datorama/client-core/issues/40)
+* **toast:** fix z index ([87c0b00](https://github.com/datorama/client-core/commit/87c0b00)), closes [#73](https://github.com/datorama/client-core/issues/73)
+
+
+### Features
+
+* **tooltip:** allow define custom offset ([83ac8e9](https://github.com/datorama/client-core/commit/83ac8e9)), closes [#68](https://github.com/datorama/client-core/issues/68)
+
 # [1.8.0](https://github.com/datorama/client-core/compare/v1.7.6...v1.8.0) (2018-08-06)
 
 

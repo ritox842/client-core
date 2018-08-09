@@ -31,7 +31,7 @@ export class DatoTooltipDirective implements OnDestroy {
   @Input() datoTooltipPosition: Popper.Placement = 'top';
   @Input() datoTooltipDelay = 0;
   @Input() datoTooltipClass = '';
-  @Input() datoTooltipOnOverflow = false;
+  @Input() datoTooltipOnTextOverflow = false;
   @Input() datoTooltipDisabled = false;
   @Input() datoTooltipOverflow = false;
   @Input() datoTooltipOffset;
@@ -61,7 +61,7 @@ export class DatoTooltipDirective implements OnDestroy {
   ngAfterContentInit() {
     const { on, off } = this.eventsMap[this.datoTooltipTrigger];
 
-    if (this.datoTooltipOnOverflow && !this.isElementOverflow(this.host.nativeElement)) return;
+    if (this.datoTooltipOnTextOverflow && !this.isElementOverflow(this.host.nativeElement)) return;
 
     fromEvent(this.host.nativeElement, on)
       .pipe(untilDestroyed(this))

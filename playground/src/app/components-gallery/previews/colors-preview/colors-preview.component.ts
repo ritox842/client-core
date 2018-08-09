@@ -9,6 +9,7 @@ import { light } from "../../../../../../lib/src/palette";
 })
 export class ColorsPreviewComponent {
   colors = Object.keys(light);
+  theme = "light";
 
   group: any = this.colors.reduce((acc, color) => {
     const [type] = color.split("-");
@@ -20,4 +21,8 @@ export class ColorsPreviewComponent {
     });
     return acc;
   }, {});
+
+  changeTheme() {
+    this.theme = this.theme === "light" ? "dark" : "light";
+  }
 }

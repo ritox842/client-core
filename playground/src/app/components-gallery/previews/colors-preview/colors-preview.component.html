@@ -1,6 +1,8 @@
 <dato-preview title="Colors">
 
-  <section>
+  <dato-button (click)="changeTheme()">Change theme</dato-button>
+
+  <section [datoPalette]="theme">
 
     <section class="d-flex d-flex-wrap">
       <div *ngFor="let color of group.primary">

@@ -17,12 +17,17 @@ export const enum Palette {
   selector: '[datoPalette]'
 })
 export class PaletteDirective {
+  currentClass = '';
   /**
    *  Will change the palette on the container to dark/light.
    */
   @Input()
   set datoPalette(palette: Palette) {
-    this.renderer.addClass(this.host.nativeElement, palette || Palette.LIGHT);
+    if (this.currentClass) {
+      this.renderer.removeClass(this.host.nativeElement, this.currentClass);
+    }
+    this.currentClass = palette;
+    this.renderer.addClass(this.host.nativeElement, this.currentClass || Palette.LIGHT);
   }
 
   constructor(private renderer: Renderer2, private host: ElementRef) {}

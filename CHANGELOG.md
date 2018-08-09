@@ -1,3 +1,11 @@
+## [1.9.1](https://github.com/datorama/client-core/compare/v1.9.0...v1.9.1) (2018-08-09)
+
+
+### Bug Fixes
+
+* **palette:** remove old class ([63b90a7](https://github.com/datorama/client-core/commit/63b90a7))
+* **select:** fix selectAll checkbox ([0545947](https://github.com/datorama/client-core/commit/0545947))
+
 # [1.9.0](https://github.com/datorama/client-core/compare/v1.8.0...v1.9.0) (2018-08-08)
 
 

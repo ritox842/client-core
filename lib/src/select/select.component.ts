@@ -193,7 +193,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   /** Whether all the options are checked */
   get _isAllChecked() {
-    return this.options.length === this._model.length;
+    return this.getRawOptions().length === this._model.length;
   }
 
   /** FormControl which listens for search value changes */

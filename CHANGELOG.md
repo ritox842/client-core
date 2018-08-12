@@ -1,3 +1,11 @@
+## [1.9.4](https://github.com/datorama/client-core/compare/v1.9.3...v1.9.4) (2018-08-12)
+
+
+### Bug Fixes
+
+* **dato-color:** allow expressions ([e463c60](https://github.com/datorama/client-core/commit/e463c60)), closes [#79](https://github.com/datorama/client-core/issues/79)
+* **icon-button:** add datoIconColor option ([b60c06e](https://github.com/datorama/client-core/commit/b60c06e)), closes [#69](https://github.com/datorama/client-core/issues/69)
+
 ## [1.9.3](https://github.com/datorama/client-core/compare/v1.9.2...v1.9.3) (2018-08-09)
 
 

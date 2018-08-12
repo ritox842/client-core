@@ -18,6 +18,7 @@ export class ColorDirective {
   /** Example: <div datoColor="primary-100, accent-200 border-left border-right">text</div> */
   @Input()
   set datoColor(color: string) {
+    if (!color) return;
     /** ["primary-100", "accent-200 border-left border-right"] */
     const colors = color.split(',');
 

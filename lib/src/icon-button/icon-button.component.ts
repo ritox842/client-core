@@ -20,6 +20,7 @@ export class DatoIconButtonComponent {
   /** Whether the button is disabled */
   @Input() disabled = false;
   @Input() datoIcon: string;
+  @Input() datoIconColor: string;
 
   constructor(@Attribute('datoSize') public datoSize, @Attribute('datoType') public datoType, @Attribute('datoCircle') public datoCircle, @Attribute('width') public width, @Attribute('height') public height, private host: ElementRef) {}
 

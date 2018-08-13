@@ -1,3 +1,23 @@
+<dato-preview title="datoColor conditional directive">
+
+  When the condition is true the datoColor adds the color
+  <br>
+  <dato-button (click)="someCondition = !someCondition">Toggle condition</dato-button>
+  <div>   condition value: {{ someCondition }}</div>
+  <div class="box primary-200-background-color" [datoColor]="someCondition && 'accent-700 background-color'"></div>
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+
+        <dato-button (click)="someCondition = !someCondition">Toggle condition</dato-button>
+        <div class="box primary-200-background-color" [datoColor]="someCondition && 'accent-700 background-color'"></div>
+
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
 <dato-preview title="Colors">
 
   <dato-button (click)="changeTheme()">Change theme</dato-button>

@@ -18,7 +18,12 @@ export class ColorDirective {
   /** Example: <div datoColor="primary-100, accent-200 border-left border-right">text</div> */
   @Input()
   set datoColor(color: string) {
-    if (!color) return;
+    if (!color) {
+      if (this.lastKlass) {
+        this.renderer.removeClass(this.host.nativeElement, this.lastKlass);
+      }
+      return;
+    }
     /** ["primary-100", "accent-200 border-left border-right"] */
     const colors = color.split(',');
 

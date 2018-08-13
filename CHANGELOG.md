@@ -1,3 +1,10 @@
+## [1.9.5](https://github.com/datorama/client-core/compare/v1.9.4...v1.9.5) (2018-08-13)
+
+
+### Bug Fixes
+
+* **dato-color:** remove class when condition is false ([7a889ac](https://github.com/datorama/client-core/commit/7a889ac))
+
 ## [1.9.4](https://github.com/datorama/client-core/compare/v1.9.3...v1.9.4) (2018-08-12)
 
 

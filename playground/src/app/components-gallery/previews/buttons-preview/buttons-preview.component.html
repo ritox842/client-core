@@ -172,7 +172,7 @@
   <div class="d-flex-row align-start-center">
 
     <div class="mr-10">
-      <dato-icon-button datoCircle [disabled]="true" datoIcon="plus-add">
+      <dato-icon-button datoCircle [disabled]="true" datoIcon="plus-add" datoIconColor="accent-400">
       </dato-icon-button>
     </div>
 
@@ -296,19 +296,25 @@
         <td>datoType</td>
         <td>primary, secondary, none</td>
         <td>primary</td>
-        <td>Wheteher it's primary or secondary</td>
+        <td>Whether it's primary or secondary</td>
       </tr>
       <tr>
         <td>disabled</td>
         <td>boolean</td>
         <td>false</td>
-        <td>Wheteher it's disabled</td>
+        <td>Whether it's disabled</td>
       </tr>
       <tr>
         <td>datoCircle</td>
         <td>as attribute</td>
         <td></td>
-        <td>Wheteher it should be circle</td>
+        <td>Whether it should be circle</td>
+      </tr>
+      <tr>
+        <td>datoIconColor</td>
+        <td>color</td>
+        <td>null</td>
+        <td>The color of the icon. (only for dato-icon-button)</td>
       </tr>
       <tr>
         <td>width</td>

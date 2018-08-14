@@ -8,7 +8,7 @@
 `run npm install in the playground folder`
 
 ## Development
-`npm run themes && npm run demo`
+From the root run - `npm run themes && npm start`
 
 #### CLI
 Use `dato-cli` to create new components.

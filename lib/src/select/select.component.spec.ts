@@ -851,12 +851,12 @@ describe('DatoSelect', () => {
         host.click(TRIGGER_MULTI_SELECTOR);
         flushMicrotasks();
         host.detectChanges();
-        query('.dato-select__header').click();
+        query('.dato-select__header input[type="checkbox"]').click();
         host.detectChanges();
         expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).toBeChecked();
         expect(host.hostComponent.control.value.length).toEqual(15);
         expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(11);
-        query('.dato-select__header').click();
+        query('.dato-select__header input[type="checkbox"]').click();
         host.detectChanges();
         expect(host.hostComponent.control.value.length).toEqual(0);
         expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).not.toBeChecked();
@@ -870,7 +870,7 @@ describe('DatoSelect', () => {
         host.click(TRIGGER_MULTI_SELECTOR);
         flushMicrotasks();
         host.detectChanges();
-        query('.dato-select__header').click();
+        query('.dato-select__header input[type="checkbox"]').click();
         host.detectChanges();
         expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).toBeChecked();
         expect(query(`${DROPDOWN_SELECTOR} .dato-select__header`)).toHaveText('15/15');

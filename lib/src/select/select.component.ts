@@ -193,7 +193,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   /** Whether all the options are checked */
   get _isAllChecked() {
-    return this.getRawOptions().length === this._model.length;
+    return this.getVisibleOptions().every(option => this._model.indexOf(option) > -1);
   }
 
   /** FormControl which listens for search value changes */
@@ -390,16 +390,33 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    *
    * @param {boolean} checked
    */
-  checkAll() {
-    this._checked = !this._checked;
-    this.options.forEach(datoOption => {
+  checkAll(checked: boolean) {
+    for (const datoOption of this.options.toArray()) {
       if (!datoOption.disabled) {
-        datoOption.active = this._checked;
+        datoOption.active = checked;
       }
-    });
-    const model = this._checked ? this.getRawOptions() : [];
-    this._model = model;
-    this.onChange(model);
+    }
+
+    const visibleOptions = this.getVisibleOptions();
+    const isAllVisible = visibleOptions.length === this.options.length;
+
+    if (isAllVisible) {
+      this._model = checked ? visibleOptions : [];
+    } else {
+      if (checked) {
+        const temp = [];
+        for (const option of visibleOptions) {
+          if (this._model.indexOf(option) === -1) {
+            temp.push(option);
+          }
+        }
+        this._model = [...this._model, ...temp];
+      } else {
+        this._model = this._model.filter(option => visibleOptions.indexOf(option) === -1);
+      }
+    }
+
+    this.onChange(this._model);
   }
 
   /**
@@ -420,8 +437,12 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    *
    * @returns {any[]}
    */
-  private getRawOptions() {
-    return this.options.filter(datoOption => !datoOption.disabled).map(datoOption => datoOption.option);
+  private getVisibleOptions(getRawOptions = true) {
+    const options = this.options.filter(datoOption => !datoOption.disabled);
+    if (getRawOptions) {
+      return options.map(datoOption => datoOption.option);
+    }
+    return options;
   }
 
   /**

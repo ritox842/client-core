@@ -1,3 +1,11 @@
+## [1.9.6](https://github.com/datorama/client-core/compare/v1.9.5...v1.9.6) (2018-08-14)
+
+
+### Bug Fixes
+
+* **panel:** allow custom width ([cbae279](https://github.com/datorama/client-core/commit/cbae279))
+* **select:** fix select all issues ([a0febb3](https://github.com/datorama/client-core/commit/a0febb3))
+
 ## [1.9.5](https://github.com/datorama/client-core/compare/v1.9.4...v1.9.5) (2018-08-13)
 
 

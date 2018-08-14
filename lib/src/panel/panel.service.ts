@@ -19,8 +19,8 @@ import { CoreConfig, DATO_CORE_CONFIG } from '../config';
 
 export type DatoPanelOptions<E = any> = {
   relativeTo?: E | string;
-  height?: string;
-  width?: string;
+  height?: number | string;
+  width?: number | string;
   viewContainerRef?: ViewContainerRef;
   offset?: { top?: number; left?: number };
 };
@@ -116,8 +116,9 @@ export class DatoPanel {
       rect: {
         left,
         top,
-        width: options.width || width,
-        height: options.height || height
+        width,
+        height: options.height || height,
+        boxWidth: options.width
       }
     };
   }

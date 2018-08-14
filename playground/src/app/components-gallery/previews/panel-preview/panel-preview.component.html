@@ -1,5 +1,8 @@
 <dato-preview title="Panel">
 
+  <ng-template #demo>
+    <test-component></test-component>
+  </ng-template>
   <section class="mb-6">
     <dato-button (click)="open()" datoSize="sm" class="mr-5">Open panel</dato-button>
     <dato-button datoSize="sm" (click)="open2()" class="mr-5">Open panel 2</dato-button>
@@ -49,7 +52,7 @@
       constructor( private datoPanel: DatoPanel ) {}
 
       open() {
-         this.datoPanel.open(PanelDemoComponent, { relativeTo: '.custom-relative', height: '200px', offset: { left: 32 } });
+         this.datoPanel.open(PanelDemoComponent, { relativeTo: '.custom-relative', height: 200, width:500, offset: { left: 32 } });
       }
     </textarea>
 
@@ -74,13 +77,13 @@
       </tr>
       <tr>
         <td>height</td>
-        <td>string</td>
-        <td>The realtive element height</td>
+        <td>valid css</td>
+        <td>The relative element height</td>
         <td>The panel height</td>
       </tr>
       <tr>
         <td>width</td>
-        <td>string</td>
+        <td>valid css</td>
         <td>min-width: 400px</td>
         <td>The panel width</td>
       </tr>

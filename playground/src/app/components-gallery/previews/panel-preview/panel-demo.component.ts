@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { DatoPanel } from "../../../../../../lib";
 
 @Component({
+  selector: "test-component",
   template: `
 
     <dato-panel-header>

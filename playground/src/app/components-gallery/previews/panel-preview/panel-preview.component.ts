@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { DatoPanel } from "../../../../../../lib";
 import {
   PanelDemoAkitaComponent,
@@ -11,6 +11,8 @@ import {
   styleUrls: ["./panel-preview.component.scss"]
 })
 export class PanelPreviewComponent implements OnInit {
+  @ViewChild("demo") tpl: TemplateRef<any>;
+
   constructor(private panelService: DatoPanel) {}
 
   open() {
@@ -22,9 +24,9 @@ export class PanelPreviewComponent implements OnInit {
   }
 
   openSmall() {
-    this.panelService.open(PanelDemoComponent, {
+    this.panelService.open(this.tpl, {
       relativeTo: ".custom-relative",
-      height: "200px",
+      height: 200,
       offset: { left: 62 }
     });
   }

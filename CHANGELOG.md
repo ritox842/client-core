@@ -1,3 +1,11 @@
+## [1.9.8](https://github.com/datorama/client-core/compare/v1.9.7...v1.9.8) (2018-08-15)
+
+
+### Bug Fixes
+
+* **components:** allow custom class in select and panel close event ([0ebabe5](https://github.com/datorama/client-core/commit/0ebabe5))
+* **snackbar:** align the snackbar ([83aada9](https://github.com/datorama/client-core/commit/83aada9))
+
 ## [1.9.7](https://github.com/datorama/client-core/compare/v1.9.6...v1.9.7) (2018-08-15)
 
 

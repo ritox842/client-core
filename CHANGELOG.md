@@ -1,3 +1,10 @@
+## [1.9.7](https://github.com/datorama/client-core/compare/v1.9.6...v1.9.7) (2018-08-15)
+
+
+### Bug Fixes
+
+* **dato-icon-button:** add support for custom icon size as well ([a9af20a](https://github.com/datorama/client-core/commit/a9af20a))
+
 ## [1.9.6](https://github.com/datorama/client-core/compare/v1.9.5...v1.9.6) (2018-08-14)
 
 

@@ -272,9 +272,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef<HTMLElement>, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size, @Attribute('datoSelectClass') klass) {
     super();
     this.size = size || 'md';
-    this._dropdownClass = `dato-select-${this.size}`;
+    this._dropdownClass = [`dato-select-${this.size}`];
     if (klass) {
-      addClass(host.nativeElement, klass);
+      this._dropdownClass.push(klass);
     }
   }
 

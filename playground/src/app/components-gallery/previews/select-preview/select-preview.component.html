@@ -3,7 +3,7 @@
   <section class="d-flex">
     <div class="select-preview">
 
-      <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple>
+      <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple datoSelectClass="netanel">
 
         <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option"
                      [disabled]="index === 1">
@@ -20,7 +20,7 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple>
+      <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple datoSelectClass="netanel">
 
         <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option"
                      [disabled]="index === 1">

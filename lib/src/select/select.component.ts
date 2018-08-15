@@ -17,7 +17,7 @@ import { debounceTime, mapTo, take } from 'rxjs/operators';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { Placement, PopperOptions } from 'popper.js';
-import { query, setStyle } from '../internal/helpers';
+import { addClass, query, setStyle } from '../internal/helpers';
 import { DatoOverlay, DatoTemplatePortal } from '../angular/overlay';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
@@ -269,10 +269,13 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Current index of active item (keyboard navigation) */
   private currentIndex;
 
-  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef<HTMLElement>, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size) {
+  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef<HTMLElement>, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size, @Attribute('datoSelectClass') klass) {
     super();
     this.size = size || 'md';
     this._dropdownClass = `dato-select-${this.size}`;
+    if (klass) {
+      addClass(host.nativeElement, klass);
+    }
   }
 
   ngOnInit() {

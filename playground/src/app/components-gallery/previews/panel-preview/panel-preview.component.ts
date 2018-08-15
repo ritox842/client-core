@@ -16,7 +16,9 @@ export class PanelPreviewComponent implements OnInit {
   constructor(private panelService: DatoPanel) {}
 
   open() {
-    this.panelService.open(PanelDemoComponent);
+    this.panelService
+      .open(PanelDemoComponent)
+      .subscribe(() => console.log("closed"));
   }
 
   close() {
@@ -24,17 +26,21 @@ export class PanelPreviewComponent implements OnInit {
   }
 
   openSmall() {
-    this.panelService.open(this.tpl, {
-      relativeTo: ".custom-relative",
-      height: 200,
-      offset: { left: 62 }
-    });
+    this.panelService
+      .open(this.tpl, {
+        relativeTo: ".custom-relative",
+        height: 200,
+        offset: { left: 62 }
+      })
+      .subscribe(() => console.log("closed"));
   }
 
   ngOnInit(): void {}
 
   open2() {
-    this.panelService.open(PanelDemoAkitaComponent);
+    this.panelService
+      .open(PanelDemoAkitaComponent)
+      .subscribe(() => console.log("closed"));
   }
 
   ngOnDestroy() {

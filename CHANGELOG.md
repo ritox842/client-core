@@ -1,3 +1,10 @@
+## [1.9.9](https://github.com/datorama/client-core/compare/v1.9.8...v1.9.9) (2018-08-15)
+
+
+### Bug Fixes
+
+* **select:** support custom class ([6c764b4](https://github.com/datorama/client-core/commit/6c764b4))
+
 ## [1.9.8](https://github.com/datorama/client-core/compare/v1.9.7...v1.9.8) (2018-08-15)
 
 

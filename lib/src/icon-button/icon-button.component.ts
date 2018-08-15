@@ -22,14 +22,16 @@ export class DatoIconButtonComponent {
   @Input() datoIcon: string;
   @Input() datoIconColor: string;
 
-  constructor(@Attribute('datoSize') public datoSize, @Attribute('datoType') public datoType, @Attribute('datoCircle') public datoCircle, @Attribute('width') public width, @Attribute('height') public height, private host: ElementRef) {}
+  constructor(@Attribute('datoSize') public datoSize, @Attribute('datoType') public datoType, @Attribute('datoCircle') public datoCircle, @Attribute('width') public width, @Attribute('height') public height, @Attribute('iconWidth') public iconWidth, @Attribute('iconHeight') public iconHeight, private host: ElementRef) {}
 
   ngOnInit() {
     if (this.width || this.height) {
       const button = query('button', this.host.nativeElement);
-      const icon = query('dato-icon', this.host.nativeElement);
       setDimensions(this.width, this.height, button);
-      setDimensions(this.width, this.height, icon);
+    }
+    if (this.iconWidth || this.iconHeight || this.width || this.height) {
+      const icon = query('dato-icon', this.host.nativeElement);
+      setDimensions(this.iconWidth || this.width, this.iconHeight || this.height, icon);
     }
   }
 }

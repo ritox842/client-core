@@ -42,6 +42,10 @@ export class DatoToast {
       content: isString(content) ? this.translate.transform(content) : content
     });
 
+    if (!isString(content) && options.data) {
+      this.contentRef.componentRef.instance.data = options.data;
+    }
+
     this.component = createComponent<DatoToastComponent>({
       component: DatoToastComponent,
       projectableNodes: this.contentRef.nodes,

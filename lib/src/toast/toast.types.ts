@@ -14,6 +14,7 @@ export type ToastOptions = {
   duration?: number;
   content?: ContentType;
   icon: IconInputs;
+  data?: any;
 };
 
 export function getDefaults(): ToastOptions {

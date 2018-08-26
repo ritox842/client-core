@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { DatoToast } from "../../../../../../lib";
 import { ToastOptions } from "../../../../../../lib/src/toast/toast.types";
+import { CustomToastComponent } from "./custom-toast.component";
 
 @Component({
   selector: "dato-toast-preview",
@@ -35,5 +36,15 @@ export class ToastPreviewComponent implements OnInit {
       content: this.tpl
     };
     this.datoToast.open("A Message From Another Module's Process 3", options);
+  }
+
+  WithComponent() {
+    const options: ToastOptions = {
+      icon: {
+        name: "alert"
+      },
+      data: { name: "Datorama" }
+    };
+    this.datoToast.open(CustomToastComponent, options);
   }
 }

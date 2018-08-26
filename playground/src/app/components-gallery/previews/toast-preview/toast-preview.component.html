@@ -66,6 +66,22 @@
 
 </dato-preview>
 
+<dato-preview title="Toast - With Component and Input">
+
+  <dato-button (click)="WithComponent()">Click</dato-button>
+
+  <dato-tabs show="js">
+
+    <textarea datoHighlight="js">
+      contructor(private toast: DatoToast) {}
+
+      this.toast.open('A Message From Another Module\'s Process 1');
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
 <div class="panel mt-4">
 
   <div class="panel-heading">
@@ -90,6 +106,12 @@
         <td>string | TemplateRef | Component</td>
         <td>undefined</td>
         <td>custom content for the footer</td>
+      </tr>
+      <tr>
+        <td>data</td>
+        <td></td>
+        <td>null</td>
+        <td>@Input() for the component in the toast</td>
       </tr>
     </dato-api-table>
 

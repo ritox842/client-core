@@ -1,3 +1,11 @@
+## [1.10.1](https://github.com/datorama/client-core/compare/v1.10.0...v1.10.1) (2018-08-26)
+
+
+### Bug Fixes
+
+* **datotoast:** code refactoring ([570807e](https://github.com/datorama/client-core/commit/570807e))
+* **toast:** code refactoring for toast with component an input ([cde2d6b](https://github.com/datorama/client-core/commit/cde2d6b))
+
 # [1.10.0](https://github.com/datorama/client-core/compare/v1.9.9...v1.10.0) (2018-08-26)
 
 

@@ -34,15 +34,15 @@ export class DatoToast {
 
     const mergedOptions = deepmerge(getDefaults(), options || {});
     mergedOptions.id = Math.random();
-
+    const isContentString = isString(content);
     this.contentRef = ngContentResolver({
       applicationRef: this.appRef,
       injector: this.injector,
       resolver: this.resolver,
-      content: isString(content) ? this.translate.transform(content) : content
+      content: isContentString ? this.translate.transform(content) : content
     });
 
-    if (!isString(content) && options.data) {
+    if (!isContentString && options.data) {
       this.contentRef.componentRef.instance.data = options.data;
     }
 

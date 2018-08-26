@@ -74,8 +74,7 @@
 
     <textarea datoHighlight="js">
       contructor(private toast: DatoToast) {}
-
-      this.toast.open('A Message From Another Module\'s Process 1');
+      this.datoToast.open(CustomComponent, {data: { name: "Datorama" }});
     </textarea>
 
   </dato-tabs>
@@ -98,7 +97,7 @@
       </tr>
       <tr>
         <td>icon</td>
-        <td> Object with keys: ( name: string, size: sm | md | lg, color: string, width: string, height: string ) </td>
+        <td> Object with keys: ( name: string, size: sm | md | lg, color: string, width: string, height: string )</td>
         <td>undefined</td>
       </tr>
       <tr>

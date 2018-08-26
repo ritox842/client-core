@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/datorama/client-core/compare/v1.9.9...v1.10.0) (2018-08-26)
+
+
+### Features
+
+* **toast:** added input for toast ([6343683](https://github.com/datorama/client-core/commit/6343683))
+
 ## [1.9.9](https://github.com/datorama/client-core/compare/v1.9.8...v1.9.9) (2018-08-15)
 
 

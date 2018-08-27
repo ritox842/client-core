@@ -78,6 +78,8 @@ export class DatoGridComponent extends BaseCustomControl implements ControlValue
   @Input()
   set options(options: DatoGridOptions) {
     options.columnDefs = this.gridHelper.translateColumns(options.columnDefs);
+    this.disableColumnMenu(options.columnDefs);
+
     this.gridOptions = { ...this.defaultGridOptions, ...options };
     // check if we got a pagination
     this.hasPagination = this.gridOptions.pagination;
@@ -152,5 +154,14 @@ export class DatoGridComponent extends BaseCustomControl implements ControlValue
           this.api.setSelectedRows(rows);
         });
     }
+  }
+
+  /**
+   * disable the column menu and leave only the filter
+   */
+  private disableColumnMenu(columnDefs: (ColDef | ColGroupDef)[]): void {
+    columnDefs.forEach((def: ColDef | ColGroupDef) => {
+      def.menuTabs = ['filterMenuTab'];
+    });
   }
 }

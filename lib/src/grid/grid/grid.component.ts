@@ -159,8 +159,8 @@ export class DatoGridComponent extends BaseCustomControl implements ControlValue
   /**
    * disable the column menu and leave only the filter
    */
-  private disableColumnMenu(columnDefs: (ColDef | ColGroupDef)[]): void {
-    columnDefs.forEach((def: ColDef | ColGroupDef) => {
+  private disableColumnMenu(columnDefs: ColDef[]): void {
+    columnDefs.forEach((def: ColDef) => {
       def.menuTabs = ['filterMenuTab'];
     });
   }

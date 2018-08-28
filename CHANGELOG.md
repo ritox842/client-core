@@ -1,3 +1,12 @@
+## [1.10.2](https://github.com/datorama/client-core/compare/v1.10.1...v1.10.2) (2018-08-28)
+
+
+### Bug Fixes
+
+* **component:** make disableColumnMenu private and add columnDef type ([edac095](https://github.com/datorama/client-core/commit/edac095))
+* **component:** remove column option- remain filter only ([fa76ef8](https://github.com/datorama/client-core/commit/fa76ef8))
+* **component:** wrong type of columnDef ([7820a94](https://github.com/datorama/client-core/commit/7820a94))
+
 ## [1.10.1](https://github.com/datorama/client-core/compare/v1.10.0...v1.10.1) (2018-08-26)
 
 

@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/datorama/client-core/compare/v1.10.2...v1.10.3) (2018-09-05)
+
+
+### Bug Fixes
+
+* **components:** fix issues ([1fc692a](https://github.com/datorama/client-core/commit/1fc692a))
+
 ## [1.10.2](https://github.com/datorama/client-core/compare/v1.10.1...v1.10.2) (2018-08-28)
 
 

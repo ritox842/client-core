@@ -116,6 +116,8 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   @Input() infiniteScrollLoading = false;
 
+  @Input() limitTo = 10;
+
   /** The options to display in the dropdown */
   @Input()
   set dataSet(data: any[]) {
@@ -269,7 +271,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** Current index of active item (keyboard navigation) */
   private currentIndex;
 
-  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef<HTMLElement>, private datoOverlay: DatoOverlay, @Attribute('datoSize') public size, @Attribute('datoSelectClass') klass) {
+  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef<HTMLElement>, private datoOverlay: DatoOverlay, @Attribute('naked') public _naked, @Attribute('datoSize') public size, @Attribute('datoSelectClass') klass) {
     super();
     this.size = size || 'md';
     this._dropdownClass = [`dato-select-${this.size}`];

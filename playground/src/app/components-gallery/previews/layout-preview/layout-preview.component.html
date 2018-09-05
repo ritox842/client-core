@@ -1,4 +1,40 @@
-<dato-preview title="Editable Header">
+<dato-preview title="Editable Header - Standalone">
+
+  <dato-editable-header [formControl]="header" standalone="true"></dato-editable-header>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-editable-header [formControl]="header" standalone="true"></dato-editable-header>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      header = new FormControl("Header Text");
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Editable Header - Standalone Small">
+
+  <dato-editable-header [formControl]="header" standalone="true" datoSmall></dato-editable-header>
+
+  <dato-tabs show="html,js">
+
+    <textarea datoHighlight="html">
+      <dato-editable-header [formControl]="header" standalone="true" datoSmall></dato-editable-header>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      header = new FormControl("Header Text");
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Editable Header (Page Level)">
 
   <dato-editable-header [formControl]="header"></dato-editable-header>
 
@@ -16,23 +52,6 @@
 
 </dato-preview>
 
-<dato-preview title="Editable Header - Standalone">
-
-  <dato-editable-header [formControl]="header" standalone="true"></dato-editable-header>
-
-  <dato-tabs show="html,js">
-
-    <textarea datoHighlight="html">
-      <dato-editable-header [formControl]="header" standalone="true" fontSize="40px"></dato-editable-header>
-    </textarea>
-
-    <textarea datoHighlight="js">
-      header = new FormControl("Header Text");
-    </textarea>
-
-  </dato-tabs>
-
-</dato-preview>
 
 <div class="panel mt-4">
 
@@ -48,6 +67,12 @@
         <td>true</td>
         <td>false</td>
         <td>Use it when it's not in page header</td>
+      </tr>
+      <tr>
+        <td>datoSmall</td>
+        <td></td>
+        <td>void</td>
+        <td>Whether the input should be small</td>
       </tr>
       <tr>
         <td>fontSize</td>

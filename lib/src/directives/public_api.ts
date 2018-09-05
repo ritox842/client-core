@@ -10,3 +10,4 @@ export * from './origin.directive';
 export * from './drag.directive';
 export * from './auto-focus.directive';
 export * from './tooltip.directive';
+export * from './subscribe.directive';

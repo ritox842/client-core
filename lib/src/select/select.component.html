@@ -1,4 +1,5 @@
 <section #overlayOrigin class="dato-select__trigger"
+         [class.dato-select--naked]="_naked"
          [class.dato-select--disabled]="_disabled">
 
   <div class="dato-select__single" *ngIf="isSingle" [ngClass]="_dropdownClass">
@@ -25,6 +26,7 @@
                       [labelKey]="labelKey"
                       (keyup)="keyup($event)"
                       [isLoading]="isLoading"
+                      [limitTo]="limitTo"
                       [clickOutside]="_clickOutside"
                       (removeOption)="removeOption($event)"
                       *ngIf="isMulti" (click)="openDropdown($event)"></dato-trigger-multi>

@@ -11,5 +11,9 @@ export class LayoutPreviewComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    //setTimeout(() => {
+    //  this.header.setValue('Placeholder');
+    //}, 0)
+  }
 }

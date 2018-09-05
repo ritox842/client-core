@@ -405,10 +405,12 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * @param model
    */
   private markAsActive(model: any[]) {
-    for (const option of model) {
-      const match = this.options.find(opt => opt.option[this.idKey] === option[this.idKey]);
-      if (match) {
-        match.active = true;
+    for (const option of this.options.toArray()) {
+      const inModel = model.find(active => active[this.idKey] === option.option[this.idKey]);
+      if (inModel) {
+        option.active = true;
+      } else {
+        option.active = false;
       }
     }
   }

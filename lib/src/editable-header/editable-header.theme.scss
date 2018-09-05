@@ -6,13 +6,16 @@ dato-editable-header {
   input {
     @include input-like-theme();
     background-color: transparent;
+    color: themify(primary-400);
+    font-weight: 600;
+    border-radius: 2px;
   }
 
-  .initial input[type=text] {
+  .initial .editable-header-input {
     color: themify(primary-300);
   }
 
-  input[type="text"]:hover {
+  .editable-header-input:hover {
     border-color: themify(primary-300);
   }
 

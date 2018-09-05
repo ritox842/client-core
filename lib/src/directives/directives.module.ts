@@ -11,8 +11,9 @@ import { DatoOriginDirective } from './origin.directive';
 import { DatoDraggableDirective } from './drag.directive';
 import { DatoAutoFocusDirective } from './auto-focus.directive';
 import { DatoTooltipDirective } from './tooltip.directive';
+import { DatoSubscribeDirective } from './subscribe.directive';
 
-const directives = [DatoOriginDirective, DatoDraggableDirective, DatoAutoFocusDirective, DatoTooltipDirective];
+const directives = [DatoOriginDirective, DatoDraggableDirective, DatoAutoFocusDirective, DatoTooltipDirective, DatoSubscribeDirective];
 
 @NgModule({
   declarations: directives,

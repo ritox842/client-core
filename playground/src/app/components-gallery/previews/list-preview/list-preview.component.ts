@@ -105,5 +105,9 @@ export class ListPreviewComponent {
     { id: 5, label: "nop" }
   ];
 
+  patch() {
+    this.flattenedControl.patchValue([{ id: 1, label: "abc", group: "A" }]);
+  }
+
   constructor() {}
 }

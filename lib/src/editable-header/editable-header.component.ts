@@ -6,11 +6,12 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Attribute, ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { toBoolean } from '@datorama/utils';
-import { query, setStyle } from '../internal/helpers';
+import { addClass, query, setStyle } from '../internal/helpers';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -30,7 +31,7 @@ export class DatoEditableHeaderComponent extends BaseCustomControl implements On
   private initialValue = '';
   private value = '';
 
-  constructor(private renderer: Renderer2, private host: ElementRef, @Attribute('fontSize') public fontSize, @Attribute('standalone') public standalone) {
+  constructor(private renderer: Renderer2, private host: ElementRef, @Attribute('datoSmall') public small, @Attribute('fontSize') public fontSize, @Attribute('standalone') public standalone, private cdr: ChangeDetectorRef) {
     super();
   }
 
@@ -39,8 +40,12 @@ export class DatoEditableHeaderComponent extends BaseCustomControl implements On
       this.renderer.addClass(this.host.nativeElement, 'standalone');
     }
 
-    const input = query('input[type="text"]', this.host.nativeElement);
+    const input = query('.editable-header-input', this.host.nativeElement);
     setStyle(input, 'fontSize', this.fontSize);
+
+    if (coerceBooleanProperty(this.small)) {
+      addClass(input, 'editable-header-input--small');
+    }
   }
 
   get isValueChanged() {
@@ -75,8 +80,12 @@ export class DatoEditableHeaderComponent extends BaseCustomControl implements On
   }
 
   writeValue(value: string) {
-    this.initialValue = this.value = value;
-    this.setInputValue(this.initialValue);
+    if (!this.initialValue) {
+      this.initialValue = value;
+    }
+    this.value = value;
+    this.setInputValue(value);
+    this.cdr.markForCheck();
   }
 
   input({ target: { value } }) {

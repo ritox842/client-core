@@ -105,7 +105,7 @@ dato-select__not-found,
         background: themify((light: primary-0, dark: primary-700));
       }
     }
-    &:hover:not(.dato-option--active) {
+    &:hover:not(.dato-option--active):not(.dato-select__group) {
       background: themify((light: primary-100, dark: primary-500));
       color: themify((light: primary-700, dark: primary-0));
     }
@@ -121,5 +121,9 @@ dato-select__not-found,
   }
 }
 
+
+.dato-select--naked dato-trigger-single, .dato-select--naked dato-trigger-multi {
+  border: none !important;
+}
 
 

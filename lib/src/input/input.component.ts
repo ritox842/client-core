@@ -42,11 +42,17 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
   @Input() isLoading = false;
   @Input() type = 'text';
 
-  constructor(@Attribute('width') public width, @Attribute('height') public height, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef) {
+  constructor(@Attribute('width') public width, @Attribute('height') public height, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef, @Attribute('attrs') private attrs) {
     super();
   }
 
   ngOnInit() {
+    if (this.attrs) {
+      const parsed = JSON.parse(this.attrs);
+      for (let attr of Object.keys(parsed)) {
+        parsed[attr] = this.inpuElement.setAttribute(attr, parsed[attr]);
+      }
+    }
     setDimensions(this.width, this.height, this.host.nativeElement);
     setDimensions(this.width, this.height, this.inpuElement);
 
@@ -61,7 +67,7 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
   /**
    * Get the native input
    */
-  get inpuElement() {
+  get inpuElement(): HTMLInputElement {
     return this.host.nativeElement.querySelector('input');
   }
 

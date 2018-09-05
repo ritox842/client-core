@@ -586,7 +586,8 @@
   <section class="d-flex">
     <div class="select-preview" style="width: 500px;">
 
-      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti type="multi"
+      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMulti
+                   type="multi"
                    [allowSelectAll]="true">
 
         <dato-option *ngFor="let option of datoSelectMulti.data" [option]="option" multi>
@@ -817,6 +818,19 @@
         <td></td>
         <td>Custom class to add</td>
       </tr>
+      <tr>
+        <td>limitTo</td>
+        <td>number</td>
+        <td>10</td>
+        <td>Limit the number of options to display in multi select</td>
+      </tr>
+      <tr>
+        <td>naked</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Whether to remove the select border</td>
+      </tr>
+
     </dato-api-table>
 
   </div>

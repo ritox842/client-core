@@ -1,0 +1,58 @@
+<dato-preview title="datoSubscribe">
+
+  <p>Use this directive when you need to subscribe to the same observable multiple time in your template</p>
+  <p *datoSubscribe="interval$ as interval">Interval: {{interval}}</p>
+  <p *datoSubscribe="intervals as intervalsObj">Object of observables: {{intervalsObj?.intTwo }} {{intervalsObj?.intOne}}</p>
+  <p *datoSubscribe="test$ as t">{{t.name}}</p>
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+       <div *datoSubscribe="alerts$ as alerts">
+         use alerts here
+       </div>
+       <p *datoSubscribe="interval$ as interval">Interval: {{interval}}</p>
+      <p *datoSubscribe="intervals as intervalsObj">Object of observables: {{intervalsObj?.intTwo }} {{intervalsObj?.intOne}}</p>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      alerts$ = quert.select(state => state.alerts);
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Polling">
+
+  <p>Use this function when you need to perform polling</p>
+
+  <dato-tabs show="js">
+
+    <textarea datoHighlight="js">
+      import { polling } from '@datorama/core';
+
+      const http = this.dataService.getData;
+      polling(http, period, initialDelay = 0).subscribe();
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+
+<dato-preview title="Web Worker">
+
+  <p>Use this function when you have an expensive operation that you want to run inside a web worker</p>
+
+  <dato-tabs show="js">
+
+    <textarea datoHighlight="js">
+      import { workerMap } from '@datorama/core';
+
+       http.get('url').pipe(mapWorker((response) => { // do some stuff and return the data}).subscribe()
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+

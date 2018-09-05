@@ -88,7 +88,7 @@ export class DatoTriggerMulti implements OnInit {
    * @type {number}
    * @private
    */
-  private _limitTo = 10;
+  private _limitTo;
 
   get limitTo(): number {
     return this._limitTo;

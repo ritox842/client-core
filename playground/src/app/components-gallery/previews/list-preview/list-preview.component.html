@@ -11,6 +11,7 @@ The list can display a hierarchy data structure, or just a simple flat list. <br
 
   <section class="d-flex">
     <div class="select-preview">
+      <button (click)="patch()">Patch</button>
       <div class="list-container">
         <dato-list [formControl]="flattenedControl" [dataSet]="flattenedOptions" [groupBy]="'group'"
                    #datoListWithFlattenedData>

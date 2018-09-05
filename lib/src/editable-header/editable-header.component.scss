@@ -1,16 +1,3 @@
-:host:not(.standalone)  {
-  section{
-    height: 48px;
-    padding: 0px 32px;
-  }
-
-  input[type=text] {
-    width: 480px;
-    font-size: 18px;
-  }
-
-}
-
 :host {
   display: flex;
 }
@@ -19,19 +6,40 @@ section {
   flex: 1;
 }
 
-input[type=text] {
+.editable-header-input {
   padding: 5px;
   margin: 0;
   border-color: transparent;
   border-width: 1px;
   width: 100%;
-  font-size: 14px;
+  font-size: 18px;
+  height: 34px;
+  line-height: 34px;
 }
 
-input[type=text]:focus {
+.editable-header-input--small {
+  font-size: 14px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.editable-header-input:focus {
   outline: none;
 }
 
-.initial input[type=text] {
+.initial .editable-header-input {
   font-style: italic;
+}
+
+:host:not(.standalone)  {
+  section{
+    height: 48px;
+    padding: 0px 32px;
+  }
+
+  .editable-header-input {
+    width: 480px;
+    font-size: 18px;
+  }
+
 }

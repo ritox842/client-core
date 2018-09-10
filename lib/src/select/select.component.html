@@ -41,7 +41,9 @@
 
     <header class="dato-select__header d-flex" *ngIf="isMulti && allowSelectAll" [class.force-hide]="_showEmptyResults">
       <dato-checkbox [checked]="_isAllChecked" (check)="checkAll($event)"></dato-checkbox>
-      <div class="dato-select__option dato-select__option--simple">Select all <span class="primary-300-color note-italic ml-5">{{_count}}</span></div>
+      <div class="dato-select__option dato-select__option--simple" (click)="checkAll(!_isAllChecked)">
+        Select all <span class="primary-300-color note-italic ml-5">{{_count}}</span>
+      </div>
     </header>
 
     <!-- END HEADER -->

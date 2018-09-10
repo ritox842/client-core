@@ -23,7 +23,7 @@ import { getListOptionHeight, ListGroupComponent, ListSearchResult } from './lis
 import { DatoListSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { normalizeData } from '../internal/data-normalization';
 import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
-import { DatoListSortComparator, defaultClientSortComparator } from './sort.comparator';
+import { DatoListSortComparator, defaultClientSortComparator, SORT_ORDER, SORT_SCORE } from './sort.comparator';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -71,6 +71,15 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
       Promise.resolve().then(() => {
         this.initOptions();
       });
+
+      if (this.isSearching) {
+        this.isSearching = false;
+        this.cdr.detectChanges();
+
+        setTimeout(() => {
+          this.performSearch();
+        });
+      }
     }
 
     this._dataIsDirty = true;
@@ -198,9 +207,11 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * @param option
    * @return {any}
    */
-  trackByFn(index, option) {
-    return option ? option[this.idKey] : index;
+  private _trackByFn(index, option) {
+    return this.getGroupKey(option) || index;
   }
+
+  trackByFn = this._trackByFn.bind(this);
 
   ngAfterContentInit(): void {
     /* Subscribing to options change, and re-init the options */
@@ -302,16 +313,48 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
     if (this.sort) {
       const searchTerm = this.searchTerm.toLowerCase();
-      // first level sorting
-      data.sort((a, b) => {
-        return this.sortComparator(a[this.labelKey], b[this.labelKey], searchTerm);
+      const groupScoreMap = {};
+
+      /* Second level sorting - sorting the children of each group */
+      data.forEach(node => {
+        const children = node.children;
+        const groupKey = this.getGroupKey(node);
+        groupScoreMap[groupKey] = 0;
+
+        if (children && children.length) {
+          /* Sorting the items and updating the group's score */
+          node.children.sort((a, b) => {
+            const result = this.sortComparator(a[this.labelKey], b[this.labelKey], searchTerm);
+            groupScoreMap[groupKey] += result[SORT_SCORE];
+
+            return result[SORT_ORDER];
+          });
+
+          /* no sort is being made for one item, but we still need to calculate the scoring of this item */
+          if (node.children.length === 1) {
+            const itemLabel = node.children[0][this.labelKey];
+            const result = this.sortComparator(itemLabel, itemLabel, searchTerm);
+            groupScoreMap[groupKey] += result[SORT_SCORE];
+          }
+        }
       });
 
-      // second level sorting
-      data.forEach(node => {
-        if (node.children) {
-          this._sort(node.children);
+      /* First level sorting.
+         First according to the group score, and then according to the given comparator
+       */
+      data.sort((a, b) => {
+        if (searchTerm) {
+          const aGroupKey = this.getGroupKey(a),
+            bGroupKey = this.getGroupKey(b);
+
+          if (groupScoreMap[aGroupKey] > groupScoreMap[bGroupKey]) {
+            return -1;
+          } else if (groupScoreMap[aGroupKey] < groupScoreMap[bGroupKey]) {
+            return 1;
+          }
         }
+
+        return this.sortComparator(a[this.labelKey], b[this.labelKey], searchTerm)[SORT_ORDER];
       });
     }
 
@@ -323,7 +366,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * @return {number}
    */
   private isAccordionGroup() {
-    return this.accordion.length;
+    return this.accordion && this.accordion.length;
   }
 
   /**
@@ -331,7 +374,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * @return {ListGroupComponent[]}
    */
   private getGroupComponentsArray(): ListGroupComponent[] {
-    return this.isAccordionGroup() ? this.accordion.first.groups.toArray() : this.groups.toArray();
+    return this.isAccordionGroup() ? this.accordion.first.groups.toArray() : this.groups && this.groups.toArray();
   }
 
   /**
@@ -365,38 +408,46 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * Subscribe to search changes and filter the list
    */
   private listenToSearch() {
-    this.searchControl.valueChanges.pipe(debounceTime(this.debounceTime), untilDestroyed(this)).subscribe((value: string) => {
-      if (this.isEmpty(value)) {
-        this.isSearching = false;
+    this.searchControl.valueChanges.pipe(debounceTime(this.debounceTime), untilDestroyed(this)).subscribe(_ => {
+      this.performSearch();
+    });
+  }
 
-        const isAccordion = this.isAccordionGroup();
-        this.getGroupComponentsArray().forEach((groupComponent: ListGroupComponent) => {
-          groupComponent._hidden = false;
+  private performSearch() {
+    const value = this.searchControl.value;
 
-          /* If this accordion group has been expended by the search function,
-             then collapse it to the original state
-          */
-          if (isAccordion) {
-            const anyGroup = groupComponent as any;
-            if (anyGroup.__expended) {
-              anyGroup.__expended = false;
-              (anyGroup as DatoAccordionGroupComponent).expand(false);
-            }
+    if (this.isEmpty(value)) {
+      this.isSearching = false;
+
+      const isAccordion = this.isAccordionGroup();
+      this._data = this._sort(this._data);
+      const groupComponents: ListGroupComponent[] = this.getGroupComponentsArray();
+      groupComponents.forEach((groupComponent: ListGroupComponent) => {
+        groupComponent._hidden = false;
+
+        /* If this accordion group has been expended by the search function,
+           then collapse it to the original state
+        */
+        if (isAccordion) {
+          const anyGroup = groupComponent as any;
+          if (anyGroup.__expended) {
+            anyGroup.__expended = false;
+            (anyGroup as DatoAccordionGroupComponent).expand(false);
           }
-        });
-      } else {
-        const result: ListSearchResult = this.search(value);
-        this._searchData = this._sort(result.results);
-        this._hasSearchResults = result.hasResults;
-        this.isSearching = true;
-      }
-
-      this.cdr.markForCheck();
-
-      /* selecting the first item on the next tick */
-      setTimeout(() => {
-        this.keyboardEventsManager.setActiveItem(0);
+        }
       });
+    } else {
+      const result: ListSearchResult = this.search(value);
+      this._searchData = this._sort(result.results);
+      this._hasSearchResults = result.hasResults;
+      this.isSearching = true;
+    }
+
+    this.cdr.markForCheck();
+
+    /* selecting the first item on the next tick */
+    setTimeout(() => {
+      this.keyboardEventsManager.setActiveItem(0);
     });
   }
 
@@ -450,40 +501,70 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    */
   private search(searchTerm: string): ListSearchResult {
     const groupComponentsArray = this.getGroupComponentsArray();
+    const hasGroups = groupComponentsArray.length;
+
+    if (hasGroups) {
+      return this.groupSearch(searchTerm);
+    }
+
+    const results = this._data.reduce((results, currValue) => {
+      const matchOption = this.searchStrategy(currValue, searchTerm, this.labelKey);
+      if (matchOption) {
+        results.push(currValue);
+      }
+
+      return results;
+    }, []);
+
+    return { results, hasResults: results.length };
+  }
+
+  /**
+   * Search for matcing groups and children.
+   * @param {string} searchTerm
+   * @return {ListSearchResult}
+   */
+  private groupSearch(searchTerm: string): ListSearchResult {
+    const groupComponentsArray = this.getGroupComponentsArray();
     const isAccordion = this.isAccordionGroup();
 
     let hasResults = false;
-    const results = this._data.reduce((previousValue, currValue, currentIndex) => {
-      /* Filter Groups */
-      if (groupComponentsArray.length) {
-        const children = currValue.children;
-        const group = { ...{}, ...currValue, children: [] };
-        let showGroup = false;
+    const results = this._data.reduce((results, currValue, currentIndex) => {
+      const children = currValue.children;
+      const group = { ...{}, ...currValue, children: [] };
+      const groupKey = this.getGroupKey(group);
 
-        /* Add the entire group */
-        previousValue.push(group);
+      let showGroup = false;
 
-        /* Match the whole group */
-        if (this.searchGroupLabels && this.searchStrategy(currValue, searchTerm, this.labelKey)) {
-          showGroup = true;
-          group.children = children;
-        } else {
-          /* Match an item from the group */
-          group.children = children.filter(option => {
-            return this.searchStrategy(option, searchTerm, this.labelKey);
-          });
+      /* Add the entire group */
+      results.push(group);
 
-          if (group.children.length) {
-            showGroup = true;
-          }
-        }
+      /* Match the whole group */
+      if (this.searchGroupLabels && this.searchStrategy(currValue, searchTerm, this.labelKey)) {
+        showGroup = true;
+        group.children = children;
+      } else {
+        /* Add matching children */
+        group.children = children.filter(option => {
+          return this.searchStrategy(option, searchTerm, this.labelKey);
+        });
+        showGroup = group.children.length;
+      }
 
-        const groupComponent = groupComponentsArray[currentIndex];
-        /* Show/hide the group */
+      if (showGroup) {
+        hasResults = true;
+      }
+
+      /* Find the right component, according to the internal key assigned in the previous search.
+         When no match is found, falling back to the same index as the group option.
+      *  The index is considered less safe, because it can change after sorting. */
+      const groupComponent = groupComponentsArray.find((g: any) => g.__key === groupKey) || groupComponentsArray[currentIndex];
+
+      /* Show/hide the group */
+      if (groupComponent) {
         groupComponent._hidden = !showGroup;
-        if (showGroup) {
-          hasResults = true;
-        }
+        /* assign an internal key to the component instance, so we can find it later (above). */
+        (groupComponent as any).__key = groupKey;
 
         /* Expand the accordion on matching results */
         if (isAccordion && showGroup) {
@@ -495,19 +576,21 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
             (groupComponent as any).__expended = true;
           }
         }
-      } else {
-        /* Filter Flat List */
-        const matchOption = this.searchStrategy(currValue, searchTerm, this.labelKey);
-        if (matchOption) {
-          previousValue.push(currValue);
-          hasResults = true;
-        }
       }
 
-      return previousValue;
+      return results;
     }, []);
 
     return { results, hasResults };
+  }
+
+  /**
+   * Get the key of the option group. It can be the group Id if exists, or the label.
+   * @param option
+   * @return {any}
+   */
+  private getGroupKey(option) {
+    return option && (option[this.idKey] || option[this.labelKey]);
   }
 
   /**

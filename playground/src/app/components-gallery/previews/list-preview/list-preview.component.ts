@@ -33,20 +33,20 @@ export class ListPreviewComponent {
   options = [
     {
       label: "B",
-      children: [{ id: 4, label: "klm" }]
+      children: [{ id: 6, label: "klm" }, { id: 7, label: "hello" }]
     },
     {
       label: "A",
       children: [
         { id: 2, label: "a hello" },
         { id: 4, label: "hello wor" },
-        { id: 3, label: "hello" },
+        { id: 3, label: "hello-1" },
         { id: 1, label: "world hello" }
       ]
     },
     {
       label: "C",
-      children: [{ id: 5, label: "nop" }]
+      children: [{ id: 5, label: "nop" }, { id: 8, label: "klm-1" }]
     }
   ];
 
@@ -105,9 +105,19 @@ export class ListPreviewComponent {
     { id: 5, label: "nop" }
   ];
 
+  get accordionOptions() {
+    return this.showLongAccordionOptions ? this.longOptions : this.options;
+  }
+
+  private showLongAccordionOptions = false;
+
+  constructor() {}
+
+  changeAccordionOptions() {
+    this.showLongAccordionOptions = !this.showLongAccordionOptions;
+  }
+
   patch() {
     this.flattenedControl.patchValue([{ id: 1, label: "abc", group: "A" }]);
   }
-
-  constructor() {}
 }

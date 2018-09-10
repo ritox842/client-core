@@ -26,6 +26,7 @@ export class SelectPreviewComponent implements OnInit {
   customFooterControl = new FormControl();
   infiniteControl = new FormControl();
   multiControl = new FormControl();
+  multiControlWithLimit = new FormControl();
   multiControl2 = new FormControl([
     { id: 1, label: "Item 1" },
     { id: 5, label: "Item 5" }
@@ -71,6 +72,9 @@ export class SelectPreviewComponent implements OnInit {
         id: i + 1
       });
     }
+
+    // selecting the first two options
+    this.multiControlWithLimit.setValue(this.options.slice(0, 2));
 
     setTimeout(() => {
       this.subject.next(this.options);

@@ -9,7 +9,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { last } from '@datorama/utils';
-import { setStyle } from '../../internal/helpers';
+import { defaultOptionsDisplayLimit } from '../select.types';
 
 @Component({
   selector: 'dato-trigger-multi',
@@ -28,7 +28,6 @@ export class DatoTriggerMulti implements OnInit {
   get isFocused() {
     return this._isFocused;
   }
-
   set isFocused(value: boolean) {
     this._isFocused = value;
   }
@@ -42,24 +41,22 @@ export class DatoTriggerMulti implements OnInit {
    */
   private _placeholder = 'Search..';
 
-  get placeholder(): string {
-    return this._placeholder;
-  }
-
   @Input()
   set placeholder(value: string) {
     this._placeholder = value;
   }
+  get placeholder(): string {
+    return this._placeholder;
+  }
 
   private _isLoading = false;
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
 
   @Input()
   set isLoading(value: boolean) {
     this._isLoading = value;
+  }
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
   /**
@@ -69,14 +66,13 @@ export class DatoTriggerMulti implements OnInit {
    */
   private _options = [];
 
-  get options(): any[] {
-    return this._options;
-  }
-
   @Input()
   set options(value: any[]) {
     this._options = value;
-    this._restCount = Math.abs(this.limitTo - this.options.length);
+    this.setRestCount();
+  }
+  get options(): any[] {
+    return this._options;
   }
 
   get showRest() {
@@ -88,15 +84,15 @@ export class DatoTriggerMulti implements OnInit {
    * @type {number}
    * @private
    */
-  private _limitTo;
-
-  get limitTo(): number {
-    return this._limitTo;
-  }
+  private _limitTo = defaultOptionsDisplayLimit;
 
   @Input()
   set limitTo(value: number) {
     this._limitTo = value;
+    this.setRestCount();
+  }
+  get limitTo(): number {
+    return this._limitTo;
   }
 
   /**
@@ -106,13 +102,12 @@ export class DatoTriggerMulti implements OnInit {
    */
   private _disabled = false;
 
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
   @Input()
   set disabled(value: boolean) {
     this._disabled = value;
+  }
+  get disabled(): boolean {
+    return this._disabled;
   }
 
   /**
@@ -202,5 +197,9 @@ export class DatoTriggerMulti implements OnInit {
   ngAfterViewInit() {
     const SPACES = 100;
     this.maxActiveElementWidth = `${this.host.nativeElement.getBoundingClientRect().width - SPACES}px`;
+  }
+
+  private setRestCount() {
+    this._restCount = Math.abs(this.limitTo - this.options.length);
   }
 }

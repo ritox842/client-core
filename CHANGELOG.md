@@ -1,3 +1,10 @@
+## [1.10.4](https://github.com/datorama/client-core/compare/v1.10.3...v1.10.4) (2018-09-11)
+
+
+### Bug Fixes
+
+* **component:** various fixes in dato-list and dato-select ([e4ad5e2](https://github.com/datorama/client-core/commit/e4ad5e2))
+
 ## [1.10.3](https://github.com/datorama/client-core/compare/v1.10.2...v1.10.3) (2018-09-05)
 
 

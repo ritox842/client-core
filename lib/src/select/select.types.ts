@@ -12,3 +12,9 @@ export enum SelectType {
 }
 
 export type SelectSize = 'sm' | 'md' | 'lg';
+
+/**
+ * The maximum number of options to display in the trigger
+ * @type {number}
+ */
+export const defaultOptionsDisplayLimit = 10;

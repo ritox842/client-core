@@ -619,6 +619,44 @@
 
 </dato-preview>
 
+<dato-preview title="Select Multi - Limit the Display of Selected Results">
+
+  <section class="d-flex">
+    <div class="select-preview" style="width: 500px;">
+
+      <dato-select [formControl]="multiControlWithLimit" [dataSet]="options" #datoSelectMultiLimit
+                   type="multi" limitTo="1"
+                   [allowSelectAll]="true">
+
+        <dato-option *ngFor="let option of datoSelectMultiLimit.data" [option]="option" multi>
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{multiControlWithLimit.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="multiControl" [dataSet]="options" #datoSelectMultiLimit
+                   type="multi" limitTo="1"
+                   [allowSelectAll]="true">
+
+        <dato-option *ngFor="let option of datoSelectMultiLimit.data" [option]="option" multi>
+          option.label
+        </dato-option>
+
+      </dato-select>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
 
 <dato-preview title="Infinite Scroll">
 

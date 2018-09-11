@@ -11,7 +11,10 @@ The list can display a hierarchy data structure, or just a simple flat list. <br
 
   <section class="d-flex">
     <div class="select-preview">
-      <button (click)="patch()">Patch</button>
+
+      <dato-button (click)="patch()" datoSize="sm">Patch</dato-button>
+      <br/><br/>
+
       <div class="list-container">
         <dato-list [formControl]="flattenedControl" [dataSet]="flattenedOptions" [groupBy]="'group'"
                    #datoListWithFlattenedData>
@@ -377,8 +380,12 @@ which may cause a performance overhead with many items.
 
   <section class="d-flex">
     <div class="select-preview">
+
+      <dato-button (click)="changeAccordionOptions()" datoSize="sm">Change Data Set</dato-button>
+      <br/><br/>
+
       <div class="list-container">
-        <dato-list [formControl]="accordionControl2" [dataSet]="options"
+        <dato-list [formControl]="accordionControl2" [dataSet]="accordionOptions"
                    [autoFocus]="false"  #datoListAccordion2 accordion>
           <dato-accordion [includeArrows]="true">
             <dato-accordion-group *ngFor="let group of datoListAccordion2.data; trackBy: datoListAccordion2.trackByFn">

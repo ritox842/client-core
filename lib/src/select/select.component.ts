@@ -10,7 +10,7 @@ import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { coerceArray } from '@datorama/utils';
-import { SelectType } from './select.types';
+import { defaultOptionsDisplayLimit, SelectType } from './select.types';
 import { DatoOptionComponent } from '../options/option.component';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, mapTo, take } from 'rxjs/operators';
@@ -116,7 +116,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   @Input() infiniteScrollLoading = false;
 
-  @Input() limitTo = 10;
+  @Input() limitTo = defaultOptionsDisplayLimit;
 
   /** The options to display in the dropdown */
   @Input()

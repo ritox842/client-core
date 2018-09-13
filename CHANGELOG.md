@@ -1,3 +1,10 @@
+## [1.10.5](https://github.com/datorama/client-core/compare/v1.10.4...v1.10.5) (2018-09-13)
+
+
+### Bug Fixes
+
+* **list component:** disable accordion animation in search mode ([f5adbdc](https://github.com/datorama/client-core/commit/f5adbdc))
+
 ## [1.10.4](https://github.com/datorama/client-core/compare/v1.10.3...v1.10.4) (2018-09-11)
 
 

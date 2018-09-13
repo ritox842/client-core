@@ -432,7 +432,9 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
           const anyGroup = groupComponent as any;
           if (anyGroup.__expended) {
             anyGroup.__expended = false;
-            (anyGroup as DatoAccordionGroupComponent).expand(false);
+            const accordionGroup = anyGroup as DatoAccordionGroupComponent;
+            accordionGroup.content.disableAnimation = false;
+            accordionGroup.expand(false);
           }
         }
       });
@@ -570,6 +572,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
         if (isAccordion && showGroup) {
           const accordionGroup = groupComponent as DatoAccordionGroupComponent;
           if (!accordionGroup.expanded) {
+            accordionGroup.content.disableAnimation = true;
             /* Expand the accordion */
             accordionGroup.expand(true);
             /* Mark the accordion as expanded, so we can return to the default state later */

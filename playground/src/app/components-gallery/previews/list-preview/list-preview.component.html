@@ -332,8 +332,8 @@ which may cause a performance overhead with many items.
               <dato-accordion-header>
                 <div class="header">{{group.label}}</div>
               </dato-accordion-header>
-              <dato-accordion-content [tpl]="accordionContent">
-                <ng-template #accordionContent>
+              <dato-accordion-content [tpl]="accordionContentBasic">
+                <ng-template #accordionContentBasic>
                   <div class="content">
                     <dato-option *ngFor="let option of group.children; trackBy: datoListAccordion.trackByFn" [option]="option" multi>
                       {{option.label}}
@@ -392,8 +392,8 @@ which may cause a performance overhead with many items.
               <dato-accordion-header>
                 <div class="header" [innerHTML]="group.label | datoHighlight: datoListAccordion2.searchTerm"></div>
               </dato-accordion-header>
-              <dato-accordion-content [tpl]="accordionContent">
-                <ng-template #accordionContent>
+              <dato-accordion-content [tpl]="accordionContentHS">
+                <ng-template #accordionContentHS>
                   <div class="content">
                     <dato-option *ngFor="let option of group.children; trackBy: datoListAccordion2.trackByFn" [option]="option" multi>
                       <span [innerHTML]="option.label | datoHighlight: datoListAccordion2.searchTerm"></span>

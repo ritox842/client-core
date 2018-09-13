@@ -13,7 +13,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
   selector: 'dato-accordion-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div [@slideInOut] *ngIf="_expanded">
+    <div [@slideInOut] *ngIf="_expanded" [@.disabled]="disableAnimation">
       <ng-container [ngTemplateOutlet]="template"></ng-container>
       <ng-content></ng-content>
     </div>
@@ -32,6 +32,16 @@ import { trigger, style, animate, transition } from '@angular/animations';
 export class DatoAccordionContentComponent {
   @Input('tpl') template: TemplateRef<any>;
   _expanded: boolean = false;
+
+  private _disableAnimation = false;
+
+  get disableAnimation(): boolean {
+    return this._disableAnimation;
+  }
+
+  set disableAnimation(value: boolean) {
+    this._disableAnimation = value;
+  }
 
   @Input()
   set expanded(value) {

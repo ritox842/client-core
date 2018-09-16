@@ -10,11 +10,11 @@
 <dato-dialog-footer>
   <ng-container *ngFor="let action of options.actions">
     <dato-button datoType="primary"
-                 [datoDialogClose]="action.type" *ngIf="action.type === 'SUCCESS'; else cancelBtn">
+                 [datoDialogClose]="action.data || action.type" *ngIf="action.type === 'SUCCESS'; else cancelBtn">
       {{action.caption}}
     </dato-button>
     <ng-template #cancelBtn>
-      <dato-button datoType="secondary" [datoDialogDismiss]="action.type">
+      <dato-button datoType="secondary" [datoDialogDismiss]="action.data || action.type">
         {{action.caption}}
       </dato-button>
     </ng-template>

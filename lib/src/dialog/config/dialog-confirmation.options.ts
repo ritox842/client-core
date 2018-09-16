@@ -9,6 +9,7 @@ export enum DatoActionType {
 export type DatoDialogAction = {
   type: DatoActionType;
   caption?: string;
+  data?: any;
 };
 
 export enum ConfirmationType {

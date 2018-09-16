@@ -74,3 +74,70 @@
 
   </dato-tabs>
 </dato-preview>
+
+
+<dato-preview title="Confirmation - Custom Dialog Actions">
+
+  By default, the confirmation dialog come with the following predefined actions buttons:<br/>
+  <code>
+    [
+      {{'{'}}
+        type: DatoActionType.DISMISSED,
+        caption: 'general.cancel'
+      {{'}'}},
+      {{'{'}}
+        type: DatoActionType.SUCCESS,
+        caption: 'general.ok'
+      {{'}'}}
+    ]
+  </code>
+  <br/><br/>
+  You can define your own actions, by set the <code>actions</code> property, as shown in this example.
+  <br/><br/>
+
+  <section class="d-flex-column">
+    <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithCustomData()">Show Confirmation</dato-button>
+
+    <div class="d-flex-row mt-20">
+      Result: <code>{{customActionResult | json}}</code>
+    </div>
+  </section>
+
+  <dato-tabs>
+
+    <textarea datoHighlight="html">
+       <dato-button class="mx-10" datoSize="sm" (click)="openDialogWithCustomData()">Show Confirmation</dato-button>
+
+      <div class="d-flex-row mt-20">
+        Result: <code>customActionResult | json</code>
+      </div>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      this.modalService
+      .confirm({
+        title: "Remove Mickey From Disney?",
+        content: "Are you sure you want yo remove Mickey Mouse from Disney?<br/>Caution: This cannot be undone.",
+        actions: [{
+          type: DatoActionType.SUCCESS,
+          caption: 'Option 1',
+          data: 'Options 1'
+        },
+          {
+            type: DatoActionType.SUCCESS,
+            caption: 'Option 2',
+            data: 'Options 2'
+          },
+          {
+            type: DatoActionType.DISMISSED,
+            caption: 'Cancel'
+          }]
+      })
+      .afterClosed()
+      .subscribe((result: DatoDialogResult) => {
+        this.customActionResult = result;
+      });
+    </textarea>
+
+  </dato-tabs>
+</dato-preview>

@@ -1,3 +1,10 @@
+## [1.11.2](https://github.com/datorama/client-core/compare/v1.11.1...v1.11.2) (2018-09-17)
+
+
+### Bug Fixes
+
+* **tooltip:** destroy tooltip when content changed ([c0b9fe9](https://github.com/datorama/client-core/commit/c0b9fe9))
+
 ## [1.11.1](https://github.com/datorama/client-core/compare/v1.11.0...v1.11.1) (2018-09-17)
 
 

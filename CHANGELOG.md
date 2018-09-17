@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/datorama/client-core/compare/v1.11.0...v1.11.1) (2018-09-17)
+
+
+### Bug Fixes
+
+* **select:** align the checkbox in select all ([3870ca4](https://github.com/datorama/client-core/commit/3870ca4))
+
 # [1.11.0](https://github.com/datorama/client-core/compare/v1.10.5...v1.11.0) (2018-09-16)
 
 

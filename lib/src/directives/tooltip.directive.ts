@@ -2,13 +2,12 @@ import { Directive, ElementRef, Input, OnDestroy, TemplateRef } from '@angular/c
 import Tooltip from 'tooltip.js';
 import { fromEvent } from 'rxjs';
 import { DatoTemplatePortal } from '../angular/overlay';
-import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { IconRegistry } from '../services/icon-registry';
 import { default as Popper } from 'popper.js';
 import { toBoolean } from '@datorama/utils';
 import { TooltipOptions, TooltipTrigger } from './tooltip.model';
 
-@TakeUntilDestroy()
 @Directive({
   selector: '[datoTooltip]'
 })
@@ -25,6 +24,9 @@ export class DatoTooltipDirective implements OnDestroy {
       this.content = this.tplPortal.elementRef;
     } else {
       this.content = content;
+      if (this.tooltip) {
+        this.destroy();
+      }
     }
   }
 
@@ -115,11 +117,6 @@ export class DatoTooltipDirective implements OnDestroy {
     return this.datoTooltipType === 'long';
   }
 
-  /**
-   *
-   * @param {Node | null} parentNode
-   * @returns {}
-   */
   private createTooltipInstance(container: HTMLElement) {
     const xIcon = `<div class="tooltip-close-icon">${this.iconRegistry.getSvg('close')}</div>`;
     const tooltipOptions: TooltipOptions = {
@@ -142,11 +139,6 @@ export class DatoTooltipDirective implements OnDestroy {
     return new Tooltip(container, tooltipOptions);
   }
 
-  /**
-   *
-   * @param {HTMLElement} element
-   * @returns {boolean}
-   */
   private isElementOverflow(element: HTMLElement): boolean {
     const parentEl = element.parentElement;
 

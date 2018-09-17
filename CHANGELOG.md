@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/datorama/client-core/compare/v1.10.5...v1.11.0) (2018-09-16)
+
+
+### Features
+
+* **dialog:** add support in custom data in the confirmation actions ([8e5a586](https://github.com/datorama/client-core/commit/8e5a586))
+
 ## [1.10.5](https://github.com/datorama/client-core/compare/v1.10.4...v1.10.5) (2018-09-13)
 
 

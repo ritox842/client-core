@@ -8,6 +8,7 @@ import {
 import { DatoDialog } from "../../../../../../../lib/src/dialog/dialog.service";
 import { ConfirmationType } from "../../../../../../../lib/src/dialog/config/dialog-confirmation.options";
 import { DatoDialogResult } from "../../../../../../../lib/src/dialog/config/dialog.options";
+import { DatoActionType } from "../../../../../../../lib";
 
 @Component({
   selector: "dato-dialog-confirmation-preview",
@@ -15,6 +16,8 @@ import { DatoDialogResult } from "../../../../../../../lib/src/dialog/config/dia
 })
 export class DatoDialogConfirmationPreviewComponent implements OnInit {
   @ViewChild("templateRef") private dialogTpl: TemplateRef<any>;
+
+  customActionResult;
 
   constructor(private modalService: DatoDialog) {}
 
@@ -52,5 +55,34 @@ export class DatoDialogConfirmationPreviewComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((result: DatoDialogResult) => {});
+  }
+
+  openDialogWithCustomData() {
+    this.modalService
+      .confirm({
+        title: "Remove Mickey From Disney?",
+        content:
+          "Are you sure you want yo remove Mickey Mouse from Disney?<br/>Caution: This cannot be undone.",
+        actions: [
+          {
+            type: DatoActionType.SUCCESS,
+            caption: "Option 1",
+            data: "Options 1"
+          },
+          {
+            type: DatoActionType.SUCCESS,
+            caption: "Option 2",
+            data: "Options 2"
+          },
+          {
+            type: DatoActionType.DISMISSED,
+            caption: "Cancel"
+          }
+        ]
+      })
+      .afterClosed()
+      .subscribe((result: DatoDialogResult) => {
+        this.customActionResult = result;
+      });
   }
 }

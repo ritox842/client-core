@@ -9,25 +9,20 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { AgGridEvent, ColumnApi, Events, GridApi } from 'ag-grid';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { OnDestroy, TakeUntilDestroy } from 'ngx-take-until-destroy';
-import { Observable } from 'rxjs';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 interface Translations {
   of: string;
   items: string;
 }
 
-@TakeUntilDestroy()
 @Component({
   selector: 'dato-grid-pagination',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './grid-pagination.component.html',
   styleUrls: ['./grid-pagination.component.scss']
 })
-export class DatoGridPaginationComponent implements OnInit, OnDestroy {
-  destroyed$: Observable<boolean>;
-
+export class DatoGridPaginationComponent implements OnInit {
   // number of rows in the table
   private rowCount: number;
   private rowsPerPage: number;
@@ -92,7 +87,7 @@ export class DatoGridPaginationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.rowDataChanged.pipe(takeUntil(this.destroyed$)).subscribe((event: AgGridEvent) => {
+    this.rowDataChanged.pipe(untilDestroyed(this)).subscribe((event: AgGridEvent) => {
       this.calcPagination(event);
     });
   }

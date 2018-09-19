@@ -22,7 +22,7 @@ import { query } from '../internal/helpers';
 import { getListOptionHeight, ListGroupComponent, ListSearchResult } from './list.types';
 import { DatoListSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { normalizeData } from '../internal/data-normalization';
-import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { DatoListSortComparator, defaultClientSortComparator, SORT_ORDER, SORT_SCORE } from './sort.comparator';
 
 const valueAccessor = {
@@ -31,7 +31,6 @@ const valueAccessor = {
   multi: true
 };
 
-@TakeUntilDestroy()
 @Component({
   selector: 'dato-list',
   templateUrl: './list.component.html',
@@ -232,7 +231,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   }
 
   ngOnDestroy() {
-    /* @TakeUntilDestroy */
+    /*  */
   }
 
   /**

@@ -1,11 +1,9 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DatoDialogOptions, dialogSizePreset } from '../config/dialog.options';
-import { TakeUntilDestroy } from 'ngx-take-until-destroy';
 import { Observable } from 'rxjs';
 import { DatoDialogRef } from '../dialog-ref';
 import { setDimensions, setMinDimensions } from '../../internal/custom-dimensions';
 
-@TakeUntilDestroy()
 @Component({
   selector: 'dato-dialog',
   templateUrl: './dialog.component.html',
@@ -16,7 +14,7 @@ import { setDimensions, setMinDimensions } from '../../internal/custom-dimension
     role: 'dialog'
   }
 })
-export class DatoDialogComponent implements OnInit, OnDestroy {
+export class DatoDialogComponent implements OnInit {
   destroyed$: Observable<boolean>;
   @Input() options: DatoDialogOptions;
 
@@ -34,6 +32,4 @@ export class DatoDialogComponent implements OnInit, OnDestroy {
     setDimensions(width, null, projectionElement);
     setMinDimensions(null, height, projectionElement);
   }
-
-  ngOnDestroy(): void {}
 }

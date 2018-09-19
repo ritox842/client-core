@@ -3,8 +3,8 @@ import { DatoGridToolbarItemDirective } from './grid-toolbar-item.directive';
 import { debounce, delay } from 'helpful-decorators';
 import { DatoGridComponent } from '../grid/grid.component';
 import { Events, GridApi, GridReadyEvent } from 'ag-grid';
-import { first, takeUntil } from 'rxjs/operators';
-import { TakeUntilDestroy, OnDestroy } from 'ngx-take-until-destroy';
+import { first } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Observable } from 'rxjs';
 import { RowSelectionType, showWhenFunc, ToolbarAction, ToolbarActionType, ToolbarArea } from './grid-toolbar.types';
 import { HashMap, isFunction } from '@datorama/utils';
@@ -12,13 +12,12 @@ import { DatoTranslateService } from '../../services/translate.service';
 import { GridToolbarService } from './grid-toolbar.service';
 import { DatoGridAPI } from '../dato-grid-api';
 
-@TakeUntilDestroy()
 @Component({
   selector: 'dato-grid-toolbar',
   templateUrl: './grid-toolbar.component.html',
   styleUrls: ['./grid-toolbar.component.scss']
 })
-export class DatoGridToolbarComponent implements OnInit, OnDestroy {
+export class DatoGridToolbarComponent implements OnInit {
   private eventHandler;
   private areaActions: HashMap<ToolbarArea> = {
     [ToolbarActionType.Button]: ToolbarArea.Left,
@@ -50,7 +49,7 @@ export class DatoGridToolbarComponent implements OnInit, OnDestroy {
     if (grid && !this.api) {
       this.api = new DatoGridAPI();
       // get gridApi
-      grid.gridReady.pipe(takeUntil(this.destroyed$), first()).subscribe((event: GridReadyEvent) => {
+      grid.gridReady.pipe(untilDestroyed(this), first()).subscribe((event: GridReadyEvent) => {
         this.api.gridApi = event.api;
         this.onGridReady();
       });

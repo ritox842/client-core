@@ -10,7 +10,7 @@ import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, Eleme
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { pluck, tap } from 'rxjs/operators';
-import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { optionalDebounce } from '../rx/debounce';
 import { BaseCustomControl } from '../internal/base-custom-control';
@@ -22,7 +22,6 @@ const valueAccessor = {
   multi: true
 };
 
-@TakeUntilDestroy()
 @Component({
   selector: 'dato-input',
   templateUrl: './input.component.html',

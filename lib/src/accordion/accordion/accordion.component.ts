@@ -11,9 +11,8 @@ import { DatoAccordionGroupComponent } from '../accordion-group/accordion-group.
 import { merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { toBoolean } from '@datorama/utils';
-import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
-@TakeUntilDestroy()
 @Component({
   selector: 'dato-accordion',
   template: '<ng-content></ng-content>',

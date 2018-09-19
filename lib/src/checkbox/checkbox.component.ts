@@ -10,7 +10,7 @@ import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, Eleme
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { toBoolean } from '@datorama/utils';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { DatoCoreError } from '../errors';
@@ -21,7 +21,6 @@ const valueAccessor = {
   multi: true
 };
 
-@TakeUntilDestroy()
 @Component({
   selector: 'dato-checkbox',
   templateUrl: './checkbox.component.html',

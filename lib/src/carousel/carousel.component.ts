@@ -10,7 +10,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, C
 import { DatoCarouselItemDirective } from './carousel-item.directive';
 import { animate, AnimationBuilder, AnimationFactory, AnimationPlayer, style } from '@angular/animations';
 import { isNumber } from '@datorama/utils';
-import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { interval } from 'rxjs';
 
 @Directive({
@@ -18,7 +18,6 @@ import { interval } from 'rxjs';
 })
 export class DatoCarouselItemElement {}
 
-@TakeUntilDestroy()
 @Component({
   selector: 'dato-carousel',
   templateUrl: './carousel.component.html',

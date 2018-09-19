@@ -17,7 +17,7 @@
 //import { Subject } from 'rxjs/Subject';
 //import { fromEvent } from 'rxjs/observable/fromEvent';
 //
-//@TakeUntilDestroy()
+
 //@Component({
 //  selector: 'dato-action-menu',
 //  template: '<ng-content></ng-content>',

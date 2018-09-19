@@ -10,7 +10,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forw
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { TakeUntilDestroy, untilDestroyed } from 'ngx-take-until-destroy';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { BaseCustomControl } from '../internal/base-custom-control';
 
 const valueAccessor = {
@@ -19,7 +19,6 @@ const valueAccessor = {
   multi: true
 };
 
-@TakeUntilDestroy()
 @Component({
   selector: 'dato-radio',
   templateUrl: './radio.component.html',

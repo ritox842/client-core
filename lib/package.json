@@ -17,19 +17,5 @@
   "main": "./bundles/datorama.umd.js",
   "es2015": "./esm2015/datorama.js",
   "module": "./esm5/datorama.es5.js",
-  "typings": "./datorama.d.ts",
-  "peerDependencies": {
-    "@angular/common": "^5.0.0",
-    "@angular/core": "^5.0.0",
-    "@angular/http": "^5.0.0",
-    "@datorama/utils": "^1.17",
-    "ag-grid": "17.1.1",
-    "ag-grid-angular": "17.1.0",
-    "ag-grid-enterprise": "17.1.1",
-    "helpful-decorators": "^1.7.0",
-    "ngx-take-until-destroy": "^2.1.1",
-    "popper.js": "^1.12.9",
-    "sortablejs": "^1.7.0",
-    "angular-sortablejs": "^2.5.2"
-  }
+  "typings": "./datorama.d.ts"
 }

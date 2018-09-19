@@ -1,3 +1,10 @@
+## [1.11.3](https://github.com/datorama/client-core/compare/v1.11.2...v1.11.3) (2018-09-19)
+
+
+### Bug Fixes
+
+* **until-destroy:** update to 5 ([a91cbd0](https://github.com/datorama/client-core/commit/a91cbd0))
+
 ## [1.11.2](https://github.com/datorama/client-core/compare/v1.11.1...v1.11.2) (2018-09-17)
 
 

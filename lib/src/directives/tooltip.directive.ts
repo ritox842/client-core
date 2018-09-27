@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnDestroy, TemplateRef } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, TemplateRef } from '@angular/core';
 import Tooltip from 'tooltip.js';
 import { fromEvent } from 'rxjs';
 import { DatoTemplatePortal } from '../angular/overlay';
@@ -11,7 +11,7 @@ import { TooltipOptions, TooltipTrigger } from './tooltip.model';
 @Directive({
   selector: '[datoTooltip]'
 })
-export class DatoTooltipDirective implements OnDestroy {
+export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   @Input() datoTooltipType: 'tooltip' | 'long' = 'tooltip';
 
   @Input()
@@ -60,7 +60,7 @@ export class DatoTooltipDirective implements OnDestroy {
 
   constructor(private host: ElementRef, private iconRegistry: IconRegistry) {}
 
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     const { on, off } = this.eventsMap[this.datoTooltipTrigger];
 
     if (this.datoTooltipOnTextOverflow && !this.isElementOverflow(this.host.nativeElement)) return;

@@ -1,18 +1,18 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { mapTo, switchMap } from "rxjs/operators";
-import { Subject, timer } from "rxjs";
-import { DatoSnackbar } from "../../../../../../lib";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { mapTo } from 'rxjs/operators';
+import { Subject, timer } from 'rxjs';
+import { DatoSnackbar } from '../../../../../../lib';
 
 @Component({
-  selector: "dato-select-preview",
-  templateUrl: "./select-preview.component.html",
-  styleUrls: ["./select-preview.component.scss"]
+  selector: 'dato-select-preview',
+  templateUrl: './select-preview.component.html',
+  styleUrls: ['./select-preview.component.scss']
 })
 export class SelectPreviewComponent implements OnInit {
   private subject = new Subject();
 
-  simpleControl = new FormControl({ id: 1, label: "Item 1" });
+  simpleControl = new FormControl({ id: 1, label: 'Item 1' });
   simpleControlSearch = new FormControl();
   simpleControlSearch2 = new FormControl();
   simpleControlSearch3 = new FormControl();
@@ -27,37 +27,17 @@ export class SelectPreviewComponent implements OnInit {
   infiniteControl = new FormControl();
   multiControl = new FormControl();
   multiControlWithLimit = new FormControl();
-  multiControl2 = new FormControl([
-    { id: 1, label: "Item 1" },
-    { id: 5, label: "Item 5" }
-  ]);
+  multiControl2 = new FormControl([{ id: 1, label: 'Item 1 long long long name' }, { id: 5, label: 'Item 5' }]);
   multiControl3 = new FormControl();
-  multiDisableControl = new FormControl([
-    { id: 1, label: "Item 1" },
-    { id: 2, label: "Item 2" }
-  ]);
-  flattenedControl = new FormControl({ id: 2, label: "efg", group: "A" });
+  multiDisableControl = new FormControl([{ id: 1, label: 'Item 1' }, { id: 2, label: 'Item 2' }]);
+  flattenedControl = new FormControl({ id: 2, label: 'efg', group: 'A' });
 
   options$ = this.subject.asObservable();
   options = [];
   optionsFromServer;
   infiniteOptions = [];
-  dayOfWeekOptions = [
-    { value: 1, label: "Sunday" },
-    { value: 2, label: "Monday" },
-    { value: 3, label: "Tuesday" },
-    { value: 4, label: "Wednesday" },
-    { value: 5, label: "Thursday" },
-    { value: 6, label: "Friday" },
-    { value: 7, label: "Saturday" }
-  ];
-  flattenedOptions = [
-    { id: 1, label: "abc", group: "A" },
-    { id: 2, label: "efg", group: "A" },
-    { id: 3, label: "hij", group: "A" },
-    { id: 4, label: "klm", group: "B" },
-    { id: 5, label: "nop", group: "C" }
-  ];
+  dayOfWeekOptions = [{ value: 1, label: 'Sunday' }, { value: 2, label: 'Monday' }, { value: 3, label: 'Tuesday' }, { value: 4, label: 'Wednesday' }, { value: 5, label: 'Thursday' }, { value: 6, label: 'Friday' }, { value: 7, label: 'Saturday' }];
+  flattenedOptions = [{ id: 1, label: 'abc', group: 'A' }, { id: 2, label: 'efg', group: 'A' }, { id: 3, label: 'hij', group: 'A' }, { id: 4, label: 'klm', group: 'B' }, { id: 5, label: 'nop', group: 'C' }];
   frequencyForm: FormGroup;
   dayOfWeek;
   constructor(private snackbar: DatoSnackbar, private builder: FormBuilder) {
@@ -101,9 +81,7 @@ export class SelectPreviewComponent implements OnInit {
   }
 
   toggleDisableEnable() {
-    this.controlDisabled.enabled
-      ? this.controlDisabled.disable()
-      : this.controlDisabled.enable();
+    this.controlDisabled.enabled ? this.controlDisabled.disable() : this.controlDisabled.enable();
   }
 
   onSearch(term: string) {
@@ -115,30 +93,20 @@ export class SelectPreviewComponent implements OnInit {
 
   grouped = [
     {
-      label: "A",
-      children: [
-        { id: 1, label: "abc" },
-        { id: 2, label: "efg" },
-        { id: 3, label: "hij" }
-      ]
+      label: 'A',
+      children: [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }]
     },
     {
-      label: "B",
-      children: [{ id: 4, label: "klm" }]
+      label: 'B',
+      children: [{ id: 4, label: 'klm' }]
     },
     {
-      label: "C",
-      children: [{ id: 5, label: "nop" }]
+      label: 'C',
+      children: [{ id: 5, label: 'nop' }]
     }
   ];
 
-  _optionsFromServer = [
-    { id: 1, label: "abc" },
-    { id: 2, label: "efg" },
-    { id: 3, label: "hij" },
-    { id: 4, label: "klm" },
-    { id: 5, label: "nop" }
-  ];
+  _optionsFromServer = [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }, { id: 4, label: 'klm' }, { id: 5, label: 'nop' }];
 
   isLoading = false;
 
@@ -149,13 +117,11 @@ export class SelectPreviewComponent implements OnInit {
   getNewItems(term) {
     this.isLoading = true;
 
-    return timer(500).pipe(
-      mapTo(this._optionsFromServer.filter(item => item.label.includes(term)))
-    );
+    return timer(500).pipe(mapTo(this._optionsFromServer.filter(item => item.label.includes(term))));
   }
 
   onSave() {
-    this.snackbar.success("Success!!!");
+    this.snackbar.success('Success!!!');
   }
 
   infiniteScrollLoading = false;

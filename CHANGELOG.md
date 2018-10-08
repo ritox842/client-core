@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/datorama/client-core/compare/v1.11.3...v1.12.0) (2018-10-08)
+
+
+### Features
+
+* **dato-editable-header:** add foucs and blur events support ([81a1e88](https://github.com/datorama/client-core/commit/81a1e88))
+
 ## [1.11.3](https://github.com/datorama/client-core/compare/v1.11.2...v1.11.3) (2018-09-19)
 
 

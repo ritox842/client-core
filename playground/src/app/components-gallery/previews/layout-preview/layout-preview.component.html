@@ -1,11 +1,13 @@
 <dato-preview title="Editable Header - Standalone">
 
-  <dato-editable-header [formControl]="header" standalone="true"></dato-editable-header>
+  <dato-editable-header (onFocus)="focus()" (onBlur)="blur()" [formControl]="header" standalone="true"></dato-editable-header>
+
+  <div class="mt-10" datoColor="primary-700">{{ isFocused ? "I'm focused!" : "I'm not focused"}}</div>
 
   <dato-tabs show="html,js">
 
     <textarea datoHighlight="html">
-      <dato-editable-header [formControl]="header" standalone="true"></dato-editable-header>
+      <dato-editable-header (onFocus)="focus()" (onBlur)="blur()" [formControl]="header" standalone="true"></dato-editable-header>
     </textarea>
 
     <textarea datoHighlight="js">
@@ -80,6 +82,24 @@
         <td>14px</td>
         <td>The font size of the input</td>
       </tr>
+    </dato-api-table>
+
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table type="outputs">
+      <tr>
+        <td>onFocus</td>
+        <td ngNonBindable>FocusEvent</td>
+        <td>This event is fired when the header input is focused</td>
+      </tr>
+      <tr>
+        <td>onBlur</td>
+        <td ngNonBindable>FocusEvent</td>
+        <td>This event is fired when the header input is blured </td>
+      </tr>
+
     </dato-api-table>
 
   </div>

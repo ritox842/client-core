@@ -3,7 +3,7 @@
          class="ellipsis editable-header-input"
          [placeholder]="placeholder"
          (input)="input($event)"
-         (blur)="blur()"
+         (blur)="blur($event)"
          (focus)="focus($event)"
          (keyup.esc)="revert()">
 </section>

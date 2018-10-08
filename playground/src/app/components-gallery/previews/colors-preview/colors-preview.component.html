@@ -1,10 +1,8 @@
 <dato-preview title="datoColor conditional directive">
 
-  When the condition is true the datoColor adds the color
-  <br>
-
+  <div class="mb-10" datoColor="primary-700">When the condition is true the datoColor adds the color</div>
   <dato-button (click)="someCondition = !someCondition">Toggle condition</dato-button>
-  <div>   condition value: {{ someCondition }}</div>
+  <div datoColor="primary-700">   condition value: {{ someCondition }}</div>
   <div class="box primary-200-background-color" [datoColor]="someCondition && 'accent-700 background-color'"></div>
   <dato-tabs show="html">
 
@@ -21,47 +19,50 @@
 
 <dato-preview title="Colors">
 
-  <dato-button (click)="changeTheme()">Change theme</dato-button>
+  <div class="mb-10 d-flex align-start-center">
+    <div class="mr-10" datoColor="primary-700">Current theme: {{theme}}</div>
+    <dato-button (click)="changeTheme()">Change theme</dato-button>
+  </div>
 
   <section [datoPalette]="theme">
 
     <section class="d-flex d-flex-wrap">
-      <div *ngFor="let color of group.primary">
+      <div *ngFor="let color of groups.primary">
         <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
         <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
     <section class="d-flex d-flex-wrap">
-      <div *ngFor="let color of group.accent">
+      <div *ngFor="let color of groups.accent">
         <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
         <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
     <section class="d-flex d-flex-wrap">
-      <div *ngFor="let color of group.green">
+      <div *ngFor="let color of groups.green">
         <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
         <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
     <section class="d-flex d-flex-wrap">
-      <div *ngFor="let color of group.yellow">
+      <div *ngFor="let color of groups.yellow">
         <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
         <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
     <section class="d-flex d-flex-wrap">
-      <div *ngFor="let color of group.red">
+      <div *ngFor="let color of groups.red">
         <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
         <div class="{{color.color}}-background-color box"></div>
       </div>
     </section>
 
     <section class="d-flex d-flex-wrap">
-      <div *ngFor="let color of group.orange">
+      <div *ngFor="let color of groups.orange">
         <span class="tag is-warning">{{color.color}} - {{color.hex}}</span>
         <div class="{{color.color}}-background-color box"></div>
       </div>

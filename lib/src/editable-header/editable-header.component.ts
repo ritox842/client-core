@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, Output, OnInit, EventEmitter, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { toBoolean } from '@datorama/utils';
@@ -28,6 +28,8 @@ const valueAccessor = {
 })
 export class DatoEditableHeaderComponent extends BaseCustomControl implements OnInit, ControlValueAccessor {
   @Input() placeholder = '';
+  @Output() onFocus: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+  @Output() onBlur: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
   private initialValue = '';
   private value = '';
 
@@ -56,17 +58,19 @@ export class DatoEditableHeaderComponent extends BaseCustomControl implements On
     return this.host.nativeElement.querySelector('input');
   }
 
-  blur() {
+  blur($event) {
     /** If the value is empty go back to initial value */
     if (!this.value) {
       this.revert();
     }
+    this.onBlur.emit($event);
   }
 
   focus($event) {
     if (!this.isValueChanged) {
       $event.target.setSelectionRange(0, 9999);
     }
+    this.onFocus.emit($event);
   }
 
   revert() {

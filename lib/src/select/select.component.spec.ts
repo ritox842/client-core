@@ -1,5 +1,5 @@
 import { DatoSelectComponent } from './select.component';
-import { createHostComponentFactory, dispatchFakeEvent, dispatchKeyboardEvent, query, queryAll, SpectatorWithHost, typeInElement } from '@netbasal/spectator';
+import { createHostComponentFactory, dispatchKeyboardEvent, query, queryAll, SpectatorWithHost, typeInElement } from '@netbasal/spectator';
 import { DatoTriggerMulti } from './trigger-multi/trigger-multi.component';
 import { DatoButtonModule, DatoCheckboxModule, DatoIconModule, DatoInputModule, DatoLinkButtonModule, DatoSelectEmptyComponent, DatoMultiOptionComponent, DatoOptionComponent, DatoTranslateService, DatoTriggerSingle, IconRegistry } from '../..';
 import { DatoOverlay } from '../angular/overlay';

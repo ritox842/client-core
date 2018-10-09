@@ -25,7 +25,6 @@ $lg: (
 $max-items: 4;
 
 dato-trigger-multi {
-  display: block;
   position: relative;
   align-items: center;
   display: flex;
@@ -48,6 +47,7 @@ dato-select[datosize="sm"] dato-trigger-multi {
 
   .dato-trigger-multi__active {
     height: map-get($sm, selectedHeight);
+    line-height: map-get($sm, selectedHeight);
     margin-right: map-get($sm, selectedMargin);
   }
 
@@ -100,6 +100,7 @@ dato-select dato-trigger-multi {
 
   .dato-trigger-multi__active {
     height: map-get($md, selectedHeight);
+    line-height: map-get($md, selectedHeight);
     margin-right: map-get($md, selectedMargin);
   }
 
@@ -161,6 +162,7 @@ dato-select[datosize="lg"] dato-trigger-multi {
 
   .dato-trigger-multi__active {
     height: map-get($lg, selectedHeight);
+    line-height: map-get($lg, selectedHeight);
     margin-right: map-get($lg, selectedMargin);
   }
 
@@ -199,15 +201,15 @@ dato-trigger-multi {
 
   .dato-trigger-multi__active {
     height: 29px;
-    padding: 0px 10px;
     border-radius: 5px;
     color: themify((light: primary-0, dark: primary-700));
     background-color: themify(accent-400);
     user-select: none;
-    padding: 4px;
-    margin: 4px 10px 4px 0px;
+    margin: 4px 10px 4px 0;
     align-items: center;
-    padding-left: 10px;
+    padding: 4px 4px 4px 10px;
+    max-width: 200px;
+
     &:hover {
       background-color: themify((light: accent-500, dark: accent-350));
       .dato-icon-close {

@@ -2,8 +2,9 @@
 
   <div class="dato-trigger-multi__active d-flex justify-between" *ngFor="let option of options | slice: 0: limitTo"
        (click)="removeFocus($event)">
-    <span [ngStyle]="{maxWidth: maxActiveElementWidth}">{{option[labelKey]}}</span>
-    <dato-icon datoIcon="close" (click)="remove(option); removeFocus($event)"></dato-icon>
+    <span [ngStyle]="{maxWidth: maxActiveElementWidth}" [datoTooltip]="option[labelKey]"
+          datoTooltipPosition="bottom" [datoTooltipOnTextOverflow]="true">{{option[labelKey]}}</span>
+    <dato-icon class="d-flex-no-shrink" datoIcon="close" (click)="remove(option); removeFocus($event)"></dato-icon>
   </div>
 
   <div class="dato-trigger-multi__active d-flex justify-between dato-trigger-multi__rest" *ngIf="showRest">

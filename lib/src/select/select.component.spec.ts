@@ -1,5 +1,5 @@
 import { DatoSelectComponent } from './select.component';
-import { createHostComponentFactory, dispatchFakeEvent, dispatchKeyboardEvent, query, queryAll, SpectatorWithHost, typeInElement } from '@netbasal/spectator';
+import { createHostComponentFactory, dispatchKeyboardEvent, query, queryAll, SpectatorWithHost, typeInElement } from '@netbasal/spectator';
 import { DatoTriggerMulti } from './trigger-multi/trigger-multi.component';
 import { DatoButtonModule, DatoCheckboxModule, DatoIconModule, DatoInputModule, DatoLinkButtonModule, DatoSelectEmptyComponent, DatoMultiOptionComponent, DatoOptionComponent, DatoTranslateService, DatoTriggerSingle, IconRegistry } from '../..';
 import { DatoOverlay } from '../angular/overlay';
@@ -12,6 +12,7 @@ import { fakeAsync, flush, flushMicrotasks, tick } from '@angular/core/testing';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
+import { DatoDirectivesModule } from '../directives/directives.module';
 
 function generateOptions() {
   const arr = [];
@@ -111,7 +112,7 @@ function createHostFactory<T>(host: Type<T>) {
     host,
     declarations: [DatoTriggerSingle, DatoTriggerMulti, DatoSelectActiveDirective, DatoSelectEmptyComponent, DatoGroupComponent, DatoOptionComponent, DatoMultiOptionComponent],
     providers: [DatoOverlay, DatoTranslateService, stubs.translate(), IconRegistry],
-    imports: [DatoIconModule, DatoInputModule, ReactiveFormsModule, DatoCheckboxModule, DatoLinkButtonModule, DatoButtonModule]
+    imports: [DatoIconModule, DatoInputModule, ReactiveFormsModule, DatoCheckboxModule, DatoLinkButtonModule, DatoButtonModule, DatoDirectivesModule]
   });
 }
 

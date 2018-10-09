@@ -21,12 +21,13 @@ import { DatoLinkButtonModule } from '../link-button/link-button.module';
 import { DatoTextModule } from '../text/text.module';
 import { DatoTriggerMulti } from './trigger-multi/trigger-multi.component';
 import { DatoOptionsModule } from '../options/options.module';
+import { DatoDirectivesModule } from '../directives/directives.module';
 
 const publicApi = [DatoSelectComponent, DatoTriggerSingle, DatoSelectEmptyComponent, DatoTriggerMulti];
 const directives = [DatoSelectActiveDirective];
 
 @NgModule({
-  imports: [CommonModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule, DatoButtonModule, DatoLinkButtonModule, DatoTextModule, DatoOptionsModule],
+  imports: [CommonModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule, DatoButtonModule, DatoLinkButtonModule, DatoTextModule, DatoOptionsModule, DatoDirectivesModule],
   declarations: [publicApi, directives],
   exports: [publicApi, directives],
   entryComponents: [publicApi]

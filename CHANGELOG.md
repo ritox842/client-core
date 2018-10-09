@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/datorama/client-core/compare/v1.12.0...v1.12.1) (2018-10-09)
+
+
+### Bug Fixes
+
+* **dato-select:** add tooltip for long multi select selections ([6985c5b](https://github.com/datorama/client-core/commit/6985c5b))
+
 # [1.12.0](https://github.com/datorama/client-core/compare/v1.11.3...v1.12.0) (2018-10-08)
 
 

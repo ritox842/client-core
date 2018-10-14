@@ -6,7 +6,31 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <p datoTooltip="hello world" style="display: inline-block">Tooltip</p>
+      <p datoTooltip="hello world" style="display: inline-block" #tooltip="tooltip">Tooltip</p>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Manual Open">
+  <div>
+    <p datoTooltip="hello world" style="display: inline-block" datoTooltipTrigger="manual" #tooltip="datoTooltip">Tooltip</p>
+    <div>
+      <dato-button (click)="tooltip.show()">Open</dato-button>
+      <dato-button (click)="tooltip.hide()">Close</dato-button>
+    </div>
+
+  </div>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <p datoTooltip="hello world" style="display: inline-block" datoTooltipTrigger="manual" #tooltip="datoTooltip">Tooltip</p>
+      <div>
+        <dato-button (click)="tooltip.show()">Open</dato-button>
+        <dato-button (click)="tooltip.hide()">Close</dato-button>
+      </div>
     </textarea>
 
   </dato-tabs>
@@ -162,7 +186,7 @@
       </tr>
       <tr>
         <td>datoTooltipTrigger</td>
-        <td>click | hover | focus</td>
+        <td>click | hover | focus | manual</td>
         <td>hover</td>
         <td>The tooltip trigger</td>
       </tr>

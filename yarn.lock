@@ -855,15 +855,16 @@
   dependencies:
     fs-extra "^5.0.0"
 
-"@datorama/utils@^1.17":
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/@datorama/utils/-/utils-1.17.0.tgz#a6e718fb88c2875ab32331eedd02657836b7b51a"
+"@datorama/utils@^1.20.0":
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/@datorama/utils/-/utils-1.20.0.tgz#ae9c5f5027fac6ec12e17b169069e57d437cdc25"
   dependencies:
     deep-equal "^1.0.1"
     lodash.clonedeep "^4.5.0"
     lodash.curry "4.1.1"
     lodash.debounce "^4.0.8"
     lodash.difference "^4.5.0"
+    lodash.differenceby "^4.8.0"
     lodash.eq "^4.0.0"
     lodash.escape "^4.0.1"
     lodash.escaperegexp "^4.1.2"
@@ -7403,6 +7404,10 @@ lodash.delay@^4.1.1:
 lodash.difference@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.difference/-/lodash.difference-4.5.0.tgz#9ccb4e505d486b91651345772885a2df27fd017c"
+
+lodash.differenceby@^4.8.0:
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/lodash.differenceby/-/lodash.differenceby-4.8.0.tgz#cfd59e94353af5de51da5d302ca4ebff33faac57"
 
 lodash.eq@^4.0.0:
   version "4.0.0"

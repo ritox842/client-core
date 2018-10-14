@@ -9,7 +9,8 @@ import { toBoolean } from '@datorama/utils';
 import { TooltipOptions, TooltipTrigger } from './tooltip.model';
 
 @Directive({
-  selector: '[datoTooltip]'
+  selector: '[datoTooltip]',
+  exportAs: 'datoTooltip'
 })
 export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   @Input() datoTooltipType: 'tooltip' | 'long' = 'tooltip';
@@ -24,9 +25,10 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
       this.content = this.tplPortal.elementRef;
     } else {
       this.content = content;
-      if (this.tooltip) {
-        this.destroy();
-      }
+    }
+
+    if (this.tooltip) {
+      this.hide();
     }
   }
 
@@ -37,6 +39,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   @Input() datoTooltipDisabled = false;
   @Input() datoTooltipOverflow = false;
   @Input() datoTooltipOffset;
+  @Input() datoIsManual = false;
   @Input() datoTooltipTrigger: TooltipTrigger = 'hover';
 
   private content: string | HTMLElement;
@@ -61,6 +64,10 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   constructor(private host: ElementRef, private iconRegistry: IconRegistry) {}
 
   ngAfterViewInit() {
+    if (this.datoTooltipTrigger === 'manual') {
+      return;
+    }
+
     const { on, off } = this.eventsMap[this.datoTooltipTrigger];
 
     if (this.datoTooltipOnTextOverflow && !this.isElementOverflow(this.host.nativeElement)) return;
@@ -73,13 +80,13 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
         if (this.datoTooltipTrigger === 'click') {
           this.isOpen = !this.isOpen;
           if (this.isOpen) {
-            this.showTootltip();
+            this.show();
           } else {
-            this.destroy();
+            this.hide();
           }
         } else {
           this.isOpen = true;
-          this.showTootltip();
+          this.show();
         }
 
         if (this.isLongTooltip && this.isOpen) {
@@ -87,7 +94,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
           if (closeButton) {
             fromEvent(closeButton, 'click')
               .pipe(untilDestroyed(this))
-              .subscribe(() => this.destroy());
+              .subscribe(() => this.hide());
           }
         }
       });
@@ -96,21 +103,29 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
       fromEvent(this.host.nativeElement, off)
         .pipe(untilDestroyed(this))
         .subscribe(() => {
-          this.destroy();
+          this.hide();
         });
     }
   }
 
   ngOnDestroy() {
-    this.destroy();
+    this.hide();
     if (this.tplPortal) {
       this.tplPortal.destroy();
     }
   }
 
-  showTootltip() {
+  show() {
     if (this.tooltip) return;
     this.tooltip = this.createTooltipInstance(this.host.nativeElement).show();
+  }
+
+  hide() {
+    if (this.tooltip) {
+      this.tooltip.dispose();
+      this.tooltip = null;
+      this.isOpen = false;
+    }
   }
 
   private get isLongTooltip() {
@@ -146,14 +161,6 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
     const elementTest: boolean = element.offsetWidth < element.scrollWidth;
 
     return parentTest || elementTest;
-  }
-
-  private destroy() {
-    if (this.tooltip) {
-      this.tooltip.dispose();
-      this.tooltip = null;
-      this.isOpen = false;
-    }
   }
 
   private getTpl(xIcon) {

@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/datorama/client-core/compare/v1.12.1...v1.13.0) (2018-10-14)
+
+
+### Features
+
+* **tooltip:** add support for manual open ([a6f30e5](https://github.com/datorama/client-core/commit/a6f30e5))
+
 ## [1.12.1](https://github.com/datorama/client-core/compare/v1.12.0...v1.12.1) (2018-10-09)
 
 

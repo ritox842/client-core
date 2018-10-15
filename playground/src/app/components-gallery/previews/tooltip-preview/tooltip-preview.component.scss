@@ -1,0 +1,19 @@
+.different-tooltip-target {
+  width: 50%;
+  margin: 10px 0;
+  padding: 10px;
+  &.first-row {
+    background-color: #BBDEFB;
+  }
+  &.second-row {
+    background-color: #86DBB1;
+  }
+  span {
+    width: 100%;
+    border: solid 1px #000000;
+    padding: 5px;
+    &.bold{
+      font-weight: 700;
+    }
+  }
+}

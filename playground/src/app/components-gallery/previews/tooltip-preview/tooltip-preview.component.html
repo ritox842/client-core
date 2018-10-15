@@ -139,6 +139,80 @@
 
 </dato-preview>
 
+<dato-preview title="Different tooltip target">
+
+  <div datoTooltip="A tooltip for a nested span element"
+       datoTooltipPosition="right"
+       [datoTooltipOverflow]="true"
+       datoTooltipOffset="0 20"
+       [datoTooltipTarget]="nestedTooltipElement"
+       class="different-tooltip-target first-row">
+    <div style="padding: 10px">
+      <div class="d-flex-column">
+        <span>Hovering my container won't affect me</span>
+        <span>Hovering my container won't affect me</span>
+        <span #nestedTooltipElement class="bold">Hovering my container will show my tooltip</span>
+        <span>Hovering my container won't affect me</span>
+      </div>
+    </div>
+  </div>
+
+  <div #outerTooltipElement
+       class="different-tooltip-target  second-row">
+    <div style="padding: 10px">
+      <div class="d-flex-column">
+        <span>Hovering me won't trigger my container tooltip</span>
+        <span>Hovering me won't trigger my container tooltip</span>
+        <span>Hovering me won't trigger my container tooltip</span>
+        <span datoTooltip="A tooltip for an outer div element"
+              datoTooltipPosition="right"
+              class="bold"
+              [datoTooltipOverflow]="true"
+              [datoTooltipTarget]="outerTooltipElement">Hovering me will trigger my container tooltip</span>
+      </div>
+    </div>
+  </div>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+     <div datoTooltip="A tooltip for a nested span element"
+          datoTooltipPosition="right"
+          [datoTooltipOverflow]="true"
+          datoTooltipOffset="0 20"
+          [datoTooltipTarget]="nestedTooltipElement"
+          class="different-tooltip-target first-row">
+    <div style="padding: 10px">
+      <div class="d-flex-column">
+        <span>Hovering my container won't affect me</span>
+        <span>Hovering my container won't affect me</span>
+        <span #nestedTooltipElement class="bold">Hovering my container will show my tooltip</span>
+        <span>Hovering my container won't affect me</span>
+      </div>
+    </div>
+  </div>
+
+  <div #outerTooltipElement
+       class="different-tooltip-target  second-row">
+    <div style="padding: 10px">
+      <div class="d-flex-column">
+        <span>Hovering me won't trigger my container tooltip</span>
+        <span>Hovering me won't trigger my container tooltip</span>
+        <span>Hovering me won't trigger my container tooltip</span>
+        <span datoTooltip="A tooltip for an outer div element"
+              datoTooltipPosition="right"
+              class="bold"
+              [datoTooltipOverflow]="true"
+              [datoTooltipTarget]="outerTooltipElement">Hovering me will trigger my container tooltip</span>
+      </div>
+    </div>
+  </div>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
 <div class="panel mt-4">
 
   <div class="panel-heading">
@@ -202,7 +276,13 @@
         <td>'0 10' (if tooltip type is 'long')</td>
         <td>Set tooltip offset position</td>
       </tr>
+      <tr>
+        <td>datoTooltipTarget</td>
+        <td>ElementRef</td>
+        <td></td>
+        <td>The element that the tooltip should open next to</td>
+      </tr>
     </dato-api-table>
-    
+
   </div>
 </div>

@@ -28,6 +28,8 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
   @ContentChildren(DatoCarouselItemDirective) items: QueryList<DatoCarouselItemDirective>;
   @ViewChild('carousel') private carousel: ElementRef;
   @Input() autoRun: number | boolean = false;
+  @Input() displayWidth = 0;
+  @Input() itemWidth: number;
   @Input() loop = false;
   @Input() showControls = true;
   @Input() timing = '250ms ease-in';
@@ -36,30 +38,25 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
   @ViewChildren(DatoCarouselItemElement, { read: ElementRef })
   private itemElements: QueryList<ElementRef>;
   private player: AnimationPlayer;
-  private itemWidth: number;
   private currentSlide = 0;
   private readonly defaultAutoRun = 10;
 
   constructor(private animationBuilder: AnimationBuilder, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      if (this.itemElements.length) {
-        this.itemWidth = this.itemElements.first.nativeElement.getBoundingClientRect().width;
-        this.carouselWrapperStyle = {
-          width: `${this.itemWidth}px`
-        };
-        this.carouselUlStyle = {
-          width: `${this.itemWidth * this.itemElements.length}px`
-        };
-        this.cdr.detectChanges();
-      }
-      if (this.autoRun) {
-        const millisecondsPerSecond = 1000;
-        const source = interval((isNumber(this.autoRun) ? (this.autoRun as number) : this.defaultAutoRun) * millisecondsPerSecond);
-        source.pipe(untilDestroyed(this)).subscribe(() => this.next());
-      }
-    });
+    this.carouselWrapperStyle = {
+      width: `${this.itemWidth}px`
+    };
+    this.carouselUlStyle = {
+      width: `${this.itemWidth * this.itemElements.length}px`
+    };
+    this.cdr.detectChanges();
+
+    if (this.autoRun) {
+      const millisecondsPerSecond = 1000;
+      const source = interval((isNumber(this.autoRun) ? (this.autoRun as number) : this.defaultAutoRun) * millisecondsPerSecond);
+      source.pipe(untilDestroyed(this)).subscribe(() => this.next());
+    }
   }
 
   ngOnDestroy() {

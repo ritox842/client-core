@@ -33,26 +33,16 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
     }
   }
 
-  @Input()
-  datoTooltipPosition: Popper.Placement = 'top';
-  @Input()
-  datoTooltipDelay = 0;
-  @Input()
-  datoTooltipClass = '';
-  @Input()
-  datoTooltipOnTextOverflow = false;
-  @Input()
-  datoTooltipDisabled = false;
-  @Input()
-  datoTooltipOverflow = false;
-  @Input()
-  datoTooltipOffset;
-  @Input()
-  datoIsManual = false;
-  @Input()
-  datoTooltipTrigger: TooltipTrigger = 'hover';
-  @Input()
-  datoTooltipTarget: ElementRef = null;
+  @Input() datoTooltipPosition: Popper.Placement = 'top';
+  @Input() datoTooltipDelay = 0;
+  @Input() datoTooltipClass = '';
+  @Input() datoTooltipOnTextOverflow = false;
+  @Input() datoTooltipDisabled = false;
+  @Input() datoTooltipOverflow = false;
+  @Input() datoTooltipOffset;
+  @Input() datoIsManual = false;
+  @Input() datoTooltipTrigger: TooltipTrigger = 'hover';
+  @Input() datoTooltipTarget: ElementRef = null;
 
   private content: string | HTMLElement;
   private tplPortal: DatoTemplatePortal;

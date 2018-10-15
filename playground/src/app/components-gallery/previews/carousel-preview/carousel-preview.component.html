@@ -3,10 +3,10 @@
   <section class="d-flex">
     <div class="select-preview">
       <div class="carousel-container">
-        <dato-carousel>
+        <dato-carousel [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
-              <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
+              <dato-icon [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
             </ng-container>
           </ng-container>
         </dato-carousel>
@@ -17,7 +17,7 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
- <dato-carousel>
+ <dato-carousel [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
@@ -33,7 +33,7 @@
   <section class="d-flex">
     <div class="select-preview">
       <div class="carousel-container">
-        <dato-carousel [showControls]="false" [autoRun]="5">
+        <dato-carousel [showControls]="false" [autoRun]="5" [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
@@ -48,7 +48,7 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
- <dato-carousel [showControls]="false" [autoRun]="5">
+ <dato-carousel [showControls]="false" [autoRun]="5" [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
@@ -64,7 +64,7 @@
   <section class="d-flex">
     <div class="select-preview">
       <div class="carousel-container">
-        <dato-carousel [loop]="true">
+        <dato-carousel [loop]="true" [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
@@ -79,7 +79,7 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
- <dato-carousel [loop]="true">
+ <dato-carousel [loop]="true" [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>

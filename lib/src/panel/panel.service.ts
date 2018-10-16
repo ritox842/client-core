@@ -128,7 +128,7 @@ export class DatoPanel {
   }
 
   private get panelContainer() {
-    return this.document.querySelector('.panel-container');
+    return this.document.querySelector('.dato-panel-container');
   }
 
   private resolveRelativeTo(element) {

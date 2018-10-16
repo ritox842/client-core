@@ -36,12 +36,12 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   @Input() datoTooltipDelay = 0;
   @Input() datoTooltipClass = '';
   @Input() datoTooltipOnTextOverflow = false;
+  @Input() datoTooltipOverflowElement: ElementRef = null;
   @Input() datoTooltipDisabled = false;
   @Input() datoTooltipOverflow = false;
   @Input() datoTooltipOffset;
   @Input() datoIsManual = false;
   @Input() datoTooltipTrigger: TooltipTrigger = 'hover';
-  @Input() datoTooltipTarget: ElementRef = null;
 
   private content: string | HTMLElement;
   private tplPortal: DatoTemplatePortal;
@@ -63,7 +63,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   private tooltip;
 
   get tooltipElement(): HTMLElement {
-    return this.datoTooltipTarget || this.host.nativeElement;
+    return this.datoTooltipOverflowElement || this.host.nativeElement;
   }
 
   constructor(private host: ElementRef, private iconRegistry: IconRegistry) {}
@@ -122,7 +122,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
 
   show() {
     if (this.tooltip) return;
-    this.tooltip = this.createTooltipInstance(this.tooltipElement).show();
+    this.tooltip = this.createTooltipInstance(this.host.nativeElement).show();
   }
 
   hide() {

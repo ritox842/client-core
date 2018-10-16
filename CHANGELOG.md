@@ -1,3 +1,23 @@
+# [1.14.0](https://github.com/datorama/client-core/compare/v1.13.0...v1.14.0) (2018-10-16)
+
+
+### Bug Fixes
+
+* **dato-carousel:** item width now an input ([bd08376](https://github.com/datorama/client-core/commit/bd08376))
+
+
+### Features
+
+* **dato-tooltip:** add datoTooltipTarget ([ac229cb](https://github.com/datorama/client-core/commit/ac229cb))
+* **dato-tooltip:** add datoTooltipTarget ([bb671a3](https://github.com/datorama/client-core/commit/bb671a3))
+* **dato-tooltip:** add datoTooltipTarget ([d56950b](https://github.com/datorama/client-core/commit/d56950b))
+* **dato-tooltip:** add datoTooltipTarget ([eeb6871](https://github.com/datorama/client-core/commit/eeb6871))
+* **dato-tooltip:** add datoTooltipTarget ([1823c30](https://github.com/datorama/client-core/commit/1823c30))
+* **dato-tooltip:** add datoTooltipTarget ([680b3e8](https://github.com/datorama/client-core/commit/680b3e8))
+* **dato-tooltip:** add datoTooltipTarget ([682def8](https://github.com/datorama/client-core/commit/682def8))
+* **dato-tooltip:** add datoTooltipTarget ([6158713](https://github.com/datorama/client-core/commit/6158713))
+* **dato-tooltip:** add datoTooltipTarget ([5c252d4](https://github.com/datorama/client-core/commit/5c252d4))
+
 # [1.13.0](https://github.com/datorama/client-core/compare/v1.12.1...v1.13.0) (2018-10-14)
 
 

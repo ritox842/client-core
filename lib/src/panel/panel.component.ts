@@ -39,6 +39,6 @@ export class DatoPanelComponent {
   }
 
   get container(): HTMLElement {
-    return this.host.nativeElement.querySelector('.panel-container');
+    return this.host.nativeElement.querySelector('.dato-panel-container');
   }
 }

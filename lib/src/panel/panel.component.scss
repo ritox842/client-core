@@ -2,13 +2,13 @@ dato-panel {
   position: absolute;
 }
 
-.panel-container ng-component {
+.dato-panel-container ng-component {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.panel-header {
+.dato-panel-header {
   display: flex;
   justify-content: space-between;
   font-size: 18px;
@@ -19,11 +19,11 @@ dato-panel {
   }
 }
 
-.panel-content, .panel-header {
+.dato-panel-content, .dato-panel-header {
   padding: 12px 24px 10px 30px;
 }
 
-.panel-container {
+.dato-panel-container {
   animation: panelSlideIn 0.2s ease-out;
   min-width: 400px;
   transform-origin: left;
@@ -36,7 +36,7 @@ dato-panel-content {
   font-size: 14px;
 }
 
-.panel-footer {
+.dato-panel-footer {
   padding: 17px 30px 16px;
   height: 70px;
   dato-button {

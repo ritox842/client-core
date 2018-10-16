@@ -4,7 +4,7 @@ import { DatoPanel } from './panel.service';
 @Component({
   selector: 'dato-panel-header',
   template: `
-    <header class="d-flex panel-header">
+    <header class="d-flex dato-panel-header">
       <div>
         <ng-content></ng-content>
       </div>

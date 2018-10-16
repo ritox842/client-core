@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/datorama/client-core/compare/v1.14.2...v1.15.0) (2018-10-16)
+
+
+### Features
+
+* **dato-carousel:** selected index functionality ([fa41621](https://github.com/datorama/client-core/commit/fa41621))
+
 ## [1.14.2](https://github.com/datorama/client-core/compare/v1.14.1...v1.14.2) (2018-10-16)
 
 

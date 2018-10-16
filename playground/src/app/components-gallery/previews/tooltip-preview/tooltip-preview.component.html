@@ -144,8 +144,7 @@
   <div datoTooltip="A tooltip for a nested span element"
        datoTooltipPosition="right"
        [datoTooltipOverflow]="true"
-       datoTooltipOffset="0 20"
-       [datoTooltipTarget]="nestedTooltipElement"
+       [datoTooltipOverflowElement]="nestedTooltipElement"
        class="different-tooltip-target first-row">
     <div style="padding: 10px">
       <div class="d-flex-column">
@@ -168,7 +167,7 @@
               datoTooltipPosition="right"
               class="bold"
               [datoTooltipOverflow]="true"
-              [datoTooltipTarget]="outerTooltipElement">Hovering me will trigger my container tooltip</span>
+              [datoTooltipOverflowElement]="outerTooltipElement">Hovering me will trigger my container tooltip</span>
       </div>
     </div>
   </div>
@@ -179,8 +178,7 @@
      <div datoTooltip="A tooltip for a nested span element"
           datoTooltipPosition="right"
           [datoTooltipOverflow]="true"
-          datoTooltipOffset="0 20"
-          [datoTooltipTarget]="nestedTooltipElement"
+          [datoTooltipOverflowElement]="nestedTooltipElement"
           class="different-tooltip-target first-row">
     <div style="padding: 10px">
       <div class="d-flex-column">
@@ -203,7 +201,7 @@
               datoTooltipPosition="right"
               class="bold"
               [datoTooltipOverflow]="true"
-              [datoTooltipTarget]="outerTooltipElement">Hovering me will trigger my container tooltip</span>
+              [datoTooltipOverflowElement]="outerTooltipElement">Hovering me will trigger my container tooltip</span>
       </div>
     </div>
   </div>
@@ -277,7 +275,7 @@
         <td>Set tooltip offset position</td>
       </tr>
       <tr>
-        <td>datoTooltipTarget</td>
+        <td>datoTooltipOverflowElement</td>
         <td>ElementRef</td>
         <td></td>
         <td>The element that the tooltip should open next to</td>

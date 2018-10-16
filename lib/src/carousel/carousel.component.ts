@@ -28,9 +28,9 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
   @ContentChildren(DatoCarouselItemDirective) items: QueryList<DatoCarouselItemDirective>;
   @ViewChild('carousel') private carousel: ElementRef;
   @Input() autoRun: number | boolean = false;
-  @Input() displayWidth = 0;
   @Input() itemWidth: number;
   @Input() loop = false;
+  @Input() selectedIndex = 0;
   @Input() showControls = true;
   @Input() timing = '250ms ease-in';
   carouselUlStyle = {};
@@ -50,6 +50,10 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
     this.carouselUlStyle = {
       width: `${this.itemWidth * this.itemElements.length}px`
     };
+    if (this.selectedIndex) {
+      this.currentSlide = this.selectedIndex;
+      this.carouselUlStyle['transform'] = `translateX(-${this.currentSlide * this.itemWidth}px)`;
+    }
     this.cdr.detectChanges();
 
     if (this.autoRun) {

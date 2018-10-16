@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/datorama/client-core/compare/v1.14.0...v1.14.1) (2018-10-16)
+
+
+### Bug Fixes
+
+* **dato-panel:** add panel inner classes prefix ([ce38dc1](https://github.com/datorama/client-core/commit/ce38dc1))
+
 # [1.14.0](https://github.com/datorama/client-core/compare/v1.13.0...v1.14.0) (2018-10-16)
 
 

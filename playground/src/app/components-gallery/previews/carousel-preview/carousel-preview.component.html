@@ -4,7 +4,7 @@
     <div class="select-preview">
       <div class="carousel-container">
         <dato-carousel [itemWidth]="300">
-          <ng-container *ngFor="let item of items | slice:0:1;">
+          <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
             </ng-container>

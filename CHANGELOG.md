@@ -1,3 +1,11 @@
+## [1.15.2](https://github.com/datorama/client-core/compare/v1.15.1...v1.15.2) (2018-10-18)
+
+
+### Bug Fixes
+
+* **dato-carousel:** centered control arrows ([c43570b](https://github.com/datorama/client-core/commit/c43570b))
+* **dato-carousel:** moved control arrows ([f36e2c1](https://github.com/datorama/client-core/commit/f36e2c1))
+
 ## [1.15.1](https://github.com/datorama/client-core/compare/v1.15.0...v1.15.1) (2018-10-18)
 
 

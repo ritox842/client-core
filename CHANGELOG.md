@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/datorama/client-core/compare/v1.15.0...v1.15.1) (2018-10-18)
+
+
+### Bug Fixes
+
+* **dato-carousel:** controls hidden when 1 slide ([a49fe2a](https://github.com/datorama/client-core/commit/a49fe2a))
+
 # [1.15.0](https://github.com/datorama/client-core/compare/v1.14.2...v1.15.0) (2018-10-16)
 
 

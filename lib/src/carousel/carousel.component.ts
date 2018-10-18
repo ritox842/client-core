@@ -69,6 +69,10 @@ export class DatoCarouselComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  get showCarouselControls(): boolean {
+    return this.showControls && this.itemElements && this.itemElements.length > 1;
+  }
+
   next() {
     if (!this.loop && this.currentSlide + 1 === this.items.length) return;
     this.currentSlide = (this.currentSlide + 1) % this.items.length;

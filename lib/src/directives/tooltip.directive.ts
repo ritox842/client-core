@@ -1,11 +1,11 @@
 import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, TemplateRef } from '@angular/core';
 import Tooltip from 'tooltip.js';
 import { fromEvent } from 'rxjs';
-import { DatoTemplatePortal } from '../..';
+import { DatoTemplatePortal } from '../angular/overlay';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { IconRegistry } from '../..';
+import { IconRegistry } from '../services/icon-registry';
 import { default as Popper } from 'popper.js';
-import { toBoolean } from '@datorama/utils';
+import { isNil } from '@datorama/utils';
 import { TooltipOptions, TooltipTrigger } from './tooltip.model';
 
 @Directive({
@@ -62,7 +62,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   };
 
   get isOpen(): boolean {
-    return toBoolean(this.tooltip);
+    return isNil(this.tooltip);
   }
 
   get tooltipElement(): HTMLElement {
@@ -144,12 +144,12 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
       container: document.body,
       title: this.content,
       html: true,
-      offset: toBoolean(this.datoTooltipOffset) ? this.datoTooltipOffset : this.isLongTooltip ? '0 10' : 0, // 0 10 => x y
+      offset: isNil(this.datoTooltipOffset) ? this.datoTooltipOffset : this.isLongTooltip ? '0 10' : 0, // 0 10 => x y
       trigger: 'manual',
       delay: this.datoTooltipDelay,
       template: this.getTpl(xIcon)
     };
-    if (this.datoTooltipOverflow || toBoolean(this.datoTooltipOffset)) {
+    if (this.datoTooltipOverflow || isNil(this.datoTooltipOffset)) {
       tooltipOptions.popperOptions = {
         modifiers: {
           preventOverflow: { enabled: false }

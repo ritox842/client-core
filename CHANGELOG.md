@@ -1,3 +1,10 @@
+## [1.15.3](https://github.com/datorama/client-core/compare/v1.15.2...v1.15.3) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** make isOpen public and fix issue with it ([928ac85](https://github.com/datorama/client-core/commit/928ac85))
+
 ## [1.15.2](https://github.com/datorama/client-core/compare/v1.15.1...v1.15.2) (2018-10-18)
 
 

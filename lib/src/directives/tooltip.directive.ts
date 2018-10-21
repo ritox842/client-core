@@ -5,7 +5,7 @@ import { DatoTemplatePortal } from '../angular/overlay';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { IconRegistry } from '../services/icon-registry';
 import { default as Popper } from 'popper.js';
-import { toBoolean } from '@datorama/utils';
+import { isNil } from '@datorama/utils';
 import { TooltipOptions, TooltipTrigger } from './tooltip.model';
 
 @Directive({
@@ -39,10 +39,11 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   @Input() datoTooltipOverflowElement: ElementRef = null;
   @Input() datoTooltipDisabled = false;
   @Input() datoTooltipOverflow = false;
-  @Input() datoTooltipOffset;
+  @Input() datoTooltipOffset: string | number;
   @Input() datoIsManual = false;
   @Input() datoTooltipTrigger: TooltipTrigger = 'hover';
 
+  private tooltip;
   private content: string | HTMLElement;
   private tplPortal: DatoTemplatePortal;
   private eventsMap = {
@@ -59,8 +60,10 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
       off: 'click'
     }
   };
-  private isOpen = false;
-  private tooltip;
+
+  get isOpen(): boolean {
+    return isNil(this.tooltip);
+  }
 
   get tooltipElement(): HTMLElement {
     return this.datoTooltipOverflowElement || this.host.nativeElement;
@@ -83,14 +86,12 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
         if (this.datoTooltipDisabled) return;
 
         if (this.datoTooltipTrigger === 'click') {
-          this.isOpen = !this.isOpen;
-          if (this.isOpen) {
+          if (!this.isOpen) {
             this.show();
           } else {
             this.hide();
           }
         } else {
-          this.isOpen = true;
           this.show();
         }
 
@@ -129,11 +130,10 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
     if (this.tooltip) {
       this.tooltip.dispose();
       this.tooltip = null;
-      this.isOpen = false;
     }
   }
 
-  private get isLongTooltip() {
+  private get isLongTooltip(): boolean {
     return this.datoTooltipType === 'long';
   }
 
@@ -144,12 +144,12 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
       container: document.body,
       title: this.content,
       html: true,
-      offset: toBoolean(this.datoTooltipOffset) ? this.datoTooltipOffset : this.isLongTooltip ? '0 10' : 0, // 0 10 => x y
+      offset: isNil(this.datoTooltipOffset) ? this.datoTooltipOffset : this.isLongTooltip ? '0 10' : 0, // 0 10 => x y
       trigger: 'manual',
       delay: this.datoTooltipDelay,
       template: this.getTpl(xIcon)
     };
-    if (this.datoTooltipOverflow || toBoolean(this.datoTooltipOffset)) {
+    if (this.datoTooltipOverflow || isNil(this.datoTooltipOffset)) {
       tooltipOptions.popperOptions = {
         modifiers: {
           preventOverflow: { enabled: false }

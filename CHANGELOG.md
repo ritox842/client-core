@@ -1,3 +1,10 @@
+## [1.15.4](https://github.com/datorama/client-core/compare/v1.15.3...v1.15.4) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix isOpen ([bbb021d](https://github.com/datorama/client-core/commit/bbb021d))
+
 ## [1.15.3](https://github.com/datorama/client-core/compare/v1.15.2...v1.15.3) (2018-10-21)
 
 

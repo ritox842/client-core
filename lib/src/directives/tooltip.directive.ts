@@ -1,9 +1,9 @@
 import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, TemplateRef } from '@angular/core';
 import Tooltip from 'tooltip.js';
 import { fromEvent } from 'rxjs';
-import { DatoTemplatePortal } from '../angular/overlay';
+import { DatoTemplatePortal } from '../..';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { IconRegistry } from '../services/icon-registry';
+import { IconRegistry } from '../..';
 import { default as Popper } from 'popper.js';
 import { toBoolean } from '@datorama/utils';
 import { TooltipOptions, TooltipTrigger } from './tooltip.model';
@@ -39,10 +39,11 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   @Input() datoTooltipOverflowElement: ElementRef = null;
   @Input() datoTooltipDisabled = false;
   @Input() datoTooltipOverflow = false;
-  @Input() datoTooltipOffset;
+  @Input() datoTooltipOffset: string | number;
   @Input() datoIsManual = false;
   @Input() datoTooltipTrigger: TooltipTrigger = 'hover';
 
+  private tooltip;
   private content: string | HTMLElement;
   private tplPortal: DatoTemplatePortal;
   private eventsMap = {
@@ -59,8 +60,10 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
       off: 'click'
     }
   };
-  private isOpen = false;
-  private tooltip;
+
+  get isOpen(): boolean {
+    return toBoolean(this.tooltip);
+  }
 
   get tooltipElement(): HTMLElement {
     return this.datoTooltipOverflowElement || this.host.nativeElement;
@@ -83,14 +86,12 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
         if (this.datoTooltipDisabled) return;
 
         if (this.datoTooltipTrigger === 'click') {
-          this.isOpen = !this.isOpen;
-          if (this.isOpen) {
+          if (!this.isOpen) {
             this.show();
           } else {
             this.hide();
           }
         } else {
-          this.isOpen = true;
           this.show();
         }
 
@@ -129,11 +130,10 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
     if (this.tooltip) {
       this.tooltip.dispose();
       this.tooltip = null;
-      this.isOpen = false;
     }
   }
 
-  private get isLongTooltip() {
+  private get isLongTooltip(): boolean {
     return this.datoTooltipType === 'long';
   }
 

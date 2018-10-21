@@ -62,7 +62,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   };
 
   get isOpen(): boolean {
-    return isNil(this.tooltip);
+    return !isNil(this.tooltip);
   }
 
   get tooltipElement(): HTMLElement {

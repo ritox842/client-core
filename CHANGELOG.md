@@ -1,3 +1,10 @@
+## [1.15.5](https://github.com/datorama/client-core/compare/v1.15.4...v1.15.5) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix dato-tooltip transfer to isNil ([ee0e849](https://github.com/datorama/client-core/commit/ee0e849))
+
 ## [1.15.4](https://github.com/datorama/client-core/compare/v1.15.3...v1.15.4) (2018-10-21)
 
 

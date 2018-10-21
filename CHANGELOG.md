@@ -1,3 +1,10 @@
+## [1.15.6](https://github.com/datorama/client-core/compare/v1.15.5...v1.15.6) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix dato-tooltip z-index ([984401e](https://github.com/datorama/client-core/commit/984401e))
+
 ## [1.15.5](https://github.com/datorama/client-core/compare/v1.15.4...v1.15.5) (2018-10-21)
 
 

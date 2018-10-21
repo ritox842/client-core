@@ -1,0 +1,70 @@
+<dato-preview title="Ace">
+
+  <section style="display: flex;">
+
+    <!--<div>-->
+      <!--<h5>HTML</h5>-->
+      <!--<dato-ace [formControl]="htmlControl" lang="html" [completions]="attributeMap"></dato-ace>-->
+
+      <!--<button (click)="updateHTML()">update</button>-->
+
+      <!--{{htmlControl.value}}-->
+    <!--</div>-->
+
+    <!--<div>-->
+      <!--<h5>CSS</h5>-->
+      <!--<dato-ace [formControl]="cssControl" lang="css"></dato-ace>-->
+
+      <!--<button (click)="updateCSS()">update</button>-->
+
+      <!--{{cssControl.value}}-->
+    <!--</div>-->
+
+    <div>
+      <h5>JS</h5>
+      <!--<section>-->
+        <!--<div aceDraggableText="DA.navigation.dashboard.goToPage({ pageId: 1 })">Navigate to a page</div>-->
+        <!--<div aceDraggableText="DA.navigation.dashboard.scrollToWidget({ widgetId: 1 })">Scroll to a widget</div>-->
+        <!--<div aceDraggableText="DA.navigation.open({ url: '', type: '_blank/_top/dialog' })">Open page</div>-->
+
+        <!--<div aceDraggableText="DA.query.getQuery()">Get query</div>-->
+        <!--<div aceDraggableText="DA.query.hasQuery()">Has query</div>-->
+        <!--<div aceDraggableText="DA.query.getQueryResult()">Get query result</div>-->
+      <!--</section>-->
+      <dato-ace [formControl]="jsControl" lang="javascript" #jsEditor></dato-ace>
+
+
+      <button (click)="updateJS()">update</button>
+
+      {{jsControl.value}}
+    </div>
+  </section>
+
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-ace></dato-ace>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>datoSize</td>
+        <td>lg, md, sm</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

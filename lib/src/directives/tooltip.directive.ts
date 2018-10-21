@@ -7,13 +7,15 @@ import { IconRegistry } from '../services/icon-registry';
 import { default as Popper } from 'popper.js';
 import { isNil } from '@datorama/utils';
 import { TooltipOptions, TooltipTrigger } from './tooltip.model';
+import { zIndex } from '../internal/z-index';
 
 @Directive({
   selector: '[datoTooltip]',
   exportAs: 'datoTooltip'
 })
 export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
-  @Input() datoTooltipType: 'tooltip' | 'long' = 'tooltip';
+  @Input()
+  datoTooltipType: 'tooltip' | 'long' = 'tooltip';
 
   @Input()
   set datoTooltip(content: string | TemplateRef<any>) {
@@ -32,16 +34,26 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
     }
   }
 
-  @Input() datoTooltipPosition: Popper.Placement = 'top';
-  @Input() datoTooltipDelay = 0;
-  @Input() datoTooltipClass = '';
-  @Input() datoTooltipOnTextOverflow = false;
-  @Input() datoTooltipOverflowElement: ElementRef = null;
-  @Input() datoTooltipDisabled = false;
-  @Input() datoTooltipOverflow = false;
-  @Input() datoTooltipOffset: string | number;
-  @Input() datoIsManual = false;
-  @Input() datoTooltipTrigger: TooltipTrigger = 'hover';
+  @Input()
+  datoTooltipPosition: Popper.Placement = 'top';
+  @Input()
+  datoTooltipDelay = 0;
+  @Input()
+  datoTooltipClass = '';
+  @Input()
+  datoTooltipOnTextOverflow = false;
+  @Input()
+  datoTooltipOverflowElement: ElementRef = null;
+  @Input()
+  datoTooltipDisabled = false;
+  @Input()
+  datoTooltipOverflow = false;
+  @Input()
+  datoTooltipOffset: string | number;
+  @Input()
+  datoIsManual = false;
+  @Input()
+  datoTooltipTrigger: TooltipTrigger = 'hover';
 
   private tooltip;
   private content: string | HTMLElement;
@@ -169,7 +181,8 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   }
 
   private getTpl(xIcon) {
-    return `<div class="tooltip dato-tooltip ${this.isLongTooltip ? '' : 'common-tooltip'} ${this.datoTooltipClass} ${this.datoTooltipPosition}" role="tooltip">
+    return `<div class="tooltip dato-tooltip ${this.isLongTooltip ? '' : 'common-tooltip'} ${this.datoTooltipClass} ${this.datoTooltipPosition}" 
+                 role="tooltip" style="z-index: ${zIndex.tooltip}">
                   ${this.isLongTooltip ? '<div class="tooltip-arrow show"></div>' : ''}
                   <div class="tooltip-content">
                     <div class="tooltip-inner"></div>

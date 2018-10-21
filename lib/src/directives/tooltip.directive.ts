@@ -144,12 +144,12 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
       container: document.body,
       title: this.content,
       html: true,
-      offset: isNil(this.datoTooltipOffset) ? this.datoTooltipOffset : this.isLongTooltip ? '0 10' : 0, // 0 10 => x y
+      offset: !isNil(this.datoTooltipOffset) ? this.datoTooltipOffset : this.isLongTooltip ? '0 10' : 0, // 0 10 => x y
       trigger: 'manual',
       delay: this.datoTooltipDelay,
       template: this.getTpl(xIcon)
     };
-    if (this.datoTooltipOverflow || isNil(this.datoTooltipOffset)) {
+    if (this.datoTooltipOverflow || !isNil(this.datoTooltipOffset)) {
       tooltipOptions.popperOptions = {
         modifiers: {
           preventOverflow: { enabled: false }

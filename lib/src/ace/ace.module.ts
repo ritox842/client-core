@@ -7,16 +7,15 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DatoAceComponent } from './ace.component';
-import { AceDraggableDirective } from './ace-draggable.directive';
+import { DatoAceDraggableDirective } from './ace-draggable.directive';
+import { DatoAceDirective } from './ace.directive';
+import { HttpClientModule } from '@angular/common/http';
 
-const publicApi = [DatoAceComponent];
+const publicApi = [DatoAceDraggableDirective, DatoAceDirective];
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [publicApi, AceDraggableDirective],
-  exports: [publicApi, AceDraggableDirective],
-  entryComponents: [publicApi]
+  declarations: [publicApi],
+  imports: [HttpClientModule],
+  exports: [publicApi]
 })
 export class DatoAceModule {}

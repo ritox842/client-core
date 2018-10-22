@@ -1,3 +1,5 @@
+import { HashMap } from '@datorama/utils';
+
 function is(token, type) {
   return token.type.lastIndexOf(type + '.xml') > -1;
 }
@@ -47,7 +49,6 @@ function getTagCompletions(attributeMap, state, session, pos, prefix) {
 
 function getAttributeCompletions(attributeMap, state, session, pos, prefix) {
   let tagName = findTagName(session, pos);
-  console.log(' getAttributeCompletions', tagName);
 
   if (!tagName) return [];
   let attributes = [];
@@ -68,8 +69,6 @@ function getAttributeCompletions(attributeMap, state, session, pos, prefix) {
 function getAttributeValueCompletions(attributeMap, state, session, pos, prefix) {
   let tagName = findTagName(session, pos);
   let attributeName = findAttributeName(session, pos);
-  console.log(' getAttributeValueCompletions', tagName);
-  console.log(' getAttributeValueCompletions', attributeName);
 
   if (!tagName) return [];
   let values = [];
@@ -104,10 +103,17 @@ function findAttributeName(session, pos) {
   if (token) return token.value;
 }
 
-export function addCompletor(attributeMap) {
+export type AceAutoCompleteHTML = {
+  [tagName: string]: {
+    [attributeName: string]: HashMap<number>;
+  };
+};
+
+export function createHTMLCompletor(attributeMap: AceAutoCompleteHTML) {
   return {
     getCompletions: function(state, session, pos, prefix, callback) {
-      var token = session.getTokenAt(pos.row, pos.column);
+      const token = session.getTokenAt(pos.row, pos.column);
+
       if (!token) return [];
 
       // tag name
@@ -122,4 +128,64 @@ export function addCompletor(attributeMap) {
       return [];
     }
   };
+}
+
+export type AceAutoCompleteJSObject = HashMap<string[]>;
+
+export function addJSObjectCompletor(objectMap: AceAutoCompleteJSObject, baseCompletors, editor) {
+  editor.commands.addCommand({
+    name: 'DADotCommand',
+    bindKey: { win: '.', mac: '.' },
+    exec: () => {
+      const pos = editor.selection.getCursor();
+      const session = editor.session;
+
+      const curLine = session
+        .getDocument()
+        .getLine(pos.row)
+        .trim();
+      const curTokens = curLine.slice(0, pos.column).split(/\s+/);
+      const curCmd = curTokens[0];
+
+      if (!curCmd) return;
+
+      editor.insert('.');
+
+      const lastToken = curTokens[curTokens.length - 1];
+      const match = lastToken.match(/DA(?:\.\w+)*/);
+
+      if (!match) {
+        return;
+      }
+
+      const JSObjectCompleter = {
+        getCompletions: (editor, session, pos, prefix, callback) => {
+          callback(
+            null,
+            (objectMap[match[0]] || []).map(word => {
+              return {
+                caption: word,
+                value: word,
+                meta: 'datorama',
+                completer: {
+                  insertMatch: (editor, data) => {
+                    editor.completer.insertMatch({ value: data.caption });
+                    editor.completers = baseCompletors;
+                  }
+                }
+              };
+            })
+          );
+        }
+      };
+
+      editor.completers = [JSObjectCompleter];
+    }
+  });
+
+  editor.commands.on('afterExec', function(e) {
+    if (e.command.name === 'DADotCommand') {
+      editor.execCommand('startAutocomplete');
+    }
+  });
 }

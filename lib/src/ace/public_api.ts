@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-export * from './ace.component';
+export * from './ace.directive';
 export * from './ace.module';
-export * from './ace.types';
 export * from './ace-draggable.directive';
+export * from './auto-complete';

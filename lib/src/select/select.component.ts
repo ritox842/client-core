@@ -9,7 +9,7 @@
 import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
-import { coerceArray } from '@datorama/utils';
+import { coerceArray, size } from '@datorama/utils';
 import { defaultOptionsDisplayLimit, SelectType } from './select.types';
 import { DatoOptionComponent } from '../options/option.component';
 import { fromEvent, merge } from 'rxjs';
@@ -25,6 +25,9 @@ import { getSelectOptionHeight } from './select-size';
 import { DatoTranslateService } from '../services/translate.service';
 import { zIndex } from '../internal/z-index';
 import { normalizeData } from '../internal/data-normalization';
+import { DatoAccordionComponent, DatoAccordionGroupComponent } from '../accordion/public_api';
+import { DatoGroupComponent } from '../options/group.component';
+import { ListGroupComponent, ListSearchResult } from '../list/list.types';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,
@@ -52,6 +55,13 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   /** QueryList of datoOptions children */
   @ContentChildren(DatoOptionComponent, { descendants: true })
   options: QueryList<DatoOptionComponent>;
+
+  /** QueryList of datoAccordionGroups children */
+  @ContentChildren(forwardRef(() => DatoAccordionComponent), { descendants: true })
+  accordion: QueryList<DatoAccordionComponent>;
+
+  /** QueryList of datoGroups children */
+  @ContentChildren(DatoGroupComponent) groups: QueryList<DatoGroupComponent>;
 
   /** Allowing custom template by passing *datoActive directive which gets the active as context */
   @ContentChild(DatoSelectActiveDirective) active: DatoSelectActiveDirective;
@@ -138,6 +148,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
     this._dataIsDirty = true;
   }
+
+  /** Search groups as well as options */
+  @Input() searchGroupLabels = true;
 
   /** Emit search value when internal search is false */
   @Output() search = new EventEmitter<string>();
@@ -468,6 +481,27 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * Show all options
    */
   private showAll() {
+    const isAccordion = this.isAccordionGroup();
+    const groupComponents: ListGroupComponent[] = this.getGroupComponentsArray();
+
+    groupComponents.forEach((groupComponent: ListGroupComponent) => {
+      groupComponent._hidden = false;
+
+      /* If this accordion group has been expended by the search function,
+         then collapse it to the original state
+      */
+      if (isAccordion) {
+        const anyGroup = groupComponent as any;
+
+        if (anyGroup.__expended) {
+          anyGroup.__expended = false;
+          const accordionGroup = anyGroup as DatoAccordionGroupComponent;
+          accordionGroup.content.disableAnimation = false;
+          accordionGroup.expand(false);
+        }
+      }
+    });
+
     for (let datoOption of this.options.toArray()) {
       datoOption.hideAndDisabled(false);
     }
@@ -480,19 +514,102 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    */
   private searchOptions(value: string) {
     let hasResult = false;
+    const groupComponentsArray: ListGroupComponent[] = this.getGroupComponentsArray();
+    const hasGroups = groupComponentsArray.length;
 
-    for (let datoOption of this.options.toArray()) {
-      const match = this.searchStrategy(datoOption, value, this.labelKey);
-
-      if (!match) {
-        datoOption.hideAndDisabled(true);
-      } else {
-        datoOption.hideAndDisabled(false);
-        hasResult = true;
-      }
+    if (hasGroups) {
+      hasResult = this.searchInGroups(groupComponentsArray, value);
+    } else {
+      hasResult = this.searchInOptions(value);
     }
 
     return hasResult;
+  }
+
+  /**
+   * Search for matching groups and children.
+   * @param {ListGroupComponent[]} groupComponentsArray
+   * @param {string} value
+   * @return {boolean}
+   */
+  private searchInGroups(groupComponentsArray: ListGroupComponent[], value: string): boolean {
+    const isAccordion = this.isAccordionGroup();
+    let hasResults = false;
+
+    this._data.forEach((group, index) => {
+      const groupKey = this.getGroupKey(group);
+      const groupMatch = this.searchGroupLabels && this.searchStrategy(group, value, this.labelKey);
+      const groupOptions = group.children.map(({ label }) => label);
+      /* show/hide the options */
+      const showGroup = this.searchInOptions(value, groupOptions, groupMatch);
+
+      if (showGroup && !hasResults) {
+        hasResults = true;
+      }
+
+      /* Find the right component, according to the internal key assigned in the previous search.
+         When no match is found, falling back to the same index as the group option.
+      *  The index is considered less safe, because it can change after sorting. */
+      const groupComponent = groupComponentsArray.find((g: any) => g.__key === groupKey) || groupComponentsArray[index];
+      /* Show/hide the group */
+      if (groupComponent) {
+        groupComponent._hidden = !showGroup;
+        /* assign an internal key to the component instance, so we can find it later (above). */
+        (groupComponent as any).__key = groupKey;
+        /* Expand the accordion on matching results */
+        if (isAccordion && showGroup) {
+          const accordionGroup = groupComponent as DatoAccordionGroupComponent;
+
+          if (!accordionGroup.expanded) {
+            accordionGroup.content.disableAnimation = true;
+            /* Expand the accordion */
+            accordionGroup.expand(true);
+            /* Mark the accordion as expanded, so we can return to the default state later */
+            (groupComponent as any).__expended = true;
+          }
+        }
+      }
+    });
+
+    return hasResults;
+  }
+
+  /**
+   * Search the options to show or hide each and return if result has been found.
+   * Consider we have a group that match we show all of its options.
+   * @param {string} value
+   * @param groupOptions
+   * @param groupMatch
+   */
+  private searchInOptions(value: string, groupOptions = [], groupMatch = false) {
+    let hasResults = false;
+
+    for (const datoOption of this.options.toArray()) {
+      if (groupMatch && groupOptions.indexOf(datoOption.option.label) !== -1) {
+        datoOption.hideAndDisabled(false);
+        hasResults = true;
+      } else if (!size(groupOptions) || groupOptions.indexOf(datoOption.option.label) !== -1) {
+        const match = this.searchStrategy(datoOption, value, this.labelKey);
+
+        if (!match) {
+          datoOption.hideAndDisabled(true);
+        } else {
+          datoOption.hideAndDisabled(false);
+          hasResults = true;
+        }
+      }
+    }
+
+    return hasResults;
+  }
+
+  /**
+   * Get the key of the option group. It can be the group Id if exists, or the label.
+   * @param option
+   * @return {any}
+   */
+  private getGroupKey(option) {
+    return option && (option[this.idKey] || option[this.labelKey]);
   }
 
   /**
@@ -689,5 +806,21 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this.infiniteSubscription && this.infiniteSubscription.unsubscribe();
     this.keyboardEventsManagerSubscription && this.keyboardEventsManagerSubscription.unsubscribe();
     this.datoOverlay.attached && this.datoOverlay.destroy();
+  }
+
+  /**
+   * Whether the group component is Accordion
+   * @return {number}
+   */
+  private isAccordionGroup() {
+    return this.accordion && this.accordion.length;
+  }
+
+  /**
+   * Retrieve an array of the group components
+   * @return {ListGroupComponent[]}
+   */
+  private getGroupComponentsArray(): ListGroupComponent[] {
+    return this.isAccordionGroup() ? this.accordion.first.groups.toArray() : this.groups && this.groups.toArray();
   }
 }

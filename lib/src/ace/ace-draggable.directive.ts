@@ -17,7 +17,7 @@ export class DatoAceDraggableDirective {
   }
 
   @HostListener('dragstart', ['$event'])
-  private drag(event) {
+  private drag(event: DragEvent) {
     event.dataTransfer.setData('text', this.text);
   }
 }

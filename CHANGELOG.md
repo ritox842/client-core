@@ -1,3 +1,46 @@
+## [1.15.6](https://github.com/datorama/client-core/compare/v1.15.5...v1.15.6) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix dato-tooltip z-index ([984401e](https://github.com/datorama/client-core/commit/984401e))
+
+## [1.15.5](https://github.com/datorama/client-core/compare/v1.15.4...v1.15.5) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix dato-tooltip transfer to isNil ([ee0e849](https://github.com/datorama/client-core/commit/ee0e849))
+
+## [1.15.4](https://github.com/datorama/client-core/compare/v1.15.3...v1.15.4) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix isOpen ([bbb021d](https://github.com/datorama/client-core/commit/bbb021d))
+
+## [1.15.3](https://github.com/datorama/client-core/compare/v1.15.2...v1.15.3) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** make isOpen public and fix issue with it ([928ac85](https://github.com/datorama/client-core/commit/928ac85))
+
+## [1.15.2](https://github.com/datorama/client-core/compare/v1.15.1...v1.15.2) (2018-10-18)
+
+
+### Bug Fixes
+
+* **dato-carousel:** centered control arrows ([c43570b](https://github.com/datorama/client-core/commit/c43570b))
+* **dato-carousel:** moved control arrows ([f36e2c1](https://github.com/datorama/client-core/commit/f36e2c1))
+
+## [1.15.1](https://github.com/datorama/client-core/compare/v1.15.0...v1.15.1) (2018-10-18)
+
+
+### Bug Fixes
+
+* **dato-carousel:** controls hidden when 1 slide ([a49fe2a](https://github.com/datorama/client-core/commit/a49fe2a))
+
 # [1.15.0](https://github.com/datorama/client-core/compare/v1.14.2...v1.15.0) (2018-10-16)
 
 

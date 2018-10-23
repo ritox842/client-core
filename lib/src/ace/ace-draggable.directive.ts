@@ -12,7 +12,7 @@ import { Attribute, Directive, ElementRef, HostListener } from '@angular/core';
   selector: '[aceDraggableText]'
 })
 export class DatoAceDraggableDirective {
-  constructor(private host: ElementRef<HTMLElement>, @Attribute('aceDraggableText') private text) {
+  constructor(private host: ElementRef<HTMLElement>, @Attribute('aceDraggableText') private text: string) {
     this.host.nativeElement.setAttribute('draggable', 'true');
   }
 

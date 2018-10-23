@@ -38,6 +38,7 @@ export class DatoTogglerComponent extends BaseCustomControl implements ControlVa
 
   writeValue(value): void {
     this.active = toBoolean(value);
+    this.cdr.markForCheck();
   }
 
   toggle() {

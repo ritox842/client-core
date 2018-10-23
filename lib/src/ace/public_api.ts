@@ -10,3 +10,4 @@ export * from './ace.directive';
 export * from './ace.module';
 export * from './ace-draggable.directive';
 export * from './auto-complete';
+export * from './ace.service';

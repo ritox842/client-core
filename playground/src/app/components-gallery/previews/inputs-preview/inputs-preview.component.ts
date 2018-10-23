@@ -37,11 +37,6 @@ export class InputsPreviewComponent implements OnInit, OnDestroy {
     this.checkboxCheckedControl.valueChanges.pipe(untilDestroyed(this)).subscribe(value => {
       this.checkboxControl.patchValue(value);
     });
-
-    this.togglerControl2.valueChanges.pipe(untilDestroyed(this)).subscribe(value => {
-      console.log(value);
-      this.togglerControl3[value ? 'enable' : 'disable']();
-    });
   }
 
   ngOnDestroy(): void {}

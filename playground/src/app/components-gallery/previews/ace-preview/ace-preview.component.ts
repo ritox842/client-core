@@ -74,6 +74,18 @@ export class AcePreviewComponent {
     {
       label: 'Dracula',
       id: 'dracula'
+    },
+    {
+      label: 'Plastic',
+      id: 'iplastic'
+    },
+    {
+      label: 'Tomorrow Night',
+      id: 'tomorrow'
+    },
+    {
+      label: 'Pastel',
+      id: 'kuroir'
     }
   ];
 

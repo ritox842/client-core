@@ -6,16 +6,17 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Directive, ElementRef, forwardRef, Input, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, forwardRef, Inject, Input, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HashMap } from '@datorama/utils';
 import { forkJoin, fromEvent, Observable, Observer, timer } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { AceAutoCompleteHTML, AceAutoCompleteJSObject, addJSObjectCompletor, createHTMLCompletor } from './auto-complete';
 import { HttpClient } from '@angular/common/http';
-import { concatMap, filter, repeat, tap } from 'rxjs/operators';
+import { concatMap, filter, repeat, take, tap } from 'rxjs/operators';
 import { appendScript } from '../internal/helpers';
 import { AceService } from './ace.service';
+import { CoreConfig, DATO_CORE_CONFIG } from '../config';
 
 declare global {
   interface Window {
@@ -36,6 +37,7 @@ declare global {
   ]
 })
 export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
+  disabled = false;
   //@ts-ignore
   private editor: AceAjax.Editor;
   private onChange: Function;
@@ -47,12 +49,13 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
     fontSize: 14,
     /** make it false to disable Ace validation */
     useWorker: true,
+    showPrintMargin: false,
     tabSize: 2,
     fontFamily: `Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace'`
   };
 
   private _options: HashMap<any> = { ...this.defaultOptions };
-  private BASE_PATH = '/assets/ace';
+  private BASE_PATH: string;
   private _lang: string;
 
   @Input()
@@ -86,11 +89,19 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
   }
 
   private get langTools() {
-    return window.ace.require('ace/ext/language_tools');
+    return this.ace.require('ace/ext/language_tools');
   }
 
-  constructor(private host: ElementRef<HTMLElement>, private http: HttpClient, private aceService: AceService) {
-    this.waitForAce().subscribe();
+  private get ace() {
+    return window.ace;
+  }
+
+  constructor(private host: ElementRef<HTMLElement>, private http: HttpClient, private aceService: AceService, @Inject(DATO_CORE_CONFIG) private config: CoreConfig) {
+    this.BASE_PATH = this.config.aceBasePath;
+    this.waitForAce().subscribe(() => {
+      this.ace.config.set('themePath', '/assets/ace/themes');
+      this.editor.setOption('enableEmmet', true);
+    });
   }
 
   /**
@@ -101,14 +112,15 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
    */
   waitForAce() {
     return new Observable(observer => {
-      if (window.ace) {
+      if (this.ace) {
         this.initializeEditor(observer);
       } else {
         if (this.aceService.fetchingAce) {
           timer(50)
             .pipe(
               repeat(),
-              filter(() => !!window.ace)
+              filter(() => !!this.ace),
+              take(1)
             )
             .subscribe(() => this.initializeEditor(observer));
         } else {
@@ -121,19 +133,16 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
   private waitForBeauitify() {
     return new Observable(observer => {
       if (window.js_beautify) {
-        observer.next(true);
-        observer.complete();
+        this.complete(observer);
       } else {
         if (this.aceService.fetchingBeautify) {
           timer(50)
             .pipe(
               repeat(),
-              filter(() => !!window.js_beautify)
+              filter(() => !!window.js_beautify),
+              take(1)
             )
-            .subscribe(() => {
-              observer.next(true);
-              observer.complete();
-            });
+            .subscribe(() => this.complete(observer));
         } else {
           this.loadBeautifier(observer);
         }
@@ -150,9 +159,7 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
   }
 
   setTheme(theme: string) {
-    this.waitForAce().subscribe(() => {
-      this.editor.setTheme(`ace/theme/${theme}`);
-    });
+    this.waitForAce().subscribe(() => this.editor.setTheme(`ace/theme/${theme}`));
   }
 
   ngAfterViewInit() {
@@ -162,9 +169,7 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
 
       fromEvent(this.editor, 'change')
         .pipe(untilDestroyed(this))
-        .subscribe(() => {
-          this.onChange(this.editor.getValue());
-        });
+        .subscribe(() => this.onChange(this.editor.getValue()));
 
       fromEvent(this.editor.container, 'drop')
         .pipe(untilDestroyed(this))
@@ -184,46 +189,51 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
   }
 
   private createRequests(paths: string[]) {
-    return paths.map(path => this.http.get(path, { responseType: 'text' }));
+    return paths.map(path => this.http.get(`${this.BASE_PATH}/${path}`, { responseType: 'text' }));
   }
 
   private loadAceWorkers() {
-    const paths = [`${this.BASE_PATH}/worker-css.js`, `${this.BASE_PATH}/worker-html.js`, `${this.BASE_PATH}/worker-javascript.js`];
+    const paths = [`worker-css.js`, `worker-html.js`, `worker-javascript.js`];
 
     return forkJoin(...this.createRequests(paths));
   }
 
   private loadAceScripts() {
-    const paths = [`${this.BASE_PATH}/ace.js`, `${this.BASE_PATH}/ace-langtools.js`, `${this.BASE_PATH}/mode-css.js`, `${this.BASE_PATH}/mode-html.js`, `${this.BASE_PATH}/mode-javascript.js`, `${this.BASE_PATH}/theme-monokai.js`, `${this.BASE_PATH}/snippets/css.js`, `${this.BASE_PATH}/snippets/html.js`, `${this.BASE_PATH}/snippets/javascript.js`];
+    // `snippets/css.js`, `snippets/html.js`, `snippets/javascript.js`
+    const paths = [`ace.js`, `ace-langtools.js`, `emmet-lib.js`, `emmet.js`, `mode-css.js`, `mode-html.js`, `mode-javascript.js`];
 
     return forkJoin(...this.createRequests(paths));
   }
 
   private loadBeautifier(observer: Observer<boolean>) {
-    const paths = [`${this.BASE_PATH}/beautify/base.js`, `${this.BASE_PATH}/beautify/css.js`, `${this.BASE_PATH}/beautify/html.js`];
+    const paths = [`beautify/base.js`, `beautify/css.js`, `beautify/html.js`];
 
     this.aceService.fetchingBeautify = true;
 
     forkJoin(...this.createRequests(paths)).subscribe((beautifires: string[]) => {
       appendScript(beautifires.join(' '), 'beautifires');
-      observer.next(true);
-      observer.complete();
+      this.complete(observer);
     });
   }
 
   private initializeEditor(observer: Observer<boolean>) {
-    this.editor = window.ace.edit(this.host.nativeElement);
+    this.editor = this.ace.edit(this.host.nativeElement);
+    this.complete(observer);
+  }
+
+  private complete(observer: Observer<boolean>) {
     observer.next(true);
     observer.complete();
   }
 
   private loadAce(observer: Observer<boolean>) {
     this.aceService.fetchingAce = true;
+
     this.loadAceScripts()
       .pipe(
         tap((aceSource: string[]) => {
           appendScript(aceSource.join(' '), 'ace-base');
-          window.ace.config.set('basePath', '/assets/ace');
+          this.ace.config.set('basePath', '/assets/ace');
         }),
         concatMap(() => this.loadAceWorkers())
       )
@@ -241,9 +251,7 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
   }
 
   private setOptions() {
-    this.waitForAce().subscribe(() => {
-      this.editor.setOptions(this._options);
-    });
+    this.waitForAce().subscribe(() => this.editor.setOptions(this._options));
   }
 
   private setLang(lang: string) {
@@ -265,5 +273,7 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
 
   registerOnTouched(fn: Function) {}
 
-  setDisabledState(isDisabled: boolean) {}
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
 }

@@ -21,7 +21,7 @@ export class InputsPreviewComponent implements OnInit, OnDestroy {
   checkboxCustomValueControl = new FormControl('yep');
   togglerControl = new FormControl(false);
   togglerControl2 = new FormControl(true);
-  togglerControl3 = new FormControl({ disabled: true, value: false });
+  togglerControl3 = new FormControl({ disabled: true, value: true });
 
   radios = [{ title: 'With ngFor one', value: 'one' }, { title: 'With ngFor two', value: 'two' }];
   constructor() {}
@@ -36,6 +36,11 @@ export class InputsPreviewComponent implements OnInit, OnDestroy {
     // checked/unchecked the checkbox
     this.checkboxCheckedControl.valueChanges.pipe(untilDestroyed(this)).subscribe(value => {
       this.checkboxControl.patchValue(value);
+    });
+
+    this.togglerControl2.valueChanges.pipe(untilDestroyed(this)).subscribe(value => {
+      console.log(value);
+      this.togglerControl3[value ? 'enable' : 'disable']();
     });
   }
 

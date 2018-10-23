@@ -13,7 +13,8 @@ import { TooltipOptions, TooltipTrigger } from './tooltip.model';
   exportAs: 'datoTooltip'
 })
 export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
-  @Input() datoTooltipType: 'tooltip' | 'long' = 'tooltip';
+  @Input()
+  datoTooltipType: 'tooltip' | 'long' = 'tooltip';
 
   @Input()
   set datoTooltip(content: string | TemplateRef<any>) {
@@ -22,6 +23,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
         this.tplPortal.destroy();
       }
       this.tplPortal = new DatoTemplatePortal(content);
+      this.tplPortal.viewRef.detectChanges();
       this.content = this.tplPortal.elementRef;
     } else {
       this.content = content;
@@ -32,16 +34,26 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
     }
   }
 
-  @Input() datoTooltipPosition: Popper.Placement = 'top';
-  @Input() datoTooltipDelay = 0;
-  @Input() datoTooltipClass = '';
-  @Input() datoTooltipOnTextOverflow = false;
-  @Input() datoTooltipOverflowElement: ElementRef = null;
-  @Input() datoTooltipDisabled = false;
-  @Input() datoTooltipOverflow = false;
-  @Input() datoTooltipOffset;
-  @Input() datoIsManual = false;
-  @Input() datoTooltipTrigger: TooltipTrigger = 'hover';
+  @Input()
+  datoTooltipPosition: Popper.Placement = 'top';
+  @Input()
+  datoTooltipDelay = 0;
+  @Input()
+  datoTooltipClass = '';
+  @Input()
+  datoTooltipOnTextOverflow = false;
+  @Input()
+  datoTooltipOverflowElement: ElementRef = null;
+  @Input()
+  datoTooltipDisabled = false;
+  @Input()
+  datoTooltipOverflow = false;
+  @Input()
+  datoTooltipOffset;
+  @Input()
+  datoIsManual = false;
+  @Input()
+  datoTooltipTrigger: TooltipTrigger = 'hover';
 
   private content: string | HTMLElement;
   private tplPortal: DatoTemplatePortal;

@@ -1,54 +1,52 @@
 <dato-preview title="Ace">
 
-  <dato-select [formControl]="themesControl" [dataSet]="themes" [isCombo]="false" #themesSelect>
+  <section style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+    <dato-select [formControl]="themesControl" [dataSet]="themes" [isCombo]="false" #themesSelect
+                 style="width: 200px;"
+                 placeholder="Select Theme..">
 
-    <dato-option *ngFor="let option of themesSelect.data;" [option]="option">
-      {{option.label}}
-    </dato-option>
+      <dato-option *ngFor="let option of themesSelect.data;" [option]="option">
+        {{option.label}}
+      </dato-option>
 
-  </dato-select>
+    </dato-select>
 
-  <dato-button (click)="prettify()">Prettify</dato-button>
+    <dato-button (click)="prettify()" datoType="orange">Prettify</dato-button>
 
+  </section>
 
-  <section style="display: flex;">
+  <section style="display: flex; flex-wrap: wrap;">
 
-    <div>
+    <div style="flex: 1 1 50%">
       <h5>HTML</h5>
-      <div dato-ace [formControl]="htmlControl" lang="html" [HTMLCompletions]="htmlMap" #htmlEditor="datoAce" style="width: 500px; height: 200px"></div>
-
-      <button (click)="updateHTML()">update</button>
-      <button (click)="updateFields()">update fields</button>
-
-      {{htmlControl.value}}
+      <div dato-ace [formControl]="htmlControl" lang="html" [HTMLCompletions]="htmlMap" #htmlEditor="datoAce"
+           class="editor"></div>
     </div>
 
-    <div>
+    <div style="flex: 1 1 50%">
       <h5>CSS</h5>
-      <div dato-ace [formControl]="cssControl" lang="css" style="width: 500px; height: 200px" #cssEditor="datoAce"></div>
-
-      <button (click)="updateCSS()">update</button>
-      {{cssControl.value}}
+      <div dato-ace [formControl]="cssControl" lang="css" #cssEditor="datoAce" class="editor"></div>
     </div>
 
-    <div>
-      <h5>JS</h5>
-      <section>
-        <div aceDraggableText="DA.navigation.dashboard.goToPage({ pageId: 1 })">Navigate to a page</div>
-        <div aceDraggableText="DA.navigation.dashboard.scrollToWidget({ widgetId: 1 })">Scroll to a widget</div>
-        <div aceDraggableText="DA.navigation.open({ url: '', type: '_blank/_top/dialog' })">Open page</div>
+    <div style="flex: 1 1 100%;">
+      <section class="dropText">
+        <h5>JS</h5>
 
-        <div aceDraggableText="DA.query.getQuery()">Get query</div>
-        <div aceDraggableText="DA.query.hasQuery()">Has query</div>
-        <div aceDraggableText="DA.query.getQueryResult()">Get query result</div>
+        <section style="display: flex;">
+          <div aceDraggableText="DA.navigation.dashboard.goToPage({ pageId: 1 })">Navigate to a page</div>
+          <div aceDraggableText="DA.navigation.dashboard.scrollToWidget({ widgetId: 1 })">Scroll to a widget</div>
+          <div aceDraggableText="DA.navigation.open({ url: '', type: '_blank/_top/dialog' })">Open page</div>
+
+          <div aceDraggableText="DA.query.getQuery()">Get query</div>
+          <div aceDraggableText="DA.query.hasQuery()">Has query</div>
+          <div aceDraggableText="DA.query.getQueryResult()">Get query result</div>
+        </section>
+
       </section>
-      <div dato-ace [formControl]="jsControl" lang="javascript" [JSObjectCompletions]="DAObjectMap" style="width: 500px; height: 200px" #jsEditor="datoAce"></div>
 
-
-      <button (click)="updateJS()">update</button>
-
-
-      {{jsControl.value}}
+      <div dato-ace [formControl]="jsControl" lang="javascript" [JSObjectCompletions]="DAObjectMap" class="editor"
+           style="width: 100%"
+           #jsEditor="datoAce"></div>
     </div>
   </section>
 
@@ -56,7 +54,8 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <dato-ace></dato-ace>
+      <div dato-ace [formControl]="cssControl" lang="css" #cssEditor="datoAce" class="editor"></div>
+      <div aceDraggableText="DA.navigation.dashboard.goToPage({ pageId: 1 })">Navigate to a page</div>
     </textarea>
 
   </dato-tabs>
@@ -73,8 +72,34 @@
 
     <dato-api-table>
       <tr>
-        <td>datoSize</td>
-        <td>lg, md, sm</td>
+        <td>lang</td>
+        <td>ace lang</td>
+        <td>text</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>theme</td>
+        <td>ace theme</td>
+        <td>ace default</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>options</td>
+        <td>ace options</td>
+        <td>ace & core default options</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>HTMLCompletions</td>
+        <td></td>
+        <td></td>
+        <td>custom HTML tags</td>
+      </tr>
+      <tr>
+        <td>JSObjectCompletions</td>
+        <td></td>
+        <td></td>
+        <td>custom JS object</td>
       </tr>
     </dato-api-table>
 

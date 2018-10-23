@@ -41,8 +41,8 @@ function getTagCompletions(attributeMap, state, session, pos, prefix) {
     return {
       value: element,
       caption: element,
-      meta: 'tag',
-      score: 1000000
+      meta: 'datorama-tag',
+      score: 10000000
     };
   });
 }
@@ -60,8 +60,8 @@ function getAttributeCompletions(attributeMap, state, session, pos, prefix) {
     return {
       caption: attribute,
       snippet: attribute + '="$0"',
-      meta: 'attribute',
-      score: 1000000
+      meta: 'datorama-attribute',
+      score: 10000000
     };
   });
 }
@@ -79,8 +79,8 @@ function getAttributeValueCompletions(attributeMap, state, session, pos, prefix)
     return {
       caption: value,
       snippet: value,
-      meta: 'attribute value',
-      score: 1000000
+      meta: 'datorama-value',
+      score: 10000000
     };
   });
 }

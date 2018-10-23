@@ -82,7 +82,7 @@
 <dato-preview title="Custom Template">
   <p [datoTooltip]="tpl" datoTooltipTrigger="click" datoTooltipType="long" style="display: inline-block">Long
     Tooltip</p>
-  <ng-template #tpl><a (click)="hello()">Hello world</a></ng-template>
+  <ng-template #tpl><a (click)="hello()">Hello world {{fromComponent}}</a></ng-template>
 
   <dato-tabs show="html">
 

@@ -484,7 +484,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     const isAccordion = this.isAccordionGroup();
     const groupComponents: ListGroupComponent[] = this.getGroupComponentsArray();
 
-    groupComponents.forEach((groupComponent: ListGroupComponent) => {
+    for (const groupComponent of groupComponents) {
       groupComponent._hidden = false;
 
       /* If this accordion group has been expended by the search function,
@@ -500,9 +500,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
           accordionGroup.expand(false);
         }
       }
-    });
+    }
 
-    for (let datoOption of this.options.toArray()) {
+    for (const datoOption of this.options.toArray()) {
       datoOption.hideAndDisabled(false);
     }
   }
@@ -534,9 +534,11 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    */
   private searchInGroups(groupComponentsArray: ListGroupComponent[], value: string): boolean {
     const isAccordion = this.isAccordionGroup();
+    const dataLength = this._data.length;
     let hasResults = false;
 
-    this._data.forEach((group, index) => {
+    for (let i = 0; i < dataLength; i++) {
+      const group = this._data[i];
       const groupKey = this.getGroupKey(group);
       const groupMatch = this.searchGroupLabels && this.searchStrategy(group, value, this.labelKey);
       const groupOptions = group.children.map(({ label }) => label);
@@ -550,7 +552,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       /* Find the right component, according to the internal key assigned in the previous search.
          When no match is found, falling back to the same index as the group option.
       *  The index is considered less safe, because it can change after sorting. */
-      const groupComponent = groupComponentsArray.find((g: any) => g.__key === groupKey) || groupComponentsArray[index];
+      const groupComponent = groupComponentsArray.find((g: any) => g.__key === groupKey) || groupComponentsArray[i];
       /* Show/hide the group */
       if (groupComponent) {
         groupComponent._hidden = !showGroup;
@@ -569,7 +571,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
           }
         }
       }
-    });
+    }
 
     return hasResults;
   }

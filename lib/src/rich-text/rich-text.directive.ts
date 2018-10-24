@@ -11,7 +11,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { isString } from '@datorama/utils';
 import { HttpClient } from '@angular/common/http';
-import { appendScript } from '../internal/helpers';
+import { appendScript, appendStyle } from '../internal/helpers';
 
 declare global {
   interface Window {
@@ -51,6 +51,9 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
   height: number;
 
   @Input()
+  autocompleteOptions = {};
+
+  @Input()
   set disabled(val: boolean) {
     this._disabled = val;
     if (this.editor && this.editor.initialized) {
@@ -86,12 +89,19 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
       this.loadLib().subscribe(lib => {
         appendScript(lib, 'rich-text-editor');
         this.init.call(this);
+        this.loadAutoCompleteStyle();
       });
     }
   }
 
   private loadLib() {
     return this.http.get('/assets/rich-text/index.js', { responseType: 'text' });
+  }
+
+  private loadAutoCompleteStyle() {
+    this.http.get('/assets/rich-text/plugins/autocomplete/plugin.css', { responseType: 'text' }).subscribe(style => {
+      appendStyle(style, 'tinymce-autocomplete');
+    });
   }
 
   private initEditor(_, editor) {
@@ -101,7 +111,7 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
   }
 
   private deaultOptions() {
-    const defaultPlugins = 'link fullscreen textcolor colorpicker image lists table textpattern';
+    const defaultPlugins = 'link fullscreen textcolor colorpicker image lists table textpattern autocomplete';
     const defaultToolbar = ['fontselect fontsizeselect forecolor backcolor bold italic underline link', 'alignleft aligncenter alignright alignjustify outdent indent | table numlist bullist  | image fullscreen'];
 
     return {
@@ -117,8 +127,8 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
       plugins: this.plugins || defaultPlugins,
       toolbar: this.toolbar || defaultToolbar,
       fontsize_formats: '8px 10px 12px 14px 18px 24px 36px',
-      // document_base_url: '/assets/rich-text',
       menubar: false,
+      autocomplete: this.autocompleteOptions,
       setup: editor => {
         this.editor = editor;
         editor.on('init', (e: Event) => {

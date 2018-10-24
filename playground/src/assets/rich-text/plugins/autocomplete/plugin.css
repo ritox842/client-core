@@ -1,0 +1,45 @@
+span#autocomplete {
+  font-weight: bold;
+}
+
+.dato-tinymce-autocomplete {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: block;
+  z-index: 100000;
+  float: left;
+  min-width: 200px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+}
+
+.dato-tinymce-autocomplete > li > a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 20px;
+  color: rgba(46, 47, 48, 1);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.dato-tinymce-autocomplete > li > a:hover, .dato-tinymce-autocomplete > li > a:focus, .dato-tinymce-autocomplete:hover > a, .dato-tinymce-autocomplete:focus > a {
+  background: rgba(241, 242, 245, 1);
+  color: rgba(46, 47, 48, 1);
+}
+
+.dato-tinymce-autocomplete > .active > a, .dato-tinymce-autocomplete > .active > a:hover, .dato-tinymce-autocomplete > .active > a:focus {
+  color: #fff;
+  text-decoration: none;
+  color: rgba(46, 47, 48, 1);
+  background-color: rgba(187, 222, 251, 1);
+}

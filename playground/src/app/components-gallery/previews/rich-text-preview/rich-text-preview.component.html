@@ -1,8 +1,6 @@
 <dato-preview title="RichText">
 
-  <!--<editor [formControl]="one" [init]="{plugins: 'link'}"></editor>-->
-
-  <div datoRichText [formControl]="one"></div>
+  <div datoRichText [formControl]="one" [autocompleteOptions]="autocomplete"></div>
   {{one.value | json}}
   <dato-tabs show="html">
 

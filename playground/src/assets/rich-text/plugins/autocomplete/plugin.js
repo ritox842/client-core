@@ -1,18 +1,18 @@
 https://github.com/StevenDevooght/tinyMCE-mention
 
-'use strict';
+  'use strict';
 
 var DatoAutoComplete = function( ed, options ) {
   this.editor = ed;
 
   this.options = $.extend({}, {
     source : [],
-    delay  : 500,
-    queryBy: 'name',
+    delay  : 0,
+    queryBy: 'label',
     items  : 10
   }, options);
 
-  this.options.insertFrom = this.options.insertFrom || this.options.queryBy;
+  this.options.insertFrom = this.options.insertFrom || 'value';
   this.matcher = this.options.matcher || this.matcher;
   this.sorter = this.options.sorter || this.sorter;
   this.renderDropdown = this.options.renderDropdown || this.renderDropdown;
@@ -346,13 +346,9 @@ DatoAutoComplete.prototype = {
 tinymce.create('tinymce.plugins.Autocomplete', {
 
   init: function( ed ) {
+    var autoComplete, autoCompleteData = ed.getParam('autocomplete');
 
-    var autoComplete,
-        autoCompleteData = ed.getParam('autocomplete');
-
-    // If the delimiter is undefined set default value to ['@'].
-    // If the delimiter is a string value convert it to an array. (backwards compatibility)
-    autoCompleteData.delimiter = (autoCompleteData.delimiter !== undefined) ? !$.isArray(autoCompleteData.delimiter) ? [autoCompleteData.delimiter] : autoCompleteData.delimiter : ['@'];
+    autoCompleteData.delimiter = autoCompleteData.delimiter ? [autoCompleteData.delimiter] : ['@'];
 
     function prevCharIsSpace() {
       var start      = ed.selection.getRng(true).startOffset,
@@ -367,7 +363,6 @@ tinymce.create('tinymce.plugins.Autocomplete', {
       if( delimiterIndex > -1 && prevCharIsSpace() ) {
         if( autoComplete === undefined || (autoComplete.hasFocus !== undefined && !autoComplete.hasFocus) ) {
           e.preventDefault();
-          // Clone options object and set the used delimiter.
           autoComplete = new DatoAutoComplete(ed, $.extend({}, autoCompleteData, { delimiter: autoCompleteData.delimiter[delimiterIndex] }));
         }
       }

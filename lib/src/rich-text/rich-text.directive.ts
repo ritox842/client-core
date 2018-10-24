@@ -150,6 +150,7 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
   }
 
   ngOnDestroy() {
+    // TODO: clean events
     if (getTinymce() !== null) {
       getTinymce().remove(this.editor);
     }

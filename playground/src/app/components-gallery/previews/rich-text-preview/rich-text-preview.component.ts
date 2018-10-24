@@ -13,10 +13,7 @@ export class RichTextPreviewComponent implements OnInit {
   fields = new BehaviorSubject([{ label: 'Query.CLICKS', value: '{Query(CLICKS)}' }, { label: 'Query.IMPRESSIONS', value: '{Query(IMPRESSIONS)}' }]);
 
   autocomplete = {
-    delay: 50,
-    queryBy: 'label',
     delimiter: '{',
-    insertFrom: 'value',
     source: (query, process, delimiter) => {
       this.fields.subscribe(fields => {
         process(fields);
@@ -27,8 +24,8 @@ export class RichTextPreviewComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.fields.next([{ label: 'Query.BLA', value: '{Query(BLA)}' }, { label: 'Query.NETA', value: '{Query(NETA)}' }]);
-    }, 10000);
+    // setTimeout(() => {
+    //   this.fields.next([{ label: 'Query.BLA', value: '{Query(BLA)}' }, { label: 'Query.NETA', value: '{Query(NETA)}' }]);
+    // }, 10000);
   }
 }

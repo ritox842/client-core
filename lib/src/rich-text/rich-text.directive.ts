@@ -118,7 +118,7 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
     fromEvent(editor, 'change keyup undo redo')
       .pipe(untilDestroyed(this))
       .subscribe(() => {
-        this.ngZone.run(() => this.onChange(editor.getContent({ format: 'raw' })));
+        this.ngZone.run(() => this.onChange(editor.getContent()));
       });
   }
 
@@ -135,6 +135,7 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
       resize: 'both',
       branding: false,
       inline: this.inline,
+      elementpath: false,
       readonly: this.disabled,
       plugins: this.plugins || defaultPlugins,
       toolbar: this.toolbar || defaultToolbar,

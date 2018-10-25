@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component({
   selector: 'dato-rich-text-preview',
@@ -10,12 +11,18 @@ import { BehaviorSubject } from 'rxjs';
 export class RichTextPreviewComponent implements OnInit {
   one = new FormControl();
   process;
-  fields = new BehaviorSubject([{ label: 'Query.CLICKS', value: '{Query(CLICKS)}' }, { label: 'Query.IMPRESSIONS', value: '{Query(IMPRESSIONS)}' }]);
+  fields = new BehaviorSubject([
+    { label: 'Query.CLICKS', value: '{Query(CLICKS)}' },
+    {
+      label: 'Query.IMPRESSIONS',
+      value: '{Query(IMPRESSIONS)}'
+    }
+  ]);
 
   autocomplete = {
     delimiter: '{',
     source: (query, process, delimiter) => {
-      this.fields.subscribe(fields => {
+      this.fields.pipe(untilDestroyed(this)).subscribe(fields => {
         process(fields);
       });
     }

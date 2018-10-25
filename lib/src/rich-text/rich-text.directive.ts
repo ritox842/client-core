@@ -12,6 +12,8 @@ import { BaseCustomControl } from '../internal/base-custom-control';
 import { isString } from '@datorama/utils';
 import { HttpClient } from '@angular/common/http';
 import { appendScript, appendStyle } from '../internal/helpers';
+import { fromEvent } from 'rxjs';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 declare global {
   interface Window {
@@ -106,8 +108,18 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
 
   private initEditor(_, editor) {
     this.ngZone.run(() => editor.setContent(this.initialValue));
-    editor.on('setcontent', ({ content, format }: any) => format === 'html' && content && this.ngZone.run(() => this.onChange(content)));
-    editor.on('change keyup undo redo', () => this.ngZone.run(() => this.onChange(editor.getContent({ format: 'raw' }))));
+
+    fromEvent(editor, 'setcontent')
+      .pipe(untilDestroyed(this))
+      .subscribe(({ content, format }) => {
+        format === 'html' && content && this.ngZone.run(() => this.onChange(content));
+      });
+
+    fromEvent(editor, 'change keyup undo redo')
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        this.ngZone.run(() => this.onChange(editor.getContent({ format: 'raw' })));
+      });
   }
 
   private deaultOptions() {
@@ -144,13 +156,10 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
       ...this.options
     };
 
-    this.ngZone.runOutsideAngular(() => {
-      getTinymce().init(options);
-    });
+    this.ngZone.runOutsideAngular(() => getTinymce().init(options));
   }
 
   ngOnDestroy() {
-    // TODO: clean events
     if (getTinymce() !== null) {
       getTinymce().remove(this.editor);
     }

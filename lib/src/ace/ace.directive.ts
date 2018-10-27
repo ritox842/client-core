@@ -111,14 +111,14 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
    * 3. Ace is on the window, return.
    */
   waitForAce(): Observable<any> {
-    if (this.ace) {
+    if (window.ace) {
       this.initializeEditor();
       return timer(0);
     } else {
       if (this.aceService.fetchingAce) {
         return timer(50).pipe(
           repeat(),
-          filter(() => !!this.ace),
+          filter(() => !!window.ace),
           tap(() => {
             this.initializeEditor();
           }),

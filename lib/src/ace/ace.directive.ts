@@ -110,44 +110,40 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
    * 2. We're already in the process of fetching Ace, so we're invoking a `timer` waiting for Ace to be defined.
    * 3. Ace is on the window, return.
    */
-  waitForAce() {
-    return new Observable(observer => {
-      if (this.ace) {
-        this.initializeEditor(observer);
+  waitForAce(): Observable<any> {
+    if (this.ace) {
+      this.initializeEditor();
+      return timer(0);
+    } else {
+      if (this.aceService.fetchingAce) {
+        return timer(50).pipe(
+          repeat(),
+          filter(() => !!this.ace),
+          tap(() => {
+            this.initializeEditor();
+          }),
+          take(1)
+        );
       } else {
-        if (this.aceService.fetchingAce) {
-          timer(50)
-            .pipe(
-              repeat(),
-              filter(() => !!this.ace),
-              take(1)
-            )
-            .subscribe(() => this.initializeEditor(observer));
-        } else {
-          this.loadAce(observer);
-        }
+        return this.loadAce();
       }
-    });
+    }
   }
 
-  private waitForBeauitify() {
-    return new Observable(observer => {
-      if (window.js_beautify) {
-        this.complete(observer);
+  private waitForBeauitify(): Observable<any> {
+    if (window.js_beautify) {
+      return timer(0);
+    } else {
+      if (this.aceService.fetchingBeautify) {
+        return timer(50).pipe(
+          repeat(),
+          filter(() => !!window.js_beautify),
+          take(1)
+        );
       } else {
-        if (this.aceService.fetchingBeautify) {
-          timer(50)
-            .pipe(
-              repeat(),
-              filter(() => !!window.js_beautify),
-              take(1)
-            )
-            .subscribe(() => this.complete(observer));
-        } else {
-          this.loadBeautifier(observer);
-        }
+        return this.loadBeautifier();
       }
-    });
+    }
   }
 
   getEditor() {
@@ -205,42 +201,38 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
     return forkJoin(...this.createRequests(paths));
   }
 
-  private loadBeautifier(observer: Observer<boolean>) {
+  private loadBeautifier() {
     const paths = [`beautify/base.js`, `beautify/css.js`, `beautify/html.js`];
 
     this.aceService.fetchingBeautify = true;
 
-    forkJoin(...this.createRequests(paths)).subscribe((beautifires: string[]) => {
-      appendScript(beautifires.join(' '), 'beautifires');
-      this.complete(observer);
-    });
+    return forkJoin(...this.createRequests(paths)).pipe(
+      tap((beautifires: string[]) => {
+        appendScript(beautifires.join(' '), 'beautifires');
+      })
+    );
   }
 
-  private initializeEditor(observer: Observer<boolean>) {
-    this.editor = this.ace.edit(this.host.nativeElement);
-    this.complete(observer);
+  private initializeEditor() {
+    if (!this.editor) {
+      this.editor = this.ace.edit(this.host.nativeElement);
+    }
   }
 
-  private complete(observer: Observer<boolean>) {
-    observer.next(true);
-    observer.complete();
-  }
-
-  private loadAce(observer: Observer<boolean>) {
+  private loadAce() {
     this.aceService.fetchingAce = true;
 
-    this.loadAceScripts()
-      .pipe(
-        tap((aceSource: string[]) => {
-          appendScript(aceSource.join(' '), 'ace-base');
-          this.ace.config.set('basePath', '/assets/ace');
-        }),
-        concatMap(() => this.loadAceWorkers())
-      )
-      .subscribe(workers => {
+    return this.loadAceScripts().pipe(
+      tap((aceSource: string[]) => {
+        appendScript(aceSource.join(' '), 'ace-base');
+        this.ace.config.set('basePath', '/assets/ace');
+      }),
+      concatMap(() => this.loadAceWorkers()),
+      tap(workers => {
         appendScript(workers.join(' '), 'ace-workers');
-        this.initializeEditor(observer);
-      });
+        this.initializeEditor();
+      })
+    );
   }
 
   private setValue(value: string) {
@@ -261,7 +253,10 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
     });
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.editor && this.editor.destroy();
+    this.editor = null;
+  }
 
   writeValue(value: string) {
     this.setValue(value || '');

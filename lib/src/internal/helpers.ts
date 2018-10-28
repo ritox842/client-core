@@ -88,6 +88,11 @@ export function appendToBody(child: HTMLElement) {
   return appendChild(document.body, child);
 }
 
+/**
+ *
+ * @param source
+ * @param id
+ */
 export function appendScript(source: string, id: string) {
   const script = createElement('script');
   script.innerHTML = source;

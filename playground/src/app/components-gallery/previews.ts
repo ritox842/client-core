@@ -1,4 +1,3 @@
-import { RichTextPreviewComponent } from './previews/rich-text-preview/rich-text-preview.component';
 import { TabsPreviewComponent } from './previews/tabs-preview/tabs-preview.component';
 import { ButtonsPreviewComponent } from './previews/buttons-preview/buttons-preview.component';
 import { TypographyPreviewComponent } from './previews/typography-preview/typography-preview.component';
@@ -22,8 +21,10 @@ import { PanelPreviewComponent } from './previews/panel-preview/panel-preview.co
 import { CarouselPreviewComponent } from './previews/carousel-preview/carousel-preview.component';
 import { CustomToastComponent } from './previews/toast-preview/custom-toast.component';
 import { MiscellaneousPreviewComponent } from './previews/miscellaneous-preview/miscellaneous-preview.component';
+import { AcePreviewComponent } from './previews/ace-preview/ace-preview.component';
+import { RichTextPreviewComponent } from './previews/rich-text-preview/rich-text-preview.component';
 
-export const previews = [RichTextPreviewComponent, ButtonsPreviewComponent, TypographyPreviewComponent, ColorsPreviewComponent, IconsPreviewComponent, InputsPreviewComponent, SortablePreviewComponent, AccordionPreviewComponent, DragPreviewComponent, TabsPreviewComponent, LayoutPreviewComponent, ListPreviewComponent, CarouselPreviewComponent, SnackbarPreviewComponent, SelectPreviewComponent, ToastPreviewComponent, TooltipPreviewComponent, PanelPreviewComponent, CustomToastComponent, MiscellaneousPreviewComponent, ...dialogPreviewComponents, ...gridProviders];
+export const previews = [ButtonsPreviewComponent, TypographyPreviewComponent, ColorsPreviewComponent, IconsPreviewComponent, InputsPreviewComponent, SortablePreviewComponent, AccordionPreviewComponent, DragPreviewComponent, TabsPreviewComponent, LayoutPreviewComponent, ListPreviewComponent, CarouselPreviewComponent, SnackbarPreviewComponent, SelectPreviewComponent, ToastPreviewComponent, TooltipPreviewComponent, PanelPreviewComponent, CustomToastComponent, MiscellaneousPreviewComponent, RichTextPreviewComponent, AcePreviewComponent, ...dialogPreviewComponents, ...gridProviders];
 
 export const routeToComponent = {
   buttons: ButtonsPreviewComponent,
@@ -35,7 +36,6 @@ export const routeToComponent = {
   sortable: SortablePreviewComponent,
   accordion: AccordionPreviewComponent,
   drag: DragPreviewComponent,
-  richtext: RichTextPreviewComponent,
   tabs: TabsPreviewComponent,
   layout: LayoutPreviewComponent,
   list: ListPreviewComponent,
@@ -46,5 +46,7 @@ export const routeToComponent = {
   toast: ToastPreviewComponent,
   tooltip: TooltipPreviewComponent,
   panel: PanelPreviewComponent,
+  richtext: RichTextPreviewComponent,
+  ace: AcePreviewComponent,
   miscellaneous: MiscellaneousPreviewComponent
 };

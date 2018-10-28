@@ -99,3 +99,15 @@ export function appendScript(source: string, id: string) {
   script.id = id;
   appendToBody(script);
 }
+
+/**
+ *
+ * @param source
+ * @param id
+ */
+export function appendStyle(source: string, id: string) {
+  const style = createElement('style');
+  style.innerHTML = source;
+  style.id = id;
+  appendToBody(style);
+}

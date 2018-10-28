@@ -1,0 +1,31 @@
+<dato-preview title="RichText">
+
+  <div datoRichText [formControl]="one" [autocompleteOptions]="autocomplete"></div>
+  {{one.value | json}}
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-rich-text></dato-rich-text>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>datoSize</td>
+        <td>lg, md, sm</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

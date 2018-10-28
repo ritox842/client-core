@@ -167,6 +167,10 @@
   dependencies:
     tslib "^1.9.0"
 
+"@ckeditor/ckeditor5-build-classic@^11.1.1":
+  version "11.1.1"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-build-classic/-/ckeditor5-build-classic-11.1.1.tgz#2eb3706bc83640bdc5f6d50e3a060aa70cf495aa"
+
 "@compodoc/compodoc@^1.0.7":
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/@compodoc/compodoc/-/compodoc-1.1.5.tgz#fefd1569e883b159afaf589d4903909c7b74ec86"
@@ -330,6 +334,12 @@
     rxjs "^5.5.6"
     semver "^5.3.0"
     semver-intersect "^1.1.2"
+
+"@tinymce/tinymce-angular@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-angular/-/tinymce-angular-2.3.1.tgz#a3405828152e2aec259a2af8d27e9497cbbaa626"
+  dependencies:
+    tslib "^1.9.0"
 
 "@types/body-parser@*":
   version "1.17.0"

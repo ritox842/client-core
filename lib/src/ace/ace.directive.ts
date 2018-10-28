@@ -97,9 +97,9 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
   }
 
   constructor(private host: ElementRef<HTMLElement>, private http: HttpClient, private aceService: AceService, @Inject(DATO_CORE_CONFIG) private config: CoreConfig) {
-    this.BASE_PATH = this.config.aceBasePath;
+    this.BASE_PATH = this.config.paths.editor;
     this.waitForAce().subscribe(() => {
-      this.ace.config.set('themePath', '/assets/ace/themes');
+      this.ace.config.set('themePath', `${this.config.paths.editor}/themes`);
       this.editor.setOption('enableEmmet', true);
     });
   }
@@ -225,7 +225,7 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
     return this.loadAceScripts().pipe(
       tap((aceSource: string[]) => {
         appendScript(aceSource.join(' '), 'ace-base');
-        this.ace.config.set('basePath', '/assets/ace');
+        this.ace.config.set('basePath', this.config.paths.editor);
       }),
       concatMap(() => this.loadAceWorkers()),
       tap(workers => {

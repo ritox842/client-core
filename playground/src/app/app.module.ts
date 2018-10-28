@@ -27,7 +27,10 @@ import { APP_TRANSLATE } from '../../../lib/src/services/tokens';
     DatoCoreModule.forRoot({
       appSelector: 'app',
       sidenavSelector: '.sidenav',
-      aceBasePath: '/assets/ace'
+      paths: {
+        editor: '/assets/ace',
+        richText: '/assets/rich-text'
+      }
     }) as any,
     ComponentsGalleryModule
   ],

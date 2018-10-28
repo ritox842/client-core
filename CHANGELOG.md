@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/datorama/client-core/compare/v1.17.0...v1.18.0) (2018-10-28)
+
+
+### Features
+
+* **directivs:** add clipboard directive ([62d42de](https://github.com/datorama/client-core/commit/62d42de))
+
 # [1.17.0](https://github.com/datorama/client-core/compare/v1.16.0...v1.17.0) (2018-10-28)
 
 

@@ -1,3 +1,19 @@
+# [1.17.0](https://github.com/datorama/client-core/compare/v1.16.0...v1.17.0) (2018-10-28)
+
+
+### Features
+
+* **rich-text:** add autocomplete plugin ([d864dc8](https://github.com/datorama/client-core/commit/d864dc8))
+* **rich-text:** add autocomplete plugin ([2bbfdda](https://github.com/datorama/client-core/commit/2bbfdda))
+* **rich-text:** add autocomplete plugin ([b80832a](https://github.com/datorama/client-core/commit/b80832a))
+* **rich-text:** add autocomplete plugin ([e62a12f](https://github.com/datorama/client-core/commit/e62a12f))
+* **rich-text:** cleaning ([3560b19](https://github.com/datorama/client-core/commit/3560b19))
+* **rich-text:** cleaning ([85162ac](https://github.com/datorama/client-core/commit/85162ac))
+* **rich-text:** create angualr wrapper for tinymce ([002dc8e](https://github.com/datorama/client-core/commit/002dc8e))
+* **rich-text:** create angualr wrapper for tinymce ([b2cdd66](https://github.com/datorama/client-core/commit/b2cdd66))
+* **rich-text:** use dato config ([d0f7a3e](https://github.com/datorama/client-core/commit/d0f7a3e))
+* **rich-text:** use dato config ([5c020f3](https://github.com/datorama/client-core/commit/5c020f3))
+
 # [1.16.0](https://github.com/datorama/client-core/compare/v1.15.6...v1.16.0) (2018-10-28)
 
 

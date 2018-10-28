@@ -1,3 +1,16 @@
+# [1.16.0](https://github.com/datorama/client-core/compare/v1.15.6...v1.16.0) (2018-10-28)
+
+
+### Features
+
+* **ace:** add the component ([899a0ca](https://github.com/datorama/client-core/commit/899a0ca))
+* **ace:** add themes and prettier ([58c2dc8](https://github.com/datorama/client-core/commit/58c2dc8))
+* **ace:** add themes and prettier ([ca3d849](https://github.com/datorama/client-core/commit/ca3d849))
+* **ace:** cleaning ([e7118a7](https://github.com/datorama/client-core/commit/e7118a7))
+* **ace:** cleaning ([08642c7](https://github.com/datorama/client-core/commit/08642c7))
+* **ace:** cleaning ([7fbf1b0](https://github.com/datorama/client-core/commit/7fbf1b0))
+* **ace:** cleaning ([b9f008a](https://github.com/datorama/client-core/commit/b9f008a))
+
 ## [1.15.6](https://github.com/datorama/client-core/compare/v1.15.5...v1.15.6) (2018-10-21)
 
 

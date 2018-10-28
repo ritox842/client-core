@@ -24,6 +24,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
         this.tplPortal.destroy();
       }
       this.tplPortal = new DatoTemplatePortal(content);
+      this.tplPortal.viewRef.detectChanges();
       this.content = this.tplPortal.elementRef;
     } else {
       this.content = content;

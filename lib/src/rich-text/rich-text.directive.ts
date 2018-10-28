@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { AfterViewInit, Directive, ElementRef, forwardRef, Input, NgZone, OnDestroy } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { isString } from '@datorama/utils';
@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { appendScript, appendStyle } from '../internal/helpers';
 import { fromEvent } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { CoreConfig, DATO_CORE_CONFIG } from '../config';
 
 declare global {
   interface Window {
@@ -71,14 +72,14 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
   private initialValue = '';
   private editor;
 
-  constructor(private ngZone: NgZone, private http: HttpClient, private host: ElementRef<HTMLElement>) {
+  constructor(private ngZone: NgZone, private http: HttpClient, private host: ElementRef<HTMLElement>, @Inject(DATO_CORE_CONFIG) private config: CoreConfig) {
     super();
   }
 
   ngAfterViewInit() {
     window.tinyMCEPreInit = {
       suffix: '',
-      base: '/assets/rich-text',
+      base: this.config.paths.richText,
       query: ''
     };
 
@@ -97,11 +98,11 @@ export class DatoRichTextDirective extends BaseCustomControl implements OnDestro
   }
 
   private loadLib() {
-    return this.http.get('/assets/rich-text/index.js', { responseType: 'text' });
+    return this.http.get(`${this.config.paths.richText}/index.js`, { responseType: 'text' });
   }
 
   private loadAutoCompleteStyle() {
-    this.http.get('/assets/rich-text/plugins/autocomplete/plugin.css', { responseType: 'text' }).subscribe(style => {
+    this.http.get(`${this.config.paths.richText}/plugins/autocomplete/plugin.css`, { responseType: 'text' }).subscribe(style => {
       appendStyle(style, 'tinymce-autocomplete');
     });
   }

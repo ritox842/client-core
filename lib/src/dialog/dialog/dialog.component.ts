@@ -16,16 +16,24 @@ import { setDimensions, setMinDimensions } from '../../internal/custom-dimension
 })
 export class DatoDialogComponent implements OnInit {
   destroyed$: Observable<boolean>;
-  @Input() options: DatoDialogOptions;
+  @Input()
+  options: DatoDialogOptions;
+
+  hasOverlay = false;
 
   constructor(private element: ElementRef, private dialogRef: DatoDialogRef) {}
 
   ngOnInit(): void {
     const projectionElement = this.element.nativeElement.querySelector('.dato-dialog-projection');
 
+    const options = this.dialogRef.options;
+
+    /* Disable the overlay when there is no backdrop and no auto closed */
+    this.hasOverlay = options.backdrop || options.enableClose;
+
     // set custom size
-    let { width, height } = this.dialogRef.options;
-    const preset = dialogSizePreset[this.dialogRef.options.size];
+    let { width, height } = options;
+    const preset = dialogSizePreset[options.size];
     width = width || preset[0];
     height = height || preset[1];
 

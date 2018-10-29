@@ -9,6 +9,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &.no-overlay {
+    pointer-events: none;
+    .dato-dialog-projection {
+      pointer-events: all;
+    }
+  }
+
 }
 
 .dato-dialog-projection {

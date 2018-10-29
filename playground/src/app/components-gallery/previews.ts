@@ -23,8 +23,9 @@ import { CustomToastComponent } from './previews/toast-preview/custom-toast.comp
 import { MiscellaneousPreviewComponent } from './previews/miscellaneous-preview/miscellaneous-preview.component';
 import { AcePreviewComponent } from './previews/ace-preview/ace-preview.component';
 import { RichTextPreviewComponent } from './previews/rich-text-preview/rich-text-preview.component';
+import { ChangeLogComponent } from './previews/changelog/change-log.component';
 
-export const previews = [ButtonsPreviewComponent, TypographyPreviewComponent, ColorsPreviewComponent, IconsPreviewComponent, InputsPreviewComponent, SortablePreviewComponent, AccordionPreviewComponent, DragPreviewComponent, TabsPreviewComponent, LayoutPreviewComponent, ListPreviewComponent, CarouselPreviewComponent, SnackbarPreviewComponent, SelectPreviewComponent, ToastPreviewComponent, TooltipPreviewComponent, PanelPreviewComponent, CustomToastComponent, MiscellaneousPreviewComponent, RichTextPreviewComponent, AcePreviewComponent, ...dialogPreviewComponents, ...gridProviders];
+export const previews = [ChangeLogComponent, ButtonsPreviewComponent, TypographyPreviewComponent, ColorsPreviewComponent, IconsPreviewComponent, InputsPreviewComponent, SortablePreviewComponent, AccordionPreviewComponent, DragPreviewComponent, TabsPreviewComponent, LayoutPreviewComponent, ListPreviewComponent, CarouselPreviewComponent, SnackbarPreviewComponent, SelectPreviewComponent, ToastPreviewComponent, TooltipPreviewComponent, PanelPreviewComponent, CustomToastComponent, MiscellaneousPreviewComponent, RichTextPreviewComponent, AcePreviewComponent, ...dialogPreviewComponents, ...gridProviders];
 
 export const routeToComponent = {
   buttons: ButtonsPreviewComponent,
@@ -48,5 +49,6 @@ export const routeToComponent = {
   panel: PanelPreviewComponent,
   richtext: RichTextPreviewComponent,
   ace: AcePreviewComponent,
-  miscellaneous: MiscellaneousPreviewComponent
+  miscellaneous: MiscellaneousPreviewComponent,
+  changelog: ChangeLogComponent
 };

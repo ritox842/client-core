@@ -521,7 +521,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   }
 
   /**
-   * Search for matcing groups and children.
+   * Search for matching groups and children.
    * @param {string} searchTerm
    * @return {ListSearchResult}
    */

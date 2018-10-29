@@ -20,7 +20,6 @@ export class ChangeLogComponent implements OnInit {
     this.changelog$ = this.http.get(changelogUrl, { responseType: 'text' }).pipe(
       map((response: string) => {
         return parseMarkdown(response);
-        //return response.replace(/\n/gm, '<br/>');
       })
     );
   }

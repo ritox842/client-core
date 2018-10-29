@@ -1,3 +1,16 @@
+# [1.20.0](https://github.com/datorama/client-core/compare/v1.19.0...v1.20.0) (2018-10-29)
+
+
+### Bug Fixes
+
+* **dato-select:** fix search label keys ([ea0f317](https://github.com/datorama/client-core/commit/ea0f317))
+
+
+### Features
+
+* **dialog:** hide the dialog's overlay when no backdrop is available ([4b5ac39](https://github.com/datorama/client-core/commit/4b5ac39))
+* **dialog:** remove redundant commnet ([498b8d0](https://github.com/datorama/client-core/commit/498b8d0))
+
 # [1.19.0](https://github.com/datorama/client-core/compare/v1.18.0...v1.19.0) (2018-10-29)
 
 

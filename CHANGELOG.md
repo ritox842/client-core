@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/datorama/client-core/compare/v1.18.0...v1.19.0) (2018-10-29)
+
+
+### Features
+
+* **dato-select:** add group filtering for dato-select component ([3fb3700](https://github.com/datorama/client-core/commit/3fb3700))
+
 # [1.18.0](https://github.com/datorama/client-core/compare/v1.17.0...v1.18.0) (2018-10-28)
 
 

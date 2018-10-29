@@ -541,7 +541,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       const group = this._data[i];
       const groupKey = this.getGroupKey(group);
       const groupMatch = this.searchGroupLabels && this.searchStrategy(group, value, this.labelKey);
-      const groupOptions = group.children.map(({ label }) => label);
+      const groupOptions = group.children.map(child => child[this.labelKey]);
       /* show/hide the options */
       const showGroup = this.searchInOptions(value, groupOptions, groupMatch);
 
@@ -587,10 +587,12 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     let hasResults = false;
 
     for (const datoOption of this.options.toArray()) {
-      if (groupMatch && groupOptions.indexOf(datoOption.option.label) !== -1) {
+      const optionInGroup = groupOptions.indexOf(datoOption.option[this.labelKey]) !== -1;
+
+      if (groupMatch && optionInGroup) {
         datoOption.hideAndDisabled(false);
         hasResults = true;
-      } else if (!size(groupOptions) || groupOptions.indexOf(datoOption.option.label) !== -1) {
+      } else if (!size(groupOptions) || optionInGroup) {
         const match = this.searchStrategy(datoOption, value, this.labelKey);
 
         if (!match) {

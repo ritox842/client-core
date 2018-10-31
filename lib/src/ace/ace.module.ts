@@ -15,7 +15,6 @@ const publicApi = [DatoAceDraggableDirective, DatoAceDirective];
 
 @NgModule({
   declarations: [publicApi],
-  imports: [HttpClientModule],
   exports: [publicApi]
 })
 export class DatoAceModule {}

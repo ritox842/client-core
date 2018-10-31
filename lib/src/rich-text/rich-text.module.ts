@@ -13,7 +13,6 @@ import { HttpClientModule } from '@angular/common/http';
 const publicApi = [DatoRichTextDirective];
 
 @NgModule({
-  imports: [HttpClientModule],
   declarations: [publicApi],
   exports: [publicApi]
 })

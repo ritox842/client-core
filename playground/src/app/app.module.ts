@@ -13,6 +13,7 @@ import { AtomicPageComponent } from './atomic-page.component';
 import { UtilsPageComponent } from 'app/utils-page.component';
 import { TranslatePipe } from './translate.pipe';
 import { APP_TRANSLATE } from '../../../lib/src/services/tokens';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -20,6 +21,7 @@ import { APP_TRANSLATE } from '../../../lib/src/services/tokens';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     RouterModule.forRoot(ROUTES, {
       useHash: Boolean(history.pushState) === false,
       preloadingStrategy: PreloadAllModules

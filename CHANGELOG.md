@@ -1,3 +1,11 @@
+## [1.20.1](https://github.com/datorama/client-core/compare/v1.20.0...v1.20.1) (2018-10-31)
+
+
+### Bug Fixes
+
+* **http:** remove module from declerations ([2bddb94](https://github.com/datorama/client-core/commit/2bddb94))
+* **http:** remove module from declerations ([bd09916](https://github.com/datorama/client-core/commit/bd09916))
+
 # [1.20.0](https://github.com/datorama/client-core/compare/v1.19.0...v1.20.0) (2018-10-29)
 
 

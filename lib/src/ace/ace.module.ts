@@ -9,7 +9,6 @@
 import { NgModule } from '@angular/core';
 import { DatoAceDraggableDirective } from './ace-draggable.directive';
 import { DatoAceDirective } from './ace.directive';
-import { HttpClientModule } from '@angular/common/http';
 
 const publicApi = [DatoAceDraggableDirective, DatoAceDirective];
 

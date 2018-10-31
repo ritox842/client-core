@@ -8,7 +8,6 @@
 
 import { NgModule } from '@angular/core';
 import { DatoRichTextDirective } from './rich-text.directive';
-import { HttpClientModule } from '@angular/common/http';
 
 const publicApi = [DatoRichTextDirective];
 

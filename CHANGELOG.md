@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/datorama/client-core/compare/v1.20.1...v1.21.0) (2018-11-04)
+
+
+### Features
+
+* **dirty-check:** adding dirty-check pipeable operator ([03bd228](https://github.com/datorama/client-core/commit/03bd228))
+
 ## [1.20.1](https://github.com/datorama/client-core/compare/v1.20.0...v1.20.1) (2018-10-31)
 
 

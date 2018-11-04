@@ -47,10 +47,12 @@ const valueAccessor = {
 })
 export class DatoSelectComponent extends BaseCustomControl implements OnInit, OnDestroy, ControlValueAccessor, AfterContentInit {
   /** The dropdown container element which is the portal  **/
-  @ViewChild('dropdown') dropdown: TemplateRef<any>;
+  @ViewChild('dropdown')
+  dropdown: TemplateRef<any>;
 
   /** The overlay origin which is one of dato-triggers **/
-  @ViewChild('overlayOrigin') origin: ElementRef;
+  @ViewChild('overlayOrigin')
+  origin: ElementRef;
 
   /** QueryList of datoOptions children */
   @ContentChildren(DatoOptionComponent, { descendants: true })
@@ -61,16 +63,20 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   accordion: QueryList<DatoAccordionComponent>;
 
   /** QueryList of datoGroups children */
-  @ContentChildren(DatoGroupComponent) groups: QueryList<DatoGroupComponent>;
+  @ContentChildren(DatoGroupComponent)
+  groups: QueryList<DatoGroupComponent>;
 
   /** Allowing custom template by passing *datoActive directive which gets the active as context */
-  @ContentChild(DatoSelectActiveDirective) active: DatoSelectActiveDirective;
+  @ContentChild(DatoSelectActiveDirective)
+  active: DatoSelectActiveDirective;
 
   /** The key that stores the option id */
-  @Input() idKey = 'id';
+  @Input()
+  idKey = 'id';
 
   /** The lookup key for the label */
-  @Input() labelKey = 'label';
+  @Input()
+  labelKey = 'label';
 
   /** A placeholder for the trigger */
   @Input()
@@ -91,42 +97,54 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   }
 
   /** If defined, indicates by which key the data should be normalized */
-  @Input() groupBy: string;
+  @Input()
+  groupBy: string;
 
   /** Add/removes search input */
-  @Input() isCombo = true;
+  @Input()
+  isCombo = true;
 
   /** Wheteher it's a group */
-  @Input() isGroup = false;
+  @Input()
+  isGroup = false;
 
   /**
    * Decide whether to filter the results internally based on search query.
    * Useful for async filtering, where we search through more complex data.
    * @type {boolean}
    */
-  @Input() internalSearch = true;
+  @Input()
+  internalSearch = true;
 
   /** Debounce time to emit search queries */
-  @Input() debounceTime = 300;
+  @Input()
+  debounceTime = 300;
 
   /** Whether to show loading indicator */
-  @Input() isLoading = false;
+  @Input()
+  isLoading = false;
 
   /** Whether to allow select all checkbox */
-  @Input() allowSelectAll = false;
+  @Input()
+  allowSelectAll = false;
 
   /** The type of the select */
-  @Input() type: SelectType = SelectType.SINGLE;
+  @Input()
+  type: SelectType = SelectType.SINGLE;
 
   /** Client search strategy */
-  @Input() searchStrategy: DatoSelectSearchStrategy = defaultClientSearchStrategy;
+  @Input()
+  searchStrategy: DatoSelectSearchStrategy = defaultClientSearchStrategy;
 
   /** The default position of the dropdown */
-  @Input() placement: Placement = 'bottom-start';
+  @Input()
+  placement: Placement = 'bottom-start';
 
-  @Input() infiniteScrollLoading = false;
+  @Input()
+  infiniteScrollLoading = false;
 
-  @Input() limitTo = defaultOptionsDisplayLimit;
+  @Input()
+  limitTo = defaultOptionsDisplayLimit;
 
   /** The options to display in the dropdown */
   @Input()
@@ -150,15 +168,22 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   }
 
   /** Search groups as well as options */
-  @Input() searchGroupLabels = true;
+  @Input()
+  searchGroupLabels = true;
 
   /** Emit search value when internal search is false */
-  @Output() search = new EventEmitter<string>();
+  @Output()
+  search = new EventEmitter<string>();
 
   /** Emit when [withActions] is true and the user clicks save */
-  @Output() save = new EventEmitter<void>();
+  @Output()
+  save = new EventEmitter<void>();
 
-  @Output() fetch = new EventEmitter<boolean>();
+  @Output()
+  fetch = new EventEmitter<boolean>();
+
+  @Output()
+  blur = new EventEmitter<void>();
 
   /**
    * Getters and Setters
@@ -311,6 +336,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this._focus = false;
     this._clickOutside = true;
     this.infiniteSubscription && this.infiniteSubscription.unsubscribe();
+    this.blur.emit();
   }
 
   /**

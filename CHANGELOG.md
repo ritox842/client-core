@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/datorama/client-core/compare/v1.22.1...v1.23.0) (2018-11-05)
+
+
+### Features
+
+* **dato-drag:** add dragged event ([c2a77e3](https://github.com/datorama/client-core/commit/c2a77e3))
+
 ## [1.22.1](https://github.com/datorama/client-core/compare/v1.22.0...v1.22.1) (2018-11-05)
 
 

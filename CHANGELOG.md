@@ -1,3 +1,10 @@
+## [1.22.1](https://github.com/datorama/client-core/compare/v1.22.0...v1.22.1) (2018-11-05)
+
+
+### Bug Fixes
+
+* **select:** update the control should mark the active ([31ae0a2](https://github.com/datorama/client-core/commit/31ae0a2))
+
 # [1.22.0](https://github.com/datorama/client-core/compare/v1.21.0...v1.22.0) (2018-11-05)
 
 

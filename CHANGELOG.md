@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/datorama/client-core/compare/v1.24.0...v1.25.0) (2018-11-05)
+
+
+### Features
+
+* **component:** add an event emitter when the dropdown closes ([d503068](https://github.com/datorama/client-core/commit/d503068))
+
 # [1.24.0](https://github.com/datorama/client-core/compare/v1.23.0...v1.24.0) (2018-11-05)
 
 

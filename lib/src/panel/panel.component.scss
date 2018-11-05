@@ -31,6 +31,14 @@ dato-panel {
   box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
 }
 
+.dato-panel-backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 dato-panel-content {
   flex: 1;
   font-size: 14px;

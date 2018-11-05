@@ -14,7 +14,7 @@ import { filter, take, takeUntil, throttleTime } from 'rxjs/operators';
 import { isString } from '@datorama/utils';
 import { DatoTranslateService } from '../services/translate.service';
 import { DatoPanelComponent } from './panel.component';
-import { setStyle } from '../internal/helpers';
+import { addClass, setStyle } from '../internal/helpers';
 import { CoreConfig, DATO_CORE_CONFIG } from '../config';
 
 export type DatoPanelOptions<E = any> = {
@@ -132,7 +132,7 @@ export class DatoPanel {
     }
 
     this.backdropElement = this.document.createElement('div');
-    this.backdropElement.classList.add(this.backdropClassName);
+    addClass(this.backdropElement, this.backdropClassName);
     this.document.querySelector(this.backDropHolder).appendChild(this.backdropElement);
   }
 

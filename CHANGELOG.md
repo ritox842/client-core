@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/datorama/client-core/compare/v1.21.0...v1.22.0) (2018-11-05)
+
+
+### Features
+
+* **dato-directives:** add datodisablecontrol directive and update docs ([7a416de](https://github.com/datorama/client-core/commit/7a416de))
+
 # [1.21.0](https://github.com/datorama/client-core/compare/v1.20.1...v1.21.0) (2018-11-04)
 
 

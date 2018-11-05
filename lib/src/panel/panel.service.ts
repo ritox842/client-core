@@ -23,7 +23,7 @@ export type DatoPanelOptions<E = any> = {
   width?: number | string;
   viewContainerRef?: ViewContainerRef;
   offset?: { top?: number; left?: number };
-  backdrop?: boolean;
+  backdrop?: { enabled: boolean; selector?: string };
 };
 
 @Injectable()
@@ -35,6 +35,7 @@ export class DatoPanel {
   private onClose = new Subject<boolean>();
   private backdropElement: HTMLElement;
   private backdropClassName = 'dato-panel-backdrop';
+  private backDropHolder = 'body';
 
   close$ = this.onClose.asObservable();
 
@@ -61,6 +62,11 @@ export class DatoPanel {
 
   private createPanel<E extends Element, T>(content: ContentType<T>, relativeTo, options: DatoPanelOptions<E>) {
     const injector = options.viewContainerRef ? options.viewContainerRef.injector : this.injector;
+    const backdrop = options.backdrop;
+
+    if (backdrop && backdrop.enabled) {
+      this.createBackdrop(backdrop.selector);
+    }
 
     this.contentRef = ngContentResolver({
       applicationRef: this.appRef,
@@ -84,10 +90,6 @@ export class DatoPanel {
     this.component.hostView.detectChanges();
 
     this.document.body.appendChild(nativeElement);
-
-    if (options.backdrop) {
-      this.createBackdrop();
-    }
 
     fromEvent(window, 'scroll', { capture: true })
       .pipe(throttleTime(10), takeUntil(this.destroy$))
@@ -124,15 +126,14 @@ export class DatoPanel {
     }
   }
 
-  private createBackdrop() {
-    this.backdropElement = this.document.createElement('DIV');
+  private createBackdrop(selector: string) {
+    if (selector) {
+      this.backDropHolder = selector;
+    }
+
+    this.backdropElement = this.document.createElement('div');
     this.backdropElement.classList.add(this.backdropClassName);
-    this.backdropElement.style.position = 'absolute';
-    this.backdropElement.style.top = '0';
-    this.backdropElement.style.right = '0';
-    this.backdropElement.style.bottom = '0';
-    this.backdropElement.style.left = '0';
-    this.document.body.appendChild(this.backdropElement);
+    this.document.querySelector(this.backDropHolder).appendChild(this.backdropElement);
   }
 
   private calcPosition(relativeTo: HTMLElement, options: DatoPanelOptions) {
@@ -169,7 +170,7 @@ export class DatoPanel {
       this.document.body.removeChild(this.nativeElement);
 
       if (this.backdropElement) {
-        this.document.body.removeChild(this.backdropElement);
+        this.document.querySelector(this.backDropHolder).removeChild(this.backdropElement);
       }
 
       this.nativeElement = null;

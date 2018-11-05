@@ -47,13 +47,13 @@ describe('DatoCarousel', () => {
 
     it('should move to the next/prev slide', () => {
       host = createHost(carousel);
-      expect(host.component.currentSlide).toEqual(0);
+      expect((host.component as any).currentSlide).toEqual(0);
       host.component.next();
-      expect(host.component.currentSlide).toEqual(1);
+      expect((host.component as any).currentSlide).toEqual(1);
       host.component.next();
-      expect(host.component.currentSlide).toEqual(2);
+      expect((host.component as any).currentSlide).toEqual(2);
       host.component.prev();
-      expect(host.component.currentSlide).toEqual(1);
+      expect((host.component as any).currentSlide).toEqual(1);
     });
   });
 
@@ -95,16 +95,13 @@ describe('DatoCarousel', () => {
       </dato-carousel>
   `;
 
-    it(
-      'should call next automatically after .5 seconds',
-      fakeAsync(() => {
-        host = createHost(carouselAutoRun);
-        expect(host.component.currentSlide).toEqual(0);
-        tick(750);
-        discardPeriodicTasks();
-        expect(host.component.currentSlide).toEqual(1);
-      })
-    );
+    it('should call next automatically after .5 seconds', fakeAsync(() => {
+      host = createHost(carouselAutoRun);
+      expect((host.component as any).currentSlide).toEqual(0);
+      tick(750);
+      discardPeriodicTasks();
+      expect((host.component as any).currentSlide).toEqual(1);
+    }));
   });
 
   describe('List with Loop', () => {
@@ -125,19 +122,19 @@ describe('DatoCarousel', () => {
 
     it('should loop between slides', () => {
       host = createHost(carouselLoop);
-      expect(host.component.currentSlide).toEqual(0);
+      expect((host.component as any).currentSlide).toEqual(0);
       host.component.next();
-      expect(host.component.currentSlide).toEqual(1);
+      expect((host.component as any).currentSlide).toEqual(1);
       host.component.next();
-      expect(host.component.currentSlide).toEqual(2);
+      expect((host.component as any).currentSlide).toEqual(2);
       host.component.next();
-      expect(host.component.currentSlide).toEqual(3);
+      expect((host.component as any).currentSlide).toEqual(3);
       host.component.next();
-      expect(host.component.currentSlide).toEqual(4);
+      expect((host.component as any).currentSlide).toEqual(4);
       host.component.next();
-      expect(host.component.currentSlide).toEqual(0);
+      expect((host.component as any).currentSlide).toEqual(0);
       host.component.prev();
-      expect(host.component.currentSlide).toEqual(4);
+      expect((host.component as any).currentSlide).toEqual(4);
     });
   });
 });

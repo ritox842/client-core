@@ -164,7 +164,7 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor, AfterV
   ngAfterViewInit() {
     this.waitForAce().subscribe(() => {
       this.setOptions();
-      this.editor.setAutoScrollEditorIntoView(true);
+      (this.editor as any).setAutoScrollEditorIntoView(true);
 
       fromEvent(this.editor, 'change')
         .pipe(untilDestroyed(this))

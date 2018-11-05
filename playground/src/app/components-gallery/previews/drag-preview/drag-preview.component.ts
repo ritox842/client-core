@@ -1,12 +1,22 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { DraggedEvent } from '../../../../../../lib';
 
 @Component({
-  selector: "dato-drag-preview",
-  templateUrl: "./drag-preview.component.html",
-  styleUrls: ["./drag-preview.component.scss"]
+  selector: 'dato-drag-preview',
+  templateUrl: './drag-preview.component.html',
+  styleUrls: ['./drag-preview.component.scss']
 })
-export class DragPreviewComponent implements OnInit {
-  constructor() {}
+export class DragPreviewComponent {
+  constructor(private cdr: ChangeDetectorRef) {}
+  enabled = true;
+  delta: DraggedEvent = { x: 0, y: 0 };
 
-  ngOnInit() {}
+  toggleEnabled() {
+    this.enabled = !this.enabled;
+  }
+
+  dragged(delta: DraggedEvent) {
+    this.delta = delta;
+    this.cdr.detectChanges();
+  }
 }

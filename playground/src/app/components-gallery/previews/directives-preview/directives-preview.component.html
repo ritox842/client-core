@@ -27,7 +27,7 @@
   <p>Use this directive when you need to toggle a form control disable/enable state</p>
   <div class="d-flex">
     <dato-input class="mr-15" width="200px" [formControl]="disableControl" [datoDisableControl]="disable"></dato-input>
-    <dato-button (click)="toggleEnableDisable()">Toggle</dato-button>
+    <dato-button (click)="toggleEnableDisable()">{{disable ? 'enable' : 'disable'}} input</dato-button>
   </div>
   <div> Toggle the input's disable/enable, disable: {{disable}} </div>
 

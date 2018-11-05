@@ -126,7 +126,7 @@ export class DatoPanel {
 
   private createBackdrop() {
     this.backdropElement = this.document.createElement('DIV');
-    this.backdropElement.classList.add('dato-panel-backdrop');
+    this.backdropElement.classList.add(this.backdropClassName);
     this.backdropElement.style.position = 'absolute';
     this.backdropElement.style.top = '0';
     this.backdropElement.style.right = '0';

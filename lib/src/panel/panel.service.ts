@@ -23,6 +23,7 @@ export type DatoPanelOptions<E = any> = {
   width?: number | string;
   viewContainerRef?: ViewContainerRef;
   offset?: { top?: number; left?: number };
+  backdrop?: boolean;
 };
 
 @Injectable()
@@ -32,6 +33,9 @@ export class DatoPanel {
   private nativeElement: HTMLElement;
   private destroy$ = new Subject();
   private onClose = new Subject<boolean>();
+  private backdropElement: HTMLElement;
+  private backdropClassName = 'dato-panel-backdrop';
+
   close$ = this.onClose.asObservable();
 
   constructor(private resolver: ComponentFactoryResolver, private translate: DatoTranslateService, private injector: Injector, private appRef: ApplicationRef, @Inject(DATO_CORE_CONFIG) private config: CoreConfig, @Inject(DOCUMENT) private document) {}
@@ -80,6 +84,11 @@ export class DatoPanel {
     this.component.hostView.detectChanges();
 
     this.document.body.appendChild(nativeElement);
+
+    if (options.backdrop) {
+      this.createBackdrop();
+    }
+
     fromEvent(window, 'scroll', { capture: true })
       .pipe(throttleTime(10), takeUntil(this.destroy$))
       .subscribe(() => {
@@ -89,10 +98,13 @@ export class DatoPanel {
     fromEvent(document.body, 'click', { capture: true })
       .pipe(takeUntil(this.destroy$))
       .subscribe(event => {
+        const target = event.target as HTMLElement;
         const main = this.document.querySelector(this.config.appSelector);
-        const notAppendedToBody = main.contains(event.target as HTMLElement);
-        const isSideNav = this.document.querySelector(this.config.sidenavSelector).contains(event.target as HTMLElement);
-        if (notAppendedToBody && !isSideNav) {
+        const notAppendedToBody = main.contains(target as HTMLElement);
+        const isSideNav = this.document.querySelector(this.config.sidenavSelector).contains(target as HTMLElement);
+        const isBackdrop = (target as HTMLElement).classList.contains(this.backdropClassName);
+
+        if ((notAppendedToBody && !isSideNav) || isBackdrop) {
           this.close();
         }
       });
@@ -110,6 +122,17 @@ export class DatoPanel {
     if (this.panelContainer) {
       setStyle(this.panelContainer, 'animation', 'panelSlideOut 0.2s');
     }
+  }
+
+  private createBackdrop() {
+    this.backdropElement = this.document.createElement('DIV');
+    this.backdropElement.classList.add('dato-panel-backdrop');
+    this.backdropElement.style.position = 'absolute';
+    this.backdropElement.style.top = '0';
+    this.backdropElement.style.right = '0';
+    this.backdropElement.style.bottom = '0';
+    this.backdropElement.style.left = '0';
+    this.document.body.appendChild(this.backdropElement);
   }
 
   private calcPosition(relativeTo: HTMLElement, options: DatoPanelOptions) {
@@ -144,6 +167,11 @@ export class DatoPanel {
       this.contentRef.destroy(this.appRef);
       this.component.destroy();
       this.document.body.removeChild(this.nativeElement);
+
+      if (this.backdropElement) {
+        this.document.body.removeChild(this.backdropElement);
+      }
+
       this.nativeElement = null;
       this.destroy$.next();
       this.onClose.next(true);

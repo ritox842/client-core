@@ -20,8 +20,11 @@ export class DatoDraggableDirective implements AfterViewInit, OnDestroy {
   @Input()
   set datoDragEnabled(enabled) {
     this.enabled = enabled;
+    /** determine if the component has been init by the handle variable */
     if (this.handle) {
       setStyle(this.handle, 'cursor', enabled ? 'move' : 'default');
+    } else if (enabled) {
+      this.init();
     }
   }
   @Output()
@@ -40,20 +43,11 @@ export class DatoDraggableDirective implements AfterViewInit, OnDestroy {
   constructor(private host: ElementRef, private zone: NgZone, private renderer: Renderer2) {}
 
   public ngAfterViewInit(): void {
-    if (!this.datoDragTarget) {
-      throw 'You need to specify the drag target';
+    if (!this.enabled) {
+      return;
     }
 
-    this.handle = this.datoDragHandle instanceof Element ? this.datoDragHandle : isString(this.datoDragHandle) && this.datoDragHandle ? document.querySelector(this.datoDragHandle as string) : this.host.nativeElement;
-
-    /** add the move cursor */
-    if (this.handle && this.enabled) {
-      setStyle(this.handle, 'cursor', 'move');
-    }
-
-    this.target = this.datoDragTarget instanceof Element ? this.datoDragTarget : document.querySelector(this.datoDragTarget as string);
-
-    this.setupEvents();
+    this.init();
   }
 
   public ngOnDestroy(): void {
@@ -115,5 +109,25 @@ export class DatoDraggableDirective implements AfterViewInit, OnDestroy {
                   ${this.offset.y + this.delta.y}px)
       `;
     });
+  }
+
+  /**
+   * Init the directive
+   */
+  private init() {
+    if (!this.datoDragTarget) {
+      throw new Error('You need to specify the drag target');
+    }
+
+    this.handle = this.datoDragHandle instanceof Element ? this.datoDragHandle : isString(this.datoDragHandle) && this.datoDragHandle ? document.querySelector(this.datoDragHandle as string) : this.host.nativeElement;
+
+    /** add the move cursor */
+    if (this.handle && this.enabled) {
+      setStyle(this.handle, 'cursor', 'move');
+    }
+
+    this.target = this.datoDragTarget instanceof Element ? this.datoDragTarget : document.querySelector(this.datoDragTarget as string);
+
+    this.setupEvents();
   }
 }

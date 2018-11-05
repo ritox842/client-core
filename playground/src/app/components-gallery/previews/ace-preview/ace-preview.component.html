@@ -19,13 +19,13 @@
 
     <div style="flex: 1 1 50%">
       <h5>HTML</h5>
-      <div dato-ace [formControl]="htmlControl" lang="html" [HTMLCompletions]="htmlMap" #htmlEditor="datoAce"
+      <div datoAce [formControl]="htmlControl" lang="html" [HTMLCompletions]="htmlMap" #htmlEditor="datoAce"
            class="editor"></div>
     </div>
 
     <div style="flex: 1 1 50%">
       <h5>CSS</h5>
-      <div dato-ace [formControl]="cssControl" lang="css" #cssEditor="datoAce" class="editor"></div>
+      <div datoAce [formControl]="cssControl" lang="css" #cssEditor="datoAce" class="editor"></div>
     </div>
 
     <div style="flex: 1 1 100%;">
@@ -44,7 +44,7 @@
 
       </section>
 
-      <div dato-ace [formControl]="jsControl" lang="javascript" [JSObjectCompletions]="DAObjectMap" class="editor"
+      <div datoAce [formControl]="jsControl" lang="javascript" [JSObjectCompletions]="DAObjectMap" class="editor"
            style="width: 100%"
            #jsEditor="datoAce"></div>
     </div>
@@ -54,7 +54,7 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <div dato-ace [formControl]="cssControl" lang="css" #cssEditor="datoAce" class="editor"></div>
+      <div datoAce [formControl]="cssControl" lang="css" #cssEditor="datoAce" class="editor"></div>
       <div aceDraggableText="DA.navigation.dashboard.goToPage({ pageId: 1 })">Navigate to a page</div>
     </textarea>
 

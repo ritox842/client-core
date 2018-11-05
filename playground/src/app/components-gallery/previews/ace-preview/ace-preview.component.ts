@@ -124,7 +124,11 @@ export class AcePreviewComponent {
     });
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    for (const ace of this.aces.toArray()) {
+      ace.setTheme('dracula');
+    }
+  }
 
   prettify() {
     for (const ace of this.aces.toArray()) {

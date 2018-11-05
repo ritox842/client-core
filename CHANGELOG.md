@@ -1,3 +1,38 @@
+# [1.24.0](https://github.com/datorama/client-core/compare/v1.23.0...v1.24.0) (2018-11-05)
+
+
+### Features
+
+* **dato-panel:** add panel backdrop option ([b4387ba](https://github.com/datorama/client-core/commit/b4387ba))
+
+# [1.23.0](https://github.com/datorama/client-core/compare/v1.22.1...v1.23.0) (2018-11-05)
+
+
+### Features
+
+* **dato-drag:** add dragged event ([c2a77e3](https://github.com/datorama/client-core/commit/c2a77e3))
+
+## [1.22.1](https://github.com/datorama/client-core/compare/v1.22.0...v1.22.1) (2018-11-05)
+
+
+### Bug Fixes
+
+* **select:** update the control should mark the active ([31ae0a2](https://github.com/datorama/client-core/commit/31ae0a2))
+
+# [1.22.0](https://github.com/datorama/client-core/compare/v1.21.0...v1.22.0) (2018-11-05)
+
+
+### Features
+
+* **dato-directives:** add datodisablecontrol directive and update docs ([7a416de](https://github.com/datorama/client-core/commit/7a416de))
+
+# [1.21.0](https://github.com/datorama/client-core/compare/v1.20.1...v1.21.0) (2018-11-04)
+
+
+### Features
+
+* **dirty-check:** adding dirty-check pipeable operator ([03bd228](https://github.com/datorama/client-core/commit/03bd228))
+
 ## [1.20.1](https://github.com/datorama/client-core/compare/v1.20.0...v1.20.1) (2018-10-31)
 
 

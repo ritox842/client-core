@@ -8,3 +8,6 @@
 
 export * from './option.component';
 export * from './multi-option.component';
+export * from './options.module';
+export * from './option-template';
+export * from './group.component';

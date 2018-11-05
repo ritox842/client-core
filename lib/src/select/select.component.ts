@@ -367,6 +367,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    */
   writeValue(activeOptions: any | any[]): void {
     this._model = activeOptions ? coerceArray(activeOptions) : [];
+    if (this.options) {
+      this.markAsActive(this._model, { deselectAll: true });
+    }
     /** For later updates */
     this.cdr.markForCheck();
   }
@@ -493,8 +496,11 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * Mark the initial control value as active
    * @param model
    */
-  private markAsActive(model: any[]) {
+  private markAsActive(model: any[], options: { deselectAll: boolean } = { deselectAll: false }) {
     const asArray = this.options.toArray();
+    if (options.deselectAll) {
+      this.resetAll();
+    }
     for (const option of model) {
       const match = asArray.find(current => current.option[this.idKey] === option[this.idKey]);
       if (match) {
@@ -726,6 +732,12 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     }
   }
 
+  private resetAll() {
+    for (const datoOption of this.options.toArray()) {
+      datoOption.active = false;
+    }
+  }
+
   /**
    *
    * @param {DatoOptionComponent} datoOption
@@ -735,7 +747,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       this.close();
       return;
     } else {
-      this.options.forEach(datoOption => (datoOption.active = false));
+      this.resetAll();
       datoOption.active = true;
     }
 

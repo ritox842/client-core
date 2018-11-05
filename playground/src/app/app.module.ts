@@ -15,6 +15,8 @@ import { TranslatePipe } from './translate.pipe';
 import { APP_TRANSLATE } from '../../../lib/src/services/tokens';
 import { HttpClientModule } from '@angular/common/http';
 
+const PRODUCTION_URL = 'https://datorama.github.io/client-core';
+
 @NgModule({
   bootstrap: [AppComponent],
   declarations: [AppComponent, AtomicPageComponent, UtilsPageComponent, TranslatePipe],
@@ -30,8 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
       appSelector: 'app',
       sidenavSelector: '.sidenav',
       paths: {
-        editor: '/assets/ace',
-        richText: '/assets/rich-text'
+        editor: environment.production ? `${PRODUCTION_URL}/assets/ace` : '/assets/ace',
+        richText: environment.production ? `${PRODUCTION_URL}/assets/rich-text` : '/assets/rich-text'
       }
     }) as any,
     ComponentsGalleryModule

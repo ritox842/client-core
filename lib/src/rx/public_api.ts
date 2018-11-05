@@ -9,3 +9,4 @@
 export * from './polling';
 export * from './debounce';
 export * from './worker';
+export * from './dirty-check';

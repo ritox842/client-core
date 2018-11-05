@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Directive, ElementRef, forwardRef, Inject, Input, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, forwardRef, Inject, Input, OnDestroy, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { HashMap } from '@datorama/utils';
 import { forkJoin, fromEvent, Observable, Observer, timer } from 'rxjs';
@@ -26,7 +26,7 @@ declare global {
 }
 
 @Directive({
-  selector: '[dato-ace]',
+  selector: '[datoAce]',
   exportAs: 'datoAce',
   providers: [
     {
@@ -36,7 +36,7 @@ declare global {
     }
   ]
 })
-export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
+export class DatoAceDirective implements OnDestroy, ControlValueAccessor, AfterViewInit {
   disabled = false;
   //@ts-ignore
   private editor: AceAjax.Editor;
@@ -155,13 +155,16 @@ export class DatoAceDirective implements OnDestroy, ControlValueAccessor {
   }
 
   setTheme(theme: string) {
-    this.waitForAce().subscribe(() => this.editor.setTheme(`ace/theme/${theme}`));
+    this.waitForAce().subscribe(() => {
+      this.ace.config.set('themePath', `${this.config.paths.editor}/themes`);
+      this.editor.setTheme(`ace/theme/${theme}`);
+    });
   }
 
   ngAfterViewInit() {
     this.waitForAce().subscribe(() => {
       this.setOptions();
-      this.editor.setAutoScrollEditorIntoView(true);
+      (this.editor as any).setAutoScrollEditorIntoView(true);
 
       fromEvent(this.editor, 'change')
         .pipe(untilDestroyed(this))

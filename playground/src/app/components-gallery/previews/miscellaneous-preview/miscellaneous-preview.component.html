@@ -1,27 +1,3 @@
-<dato-preview title="datoSubscribe">
-
-  <p>Use this directive when you need to subscribe to the same observable multiple time in your template</p>
-  <p *datoSubscribe="interval$ as interval">Interval: {{interval}}</p>
-  <p *datoSubscribe="intervals as intervalsObj">Object of observables: {{intervalsObj?.intTwo }} {{intervalsObj?.intOne}}</p>
-  <p *datoSubscribe="test$ as t">{{t.name}}</p>
-  <dato-tabs show="html, js">
-
-    <textarea datoHighlight="html">
-       <div *datoSubscribe="alerts$ as alerts">
-         use alerts here
-       </div>
-       <p *datoSubscribe="interval$ as interval">Interval: {{interval}}</p>
-      <p *datoSubscribe="intervals as intervalsObj">Object of observables: {{intervalsObj?.intTwo }} {{intervalsObj?.intOne}}</p>
-    </textarea>
-
-    <textarea datoHighlight="js">
-      alerts$ = quert.select(state => state.alerts);
-    </textarea>
-
-  </dato-tabs>
-
-</dato-preview>
-
 <dato-preview title="Polling">
 
   <p>Use this function when you need to perform polling</p>
@@ -50,6 +26,22 @@
       import { workerMap } from '@datorama/core';
 
        http.get('url').pipe(mapWorker((response) => { // do some stuff and return the data}).subscribe()
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Dirty Check Operator">
+
+  <p>Dirty Check the source value. The default comparator is JSON.stringify(head, current).</p>
+
+  <dato-tabs show="js">
+
+    <textarea datoHighlight="js">
+    this.todosQuery.select(state => state.ui).pipe(
+       dirtyCheck()
+    ).subscribe(isDirty => ...);
     </textarea>
 
   </dato-tabs>

@@ -24,8 +24,9 @@ import { MiscellaneousPreviewComponent } from './previews/miscellaneous-preview/
 import { AcePreviewComponent } from './previews/ace-preview/ace-preview.component';
 import { RichTextPreviewComponent } from './previews/rich-text-preview/rich-text-preview.component';
 import { ChangeLogComponent } from './previews/changelog/change-log.component';
+import { DirectivesPreviewComponent } from './previews/directives-preview/directives-preview.component';
 
-export const previews = [ChangeLogComponent, ButtonsPreviewComponent, TypographyPreviewComponent, ColorsPreviewComponent, IconsPreviewComponent, InputsPreviewComponent, SortablePreviewComponent, AccordionPreviewComponent, DragPreviewComponent, TabsPreviewComponent, LayoutPreviewComponent, ListPreviewComponent, CarouselPreviewComponent, SnackbarPreviewComponent, SelectPreviewComponent, ToastPreviewComponent, TooltipPreviewComponent, PanelPreviewComponent, CustomToastComponent, MiscellaneousPreviewComponent, RichTextPreviewComponent, AcePreviewComponent, ...dialogPreviewComponents, ...gridProviders];
+export const previews = [DirectivesPreviewComponent, ChangeLogComponent, ButtonsPreviewComponent, TypographyPreviewComponent, ColorsPreviewComponent, IconsPreviewComponent, InputsPreviewComponent, SortablePreviewComponent, AccordionPreviewComponent, DragPreviewComponent, TabsPreviewComponent, LayoutPreviewComponent, ListPreviewComponent, CarouselPreviewComponent, SnackbarPreviewComponent, SelectPreviewComponent, ToastPreviewComponent, TooltipPreviewComponent, PanelPreviewComponent, CustomToastComponent, MiscellaneousPreviewComponent, RichTextPreviewComponent, AcePreviewComponent, ...dialogPreviewComponents, ...gridProviders];
 
 export const routeToComponent = {
   buttons: ButtonsPreviewComponent,
@@ -50,5 +51,6 @@ export const routeToComponent = {
   richtext: RichTextPreviewComponent,
   ace: AcePreviewComponent,
   miscellaneous: MiscellaneousPreviewComponent,
-  changelog: ChangeLogComponent
+  changelog: ChangeLogComponent,
+  directives: DirectivesPreviewComponent
 };

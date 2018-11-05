@@ -12,9 +12,10 @@ import { DatoDraggableDirective } from './drag.directive';
 import { DatoAutoFocusDirective } from './auto-focus.directive';
 import { DatoTooltipDirective } from './tooltip.directive';
 import { DatoSubscribeDirective } from './subscribe.directive';
+import { DatoDisableControlDirective } from './disable-control.directive';
 import { DatoClipboardDirective } from './clipboard.directive';
 
-const directives = [DatoOriginDirective, DatoDraggableDirective, DatoClipboardDirective, DatoAutoFocusDirective, DatoTooltipDirective, DatoSubscribeDirective];
+const directives = [DatoOriginDirective, DatoDraggableDirective, DatoAutoFocusDirective, DatoTooltipDirective, DatoSubscribeDirective, DatoClipboardDirective, DatoDisableControlDirective];
 
 @NgModule({
   declarations: directives,

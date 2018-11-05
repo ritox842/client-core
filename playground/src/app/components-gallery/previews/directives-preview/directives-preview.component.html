@@ -1,0 +1,52 @@
+<dato-preview title="datoSubscribe">
+
+  <p>Use this directive when you need to subscribe to the same observable multiple time in your template</p>
+  <p *datoSubscribe="interval$ as interval">Interval: {{interval}}</p>
+  <p *datoSubscribe="intervals as intervalsObj">Object of observables: {{intervalsObj?.intTwo }} {{intervalsObj?.intOne}}</p>
+  <p *datoSubscribe="test$ as t">{{t.name}}</p>
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+       <div *datoSubscribe="alerts$ as alerts">
+         use alerts here
+       </div>
+       <p *datoSubscribe="interval$ as interval">Interval: {{interval}}</p>
+      <p *datoSubscribe="intervals as intervalsObj">Object of observables: {{intervalsObj?.intTwo }} {{intervalsObj?.intOne}}</p>
+    </textarea>
+
+    <textarea datoHighlight="js">
+      alerts$ = quert.select(state => state.alerts);
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="datoDisableControl">
+
+  <p>Use this directive when you need to toggle a form control disable/enable state</p>
+  <div class="d-flex">
+    <dato-input class="mr-15" width="200px" [formControl]="disableControl" [datoDisableControl]="disable"></dato-input>
+    <dato-button (click)="toggleEnableDisable()">Toggle</dato-button>
+  </div>
+  <div> Toggle the input's disable/enable, disable: {{disable}} </div>
+
+  <dato-tabs show="html, js">
+
+    <textarea datoHighlight="html">
+  <div class="d-flex">
+    <dato-input class="mr-20" width="200px" [formControl]="disableControl" [datoDisableControl]="disable"></dato-input>
+    <dato-button (click)="toggleEnableDisable()">Toggle</dato-button>
+  </div>
+    <div> Toggle the input's disable/enable, disable: {{disable}} </div>
+    </textarea>
+
+    <textarea datoHighlight="js">
+        toggleEnableDisable() {
+          this.disable = !this.disable;
+        }
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>

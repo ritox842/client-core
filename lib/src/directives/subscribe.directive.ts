@@ -8,7 +8,7 @@
 
 import { ChangeDetectorRef, Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { combineLatest, Observable, Subscription } from 'rxjs';
-import { map, scan } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { isFunction } from '@datorama/utils';
 
 export class DatoSubscribeContext {

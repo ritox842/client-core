@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/datorama/client-core/compare/v1.23.0...v1.24.0) (2018-11-05)
+
+
+### Features
+
+* **dato-panel:** add panel backdrop option ([b4387ba](https://github.com/datorama/client-core/commit/b4387ba))
+
 # [1.23.0](https://github.com/datorama/client-core/compare/v1.22.1...v1.23.0) (2018-11-05)
 
 

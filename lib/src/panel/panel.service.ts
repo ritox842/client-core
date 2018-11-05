@@ -92,7 +92,10 @@ export class DatoPanel {
     this.document.body.appendChild(nativeElement);
 
     fromEvent(window, 'scroll', { capture: true })
-      .pipe(throttleTime(10), takeUntil(this.destroy$))
+      .pipe(
+        throttleTime(10),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => {
         this.calcPosition(relativeTo, options);
       });
@@ -116,7 +119,10 @@ export class DatoPanel {
 
   activateAnimationEndHook() {
     fromEvent(this.panelContainer, 'animationend')
-      .pipe(filter(({ animationName }: AnimationEvent) => animationName === 'panelSlideOut'), takeUntil(this.destroy$))
+      .pipe(
+        filter(({ animationName }: AnimationEvent) => animationName === 'panelSlideOut'),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => this.destroy());
   }
 

@@ -8,7 +8,8 @@ import { PanelDemoAkitaComponent, PanelDemoComponent } from './panel-demo.compon
   styleUrls: ['./panel-preview.component.scss']
 })
 export class PanelPreviewComponent implements OnInit {
-  @ViewChild('demo') tpl: TemplateRef<any>;
+  @ViewChild('demo')
+  tpl: TemplateRef<any>;
 
   constructor(private panelService: DatoPanel) {}
 

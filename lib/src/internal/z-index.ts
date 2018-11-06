@@ -4,5 +4,6 @@ export const zIndex = {
   snackbar: 25000,
   select: 20000,
   dialog: 10000,
-  panel: 9999
+  panel: 9999,
+  panelBackdrop: 9998
 };

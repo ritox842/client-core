@@ -1,3 +1,12 @@
+## [1.25.2](https://github.com/datorama/client-core/compare/v1.25.1...v1.25.2) (2018-11-06)
+
+
+### Bug Fixes
+
+* **dato-disable-control:** prevent form change event emit ([de1e2fe](https://github.com/datorama/client-core/commit/de1e2fe))
+* **dato-input:** coerce boolean on condition ([fa7134f](https://github.com/datorama/client-core/commit/fa7134f))
+* **dato-input:** fix condition ([d4da97b](https://github.com/datorama/client-core/commit/d4da97b))
+
 ## [1.25.1](https://github.com/datorama/client-core/compare/v1.25.0...v1.25.1) (2018-11-06)
 
 

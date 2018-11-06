@@ -17,7 +17,7 @@ export class DatoDisableControlDirective {
   set datoDisableControl(condition: boolean) {
     if (this.ngControl.control.disabled !== condition) {
       const action = condition ? 'disable' : 'enable';
-      this.ngControl.control[action]();
+      this.ngControl.control[action]({ emitEvent: false });
     }
   }
 

@@ -144,11 +144,7 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
    * @param value
    */
   private activateDeleteIcon(value) {
-    if (value) {
-      this.showDelete = true;
-    } else {
-      this.showDelete = false;
-    }
+    this.showDelete = value;
     this.cdr.detectChanges();
   }
 }

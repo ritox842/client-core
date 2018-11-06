@@ -1,3 +1,24 @@
+# [1.25.0](https://github.com/datorama/client-core/compare/v1.24.0...v1.25.0) (2018-11-05)
+
+
+### Features
+
+* **component:** add an event emitter when the dropdown closes ([d503068](https://github.com/datorama/client-core/commit/d503068))
+
+# [1.24.0](https://github.com/datorama/client-core/compare/v1.23.0...v1.24.0) (2018-11-05)
+
+
+### Features
+
+* **dato-panel:** add panel backdrop option ([b4387ba](https://github.com/datorama/client-core/commit/b4387ba))
+
+# [1.23.0](https://github.com/datorama/client-core/compare/v1.22.1...v1.23.0) (2018-11-05)
+
+
+### Features
+
+* **dato-drag:** add dragged event ([c2a77e3](https://github.com/datorama/client-core/commit/c2a77e3))
+
 ## [1.22.1](https://github.com/datorama/client-core/compare/v1.22.0...v1.22.1) (2018-11-05)
 
 

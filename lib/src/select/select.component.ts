@@ -182,6 +182,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   @Output()
   fetch = new EventEmitter<boolean>();
 
+  @Output()
+  blur = new EventEmitter<void>();
+
   /**
    * Getters and Setters
    */
@@ -333,6 +336,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     this._focus = false;
     this._clickOutside = true;
     this.infiniteSubscription && this.infiniteSubscription.unsubscribe();
+    this.blur.emit();
   }
 
   /**

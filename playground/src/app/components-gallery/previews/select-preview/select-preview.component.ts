@@ -110,6 +110,10 @@ export class SelectPreviewComponent implements OnInit {
 
   isLoading = false;
 
+  blur() {
+    this.snackbar.success('Dropdown closed!!!');
+  }
+
   update() {
     this.asyncControl.patchValue({ ...this.options[2] });
   }

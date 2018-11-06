@@ -3,7 +3,7 @@
   <section class="d-flex">
     <div class="select-preview">
 
-      <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple datoSelectClass="netanel">
+      <dato-select (blur)="blur()" [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple datoSelectClass="netanel">
 
         <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option"
                      [disabled]="index === 1">
@@ -20,7 +20,7 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <dato-select [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple datoSelectClass="netanel">
+      <dato-select (blur)="blur()" [formControl]="simpleControl" [dataSet]="options" [isCombo]="false" #datoSelectSimple datoSelectClass="netanel">
 
         <dato-option *ngFor="let option of datoSelectSimple.data; index as index" [option]="option"
                      [disabled]="index === 1">
@@ -898,6 +898,11 @@
         <td>fetch</td>
         <td>string</td>
         <td>Emit search value when internal search is false</td>
+      </tr>
+      <tr>
+        <td>blur</td>
+        <td>void</td>
+        <td>Emits when the dropdown closes</td>
       </tr>
 
     </dato-api-table>

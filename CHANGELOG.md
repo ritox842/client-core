@@ -1,3 +1,10 @@
+## [1.25.3](https://github.com/datorama/client-core/compare/v1.25.2...v1.25.3) (2018-11-06)
+
+
+### Bug Fixes
+
+* **dato-panel:** add backdrop z-index and docs ([e7f2089](https://github.com/datorama/client-core/commit/e7f2089))
+
 ## [1.25.2](https://github.com/datorama/client-core/compare/v1.25.1...v1.25.2) (2018-11-06)
 
 

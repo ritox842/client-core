@@ -16,6 +16,7 @@ import { DatoTranslateService } from '../services/translate.service';
 import { DatoPanelComponent } from './panel.component';
 import { addClass, setStyle } from '../internal/helpers';
 import { CoreConfig, DATO_CORE_CONFIG } from '../config';
+import { zIndex } from '../internal/z-index';
 
 export type DatoPanelOptions<E = any> = {
   relativeTo?: E | string;
@@ -139,6 +140,7 @@ export class DatoPanel {
 
     this.backdropElement = this.document.createElement('div');
     addClass(this.backdropElement, this.backdropClassName);
+    setStyle(this.backdropElement, 'zIndex', `${zIndex.panelBackdrop}`);
     this.document.querySelector(this.backDropHolder).appendChild(this.backdropElement);
   }
 

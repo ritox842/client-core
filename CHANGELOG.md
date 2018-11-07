@@ -1,3 +1,10 @@
+## [1.25.4](https://github.com/datorama/client-core/compare/v1.25.3...v1.25.4) (2018-11-07)
+
+
+### Bug Fixes
+
+* **ace-text:** use input as we need binding ([64081f1](https://github.com/datorama/client-core/commit/64081f1))
+
 ## [1.25.3](https://github.com/datorama/client-core/compare/v1.25.2...v1.25.3) (2018-11-06)
 
 

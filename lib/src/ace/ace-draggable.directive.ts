@@ -6,13 +6,20 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Attribute, Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
   selector: '[aceDraggableText]'
 })
 export class DatoAceDraggableDirective {
-  constructor(private host: ElementRef<HTMLElement>, @Attribute('aceDraggableText') private text: string) {
+  private text: string;
+
+  @Input()
+  set aceDraggableText(value: string) {
+    this.text = value;
+  }
+
+  constructor(private host: ElementRef<HTMLElement>) {
     this.host.nativeElement.setAttribute('draggable', 'true');
   }
 

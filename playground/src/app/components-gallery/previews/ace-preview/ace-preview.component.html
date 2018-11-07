@@ -1,9 +1,8 @@
 <dato-preview title="Ace">
 
   <section style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-    <dato-select [formControl]="themesControl" [dataSet]="themes" [isCombo]="false" #themesSelect
-                 style="width: 200px;"
-                 placeholder="Select Theme..">
+    <dato-select [formControl]="themesControl" [dataSet]="themes" [isCombo]="false" #themesSelect style="width: 200px;"
+      placeholder="Select Theme..">
 
       <dato-option *ngFor="let option of themesSelect.data;" [option]="option">
         {{option.label}}
@@ -19,8 +18,7 @@
 
     <div style="flex: 1 1 50%">
       <h5>HTML</h5>
-      <div datoAce [formControl]="htmlControl" lang="html" [HTMLCompletions]="htmlMap" #htmlEditor="datoAce"
-           class="editor"></div>
+      <div datoAce [formControl]="htmlControl" lang="html" [HTMLCompletions]="htmlMap" #htmlEditor="datoAce" class="editor"></div>
     </div>
 
     <div style="flex: 1 1 50%">
@@ -33,7 +31,7 @@
         <h5>JS</h5>
 
         <section style="display: flex;">
-          <div aceDraggableText="DA.navigation.dashboard.goToPage({ pageId: 1 })">Navigate to a page</div>
+          <div [aceDraggableText]="'DA.navigation.dashboard.goToPage({ pageId: 1 })'">Navigate to a page</div>
           <div aceDraggableText="DA.navigation.dashboard.scrollToWidget({ widgetId: 1 })">Scroll to a widget</div>
           <div aceDraggableText="DA.navigation.open({ url: '', type: '_blank/_top/dialog' })">Open page</div>
 
@@ -44,9 +42,8 @@
 
       </section>
 
-      <div datoAce [formControl]="jsControl" lang="javascript" [JSObjectCompletions]="DAObjectMap" class="editor"
-           style="width: 100%"
-           #jsEditor="datoAce"></div>
+      <div datoAce [formControl]="jsControl" lang="javascript" [JSObjectCompletions]="DAObjectMap" class="editor" style="width: 100%"
+        #jsEditor="datoAce"></div>
     </div>
   </section>
 

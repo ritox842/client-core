@@ -1,26 +1,28 @@
 <dato-preview title="Accordion">
-  <dato-button datoSize="sm" class="mr-5 mb-6" (click)="accordion2.toggle(0)">Toggle first</dato-button>
-  <dato-button datoSize="sm" class="mr-5 mb-6" (click)="expandAll = !expandAll">Expand all</dato-button>
-  <dato-button datoSize="sm" class="mr-5 mb-6" (click)="changeActive()">Change active ids</dato-button>
+  <ng-container *datoSubscribe="search$ as searchTerm">
+    <dato-button datoSize="sm" class="mr-5 mb-6" (click)="accordion2.toggle(0)">Toggle first</dato-button>
+    <dato-button datoSize="sm" class="mr-5 mb-6" (click)="expandAll = !expandAll">Expand all</dato-button>
+    <dato-button datoSize="sm" class="mr-5 mb-6" (click)="changeActive()">Change active ids</dato-button>
 
-  <dato-input placeholder="Search..." [formControl]="searchControl"></dato-input>
+    <dato-input placeholder="Search..." [formControl]="searchControl"></dato-input>
+    <dato-accordion [activeIds]="activeIds" #accordion2="datoAccordion" [expandAll]="expandAll" [searchTerm]="searchTerm">
 
-  <dato-accordion [activeIds]="activeIds" #accordion2="datoAccordion" [expandAll]="expandAll" [searchStream]="search$">
+      <dato-accordion-group *ngFor="let section of data">
+        <dato-accordion-header #header="datoAccordionHeader">
+          <div class="header d-flex items-center">
+            <dato-icon [datoIcon]="header.isOpen ? 'arrow-down' : 'arrow-right'" datoColor="primary-400" datoSize="sm"
+              class="mr-4"></dato-icon>
+            <span>{{section.title}}</span>
+          </div>
+        </dato-accordion-header>
+        <dato-accordion-content>
+          <p [datoSearchable]="child" [datoSearchTerm]="searchTerm" *ngFor="let child of section.children" [innerHTML]="child | datoHighlight: searchTerm"></p>
+        </dato-accordion-content>
+      </dato-accordion-group>
 
-    <dato-accordion-group *ngFor="let section of data">
-      <dato-accordion-header #header="datoAccordionHeader">
-        <div class="header d-flex items-center">
-          <dato-icon [datoIcon]="header.isOpen ? 'arrow-down' : 'arrow-right'" datoColor="primary-400" datoSize="sm"
-            class="mr-4"></dato-icon>
-          <span>{{section.title}}</span>
-        </div>
-      </dato-accordion-header>
-      <dato-accordion-content>
-        <div class="content" [datoSearchable]="section.description" [innerHTML]="section.description | datoHighlight:searchControl.value"></div>
-      </dato-accordion-content>
-    </dato-accordion-group>
+    </dato-accordion>
+  </ng-container>
 
-  </dato-accordion>
 
   <dato-tabs show="html">
 

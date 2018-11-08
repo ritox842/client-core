@@ -58,6 +58,9 @@ export class DatoAccordionGroupComponent {
   }
 
   hide(hide = true) {
-    this._hidden = hide;
+    if (hide !== this._hidden) {
+      this._hidden = hide;
+      this.cdr.detectChanges();
+    }
   }
 }

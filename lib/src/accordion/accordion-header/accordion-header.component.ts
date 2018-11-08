@@ -28,8 +28,10 @@ export class DatoAccordionHeaderComponent {
 
   @Input()
   set expanded(value) {
-    this._expanded = value;
-    this.cdr.detectChanges();
+    if (this._expanded !== value) {
+      this._expanded = value;
+      this.cdr.detectChanges();
+    }
   }
 
   get includeArrow() {

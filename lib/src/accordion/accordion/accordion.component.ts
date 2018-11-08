@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 /**
  * @license
  * Copyright Datorama. All Rights Reserved.
@@ -9,7 +8,7 @@ import { Observable } from 'rxjs';
 
 import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, Input, OnDestroy, Optional, QueryList, SkipSelf } from '@angular/core';
 import { DatoAccordionGroupComponent } from '../accordion-group/accordion-group.component';
-import { merge, Subscription } from 'rxjs';
+import { merge, Subscription, Observable } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { toBoolean } from '@datorama/utils';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -41,9 +40,25 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
   activeIds: number | number[] = [];
 
   @Input()
-  searchStream: Observable<string>;
+  set searchTerm(searchTerm: string) {
+    if (this.groups) {
+      searchTerm = searchTerm || '';
 
-  groupsSubscription: Subscription;
+      for (const group of this.asArray) {
+        if (!searchTerm) {
+          this.toggleGroup(group, false);
+          group.hide(false);
+        } else {
+          const searchables = group.content.searchable;
+          const result = searchables.filter(({ term }) => term.indexOf(searchTerm.toLowerCase()) > -1);
+          group.hide(!result.length);
+          group.expand(!!result.length);
+        }
+      }
+    }
+  }
+
+  private groupsSubscription: Subscription;
 
   constructor(
     @SkipSelf()
@@ -90,10 +105,6 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
   }
 
   ngAfterContentInit() {
-    if (this.searchStream) {
-      this.listenToSearch();
-    }
-
     this.groups.changes.pipe(untilDestroyed(this)).subscribe(() => {
       this.register();
     });
@@ -101,22 +112,10 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     this.register();
     if (this.includeArrows) {
       this.updateIncludeArrows();
-      // register to groups changes
       this.groups.changes.pipe(untilDestroyed(this)).subscribe(this.updateIncludeArrows.bind(this));
     }
 
     setTimeout(() => this.initialOpen(this.activeIds));
-  }
-
-  private listenToSearch() {
-    this.searchStream.pipe(untilDestroyed(this)).subscribe(searchTerm => {
-      for (const group of this.asArray) {
-        const { term } = group.content.searchable;
-        const result = term.indexOf(searchTerm.toLowerCase()) > -1;
-        group.hide(!result);
-        group.expand(!!result);
-      }
-    });
   }
 
   private updateIncludeArrows() {

@@ -18,7 +18,8 @@ export class AccordionPreviewComponent implements OnInit {
     for (let index = 1; index < 5; index++) {
       this.data.push({
         title: `Title ${index}`,
-        description: `Title${index} description`
+        description: `Title${index} description`,
+        children: [`Child ${index} - 1`, `Child ${index} - 2`, `Child ${index} - 3`]
       });
     }
   }

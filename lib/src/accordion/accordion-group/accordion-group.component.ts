@@ -17,12 +17,18 @@ import { DatoAccordionHeaderComponent } from '../accordion-header/accordion-head
   styleUrls: [`./accordion-group.component.scss`]
 })
 export class DatoAccordionGroupComponent {
-  @ContentChild(DatoAccordionContentComponent) content: DatoAccordionContentComponent;
-  @ContentChild(DatoAccordionHeaderComponent) header: DatoAccordionHeaderComponent;
-  @HostBinding('class.dato-accordion-disabled') _disabled = false;
-  @HostBinding('class.force-hide') _hidden = false;
+  @ContentChild(DatoAccordionContentComponent)
+  content: DatoAccordionContentComponent;
+  @ContentChild(DatoAccordionHeaderComponent)
+  header: DatoAccordionHeaderComponent;
 
-  @Output() toggle = new EventEmitter<{ expanded: boolean }>();
+  @HostBinding('class.dato-accordion-disabled')
+  _disabled = false;
+  @HostBinding('class.force-hide')
+  _hidden = false;
+
+  @Output()
+  toggle = new EventEmitter<{ expanded: boolean }>();
 
   @Input()
   set disabled(value) {
@@ -49,5 +55,9 @@ export class DatoAccordionGroupComponent {
   expand(expanded: boolean) {
     this.content.expanded = expanded;
     this.header.expanded = expanded;
+  }
+
+  hide(hide = true) {
+    this._hidden = hide;
   }
 }

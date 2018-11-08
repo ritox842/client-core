@@ -8,6 +8,7 @@
 
 import { Component, Input, ChangeDetectorRef, ChangeDetectionStrategy, ContentChild, TemplateRef } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { DatoSearchableDirective } from '../../directives/searchable.directive';
 
 @Component({
   selector: 'dato-accordion-content',
@@ -20,17 +21,21 @@ import { trigger, style, animate, transition } from '@angular/animations';
   `,
   styles: [
     `
-    :host {
-      overflow: hidden;
-      display: block;
-    }
-
-  `
+      :host {
+        overflow: hidden;
+        display: block;
+      }
+    `
   ],
   animations: [trigger('slideInOut', [transition(':enter', [style({ height: '0px' }), animate('200ms', style({ height: '*' }))]), transition(':leave', [style({ height: '*' }), animate('200ms', style({ height: '0px' }))])])]
 })
 export class DatoAccordionContentComponent {
-  @Input('tpl') template: TemplateRef<any>;
+  @Input('tpl')
+  template: TemplateRef<any>;
+
+  @ContentChild(DatoSearchableDirective)
+  searchable: DatoSearchableDirective;
+
   _expanded: boolean = false;
 
   private _disableAnimation = false;

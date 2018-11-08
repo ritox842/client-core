@@ -1,5 +1,4 @@
 .header {
-  background: #dbdbdb;
   height: 64px;
   line-height: 64px;
   padding: 0 20px;
@@ -12,9 +11,7 @@
   background: white;
 }
 
-.dato-accordion-open {
-  color: hotpink;
-}
+.dato-accordion-open {}
 
 dato-accordion-group.dato-accordion-disabled {
   opacity: 0.3;

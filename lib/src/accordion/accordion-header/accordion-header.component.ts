@@ -13,15 +13,18 @@ import { fromEvent, Observable } from 'rxjs';
   selector: 'dato-accordion-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './accordion-header.component.html',
+  exportAs: 'datoAccordionHeader',
   styles: [
     `
-            :host {
-                display: block;
-            }`
+      :host {
+        display: block;
+      }
+    `
   ]
 })
 export class DatoAccordionHeaderComponent {
-  @HostBinding('class.dato-accordion-open') _expanded = false;
+  @HostBinding('class.dato-accordion-open')
+  _expanded = false;
 
   @Input()
   set expanded(value) {
@@ -46,5 +49,9 @@ export class DatoAccordionHeaderComponent {
 
   get element() {
     return this.host.nativeElement;
+  }
+
+  get isOpen() {
+    return this._expanded;
   }
 }

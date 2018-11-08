@@ -33,10 +33,12 @@
       },
       "@semantic-release/git"
     ],
-    "publish": [{
-      "path": "@semantic-release/npm",
-      "pkgRoot": "dist"
-    }]
+    "publish": [
+      {
+        "path": "@semantic-release/npm",
+        "pkgRoot": "dist"
+      }
+    ]
   },
   "config": {
     "commitizen": {
@@ -102,7 +104,7 @@
     "run-sequence": "^2.2.1",
     "rxjs": "^6.3.2",
     "sass-json-export": "^2.0.0",
-    "semantic-release": "^15.7.2",
+    "semantic-release": "^15.10.8",
     "sorcery": "^0.10.0",
     "sync-json": "^1.0.2",
     "through2": "^2.0.3",

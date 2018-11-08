@@ -48,11 +48,13 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
         if (!searchTerm) {
           this.toggleGroup(group, false);
           group.hide(false);
+          group.header.searchResultLength = 0;
         } else {
           const searchables = group.content.searchable;
           const result = searchables.filter(({ term }) => term.indexOf(searchTerm.toLowerCase()) > -1);
           group.hide(!result.length);
           group.expand(!!result.length);
+          group.header.searchResultLength = result.length;
         }
       }
     }

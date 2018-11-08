@@ -16,9 +16,6 @@ export class DatoSearchableDirective {
     this._term = term || '';
   }
 
-  @Input()
-  datoSearchTerm = '';
-
   private _term = '';
 
   constructor(private host: ElementRef) {}
@@ -37,19 +34,5 @@ export class DatoSearchableDirective {
 
   show() {
     this.element.classList.remove('force-hide');
-  }
-
-  ngOnChanges(changes) {
-    const term = changes.term ? changes.term : this.term;
-    const currentSearchTerm = changes.datoSearchTerm.currentValue;
-    if (!currentSearchTerm) {
-      this.show();
-      return;
-    }
-    if (term.indexOf(currentSearchTerm) === -1) {
-      this.hide();
-    } else {
-      this.show();
-    }
   }
 }

@@ -45,10 +45,6 @@ export class DatoAccordionHeaderComponent {
 
   click$ = fromEvent(this.element, 'click');
 
-  private _includeArrow = false;
-
-  constructor(public host: ElementRef, private cdr: ChangeDetectorRef) {}
-
   get element() {
     return this.host.nativeElement;
   }
@@ -56,4 +52,17 @@ export class DatoAccordionHeaderComponent {
   get isOpen() {
     return this._expanded;
   }
+
+  set searchResultLength(value: number) {
+    this._searchResultLength = value;
+  }
+
+  get searchResultLength() {
+    return this._searchResultLength;
+  }
+
+  private _searchResultLength = 0;
+  private _includeArrow = false;
+
+  constructor(public host: ElementRef, private cdr: ChangeDetectorRef) {}
 }

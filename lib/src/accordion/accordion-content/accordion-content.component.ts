@@ -8,7 +8,7 @@
 
 import { Component, Input, ChangeDetectorRef, ChangeDetectionStrategy, ContentChildren, TemplateRef, QueryList } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { DatoSearchableDirective } from '../../directives/searchable.directive';
+import { DatoSearchableDirective } from '../../searchable/searchable.directive';
 
 @Component({
   selector: 'dato-accordion-content',
@@ -34,7 +34,7 @@ export class DatoAccordionContentComponent {
   template: TemplateRef<any>;
 
   @ContentChildren(DatoSearchableDirective)
-  searchable: QueryList<DatoSearchableDirective>;
+  searchables: QueryList<DatoSearchableDirective>;
 
   _expanded: boolean = false;
 

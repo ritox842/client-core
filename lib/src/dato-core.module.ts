@@ -43,8 +43,9 @@ import { DatoPipesModule } from './pipes/pipes.module';
 import { DatoRichTextModule } from './rich-text/rich-text.module';
 import { DatoAceModule } from './ace/ace.module';
 import { AceService } from './ace/ace.service';
+import { DatoSearchableModule } from './searchable/searchable.module';
 
-const modules = [DatoDirectivesModule, DatoAceModule, DatoRichTextModule, DatoPanelModule, DatoSelectModule, DatoToastModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule, DatoDynamicContentModule, DatoListModule, DatoOptionsModule, DatoCarouselModule, DatoPipesModule];
+const modules = [DatoDirectivesModule, DatoSearchableModule, DatoAceModule, DatoRichTextModule, DatoPanelModule, DatoSelectModule, DatoToastModule, DatoButtonModule, DatoThemesModule, DatoSnackbarModule, DatoEditableHeaderModule, DatoInputModule, DatoIconModule, DatoLinkButtonModule, DatoTextModule, DatoTabsModule, DatoGridModule, DatoLoaderModule, DatoSortableModule, DatoAccordionModule, DatoTogglerModule, DatoCheckboxModule, DatoRadioModule, DatoDialogModule, DatoDynamicContentModule, DatoListModule, DatoOptionsModule, DatoCarouselModule, DatoPipesModule];
 
 const providers = [IconRegistry, AceService, ThemeManager, DatoSnackbar, DatoTranslateService, DatoToast, DatoPanel];
 

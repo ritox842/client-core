@@ -14,10 +14,8 @@ import { DatoTooltipDirective } from './tooltip.directive';
 import { DatoSubscribeDirective } from './subscribe.directive';
 import { DatoDisableControlDirective } from './disable-control.directive';
 import { DatoClipboardDirective } from './clipboard.directive';
-import { DatoSearchableDirective } from './searchable.directive';
-import { DatoSearchableContainerComponent } from './searchable-container.component';
 
-const directives = [DatoSearchableContainerComponent, DatoOriginDirective, DatoSearchableDirective, DatoDraggableDirective, DatoAutoFocusDirective, DatoTooltipDirective, DatoSubscribeDirective, DatoClipboardDirective, DatoDisableControlDirective];
+const directives = [DatoOriginDirective, DatoDraggableDirective, DatoAutoFocusDirective, DatoTooltipDirective, DatoSubscribeDirective, DatoClipboardDirective, DatoDisableControlDirective];
 
 @NgModule({
   declarations: directives,

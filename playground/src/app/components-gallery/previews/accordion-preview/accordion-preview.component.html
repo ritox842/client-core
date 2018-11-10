@@ -19,7 +19,7 @@
             </div>
           </dato-accordion-header>
           <dato-accordion-content>
-            <p [datoSearchable]="child" *ngFor="let child of section.children" [innerHTML]="child | datoHighlight: searchTerm"></p>
+            <p [datoSearchable]="child" *ngFor="let child of section.children" datoSearchableHighlight></p>
           </dato-accordion-content>
         </dato-accordion-group>
 

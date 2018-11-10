@@ -32,6 +32,7 @@ export * from './dialog/public_api';
 export * from './toast/public_api';
 export * from './panel/public_api';
 export * from './ace/public_api';
+export * from './searchable/public_api';
 export * from './angular/public_api';
 
 export * from './svg/svg';

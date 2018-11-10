@@ -12,6 +12,7 @@ import { merge, Subscription, Observable } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { toBoolean } from '@datorama/utils';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component({
   selector: 'dato-accordion',
   template: '<ng-content></ng-content>',
@@ -50,8 +51,8 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
           group.hide(false);
           group.header.searchResultLength = 0;
         } else {
-          const searchables = group.content.searchable;
-          const result = searchables.filter(({ term }) => term.indexOf(searchTerm.toLowerCase()) > -1);
+          const searchables = group.content.searchables;
+          const result = searchables.filter(({ token }) => token.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
           group.hide(!result.length);
           group.expand(!!result.length);
           group.header.searchResultLength = result.length;

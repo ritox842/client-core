@@ -13,5 +13,4 @@ export * from './tooltip.directive';
 export * from './subscribe.directive';
 export * from './disable-control.directive';
 export * from './clipboard.directive';
-export * from './searchable.directive';
 export * from './directives.module';

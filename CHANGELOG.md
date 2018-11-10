@@ -1,3 +1,13 @@
+# [1.26.0](https://github.com/datorama/client-core/compare/v1.25.4...v1.26.0) (2018-11-10)
+
+
+### Features
+
+* **accordion:** add search functionality ([462315b](https://github.com/datorama/client-core/commit/462315b))
+* **accordion:** add search option ([7b36379](https://github.com/datorama/client-core/commit/7b36379))
+* **accordion:** add searchable ([47337ea](https://github.com/datorama/client-core/commit/47337ea))
+* **searchable:** add search functionality ([92e6b2d](https://github.com/datorama/client-core/commit/92e6b2d))
+
 ## [1.25.4](https://github.com/datorama/client-core/compare/v1.25.3...v1.25.4) (2018-11-07)
 
 

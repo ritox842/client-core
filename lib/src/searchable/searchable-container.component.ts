@@ -37,7 +37,7 @@ export class DatoSearchableContainerComponent {
   set term(searchTerm: string) {
     this._term = searchTerm || '';
     if (this.contentInit) {
-      this.magic(this._term);
+      this.search(this._term);
     }
   }
 
@@ -45,7 +45,7 @@ export class DatoSearchableContainerComponent {
     return this._term;
   }
 
-  magic(searchTerm: string) {
+  search(searchTerm: string) {
     this.handleSearchables(searchTerm);
     this.handleHighlighters(searchTerm);
   }
@@ -56,25 +56,42 @@ export class DatoSearchableContainerComponent {
     } else {
       this.searchables.push(searchable as DatoSearchableDirective);
     }
+
+    /** For later arrives */
+    if (this.contentInit) {
+      if (highlight) {
+        (searchable as DatoSearchableHighlightDirective).highlight(searchable.token, this._term);
+      } else {
+        if (this.match(searchable as DatoSearchableDirective)) {
+          (searchable as DatoSearchableDirective).show();
+          this.count++;
+        } else {
+          (searchable as DatoSearchableDirective).hide();
+        }
+      }
+    }
   }
 
   unregister(searchable: DatoSearchableDirective | DatoSearchableHighlightDirective, highlight = false) {
-    let arr = 'searchables';
     if (highlight) {
-      arr = 'searchablesHighlight';
+      this.searchablesHighlight = this.searchablesHighlight.filter(current => current !== searchable);
+    } else {
+      this.searchables = this.searchables.filter(current => current !== searchable);
     }
-
-    this[arr] = this[arr].filter(current => current !== searchable);
   }
 
   ngAfterContentInit() {
     this.contentInit = true;
-    this.magic(this.term);
+    this.search(this.term);
   }
 
   ngOnDestroy() {
     this.searchables = [];
     this.searchablesHighlight = [];
+  }
+
+  private match(searchable: DatoSearchableDirective) {
+    return searchable.token.toLowerCase().indexOf(this._term.toLowerCase()) > -1;
   }
 
   private handleSearchables(searchTerm: string) {
@@ -84,7 +101,7 @@ export class DatoSearchableContainerComponent {
         searchable.show();
         count++;
       } else {
-        if (searchable.token.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+        if (this.match(searchable)) {
           searchable.show();
           count++;
         } else {

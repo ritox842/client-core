@@ -5,7 +5,7 @@
     <dato-button datoSize="sm" class="mr-5 mb-6" (click)="changeActive()">Change active ids</dato-button>
 
     <dato-input placeholder="Search..." [formControl]="searchControl"></dato-input>
-
+    <button (click)="show = !show">Toggle</button>
     <dato-searchable-container #container="datoSearchableContainer" [datoSearchTerm]="searchTerm">
       {{container.count}}
       <dato-accordion [activeIds]="activeIds" #accordion2="datoAccordion" [expandAll]="expandAll" [searchTerm]="searchTerm">
@@ -24,7 +24,12 @@
         </dato-accordion-group>
 
       </dato-accordion>
+
+      <p datoSearchable="Hello" *ngIf="show">
+        <span datoSearchableHighlight></span> World
+      </p>
     </dato-searchable-container>
+
 
   </ng-container>
 

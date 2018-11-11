@@ -1,3 +1,10 @@
+## [1.26.1](https://github.com/datorama/client-core/compare/v1.26.0...v1.26.1) (2018-11-11)
+
+
+### Bug Fixes
+
+* **searchable:** should support later arrives ([43cbdb6](https://github.com/datorama/client-core/commit/43cbdb6))
+
 # [1.26.0](https://github.com/datorama/client-core/compare/v1.25.4...v1.26.0) (2018-11-10)
 
 

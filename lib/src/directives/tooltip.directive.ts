@@ -136,7 +136,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
 
   show() {
     if (this.tooltip) return;
-    this.tooltip = this.createTooltipInstance(this.host.nativeElement).show();
+    this.tooltip = this.createTooltipInstance(this.tooltipElement).show();
   }
 
   hide() {

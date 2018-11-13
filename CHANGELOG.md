@@ -1,3 +1,10 @@
+## [1.26.2](https://github.com/datorama/client-core/compare/v1.26.1...v1.26.2) (2018-11-13)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix datoTooltipOverflowElement ([050c022](https://github.com/datorama/client-core/commit/050c022))
+
 ## [1.26.1](https://github.com/datorama/client-core/compare/v1.26.0...v1.26.1) (2018-11-11)
 
 

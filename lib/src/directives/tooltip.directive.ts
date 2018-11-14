@@ -1,6 +1,6 @@
 import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, TemplateRef } from '@angular/core';
 import Tooltip from 'tooltip.js';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { DatoTemplatePortal } from '../angular/overlay';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { IconRegistry } from '../services/icon-registry';
@@ -33,6 +33,11 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
     if (this.tooltip) {
       this.hide();
     }
+
+    if (this.viewInit) {
+      this.unsubscribe();
+      this.initTooltip();
+    }
   }
 
   @Input()
@@ -56,9 +61,12 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   @Input()
   datoTooltipTrigger: TooltipTrigger = 'hover';
 
+  private viewInit = false;
   private tooltip;
   private content: string | HTMLElement;
   private tplPortal: DatoTemplatePortal;
+  private triggerOn: Subscription;
+  private triggerOff: Subscription;
   private eventsMap = {
     hover: {
       on: 'mouseenter',
@@ -85,46 +93,13 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   constructor(private host: ElementRef, private iconRegistry: IconRegistry) {}
 
   ngAfterViewInit() {
+    this.viewInit = true;
+
     if (this.datoTooltipTrigger === 'manual') {
       return;
     }
 
-    const { on, off } = this.eventsMap[this.datoTooltipTrigger];
-
-    if (this.datoTooltipOnTextOverflow && !this.isElementOverflow(this.tooltipElement)) return;
-
-    fromEvent(this.host.nativeElement, on)
-      .pipe(untilDestroyed(this))
-      .subscribe(() => {
-        if (this.datoTooltipDisabled) return;
-
-        if (this.datoTooltipTrigger === 'click') {
-          if (!this.isOpen) {
-            this.show();
-          } else {
-            this.hide();
-          }
-        } else {
-          this.show();
-        }
-
-        if (this.isLongTooltip && this.isOpen) {
-          const closeButton = this.tooltip.popperInstance.popper.querySelector('.tooltip-close-icon svg');
-          if (closeButton) {
-            fromEvent(closeButton, 'click')
-              .pipe(untilDestroyed(this))
-              .subscribe(() => this.hide());
-          }
-        }
-      });
-
-    if (this.datoTooltipTrigger !== 'click') {
-      fromEvent(this.host.nativeElement, off)
-        .pipe(untilDestroyed(this))
-        .subscribe(() => {
-          this.hide();
-        });
-    }
+    this.initTooltip();
   }
 
   ngOnDestroy() {
@@ -190,5 +165,54 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
                     ${this.isLongTooltip && this.datoTooltipTrigger === 'click' ? xIcon : ''}
                  </div>
                 </div>`;
+  }
+
+  private initTooltip() {
+    const { on, off } = this.eventsMap[this.datoTooltipTrigger];
+
+    if (this.datoTooltipOnTextOverflow && !this.isElementOverflow(this.tooltipElement)) return;
+
+    this.triggerOn = fromEvent(this.host.nativeElement, on)
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        if (this.datoTooltipDisabled) return;
+
+        if (this.datoTooltipTrigger === 'click') {
+          if (!this.isOpen) {
+            this.show();
+          } else {
+            this.hide();
+          }
+        } else {
+          this.show();
+        }
+
+        if (this.isLongTooltip && this.isOpen) {
+          const closeButton = this.tooltip.popperInstance.popper.querySelector('.tooltip-close-icon svg');
+          if (closeButton) {
+            fromEvent(closeButton, 'click')
+              .pipe(untilDestroyed(this))
+              .subscribe(() => this.hide());
+          }
+        }
+      });
+
+    if (this.datoTooltipTrigger !== 'click') {
+      this.triggerOff = fromEvent(this.host.nativeElement, off)
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.hide();
+        });
+    }
+  }
+
+  private unsubscribe() {
+    if (this.triggerOn) {
+      this.triggerOn.unsubscribe();
+    }
+
+    if (this.triggerOff) {
+      this.triggerOff.unsubscribe();
+    }
   }
 }

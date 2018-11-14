@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'dato-tooltip-preview',
@@ -8,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class TooltipPreviewComponent implements OnInit {
   isDisabled = true;
   fromComponent = 'fromComponent';
+  longText = 'Long Long All Text';
+  editableTextControl = new FormControl('Editable text');
+
   constructor() {}
 
   ngOnInit() {}

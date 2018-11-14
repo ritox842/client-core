@@ -17,10 +17,11 @@ import { ListItemComponent } from './list-item/list-item.component';
 import { NgContentComponent } from '../ng-content';
 import { HelloComponent } from '../hello.component';
 import { PanelDemoAkitaComponent, PanelDemoComponent } from './previews/panel-preview/panel-demo.component';
+import { SpanExpandedComponent } from './span-expanded/span-expanded.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule, DatoCoreModule, ReactiveFormsModule],
   entryComponents: [previews, PanelDemoComponent, PanelDemoAkitaComponent],
-  declarations: [SideNavComponent, ComponentsGalleryComponent, ComponentPreviewComponent, HighlightDirective, ViewerComponent, PreviewComponent, TabsComponent, TabComponent, ApiTableComponent, ListItemComponent, previews, HelloComponent, NgContentComponent, PanelDemoComponent, PanelDemoAkitaComponent]
+  declarations: [SideNavComponent, ComponentsGalleryComponent, ComponentPreviewComponent, HighlightDirective, ViewerComponent, PreviewComponent, TabsComponent, TabComponent, ApiTableComponent, ListItemComponent, previews, HelloComponent, NgContentComponent, PanelDemoComponent, PanelDemoAkitaComponent, SpanExpandedComponent]
 })
 export class ComponentsGalleryModule {}

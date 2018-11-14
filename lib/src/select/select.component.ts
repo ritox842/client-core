@@ -17,7 +17,7 @@ import { debounceTime, mapTo, take } from 'rxjs/operators';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { Placement, PopperOptions } from 'popper.js';
-import { addClass, query, setStyle } from '../internal/helpers';
+import { query, setStyle } from '../internal/helpers';
 import { DatoOverlay, DatoTemplatePortal } from '../angular/overlay';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
@@ -44,79 +44,120 @@ const valueAccessor = {
 })
 export class DatoSelectComponent extends BaseCustomControl implements OnInit, OnDestroy, ControlValueAccessor, AfterContentInit {
   /** The dropdown container element which is the portal  **/
-  @ViewChild('dropdown') dropdown: TemplateRef<any>;
+  @ViewChild('dropdown')
+  dropdown: TemplateRef<any>;
 
   /** The overlay origin which is one of dato-triggers **/
-  @ViewChild('overlayOrigin') origin: ElementRef;
+  @ViewChild('overlayOrigin')
+  origin: ElementRef;
 
   /** QueryList of datoOptions children */
   @ContentChildren(DatoOptionComponent, { descendants: true })
   options: QueryList<DatoOptionComponent>;
 
   /** Allowing custom template by passing *datoActive directive which gets the active as context */
-  @ContentChild(DatoSelectActiveDirective) active: DatoSelectActiveDirective;
+  @ContentChild(DatoSelectActiveDirective)
+  active: DatoSelectActiveDirective;
 
   /** The key that stores the option id */
-  @Input() idKey = 'id';
+  @Input()
+  idKey = 'id';
 
   /** The lookup key for the label */
-  @Input() labelKey = 'label';
-
-  /** A placeholder for the trigger */
   @Input()
-  set placeholder(value: string) {
-    this._placeholder = this.translate.transform(value);
-  }
-
-  /** A placeholder for the search */
-  @Input()
-  set searchPlaceholder(value: string) {
-    this._searchPlaceholder = this.translate.transform(value);
-  }
-
-  /** Custom text when we don't have results */
-  @Input()
-  set noItemsLabel(value: string) {
-    this._noItemsLabel = this.translate.transform(value);
-  }
-
+  labelKey = 'label';
   /** If defined, indicates by which key the data should be normalized */
-  @Input() groupBy: string;
-
+  @Input()
+  groupBy: string;
   /** Add/removes search input */
-  @Input() isCombo = true;
-
+  @Input()
+  isCombo = true;
   /** Wheteher it's a group */
-  @Input() isGroup = false;
-
+  @Input()
+  isGroup = false;
   /**
    * Decide whether to filter the results internally based on search query.
    * Useful for async filtering, where we search through more complex data.
    * @type {boolean}
    */
-  @Input() internalSearch = true;
-
+  @Input()
+  internalSearch = true;
   /** Debounce time to emit search queries */
-  @Input() debounceTime = 300;
-
+  @Input()
+  debounceTime = 300;
   /** Whether to show loading indicator */
-  @Input() isLoading = false;
-
+  @Input()
+  isLoading = false;
   /** Whether to allow select all checkbox */
-  @Input() allowSelectAll = false;
-
+  @Input()
+  allowSelectAll = false;
   /** The type of the select */
-  @Input() type: SelectType = SelectType.SINGLE;
-
+  @Input()
+  type: SelectType = SelectType.SINGLE;
   /** Client search strategy */
-  @Input() searchStrategy: DatoSelectSearchStrategy = defaultClientSearchStrategy;
-
+  @Input()
+  searchStrategy: DatoSelectSearchStrategy = defaultClientSearchStrategy;
   /** The default position of the dropdown */
-  @Input() placement: Placement = 'bottom-start';
+  @Input()
+  placement: Placement = 'bottom-start';
+  @Input()
+  infiniteScrollLoading = false;
+  @Input()
+  limitTo = defaultOptionsDisplayLimit;
+  /** Emit search value when internal search is false */
+  @Output()
+  search = new EventEmitter<string>();
+  /** Emit when [withActions] is true and the user clicks save */
+  @Output()
+  save = new EventEmitter<void>();
+  @Output()
+  fetch = new EventEmitter<boolean>();
+  /** FormControl which listens for search value changes */
+  searchControl = new FormControl();
+  /** Indicates whether we already initialized the data,
+   *  This is optimization for non async calls.
+   * */
+  _dataIsDirty = false;
+  /** Triggers the focus on the input */
+  _focus = false;
+  /** Store the active options */
+  _model = [];
+  /** Enable/disable the select-trigger */
+  _disabled;
+  /** Indication if we need to set the initial control value as actives */
+  _initialOpen = true;
+  /** Whether generate cancel/save footer */
+  _withActions = false;
+  _withInfiniteScroll = false;
+  /** Notify the multi trigger when click outside to remove the focus  */
+  _clickOutside = false;
+  /** Dropdown size class */
+  _dropdownClass;
+  /** Whether is selectAll checked */
+  _checked;
+  disabledIDs: string | number[];
+  /** true until ngOnInit */
+  private initialRun = true;
+  /** Search control subscription */
+  private searchSubscription;
+  /** Clicks options subscription */
+  private clicksSubscription;
+  /** Keyboard Manager */
+  private keyboardEventsManager: ListKeyManager<DatoOptionComponent>;
+  /** Keyboard subscription */
+  private keyboardEventsManagerSubscription;
+  private infiniteSubscription;
+  /** Current index of active item (keyboard navigation) */
+  private currentIndex;
 
-  @Input() infiniteScrollLoading = false;
-
-  @Input() limitTo = defaultOptionsDisplayLimit;
+  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef<HTMLElement>, private datoOverlay: DatoOverlay, @Attribute('naked') public _naked, @Attribute('datoSize') public size, @Attribute('datoSelectClass') klass) {
+    super();
+    this.size = size || 'md';
+    this._dropdownClass = [`dato-select-${this.size}`];
+    if (klass) {
+      this._dropdownClass.push(klass);
+    }
+  }
 
   /** The options to display in the dropdown */
   @Input()
@@ -137,38 +178,9 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     }
 
     this._dataIsDirty = true;
-  }
-
-  /** Emit search value when internal search is false */
-  @Output() search = new EventEmitter<string>();
-
-  /** Emit when [withActions] is true and the user clicks save */
-  @Output() save = new EventEmitter<void>();
-
-  @Output() fetch = new EventEmitter<boolean>();
-
-  /**
-   * Getters and Setters
-   */
-
-  get data() {
-    return this._data;
-  }
-
-  get open() {
-    return this._open;
-  }
-
-  set open(value: boolean) {
-    this._open = value;
-  }
-
-  get hasResults() {
-    return this._hasResults;
-  }
-
-  set hasResults(value: boolean) {
-    this._hasResults = value;
+    if (this.options) {
+      this.setDisabledIDs();
+    }
   }
 
   get hasValue() {
@@ -198,86 +210,65 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     return this.getVisibleOptions().every(option => this._model.indexOf(option) > -1);
   }
 
-  /** FormControl which listens for search value changes */
-  searchControl = new FormControl();
-
   /**
    * Private Properties
    */
 
   _placeholder = this.translate.transform('general.select');
 
+  /** A placeholder for the trigger */
+  @Input()
+  set placeholder(value: string) {
+    this._placeholder = this.translate.transform(value);
+  }
+
   _searchPlaceholder = this.translate.transform('general.search');
 
+  /** A placeholder for the search */
+  @Input()
+  set searchPlaceholder(value: string) {
+    this._searchPlaceholder = this.translate.transform(value);
+  }
+
   _noItemsLabel = this.translate.transform('general.no-items');
+
+  /** Custom text when we don't have results */
+  @Input()
+  set noItemsLabel(value: string) {
+    this._noItemsLabel = this.translate.transform(value);
+  }
 
   /** Store the initial data */
   _data = [];
 
-  /** Indicates whether we already initialized the data,
-   *  This is optimization for non async calls.
-   * */
-  _dataIsDirty = false;
+  /**
+   * Getters and Setters
+   */
 
-  /** Triggers the focus on the input */
-  _focus = false;
-
-  /** Store the active options */
-  _model = [];
-
-  /** Enable/disable the select-trigger */
-  _disabled;
+  get data() {
+    return this._data;
+  }
 
   /** Wheter the dropdown is open */
   _open = false;
 
+  get open() {
+    return this._open;
+  }
+
+  set open(value: boolean) {
+    this._open = value;
+  }
+
   /** Whether we have search results */
   _hasResults = true;
 
-  /** Indication if we need to set the initial control value as actives */
-  _initialOpen = true;
+  get hasResults() {
+    return this._hasResults;
+  }
 
-  /** Whether generate cancel/save footer */
-  _withActions = false;
-
-  _withInfiniteScroll = false;
-
-  /** Notify the multi trigger when click outside to remove the focus  */
-  _clickOutside = false;
-
-  /** Dropdown size class */
-  _dropdownClass;
-
-  /** Whether is selectAll checked */
-  _checked;
-
-  /** true until ngOnInit */
-  private initialRun = true;
-
-  /** Search control subscription */
-  private searchSubscription;
-
-  /** Clicks options subscription */
-  private clicksSubscription;
-
-  /** Keyboard Manager */
-  private keyboardEventsManager: ListKeyManager<DatoOptionComponent>;
-
-  /** Keyboard subscription */
-  private keyboardEventsManagerSubscription;
-
-  private infiniteSubscription;
-
-  /** Current index of active item (keyboard navigation) */
-  private currentIndex;
-
-  constructor(private cdr: ChangeDetectorRef, private translate: DatoTranslateService, private host: ElementRef<HTMLElement>, private datoOverlay: DatoOverlay, @Attribute('naked') public _naked, @Attribute('datoSize') public size, @Attribute('datoSelectClass') klass) {
-    super();
-    this.size = size || 'md';
-    this._dropdownClass = [`dato-select-${this.size}`];
-    if (klass) {
-      this._dropdownClass.push(klass);
-    }
+  set hasResults(value: boolean) {
+    this._hasResults = value;
   }
 
   ngOnInit() {
@@ -389,6 +380,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
         this.scrollToElement(index);
       }
     });
+    this.setDisabledIDs();
   }
 
   /**
@@ -436,6 +428,45 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
     if (this.datoOverlay.attached) {
       this.datoOverlay.scheduleUpdate();
     }
+  }
+
+  /**
+   *
+   * @param {number} keyCode
+   */
+  @HostListener('document:keydown', ['$event'])
+  onDocumentKeydown(event: KeyboardEvent) {
+    if (event.keyCode === ESCAPE && this.open) {
+      this._clickOutside = true;
+      this.close();
+    }
+  }
+
+  /**
+   *
+   * @param {KeyboardEvent} event
+   * @returns {boolean}
+   */
+  keyup(event: KeyboardEvent) {
+    event.stopPropagation();
+
+    if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
+      this.keyboardEventsManager.onKeydown(event);
+      return false;
+    } else if (event.keyCode === ENTER) {
+      const index = this.keyboardEventsManager.activeItemIndex;
+      const active = this.options.toArray()[index];
+      this.isSingle ? this.handleSingleClick(active) : this.handleMultiClick(active);
+      return false;
+    }
+  }
+
+  ngOnDestroy() {
+    this.searchSubscription && this.searchSubscription.unsubscribe();
+    this.clicksSubscription && this.clicksSubscription.unsubscribe();
+    this.infiniteSubscription && this.infiniteSubscription.unsubscribe();
+    this.keyboardEventsManagerSubscription && this.keyboardEventsManagerSubscription.unsubscribe();
+    this.datoOverlay.attached && this.datoOverlay.destroy();
   }
 
   /**
@@ -550,37 +581,6 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
 
   /**
    *
-   * @param {number} keyCode
-   */
-  @HostListener('document:keydown', ['$event'])
-  onDocumentKeydown(event: KeyboardEvent) {
-    if (event.keyCode === ESCAPE && this.open) {
-      this._clickOutside = true;
-      this.close();
-    }
-  }
-
-  /**
-   *
-   * @param {KeyboardEvent} event
-   * @returns {boolean}
-   */
-  keyup(event: KeyboardEvent) {
-    event.stopPropagation();
-
-    if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
-      this.keyboardEventsManager.onKeydown(event);
-      return false;
-    } else if (event.keyCode === ENTER) {
-      const index = this.keyboardEventsManager.activeItemIndex;
-      const active = this.options.toArray()[index];
-      this.isSingle ? this.handleSingleClick(active) : this.handleMultiClick(active);
-      return false;
-    }
-  }
-
-  /**
-   *
    * @param {DatoOptionComponent} datoOption
    */
   private handleSingleClick(datoOption: DatoOptionComponent) {
@@ -683,11 +683,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
       });
   }
 
-  ngOnDestroy() {
-    this.searchSubscription && this.searchSubscription.unsubscribe();
-    this.clicksSubscription && this.clicksSubscription.unsubscribe();
-    this.infiniteSubscription && this.infiniteSubscription.unsubscribe();
-    this.keyboardEventsManagerSubscription && this.keyboardEventsManagerSubscription.unsubscribe();
-    this.datoOverlay.attached && this.datoOverlay.destroy();
+  private setDisabledIDs() {
+    this.disabledIDs = this.options ? this.options._results.filter(multiOptionComponent => multiOptionComponent.disabled).map(multiOptionComponent => multiOptionComponent.option.id) : [];
   }
 }

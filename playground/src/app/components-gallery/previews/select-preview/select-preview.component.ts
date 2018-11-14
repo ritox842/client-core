@@ -10,8 +10,6 @@ import { DatoSnackbar } from '../../../../../../lib';
   styleUrls: ['./select-preview.component.scss']
 })
 export class SelectPreviewComponent implements OnInit {
-  private subject = new Subject();
-
   simpleControl = new FormControl({ id: 1, label: 'Item 1' });
   simpleControlSearch = new FormControl();
   simpleControlSearch2 = new FormControl();
@@ -31,15 +29,66 @@ export class SelectPreviewComponent implements OnInit {
   multiControl3 = new FormControl();
   multiDisableControl = new FormControl([{ id: 1, label: 'Item 1' }, { id: 2, label: 'Item 2' }]);
   flattenedControl = new FormControl({ id: 2, label: 'efg', group: 'A' });
-
-  options$ = this.subject.asObservable();
+  multiDisableControlOptionsControl = new FormControl();
   options = [];
+  multiDisableControlOptions = [];
   optionsFromServer;
   infiniteOptions = [];
-  dayOfWeekOptions = [{ value: 1, label: 'Sunday' }, { value: 2, label: 'Monday' }, { value: 3, label: 'Tuesday' }, { value: 4, label: 'Wednesday' }, { value: 5, label: 'Thursday' }, { value: 6, label: 'Friday' }, { value: 7, label: 'Saturday' }];
-  flattenedOptions = [{ id: 1, label: 'abc', group: 'A' }, { id: 2, label: 'efg', group: 'A' }, { id: 3, label: 'hij', group: 'A' }, { id: 4, label: 'klm', group: 'B' }, { id: 5, label: 'nop', group: 'C' }];
+  dayOfWeekOptions = [
+    { value: 1, label: 'Sunday' },
+    { value: 2, label: 'Monday' },
+    { value: 3, label: 'Tuesday' },
+    {
+      value: 4,
+      label: 'Wednesday'
+    },
+    { value: 5, label: 'Thursday' },
+    { value: 6, label: 'Friday' },
+    { value: 7, label: 'Saturday' }
+  ];
+  flattenedOptions = [
+    { id: 1, label: 'abc', group: 'A' },
+    { id: 2, label: 'efg', group: 'A' },
+    {
+      id: 3,
+      label: 'hij',
+      group: 'A'
+    },
+    { id: 4, label: 'klm', group: 'B' },
+    { id: 5, label: 'nop', group: 'C' }
+  ];
   frequencyForm: FormGroup;
   dayOfWeek;
+  dynamic;
+  grouped = [
+    {
+      label: 'A',
+      children: [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }]
+    },
+    {
+      label: 'B',
+      children: [{ id: 4, label: 'klm' }]
+    },
+    {
+      label: 'C',
+      children: [{ id: 5, label: 'nop' }]
+    }
+  ];
+  _optionsFromServer = [
+    { id: 1, label: 'abc' },
+    { id: 2, label: 'efg' },
+    { id: 3, label: 'hij' },
+    {
+      id: 4,
+      label: 'klm'
+    },
+    { id: 5, label: 'nop' }
+  ];
+  isLoading = false;
+  infiniteScrollLoading = false;
+  private subject = new Subject();
+  options$ = this.subject.asObservable();
+
   constructor(private snackbar: DatoSnackbar, private builder: FormBuilder) {
     this.dayOfWeek = new FormControl();
     this.frequencyForm = this.builder.group({
@@ -50,6 +99,13 @@ export class SelectPreviewComponent implements OnInit {
       this.options.push({
         label: `Item ${i + 1}`,
         id: i + 1
+      });
+    }
+    for (var i = 0, len = 15; i < len; i++) {
+      this.multiDisableControlOptions.push({
+        label: `Item ${i + 1}`,
+        id: i + 1,
+        disabled: i % 3 === 0
       });
     }
 
@@ -64,11 +120,10 @@ export class SelectPreviewComponent implements OnInit {
     this.infiniteOptions = this.options.slice();
   }
 
-  dynamic;
-
   ngOnInit() {
     this.controlDisabled.disable();
     this.multiDisableControl.disable();
+    this.multiDisableControlOptionsControl.setValue(this.multiDisableControlOptions);
 
     this.dynamic = [
       {
@@ -91,25 +146,6 @@ export class SelectPreviewComponent implements OnInit {
     });
   }
 
-  grouped = [
-    {
-      label: 'A',
-      children: [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }]
-    },
-    {
-      label: 'B',
-      children: [{ id: 4, label: 'klm' }]
-    },
-    {
-      label: 'C',
-      children: [{ id: 5, label: 'nop' }]
-    }
-  ];
-
-  _optionsFromServer = [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }, { id: 4, label: 'klm' }, { id: 5, label: 'nop' }];
-
-  isLoading = false;
-
   update() {
     this.asyncControl.patchValue({ ...this.options[2] });
   }
@@ -123,8 +159,6 @@ export class SelectPreviewComponent implements OnInit {
   onSave() {
     this.snackbar.success('Success!!!');
   }
-
-  infiniteScrollLoading = false;
 
   fetchMore() {
     this.infiniteScrollLoading = true;

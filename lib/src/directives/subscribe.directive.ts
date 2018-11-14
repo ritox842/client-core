@@ -8,7 +8,7 @@
 
 import { ChangeDetectorRef, Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { combineLatest, Observable, Subscription } from 'rxjs';
-import { map, scan } from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { isFunction } from '@datorama/utils';
 
 export class DatoSubscribeContext {
@@ -35,11 +35,10 @@ export class DatoSubscribeDirective implements OnInit, OnDestroy {
       this.observable = combineLatest(observables);
       this.subscription = this.observable.subscribe(value => {
         if (this.isObject(inputObservable)) {
-          const asObject = value.reduce((acc, current) => {
+          this.context.datoSubscribe = value.reduce((acc, current) => {
             acc[current.key] = current.value;
             return acc;
           }, {});
-          this.context.datoSubscribe = asObject;
         } else {
           this.context.datoSubscribe = Array.isArray(inputObservable) ? value : value[0];
         }
@@ -65,10 +64,10 @@ export class DatoSubscribeDirective implements OnInit, OnDestroy {
   private buildObservablesFromObject(inputObservable) {
     return Object.keys(inputObservable).map(key => {
       return inputObservable[key].pipe(
-        map(v => {
+        map((v: Observable<any>) => {
           return {
             key,
-            value: v
+            value: v.pipe(startWith({}))
           };
         })
       );

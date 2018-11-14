@@ -330,10 +330,10 @@
 
   </section>
 
-  <dato-tabs show="html,js">
+  <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <dato-select [formControl]="multiDisableControl" [dataSet]="options" #datoSelectMultiDisabled type="multi">
+     <dato-select [formControl]="multiDisableControl" [dataSet]="options" #datoSelectMultiDisabled type="multi">
 
         <dato-option *ngFor="let option of datoSelectMultiDisabled.data" [option]="option" multi>
           option.label
@@ -341,16 +341,54 @@
 
       </dato-select>
 
+      <p datoFont class="mt-10">Control value: <span class="code">{{multiDisableControl.value | json}}</span></p>
+
     </textarea>
 
-    <textarea datoHighlight="js">
-      controlDisabled.disable();
-      controlDisabled.enable();
-    </textarea>
   </dato-tabs>
 
 </dato-preview>
 
+<dato-preview title="Select Multi - Disabled options">
+
+  <section class="d-flex">
+    <div class="select-preview" style="width: 500px;">
+
+      <dato-select [formControl]="multiDisableControlOptionsControl" [dataSet]="multiDisableControlOptions" #datoSelectMultiDisabledOptions type="multi">
+
+        <dato-option *ngFor="let option of datoSelectMultiDisabledOptions.data" [option]="option" multi
+        [disabled]="option.disabled">
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{multiDisableControl.value | json}}</span></p>
+
+    </div>
+
+  </section>
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-select [formControl]="multiDisableControlOptionsControl" [dataSet]="multiDisableControlOptions"
+                   #datoSelectMultiDisabledOptions type="multi">
+
+        <dato-option *ngFor="let option of datoSelectMultiDisabledOptions.data" [option]="option" multi
+                     [disabled]="option.disabled">
+          option.label
+        </dato-option>
+
+      </dato-select>
+
+      <p datoFont class="mt-10">Control value: <span class="code">{{multiDisableControlOptionsControl.value | json}}</span></p>
+
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
 
 <dato-preview title="Select Single - Custom Template">
 

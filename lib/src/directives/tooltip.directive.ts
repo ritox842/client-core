@@ -95,11 +95,9 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   ngAfterViewInit() {
     this.viewInit = true;
 
-    if (this.datoTooltipTrigger === 'manual') {
-      return;
+    if (this.datoTooltipTrigger !== 'manual') {
+      this.initTooltip();
     }
-
-    this.initTooltip();
   }
 
   ngOnDestroy() {
@@ -207,12 +205,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   }
 
   private unsubscribe() {
-    if (this.triggerOn) {
-      this.triggerOn.unsubscribe();
-    }
-
-    if (this.triggerOff) {
-      this.triggerOff.unsubscribe();
-    }
+    this.triggerOn && this.triggerOn.unsubscribe();
+    this.triggerOff && this.triggerOff.unsubscribe();
   }
 }

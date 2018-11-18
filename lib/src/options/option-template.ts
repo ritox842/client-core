@@ -19,7 +19,7 @@ export function getOptionTemplate(isMulti = false) {
          dato-select__option--hover"
          [class.force-hide]="hide"
          ${isMulti ? '' : '[class.dato-option--active]="active"'}
-         [class.dato-select__option--disabled]="_disabled"
+         [datoTooltip]="getOptionTooltip()"
          [class.dato-option--keyboard-active]="activeByKeyboard"
          >
       ${isMulti ? getMultiTemplate() : '<ng-content></ng-content>'} 

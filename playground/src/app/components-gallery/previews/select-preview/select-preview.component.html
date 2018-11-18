@@ -354,16 +354,18 @@
   <section class="d-flex">
     <div class="select-preview" style="width: 500px;">
 
-      <dato-select [formControl]="multiDisableControlOptionsControl" [dataSet]="multiDisableControlOptions" #datoSelectMultiDisabledOptions type="multi">
+      <dato-select [formControl]="multiDisableControlOptionsControl" [dataSet]="options"
+                   #datoSelectMultiDisabledOptions type="multi">
 
-        <dato-option *ngFor="let option of datoSelectMultiDisabledOptions.data" [option]="option" multi
-        [disabled]="option.disabled">
+        <dato-option *ngFor="let option of datoSelectMultiDisabledOptions.data;index as index" multi
+                     [option]="option"
+                     [disabled]="index % 3 === 0">
           {{option.label}}
         </dato-option>
 
       </dato-select>
 
-      <p datoFont class="mt-10">Control value: <span class="code">{{multiDisableControl.value | json}}</span></p>
+      <p datoFont class="mt-10">Control value: <span class="code">{{multiDisableControlOptionsControl.value | json}}</span></p>
 
     </div>
 
@@ -372,17 +374,18 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
-      <dato-select [formControl]="multiDisableControlOptionsControl" [dataSet]="multiDisableControlOptions"
+      <dato-select [formControl]="multiDisableControlOptionsControl" [dataSet]="options"
                    #datoSelectMultiDisabledOptions type="multi">
 
-        <dato-option *ngFor="let option of datoSelectMultiDisabledOptions.data" [option]="option" multi
-                     [disabled]="option.disabled">
+        <dato-option *ngFor="let option of datoSelectMultiDisabledOptions.data;index as index" [option]="option" multi
+                     [disabled]="index % 3 === 0">
           option.label
         </dato-option>
 
       </dato-select>
 
-      <p datoFont class="mt-10">Control value: <span class="code">{{multiDisableControlOptionsControl.value | json}}</span></p>
+      <p datoFont class="mt-10">Control value: <span
+        class="code">{{multiDisableControlOptionsControl.value | json}}</span></p>
 
     </textarea>
 

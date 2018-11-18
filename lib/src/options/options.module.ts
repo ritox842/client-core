@@ -10,11 +10,12 @@ import { DatoIconModule } from '../icon/icon.module';
 import { NgModule } from '@angular/core';
 import { DatoCheckboxModule } from '../checkbox/checkbox.module';
 import { CommonModule } from '@angular/common';
+import { DatoDirectivesModule } from '../../src/directives/directives.module';
 
 const publicApi = [DatoOptionComponent, DatoGroupComponent, DatoMultiOptionComponent];
 
 @NgModule({
-  imports: [CommonModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule, DatoButtonModule, DatoLinkButtonModule, DatoTextModule],
+  imports: [CommonModule, DatoInputModule, DatoIconModule, ReactiveFormsModule, DatoCheckboxModule, DatoButtonModule, DatoLinkButtonModule, DatoTextModule, DatoDirectivesModule],
   declarations: [publicApi],
   exports: [publicApi],
   entryComponents: [publicApi]

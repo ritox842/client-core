@@ -30,11 +30,7 @@ export class DatoOptionComponent implements OnInit {
 
   @Input()
   set disabled(value) {
-    if (!!value) {
-      this._permanentDisabled = true;
-    } else {
-      this._permanentDisabled = false;
-    }
+    this._permanentDisabled = !!value;
     if (value !== this._disabled) {
       this._disabled = value;
       this.detectChanges();
@@ -125,6 +121,12 @@ export class DatoOptionComponent implements OnInit {
 
     if (needCd) {
       this.detectChanges();
+    }
+  }
+
+  getOptionTooltip() {
+    if (this.disabled) {
+      return this.active ? 'This item cannot be removed' : 'This item cannot be selected';
     }
   }
 }

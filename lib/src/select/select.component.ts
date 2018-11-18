@@ -290,7 +290,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, Co
   _checked;
 
   /*Holds all disabled options ID's**/
-  disabledIDs: string | number[];
+  disabledIDs: string[] | number[];
 
   /** true until ngOnInit */
   private initialRun = true;
@@ -846,8 +846,17 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, Co
       });
   }
 
+  /**
+   * Run through all datoOptionComponent and gather
+   * all disabled option ID's
+   */
   private setDisabledIDs() {
-    this.disabledIDs = this.options ? this.options._results.filter(multiOptionComponent => multiOptionComponent.disabled).map(multiOptionComponent => multiOptionComponent.option.id) : [];
+    this.disabledIDs = [];
+    this.options._results.forEach(optionComponent => {
+      if (optionComponent.disabled) {
+        this.disabledIDs.push(optionComponent.option.id);
+      }
+    });
   }
 
   /**

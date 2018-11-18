@@ -27,7 +27,7 @@ export class DatoTriggerMulti implements OnInit {
   @Input()
   control: FormControl;
   @Input()
-  disabledIDs: string[] | number[];
+  disabledIDs: string[] | number[] = [];
   /**
    *
    * @type {string}

@@ -330,10 +330,10 @@
 
   </section>
 
-  <dato-tabs show="html">
+  <dato-tabs show="html,js">
 
     <textarea datoHighlight="html">
-     <dato-select [formControl]="multiDisableControl" [dataSet]="options" #datoSelectMultiDisabled type="multi">
+      <dato-select [formControl]="multiDisableControl" [dataSet]="options" #datoSelectMultiDisabled type="multi">
 
         <dato-option *ngFor="let option of datoSelectMultiDisabled.data" [option]="option" multi>
           option.label

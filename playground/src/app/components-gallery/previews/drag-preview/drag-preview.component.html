@@ -1,11 +1,15 @@
 <dato-preview title="Draggable">
   <div style="width: 200px; height: 200px; border: 1px solid lightgrey"
        class="target"
+       [datoDragEnabled]="enabled"
        datoDraggable [datoDragHandle]="h1"
-       datoDragTarget=".target">
+       datoDragTarget=".target"
+      (dragged)="dragged($event)">
     <h1 class="handler" #h1>handler</h1>
     content to drag
   </div>
+  <dato-button class="mt-10" (click)="toggleEnabled()">{{enabled ? 'disable' : 'enable'}} drag</dato-button>
+  <div>Dragged element relative position: {{delta | json}}</div>
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
@@ -32,6 +36,12 @@
 
     <dato-api-table>
       <tr>
+        <td>datoDragEnabled</td>
+        <td>boolean</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
         <td>datoDragHandle</td>
         <td>selector/element</td>
         <td>The directive host</td>
@@ -42,6 +52,13 @@
         <td>selector/element</td>
         <td></td>
         <td>The drag target element</td>
+      </tr>
+    </dato-api-table>
+    <dato-api-table type="outputs">
+      <tr>
+        <td>dragged</td>
+        <td>event object: DraggedEvent</td>
+        <td>Emits the dragged element relative position</td>
       </tr>
     </dato-api-table>
 

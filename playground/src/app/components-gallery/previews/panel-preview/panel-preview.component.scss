@@ -29,4 +29,8 @@ main {
   background: #fff;
   flex: 1;
   padding: 20px;
+
+  &[data-relative="backdrop"] {
+    position: relative;
+  }
 }

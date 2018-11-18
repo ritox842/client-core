@@ -31,7 +31,6 @@ export class SelectPreviewComponent implements OnInit {
   flattenedControl = new FormControl({ id: 2, label: 'efg', group: 'A' });
   multiDisableControlOptionsControl = new FormControl();
   options = [];
-  multiDisableControlOptions = [];
   optionsFromServer;
   infiniteOptions = [];
   dayOfWeekOptions = [
@@ -60,20 +59,6 @@ export class SelectPreviewComponent implements OnInit {
   frequencyForm: FormGroup;
   dayOfWeek;
   dynamic;
-  grouped = [
-    {
-      label: 'A',
-      children: [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }]
-    },
-    {
-      label: 'B',
-      children: [{ id: 4, label: 'klm' }]
-    },
-    {
-      label: 'C',
-      children: [{ id: 5, label: 'nop' }]
-    }
-  ];
   _optionsFromServer = [
     { id: 1, label: 'abc' },
     { id: 2, label: 'efg' },
@@ -101,13 +86,6 @@ export class SelectPreviewComponent implements OnInit {
         id: i + 1
       });
     }
-    for (var i = 0, len = 15; i < len; i++) {
-      this.multiDisableControlOptions.push({
-        label: `Item ${i + 1}`,
-        id: i + 1,
-        disabled: i % 3 === 0
-      });
-    }
 
     // selecting the first two options
     this.multiControlWithLimit.setValue(this.options.slice(0, 2));
@@ -123,7 +101,7 @@ export class SelectPreviewComponent implements OnInit {
   ngOnInit() {
     this.controlDisabled.disable();
     this.multiDisableControl.disable();
-    this.multiDisableControlOptionsControl.setValue(this.multiDisableControlOptions);
+    this.multiDisableControlOptionsControl.setValue(this.options);
 
     this.dynamic = [
       {
@@ -144,6 +122,25 @@ export class SelectPreviewComponent implements OnInit {
       this.optionsFromServer = res;
       this.isLoading = false;
     });
+  }
+
+  grouped = [
+    {
+      label: 'A',
+      children: [{ id: 1, label: 'abc' }, { id: 2, label: 'efg' }, { id: 3, label: 'hij' }]
+    },
+    {
+      label: 'B',
+      children: [{ id: 4, label: 'klm' }]
+    },
+    {
+      label: 'C',
+      children: [{ id: 5, label: 'nop' }]
+    }
+  ];
+
+  blur() {
+    this.snackbar.success('Dropdown closed!!!');
   }
 
   update() {

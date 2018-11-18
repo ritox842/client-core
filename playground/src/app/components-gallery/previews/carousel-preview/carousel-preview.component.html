@@ -3,10 +3,10 @@
   <section class="d-flex">
     <div class="select-preview">
       <div class="carousel-container">
-        <dato-carousel>
+        <dato-carousel [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
-              <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
+              <dato-icon [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
             </ng-container>
           </ng-container>
         </dato-carousel>
@@ -17,7 +17,7 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
- <dato-carousel>
+ <dato-carousel [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
@@ -33,7 +33,7 @@
   <section class="d-flex">
     <div class="select-preview">
       <div class="carousel-container">
-        <dato-carousel [showControls]="false" [autoRun]="5">
+        <dato-carousel [showControls]="false" [autoRun]="5" [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
@@ -48,7 +48,7 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
- <dato-carousel [showControls]="false" [autoRun]="5">
+ <dato-carousel [showControls]="false" [autoRun]="5" [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
@@ -64,7 +64,7 @@
   <section class="d-flex">
     <div class="select-preview">
       <div class="carousel-container">
-        <dato-carousel [loop]="true">
+        <dato-carousel [loop]="true" [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
@@ -79,7 +79,7 @@
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
- <dato-carousel [loop]="true">
+ <dato-carousel [loop]="true" [itemWidth]="300">
           <ng-container *ngFor="let item of items;">
             <ng-container *datoCarouselItem>
               <dato-icon  [datoIcon]="item.icon" height="300px" width="300px"></dato-icon>
@@ -90,3 +90,62 @@
 
   </dato-tabs>
 </dato-preview>
+
+
+<div class="panel mt-4">
+
+  <div class="panel-heading">
+    API
+  </div>
+
+  <div class="panel-block">
+
+    <dato-api-table>
+      <tr>
+        <td>autoRun</td>
+        <td>number | boolean</td>
+        <td>false</td>
+        <td>
+          False: Slide transition is done only manually<br>
+          True: Slides transition automatically (every 10 seconds)<br>
+          Number (N): Slides transition automatically (every N seconds)
+        </td>
+      </tr>
+      <tr>
+        <td>itemWidth</td>
+        <td>number</td>
+        <td></td>
+        <td>
+          Width (in pixel) of each slide
+        </td>
+      </tr>
+      <tr>
+        <td>loop</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>
+          After reaching the last slide, whether the carousel should loop back to the first one.
+        </td>
+      </tr>
+      <tr>
+        <td>selectedIndex</td>
+        <td>number</td>
+        <td>0</td>
+        <td>Which slide should the carousel start on</td>
+      </tr>
+      <tr>
+        <td>showControls</td>
+        <td>boolean</td>
+        <td>true</td>
+        <td>Display slide transition controls</td>
+      </tr>
+      <tr>
+        <td>timing</td>
+        <td>string</td>
+        <td>'250ms ease-in'</td>
+        <td>Transition animation</td>
+      </tr>
+    </dato-api-table>
+
+  </div>
+</div>

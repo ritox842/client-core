@@ -32,14 +32,22 @@ const valueAccessor = {
 export class DatoInputComponent extends BaseCustomControl implements OnInit, OnDestroy, ControlValueAccessor {
   showDelete = false;
 
-  @Input() placeholder = '';
-  /** @deprecated - use isDisabled */
-  @Input() disabled = false;
-  @Input() isDisabled = false;
-  @Input() debounceTime;
-  @Input() isFocused = false;
-  @Input() isLoading = false;
-  @Input() type = 'text';
+  @Input()
+  placeholder = '';
+  /** @deprecated - use DatoDisableControl directive */
+  @Input()
+  disabled = false;
+  /** @deprecated - use DatoDisableControl directive */
+  @Input()
+  isDisabled = false;
+  @Input()
+  debounceTime;
+  @Input()
+  isFocused = false;
+  @Input()
+  isLoading = false;
+  @Input()
+  type = 'text';
 
   constructor(@Attribute('width') public width, @Attribute('height') public height, private renderer: Renderer2, private cdr: ChangeDetectorRef, private host: ElementRef, @Attribute('attrs') private attrs) {
     super();
@@ -56,7 +64,12 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
     setDimensions(this.width, this.height, this.inpuElement);
 
     fromEvent(this.inpuElement, 'input')
-      .pipe(pluck('target', 'value'), tap(val => this.activateDeleteIcon(val)), optionalDebounce(this.debounceTime), untilDestroyed(this))
+      .pipe(
+        pluck('target', 'value'),
+        tap(val => this.activateDeleteIcon(val)),
+        optionalDebounce(this.debounceTime),
+        untilDestroyed(this)
+      )
       .subscribe(val => {
         this.onChange(val);
         this.cdr.markForCheck();
@@ -131,11 +144,7 @@ export class DatoInputComponent extends BaseCustomControl implements OnInit, OnD
    * @param value
    */
   private activateDeleteIcon(value) {
-    if (value) {
-      this.showDelete = true;
-    } else {
-      this.showDelete = false;
-    }
+    this.showDelete = !!value;
     this.cdr.detectChanges();
   }
 }

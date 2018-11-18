@@ -21,9 +21,7 @@ export class DatoHighlightPipe implements PipeTransform {
 
     cleanSearch = cleanSearch
       .split(' ')
-      .filter(t => {
-        return t.length > 0;
-      })
+      .filter(t => t.length > 0)
       .join('|');
 
     const regex = new RegExp(cleanSearch, 'gi');

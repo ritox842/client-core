@@ -14,15 +14,18 @@ import { filter, take, takeUntil, throttleTime } from 'rxjs/operators';
 import { isString } from '@datorama/utils';
 import { DatoTranslateService } from '../services/translate.service';
 import { DatoPanelComponent } from './panel.component';
-import { setStyle } from '../internal/helpers';
+import { addClass, setStyle } from '../internal/helpers';
 import { CoreConfig, DATO_CORE_CONFIG } from '../config';
+import { zIndex } from '../internal/z-index';
 
 export type DatoPanelOptions<E = any> = {
+  customClass?: string;
   relativeTo?: E | string;
   height?: number | string;
   width?: number | string;
   viewContainerRef?: ViewContainerRef;
   offset?: { top?: number; left?: number };
+  backdrop?: { enabled: boolean; selector?: string };
 };
 
 @Injectable()
@@ -32,6 +35,10 @@ export class DatoPanel {
   private nativeElement: HTMLElement;
   private destroy$ = new Subject();
   private onClose = new Subject<boolean>();
+  private backdropElement: HTMLElement;
+  private backdropClassName = 'dato-panel-backdrop';
+  private backDropHolder = 'body';
+
   close$ = this.onClose.asObservable();
 
   constructor(private resolver: ComponentFactoryResolver, private translate: DatoTranslateService, private injector: Injector, private appRef: ApplicationRef, @Inject(DATO_CORE_CONFIG) private config: CoreConfig, @Inject(DOCUMENT) private document) {}
@@ -57,6 +64,11 @@ export class DatoPanel {
 
   private createPanel<E extends Element, T>(content: ContentType<T>, relativeTo, options: DatoPanelOptions<E>) {
     const injector = options.viewContainerRef ? options.viewContainerRef.injector : this.injector;
+    const backdrop = options.backdrop;
+
+    if (backdrop && backdrop.enabled) {
+      this.createBackdrop(backdrop.selector);
+    }
 
     this.contentRef = ngContentResolver({
       applicationRef: this.appRef,
@@ -74,14 +86,18 @@ export class DatoPanel {
 
     const { nativeElement } = this.component.location;
     this.nativeElement = nativeElement;
-
+    this.component.instance.customClass = options.customClass;
     this.calcPosition(relativeTo, options);
 
     this.component.hostView.detectChanges();
 
     this.document.body.appendChild(nativeElement);
+
     fromEvent(window, 'scroll', { capture: true })
-      .pipe(throttleTime(10), takeUntil(this.destroy$))
+      .pipe(
+        throttleTime(10),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => {
         this.calcPosition(relativeTo, options);
       });
@@ -89,10 +105,13 @@ export class DatoPanel {
     fromEvent(document.body, 'click', { capture: true })
       .pipe(takeUntil(this.destroy$))
       .subscribe(event => {
+        const target = event.target as HTMLElement;
         const main = this.document.querySelector(this.config.appSelector);
-        const notAppendedToBody = main.contains(event.target as HTMLElement);
-        const isSideNav = this.document.querySelector(this.config.sidenavSelector).contains(event.target as HTMLElement);
-        if (notAppendedToBody && !isSideNav) {
+        const notAppendedToBody = main.contains(target as HTMLElement);
+        const isSideNav = this.document.querySelector(this.config.sidenavSelector).contains(target as HTMLElement);
+        const isBackdrop = (target as HTMLElement).classList.contains(this.backdropClassName);
+
+        if ((notAppendedToBody && !isSideNav) || isBackdrop) {
           this.close();
         }
       });
@@ -102,7 +121,10 @@ export class DatoPanel {
 
   activateAnimationEndHook() {
     fromEvent(this.panelContainer, 'animationend')
-      .pipe(filter(({ animationName }: AnimationEvent) => animationName === 'panelSlideOut'), takeUntil(this.destroy$))
+      .pipe(
+        filter(({ animationName }: AnimationEvent) => animationName === 'panelSlideOut'),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => this.destroy());
   }
 
@@ -110,6 +132,17 @@ export class DatoPanel {
     if (this.panelContainer) {
       setStyle(this.panelContainer, 'animation', 'panelSlideOut 0.2s');
     }
+  }
+
+  private createBackdrop(selector: string) {
+    if (selector) {
+      this.backDropHolder = selector;
+    }
+
+    this.backdropElement = this.document.createElement('div');
+    addClass(this.backdropElement, this.backdropClassName);
+    setStyle(this.backdropElement, 'zIndex', `${zIndex.panelBackdrop}`);
+    this.document.querySelector(this.backDropHolder).appendChild(this.backdropElement);
   }
 
   private calcPosition(relativeTo: HTMLElement, options: DatoPanelOptions) {
@@ -128,7 +161,7 @@ export class DatoPanel {
   }
 
   private get panelContainer() {
-    return this.document.querySelector('.panel-container');
+    return this.document.querySelector('.dato-panel-container');
   }
 
   private resolveRelativeTo(element) {
@@ -144,6 +177,11 @@ export class DatoPanel {
       this.contentRef.destroy(this.appRef);
       this.component.destroy();
       this.document.body.removeChild(this.nativeElement);
+
+      if (this.backdropElement) {
+        this.document.querySelector(this.backDropHolder).removeChild(this.backdropElement);
+      }
+
       this.nativeElement = null;
       this.destroy$.next();
       this.onClose.next(true);

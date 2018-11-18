@@ -1,19 +1,21 @@
 import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, TemplateRef } from '@angular/core';
 import Tooltip from 'tooltip.js';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { DatoTemplatePortal } from '../angular/overlay';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { IconRegistry } from '../services/icon-registry';
 import { default as Popper } from 'popper.js';
-import { toBoolean } from '@datorama/utils';
+import { isNil } from '@datorama/utils';
 import { TooltipOptions, TooltipTrigger } from './tooltip.model';
+import { zIndex } from '../internal/z-index';
 
 @Directive({
   selector: '[datoTooltip]',
   exportAs: 'datoTooltip'
 })
 export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
-  @Input() datoTooltipType: 'tooltip' | 'long' = 'tooltip';
+  @Input()
+  datoTooltipType: 'tooltip' | 'long' = 'tooltip';
 
   @Input()
   set datoTooltip(content: string | TemplateRef<any>) {
@@ -22,6 +24,7 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
         this.tplPortal.destroy();
       }
       this.tplPortal = new DatoTemplatePortal(content);
+      this.tplPortal.viewRef.detectChanges();
       this.content = this.tplPortal.elementRef;
     } else {
       this.content = content;
@@ -30,21 +33,40 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
     if (this.tooltip) {
       this.hide();
     }
+
+    if (this.viewInit) {
+      this.unsubscribe();
+      this.initTooltip();
+    }
   }
 
-  @Input() datoTooltipPosition: Popper.Placement = 'top';
-  @Input() datoTooltipDelay = 0;
-  @Input() datoTooltipClass = '';
-  @Input() datoTooltipOnTextOverflow = false;
-  @Input() datoTooltipOverflowElement: ElementRef = null;
-  @Input() datoTooltipDisabled = false;
-  @Input() datoTooltipOverflow = false;
-  @Input() datoTooltipOffset;
-  @Input() datoIsManual = false;
-  @Input() datoTooltipTrigger: TooltipTrigger = 'hover';
+  @Input()
+  datoTooltipPosition: Popper.Placement = 'top';
+  @Input()
+  datoTooltipDelay = 0;
+  @Input()
+  datoTooltipClass = '';
+  @Input()
+  datoTooltipOnTextOverflow = false;
+  @Input()
+  datoTooltipOverflowElement: ElementRef = null;
+  @Input()
+  datoTooltipDisabled = false;
+  @Input()
+  datoTooltipOverflow = false;
+  @Input()
+  datoTooltipOffset: string | number;
+  @Input()
+  datoIsManual = false;
+  @Input()
+  datoTooltipTrigger: TooltipTrigger = 'hover';
 
+  private viewInit = false;
+  private tooltip;
   private content: string | HTMLElement;
   private tplPortal: DatoTemplatePortal;
+  private triggerOn: Subscription;
+  private triggerOff: Subscription;
   private eventsMap = {
     hover: {
       on: 'mouseenter',
@@ -59,8 +81,10 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
       off: 'click'
     }
   };
-  private isOpen = false;
-  private tooltip;
+
+  get isOpen(): boolean {
+    return !isNil(this.tooltip);
+  }
 
   get tooltipElement(): HTMLElement {
     return this.datoTooltipOverflowElement || this.host.nativeElement;
@@ -69,47 +93,10 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   constructor(private host: ElementRef, private iconRegistry: IconRegistry) {}
 
   ngAfterViewInit() {
-    if (this.datoTooltipTrigger === 'manual') {
-      return;
-    }
+    this.viewInit = true;
 
-    const { on, off } = this.eventsMap[this.datoTooltipTrigger];
-
-    if (this.datoTooltipOnTextOverflow && !this.isElementOverflow(this.tooltipElement)) return;
-
-    fromEvent(this.host.nativeElement, on)
-      .pipe(untilDestroyed(this))
-      .subscribe(() => {
-        if (this.datoTooltipDisabled) return;
-
-        if (this.datoTooltipTrigger === 'click') {
-          this.isOpen = !this.isOpen;
-          if (this.isOpen) {
-            this.show();
-          } else {
-            this.hide();
-          }
-        } else {
-          this.isOpen = true;
-          this.show();
-        }
-
-        if (this.isLongTooltip && this.isOpen) {
-          const closeButton = this.tooltip.popperInstance.popper.querySelector('.tooltip-close-icon svg');
-          if (closeButton) {
-            fromEvent(closeButton, 'click')
-              .pipe(untilDestroyed(this))
-              .subscribe(() => this.hide());
-          }
-        }
-      });
-
-    if (this.datoTooltipTrigger !== 'click') {
-      fromEvent(this.host.nativeElement, off)
-        .pipe(untilDestroyed(this))
-        .subscribe(() => {
-          this.hide();
-        });
+    if (this.datoTooltipTrigger !== 'manual') {
+      this.initTooltip();
     }
   }
 
@@ -122,18 +109,17 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
 
   show() {
     if (this.tooltip) return;
-    this.tooltip = this.createTooltipInstance(this.host.nativeElement).show();
+    this.tooltip = this.createTooltipInstance(this.tooltipElement).show();
   }
 
   hide() {
     if (this.tooltip) {
       this.tooltip.dispose();
       this.tooltip = null;
-      this.isOpen = false;
     }
   }
 
-  private get isLongTooltip() {
+  private get isLongTooltip(): boolean {
     return this.datoTooltipType === 'long';
   }
 
@@ -144,12 +130,12 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
       container: document.body,
       title: this.content,
       html: true,
-      offset: toBoolean(this.datoTooltipOffset) ? this.datoTooltipOffset : this.isLongTooltip ? '0 10' : 0, // 0 10 => x y
+      offset: !isNil(this.datoTooltipOffset) ? this.datoTooltipOffset : this.isLongTooltip ? '0 10' : 0, // 0 10 => x y
       trigger: 'manual',
       delay: this.datoTooltipDelay,
       template: this.getTpl(xIcon)
     };
-    if (this.datoTooltipOverflow || toBoolean(this.datoTooltipOffset)) {
+    if (this.datoTooltipOverflow || !isNil(this.datoTooltipOffset)) {
       tooltipOptions.popperOptions = {
         modifiers: {
           preventOverflow: { enabled: false }
@@ -169,12 +155,57 @@ export class DatoTooltipDirective implements OnDestroy, AfterViewInit {
   }
 
   private getTpl(xIcon) {
-    return `<div class="tooltip dato-tooltip ${this.isLongTooltip ? '' : 'common-tooltip'} ${this.datoTooltipClass} ${this.datoTooltipPosition}" role="tooltip">
+    return `<div class="tooltip dato-tooltip ${this.isLongTooltip ? '' : 'common-tooltip'} ${this.datoTooltipClass} ${this.datoTooltipPosition}" 
+                 role="tooltip" style="z-index: ${zIndex.tooltip}">
                   ${this.isLongTooltip ? '<div class="tooltip-arrow show"></div>' : ''}
                   <div class="tooltip-content">
                     <div class="tooltip-inner"></div>
                     ${this.isLongTooltip && this.datoTooltipTrigger === 'click' ? xIcon : ''}
                  </div>
                 </div>`;
+  }
+
+  private initTooltip() {
+    const { on, off } = this.eventsMap[this.datoTooltipTrigger];
+
+    if (this.datoTooltipOnTextOverflow && !this.isElementOverflow(this.tooltipElement)) return;
+
+    this.triggerOn = fromEvent(this.host.nativeElement, on)
+      .pipe(untilDestroyed(this))
+      .subscribe(() => {
+        if (this.datoTooltipDisabled) return;
+
+        if (this.datoTooltipTrigger === 'click') {
+          if (!this.isOpen) {
+            this.show();
+          } else {
+            this.hide();
+          }
+        } else {
+          this.show();
+        }
+
+        if (this.isLongTooltip && this.isOpen) {
+          const closeButton = this.tooltip.popperInstance.popper.querySelector('.tooltip-close-icon svg');
+          if (closeButton) {
+            fromEvent(closeButton, 'click')
+              .pipe(untilDestroyed(this))
+              .subscribe(() => this.hide());
+          }
+        }
+      });
+
+    if (this.datoTooltipTrigger !== 'click') {
+      this.triggerOff = fromEvent(this.host.nativeElement, off)
+        .pipe(untilDestroyed(this))
+        .subscribe(() => {
+          this.hide();
+        });
+    }
+  }
+
+  private unsubscribe() {
+    this.triggerOn && this.triggerOn.unsubscribe();
+    this.triggerOff && this.triggerOff.unsubscribe();
   }
 }

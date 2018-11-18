@@ -6,13 +6,14 @@
   <section class="mb-6">
     <dato-button (click)="open()" datoSize="sm" class="mr-5">Open panel</dato-button>
     <dato-button datoSize="sm" (click)="open2()" class="mr-5">Open panel 2</dato-button>
+    <dato-button datoSize="sm" (click)="open3()">Open panel with backdrop</dato-button>
   </section>
 
   <section>
     <nav>Nav</nav>
     <section class="flex">
       <div class="sidenav">Sidenav</div>
-      <main><h1>Main</h1></main>
+      <main data-relative="backdrop"><h1>Main</h1></main>
     </section>
   </section>
 
@@ -98,6 +99,12 @@
         <td></td>
         <td>null</td>
         <td>Pass the current viewContainerRef when you need the current injector</td>
+      </tr>
+      <tr>
+        <td>backdrop</td>
+        <td>object with enable and selector</td>
+        <td>null</td>
+        <td>Enabled backdrop to the body or a specific selector</td>
       </tr>
     </dato-api-table>
 

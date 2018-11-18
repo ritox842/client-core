@@ -1,3 +1,261 @@
+# [1.28.0](https://github.com/datorama/client-core/compare/v1.27.0...v1.28.0) (2018-11-18)
+
+
+### Features
+
+* **dato-tooltip:** add the ability to reinitiate tooltip on text change ([91e1549](https://github.com/datorama/client-core/commit/91e1549))
+
+# [1.27.0](https://github.com/datorama/client-core/compare/v1.26.2...v1.27.0) (2018-11-18)
+
+
+### Features
+
+* **panel:** panel can take custom class ([94ee453](https://github.com/datorama/client-core/commit/94ee453))
+
+## [1.26.2](https://github.com/datorama/client-core/compare/v1.26.1...v1.26.2) (2018-11-13)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix datoTooltipOverflowElement ([050c022](https://github.com/datorama/client-core/commit/050c022))
+
+## [1.26.1](https://github.com/datorama/client-core/compare/v1.26.0...v1.26.1) (2018-11-11)
+
+
+### Bug Fixes
+
+* **searchable:** should support later arrives ([43cbdb6](https://github.com/datorama/client-core/commit/43cbdb6))
+
+# [1.26.0](https://github.com/datorama/client-core/compare/v1.25.4...v1.26.0) (2018-11-10)
+
+
+### Features
+
+* **accordion:** add search functionality ([462315b](https://github.com/datorama/client-core/commit/462315b))
+* **accordion:** add search option ([7b36379](https://github.com/datorama/client-core/commit/7b36379))
+* **accordion:** add searchable ([47337ea](https://github.com/datorama/client-core/commit/47337ea))
+* **searchable:** add search functionality ([92e6b2d](https://github.com/datorama/client-core/commit/92e6b2d))
+
+## [1.25.4](https://github.com/datorama/client-core/compare/v1.25.3...v1.25.4) (2018-11-07)
+
+
+### Bug Fixes
+
+* **ace-text:** use input as we need binding ([64081f1](https://github.com/datorama/client-core/commit/64081f1))
+
+## [1.25.3](https://github.com/datorama/client-core/compare/v1.25.2...v1.25.3) (2018-11-06)
+
+
+### Bug Fixes
+
+* **dato-panel:** add backdrop z-index and docs ([e7f2089](https://github.com/datorama/client-core/commit/e7f2089))
+
+## [1.25.2](https://github.com/datorama/client-core/compare/v1.25.1...v1.25.2) (2018-11-06)
+
+
+### Bug Fixes
+
+* **dato-disable-control:** prevent form change event emit ([de1e2fe](https://github.com/datorama/client-core/commit/de1e2fe))
+* **dato-input:** coerce boolean on condition ([fa7134f](https://github.com/datorama/client-core/commit/fa7134f))
+* **dato-input:** fix condition ([d4da97b](https://github.com/datorama/client-core/commit/d4da97b))
+
+## [1.25.1](https://github.com/datorama/client-core/compare/v1.25.0...v1.25.1) (2018-11-06)
+
+
+### Bug Fixes
+
+* **dato-disable-control:** support getters ([38124c3](https://github.com/datorama/client-core/commit/38124c3))
+
+# [1.25.0](https://github.com/datorama/client-core/compare/v1.24.0...v1.25.0) (2018-11-05)
+
+
+### Features
+
+* **component:** add an event emitter when the dropdown closes ([d503068](https://github.com/datorama/client-core/commit/d503068))
+
+# [1.24.0](https://github.com/datorama/client-core/compare/v1.23.0...v1.24.0) (2018-11-05)
+
+
+### Features
+
+* **dato-panel:** add panel backdrop option ([b4387ba](https://github.com/datorama/client-core/commit/b4387ba))
+
+# [1.23.0](https://github.com/datorama/client-core/compare/v1.22.1...v1.23.0) (2018-11-05)
+
+
+### Features
+
+* **dato-drag:** add dragged event ([c2a77e3](https://github.com/datorama/client-core/commit/c2a77e3))
+
+## [1.22.1](https://github.com/datorama/client-core/compare/v1.22.0...v1.22.1) (2018-11-05)
+
+
+### Bug Fixes
+
+* **select:** update the control should mark the active ([31ae0a2](https://github.com/datorama/client-core/commit/31ae0a2))
+
+# [1.22.0](https://github.com/datorama/client-core/compare/v1.21.0...v1.22.0) (2018-11-05)
+
+
+### Features
+
+* **dato-directives:** add datodisablecontrol directive and update docs ([7a416de](https://github.com/datorama/client-core/commit/7a416de))
+
+# [1.21.0](https://github.com/datorama/client-core/compare/v1.20.1...v1.21.0) (2018-11-04)
+
+
+### Features
+
+* **dirty-check:** adding dirty-check pipeable operator ([03bd228](https://github.com/datorama/client-core/commit/03bd228))
+
+## [1.20.1](https://github.com/datorama/client-core/compare/v1.20.0...v1.20.1) (2018-10-31)
+
+
+### Bug Fixes
+
+* **http:** remove module from declerations ([2bddb94](https://github.com/datorama/client-core/commit/2bddb94))
+* **http:** remove module from declerations ([bd09916](https://github.com/datorama/client-core/commit/bd09916))
+
+# [1.20.0](https://github.com/datorama/client-core/compare/v1.19.0...v1.20.0) (2018-10-29)
+
+
+### Bug Fixes
+
+* **dato-select:** fix search label keys ([ea0f317](https://github.com/datorama/client-core/commit/ea0f317))
+
+
+### Features
+
+* **dialog:** hide the dialog's overlay when no backdrop is available ([4b5ac39](https://github.com/datorama/client-core/commit/4b5ac39))
+* **dialog:** remove redundant commnet ([498b8d0](https://github.com/datorama/client-core/commit/498b8d0))
+
+# [1.19.0](https://github.com/datorama/client-core/compare/v1.18.0...v1.19.0) (2018-10-29)
+
+
+### Features
+
+* **dato-select:** add group filtering for dato-select component ([3fb3700](https://github.com/datorama/client-core/commit/3fb3700))
+
+# [1.18.0](https://github.com/datorama/client-core/compare/v1.17.0...v1.18.0) (2018-10-28)
+
+
+### Features
+
+* **directivs:** add clipboard directive ([62d42de](https://github.com/datorama/client-core/commit/62d42de))
+
+# [1.17.0](https://github.com/datorama/client-core/compare/v1.16.0...v1.17.0) (2018-10-28)
+
+
+### Features
+
+* **rich-text:** add autocomplete plugin ([d864dc8](https://github.com/datorama/client-core/commit/d864dc8))
+* **rich-text:** add autocomplete plugin ([2bbfdda](https://github.com/datorama/client-core/commit/2bbfdda))
+* **rich-text:** add autocomplete plugin ([b80832a](https://github.com/datorama/client-core/commit/b80832a))
+* **rich-text:** add autocomplete plugin ([e62a12f](https://github.com/datorama/client-core/commit/e62a12f))
+* **rich-text:** cleaning ([3560b19](https://github.com/datorama/client-core/commit/3560b19))
+* **rich-text:** cleaning ([85162ac](https://github.com/datorama/client-core/commit/85162ac))
+* **rich-text:** create angualr wrapper for tinymce ([002dc8e](https://github.com/datorama/client-core/commit/002dc8e))
+* **rich-text:** create angualr wrapper for tinymce ([b2cdd66](https://github.com/datorama/client-core/commit/b2cdd66))
+* **rich-text:** use dato config ([d0f7a3e](https://github.com/datorama/client-core/commit/d0f7a3e))
+* **rich-text:** use dato config ([5c020f3](https://github.com/datorama/client-core/commit/5c020f3))
+
+# [1.16.0](https://github.com/datorama/client-core/compare/v1.15.6...v1.16.0) (2018-10-28)
+
+
+### Features
+
+* **ace:** add the component ([899a0ca](https://github.com/datorama/client-core/commit/899a0ca))
+* **ace:** add themes and prettier ([58c2dc8](https://github.com/datorama/client-core/commit/58c2dc8))
+* **ace:** add themes and prettier ([ca3d849](https://github.com/datorama/client-core/commit/ca3d849))
+* **ace:** cleaning ([e7118a7](https://github.com/datorama/client-core/commit/e7118a7))
+* **ace:** cleaning ([08642c7](https://github.com/datorama/client-core/commit/08642c7))
+* **ace:** cleaning ([7fbf1b0](https://github.com/datorama/client-core/commit/7fbf1b0))
+* **ace:** cleaning ([b9f008a](https://github.com/datorama/client-core/commit/b9f008a))
+
+## [1.15.6](https://github.com/datorama/client-core/compare/v1.15.5...v1.15.6) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix dato-tooltip z-index ([984401e](https://github.com/datorama/client-core/commit/984401e))
+
+## [1.15.5](https://github.com/datorama/client-core/compare/v1.15.4...v1.15.5) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix dato-tooltip transfer to isNil ([ee0e849](https://github.com/datorama/client-core/commit/ee0e849))
+
+## [1.15.4](https://github.com/datorama/client-core/compare/v1.15.3...v1.15.4) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** fix isOpen ([bbb021d](https://github.com/datorama/client-core/commit/bbb021d))
+
+## [1.15.3](https://github.com/datorama/client-core/compare/v1.15.2...v1.15.3) (2018-10-21)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** make isOpen public and fix issue with it ([928ac85](https://github.com/datorama/client-core/commit/928ac85))
+
+## [1.15.2](https://github.com/datorama/client-core/compare/v1.15.1...v1.15.2) (2018-10-18)
+
+
+### Bug Fixes
+
+* **dato-carousel:** centered control arrows ([c43570b](https://github.com/datorama/client-core/commit/c43570b))
+* **dato-carousel:** moved control arrows ([f36e2c1](https://github.com/datorama/client-core/commit/f36e2c1))
+
+## [1.15.1](https://github.com/datorama/client-core/compare/v1.15.0...v1.15.1) (2018-10-18)
+
+
+### Bug Fixes
+
+* **dato-carousel:** controls hidden when 1 slide ([a49fe2a](https://github.com/datorama/client-core/commit/a49fe2a))
+
+# [1.15.0](https://github.com/datorama/client-core/compare/v1.14.2...v1.15.0) (2018-10-16)
+
+
+### Features
+
+* **dato-carousel:** selected index functionality ([fa41621](https://github.com/datorama/client-core/commit/fa41621))
+
+## [1.14.2](https://github.com/datorama/client-core/compare/v1.14.1...v1.14.2) (2018-10-16)
+
+
+### Bug Fixes
+
+* **dato-tooltip:** minor tooltip changes ([474ce2c](https://github.com/datorama/client-core/commit/474ce2c))
+
+## [1.14.1](https://github.com/datorama/client-core/compare/v1.14.0...v1.14.1) (2018-10-16)
+
+
+### Bug Fixes
+
+* **dato-panel:** add panel inner classes prefix ([ce38dc1](https://github.com/datorama/client-core/commit/ce38dc1))
+
+# [1.14.0](https://github.com/datorama/client-core/compare/v1.13.0...v1.14.0) (2018-10-16)
+
+
+### Bug Fixes
+
+* **dato-carousel:** item width now an input ([bd08376](https://github.com/datorama/client-core/commit/bd08376))
+
+
+### Features
+
+* **dato-tooltip:** add datoTooltipTarget ([ac229cb](https://github.com/datorama/client-core/commit/ac229cb))
+* **dato-tooltip:** add datoTooltipTarget ([bb671a3](https://github.com/datorama/client-core/commit/bb671a3))
+* **dato-tooltip:** add datoTooltipTarget ([d56950b](https://github.com/datorama/client-core/commit/d56950b))
+* **dato-tooltip:** add datoTooltipTarget ([eeb6871](https://github.com/datorama/client-core/commit/eeb6871))
+* **dato-tooltip:** add datoTooltipTarget ([1823c30](https://github.com/datorama/client-core/commit/1823c30))
+* **dato-tooltip:** add datoTooltipTarget ([680b3e8](https://github.com/datorama/client-core/commit/680b3e8))
+* **dato-tooltip:** add datoTooltipTarget ([682def8](https://github.com/datorama/client-core/commit/682def8))
+* **dato-tooltip:** add datoTooltipTarget ([6158713](https://github.com/datorama/client-core/commit/6158713))
+* **dato-tooltip:** add datoTooltipTarget ([5c252d4](https://github.com/datorama/client-core/commit/5c252d4))
+
 # [1.13.0](https://github.com/datorama/client-core/compare/v1.12.1...v1.13.0) (2018-10-14)
 
 

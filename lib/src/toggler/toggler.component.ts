@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { toBoolean } from '@datorama/utils';
@@ -28,12 +28,17 @@ export class DatoTogglerComponent extends BaseCustomControl implements ControlVa
   private active = false;
   isDisabled = false;
 
+  constructor(private cdr: ChangeDetectorRef) {
+    super();
+  }
+
   get isActive() {
     return this.active;
   }
 
   writeValue(value): void {
     this.active = toBoolean(value);
+    this.cdr.markForCheck();
   }
 
   toggle() {
@@ -44,5 +49,6 @@ export class DatoTogglerComponent extends BaseCustomControl implements ControlVa
 
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
+    this.cdr.markForCheck();
   }
 }

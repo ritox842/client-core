@@ -13,20 +13,25 @@ import { fromEvent, Observable } from 'rxjs';
   selector: 'dato-accordion-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './accordion-header.component.html',
+  exportAs: 'datoAccordionHeader',
   styles: [
     `
-            :host {
-                display: block;
-            }`
+      :host {
+        display: block;
+      }
+    `
   ]
 })
 export class DatoAccordionHeaderComponent {
-  @HostBinding('class.dato-accordion-open') _expanded = false;
+  @HostBinding('class.dato-accordion-open')
+  _expanded = false;
 
   @Input()
   set expanded(value) {
-    this._expanded = value;
-    this.cdr.detectChanges();
+    if (this._expanded !== value) {
+      this._expanded = value;
+      this.cdr.detectChanges();
+    }
   }
 
   get includeArrow() {
@@ -40,11 +45,24 @@ export class DatoAccordionHeaderComponent {
 
   click$ = fromEvent(this.element, 'click');
 
-  private _includeArrow = false;
-
-  constructor(public host: ElementRef, private cdr: ChangeDetectorRef) {}
-
   get element() {
     return this.host.nativeElement;
   }
+
+  get isOpen() {
+    return this._expanded;
+  }
+
+  set searchResultLength(value: number) {
+    this._searchResultLength = value;
+  }
+
+  get searchResultLength() {
+    return this._searchResultLength;
+  }
+
+  private _searchResultLength = 0;
+  private _includeArrow = false;
+
+  constructor(public host: ElementRef, private cdr: ChangeDetectorRef) {}
 }

@@ -13,6 +13,9 @@ import { AtomicPageComponent } from './atomic-page.component';
 import { UtilsPageComponent } from 'app/utils-page.component';
 import { TranslatePipe } from './translate.pipe';
 import { APP_TRANSLATE } from '../../../lib/src/services/tokens';
+import { HttpClientModule } from '@angular/common/http';
+
+const PRODUCTION_URL = 'https://datorama.github.io/client-core';
 
 @NgModule({
   bootstrap: [AppComponent],
@@ -20,13 +23,18 @@ import { APP_TRANSLATE } from '../../../lib/src/services/tokens';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     RouterModule.forRoot(ROUTES, {
       useHash: Boolean(history.pushState) === false,
       preloadingStrategy: PreloadAllModules
     }),
     DatoCoreModule.forRoot({
       appSelector: 'app',
-      sidenavSelector: '.sidenav'
+      sidenavSelector: '.sidenav',
+      paths: {
+        editor: environment.production ? `${PRODUCTION_URL}/assets/ace` : '/assets/ace',
+        richText: environment.production ? `${PRODUCTION_URL}/assets/rich-text` : '/assets/rich-text'
+      }
     }) as any,
     ComponentsGalleryModule
   ],

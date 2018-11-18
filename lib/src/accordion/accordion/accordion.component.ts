@@ -8,7 +8,7 @@
 
 import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, Input, OnDestroy, Optional, QueryList, SkipSelf } from '@angular/core';
 import { DatoAccordionGroupComponent } from '../accordion-group/accordion-group.component';
-import { merge } from 'rxjs';
+import { merge, Subscription, Observable } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { toBoolean } from '@datorama/utils';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -19,22 +19,49 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
   exportAs: 'datoAccordion',
   styles: [
     `
-          :host {
-              display: block;
-          }`
+      :host {
+        display: block;
+      }
+    `
   ]
 })
 export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
-  @ContentChildren(DatoAccordionGroupComponent) groups: QueryList<DatoAccordionGroupComponent>;
+  @ContentChildren(DatoAccordionGroupComponent)
+  groups: QueryList<DatoAccordionGroupComponent>;
   @ContentChildren(DatoAccordionComponent, { descendants: true })
   childAccordion: QueryList<DatoAccordionComponent>;
 
-  @Input() closeOthers = false;
-  @Input() expandAll = false;
-  @Input() includeArrows = false;
-  @Input() activeIds: number | number[] = [];
+  @Input()
+  closeOthers = false;
+  @Input()
+  expandAll = false;
+  @Input()
+  includeArrows = false;
+  @Input()
+  activeIds: number | number[] = [];
 
-  groupsSubscription;
+  @Input()
+  set searchTerm(searchTerm: string) {
+    if (this.groups) {
+      searchTerm = searchTerm || '';
+
+      for (const group of this.asArray) {
+        if (!searchTerm) {
+          this.toggleGroup(group, false);
+          group.hide(false);
+          group.header.searchResultLength = 0;
+        } else {
+          const searchables = group.content.searchables;
+          const result = searchables.filter(({ token }) => token.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1);
+          group.hide(!result.length);
+          group.expand(!!result.length);
+          group.header.searchResultLength = result.length;
+        }
+      }
+    }
+  }
+
+  private groupsSubscription: Subscription;
 
   constructor(
     @SkipSelf()
@@ -68,12 +95,16 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     if (!toArray) {
       toArray = this.groups.toArray().map((_, i) => i);
     }
-    toArray.forEach(index => {
+    for (const index of toArray) {
       const group = this.groups.toArray()[index];
       if (!this.parent && !group._disabled) {
-        this.onGroupClick(group);
+        this.onGroupClick(group, true);
       }
-    });
+    }
+  }
+
+  get asArray() {
+    return this.groups.toArray();
   }
 
   ngAfterContentInit() {
@@ -84,19 +115,16 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     this.register();
     if (this.includeArrows) {
       this.updateIncludeArrows();
-      // register to groups changes
       this.groups.changes.pipe(untilDestroyed(this)).subscribe(this.updateIncludeArrows.bind(this));
     }
 
-    setTimeout(() => {
-      this.initialOpen(this.activeIds);
-    });
+    setTimeout(() => this.initialOpen(this.activeIds));
   }
 
   private updateIncludeArrows() {
-    this.groups.forEach(group => {
+    for (const group of this.groups.toArray()) {
       group.header.includeArrow = true;
-    });
+    }
   }
 
   private register() {
@@ -109,20 +137,20 @@ export class DatoAccordionComponent implements AfterContentInit, OnDestroy {
     });
   }
 
-  private onGroupClick(group: DatoAccordionGroupComponent) {
+  private onGroupClick(group: DatoAccordionGroupComponent, force = false) {
     if (group._disabled) {
       return;
     }
 
     if (this.closeOthers && !group.content._expanded) {
-      this.groups.forEach(g => {
+      for (const g of this.groups.toArray()) {
         if (g !== group) {
           this.closeAndEmit(g);
         }
-      });
+      }
     }
 
-    this.toggleGroup(group, !group.content._expanded);
+    this.toggleGroup(group, force ? true : !group.content._expanded);
 
     const children = this.getChildAccordionsComponents();
 

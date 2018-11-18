@@ -6,8 +6,9 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { Component, Input, ChangeDetectorRef, ChangeDetectionStrategy, ContentChild, TemplateRef } from '@angular/core';
+import { Component, Input, ChangeDetectorRef, ChangeDetectionStrategy, ContentChildren, TemplateRef, QueryList } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { DatoSearchableDirective } from '../../searchable/searchable.directive';
 
 @Component({
   selector: 'dato-accordion-content',
@@ -20,17 +21,21 @@ import { trigger, style, animate, transition } from '@angular/animations';
   `,
   styles: [
     `
-    :host {
-      overflow: hidden;
-      display: block;
-    }
-
-  `
+      :host {
+        overflow: hidden;
+        display: block;
+      }
+    `
   ],
   animations: [trigger('slideInOut', [transition(':enter', [style({ height: '0px' }), animate('200ms', style({ height: '*' }))]), transition(':leave', [style({ height: '*' }), animate('200ms', style({ height: '0px' }))])])]
 })
 export class DatoAccordionContentComponent {
-  @Input('tpl') template: TemplateRef<any>;
+  @Input('tpl')
+  template: TemplateRef<any>;
+
+  @ContentChildren(DatoSearchableDirective)
+  searchables: QueryList<DatoSearchableDirective>;
+
   _expanded: boolean = false;
 
   private _disableAnimation = false;
@@ -45,8 +50,10 @@ export class DatoAccordionContentComponent {
 
   @Input()
   set expanded(value) {
-    this._expanded = value;
-    this.cdr.detectChanges();
+    if (this._expanded !== value) {
+      this._expanded = value;
+      this.cdr.detectChanges();
+    }
   }
 
   constructor(private cdr: ChangeDetectorRef) {}

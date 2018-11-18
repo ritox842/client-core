@@ -46,14 +46,16 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   options: QueryList<DatoOptionComponent>;
 
   /** QueryList of datoGroups children */
-  @ContentChildren(DatoGroupComponent) groups: QueryList<DatoGroupComponent>;
+  @ContentChildren(DatoGroupComponent)
+  groups: QueryList<DatoGroupComponent>;
 
   /** QueryList of datoAccordionGroups children */
   @ContentChildren(forwardRef(() => DatoAccordionComponent), { descendants: true })
   accordion: QueryList<DatoAccordionComponent>;
 
   /** autoFocus on search input element */
-  @Input() autoFocus = true;
+  @Input()
+  autoFocus = true;
 
   /** The options to display in the list */
   @Input()
@@ -85,34 +87,44 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   }
 
   /** Debounce time to emit search queries */
-  @Input() debounceTime = 300;
+  @Input()
+  debounceTime = 300;
 
   /** If defined, indicates by which key the data should be normalized */
-  @Input() groupBy: string;
+  @Input()
+  groupBy: string;
 
   /** The key that stores the option id */
-  @Input() idKey = 'id';
+  @Input()
+  idKey = 'id';
 
   /** Whether to show loading indicator */
-  @Input() isLoading = false;
+  @Input()
+  isLoading = false;
 
   /** The lookup key for the label */
-  @Input() labelKey = 'label';
+  @Input()
+  labelKey = 'label';
 
   /** Search groups as well as options */
-  @Input() searchGroupLabels = true;
+  @Input()
+  searchGroupLabels = true;
 
   /** Client search strategy */
-  @Input() searchStrategy: DatoListSearchStrategy = defaultClientSearchStrategy;
+  @Input()
+  searchStrategy: DatoListSearchStrategy = defaultClientSearchStrategy;
 
   /** Client sort comparator */
-  @Input() sortComparator: DatoListSortComparator = defaultClientSortComparator;
+  @Input()
+  sortComparator: DatoListSortComparator = defaultClientSortComparator;
 
   /** Client sort */
-  @Input() sort = true;
+  @Input()
+  sort = true;
 
   /** available sizes */
-  @Input() datoSize: 'sm' | 'md';
+  @Input()
+  datoSize: 'sm' | 'md';
 
   /**
    * Getters and Setters
@@ -407,9 +419,14 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
    * Subscribe to search changes and filter the list
    */
   private listenToSearch() {
-    this.searchControl.valueChanges.pipe(debounceTime(this.debounceTime), untilDestroyed(this)).subscribe(_ => {
-      this.performSearch();
-    });
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(this.debounceTime),
+        untilDestroyed(this)
+      )
+      .subscribe(_ => {
+        this.performSearch();
+      });
   }
 
   private performSearch() {
@@ -521,7 +538,7 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
   }
 
   /**
-   * Search for matcing groups and children.
+   * Search for matching groups and children.
    * @param {string} searchTerm
    * @return {ListSearchResult}
    */
@@ -607,7 +624,10 @@ export class DatoListComponent extends BaseCustomControl implements OnInit, Cont
 
     /** Consider change it to use event delegation */
     this.clicksSubscription = merge(...clicks$)
-      .pipe(debounceTime(10), untilDestroyed(this))
+      .pipe(
+        debounceTime(10),
+        untilDestroyed(this)
+      )
       .subscribe((datoOption: DatoOptionComponent) => {
         if (datoOption.disabled) return;
         this.handleClick(datoOption);

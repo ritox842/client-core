@@ -32,6 +32,17 @@ export function setStyle(element, prop: string, value: string): void {
 /**
  *
  * @param element
+ * @param map
+ */
+export function setStyles(element, map: object): void {
+  for (const key of Object.keys(map)) {
+    setStyle(element, key, map[key]);
+  }
+}
+
+/**
+ *
+ * @param element
  * @param {string | string[]} className
  */
 export function addClass(element, className: string | string[]): void {
@@ -85,5 +96,37 @@ export function prependChild(parent: HTMLElement, child: Node) {
  * @returns {HTMLElement}
  */
 export function appendToBody(child: HTMLElement) {
+  appendChild(document.body, child);
+  return () => {
+    document.body.removeChild(child);
+    child = null;
+  };
+}
+
+export function removeFromBody(child: HTMLElement) {
   return appendChild(document.body, child);
+}
+
+/**
+ *
+ * @param source
+ * @param id
+ */
+export function appendScript(source: string, id: string) {
+  const script = createElement('script');
+  script.innerHTML = source;
+  script.id = id;
+  appendToBody(script);
+}
+
+/**
+ *
+ * @param source
+ * @param id
+ */
+export function appendStyle(source: string, id: string) {
+  const style = createElement('style');
+  style.innerHTML = source;
+  style.id = id;
+  appendToBody(style);
 }

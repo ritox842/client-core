@@ -1,8 +1,63 @@
 <dato-preview title="Accordion">
+  <ng-container *datoSubscribe="search$ as searchTerm">
+    <dato-button datoSize="sm" class="mr-5 mb-6" (click)="accordion2.toggle(0)">Toggle first</dato-button>
+    <dato-button datoSize="sm" class="mr-5 mb-6" (click)="expandAll = !expandAll">Expand all</dato-button>
+    <dato-button datoSize="sm" class="mr-5 mb-6" (click)="changeActive()">Change active ids</dato-button>
+
+    <dato-input placeholder="Search..." [formControl]="searchControl"></dato-input>
+    <button (click)="show = !show">Toggle</button>
+    <dato-searchable-container #container="datoSearchableContainer" [datoSearchTerm]="searchTerm">
+      {{container.count}}
+      <dato-accordion [activeIds]="activeIds" #accordion2="datoAccordion" [expandAll]="expandAll" [searchTerm]="searchTerm">
+
+        <dato-accordion-group *ngFor="let section of data">
+          <dato-accordion-header #header="datoAccordionHeader">
+            <div class="header d-flex items-center">
+              <dato-icon [datoIcon]="header.isOpen ? 'arrow-down' : 'arrow-right'" datoColor="primary-400" datoSize="sm"
+                class="mr-4"></dato-icon>
+              <span>{{section.title}} <ng-container *ngIf="header.searchResultLength">({{header.searchResultLength}})</ng-container></span>
+            </div>
+          </dato-accordion-header>
+          <dato-accordion-content>
+            <p [datoSearchable]="child" *ngFor="let child of section.children" datoSearchableHighlight></p>
+          </dato-accordion-content>
+        </dato-accordion-group>
+
+      </dato-accordion>
+
+      <p datoSearchable="Hello" *ngIf="show">
+        <span datoSearchableHighlight></span> World
+      </p>
+    </dato-searchable-container>
+
+
+  </ng-container>
+
+
+  <dato-tabs show="html">
+
+    <textarea datoHighlight="html">
+      <dato-accordion [closeOthers]="true" [activeIds]="activeIds" #accordion2="datoAccordion" [expandAll]="expandAll">
+        <dato-accordion-group>
+          <dato-accordion-header>
+            <div class="header">Title 1</div>
+          </dato-accordion-header>
+          <dato-accordion-content>
+            <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet blanditiis distinctio eius molestiae molestias nulla officiis perspiciatis! At, debitis ea ipsam iure magni maiores minus pariatur perspiciatis soluta vero, voluptate?</div>
+          </dato-accordion-content>
+        </dato-accordion-group>
+      </dato-accordion>
+    </textarea>
+
+  </dato-tabs>
+
+</dato-preview>
+
+<dato-preview title="Accordion - Disabled">
 
   <dato-button (click)="accordion.toggle(2)" class="mb-5">Toggle third</dato-button>
 
-  <dato-accordion [closeOthers]="true" [activeIds]="[0]" #accordion="datoAccordion">
+  <dato-accordion [closeOthers]="true" [activeIds]="[0]" #accordion="datoAccordion" [includeArrows]="true">
     <dato-accordion-group>
       <dato-accordion-header>
         <div class="header">Title 1</div>
@@ -72,110 +127,7 @@
 
 </dato-preview>
 
-<dato-preview title="Accordion">
-  <dato-button datoSize="sm" class="mr-5 mb-6" (click)="accordion2.toggle(0)">Toggle first</dato-button>
-  <dato-button datoSize="sm" class="mr-5 mb-6" (click)="expandAll = !expandAll">Expand all</dato-button>
-  <dato-button datoSize="sm" class="mr-5 mb-6" (click)="changeActive()">Change active ids</dato-button>
-  <dato-button datoSize="sm" class="mr-5 mb-6" (click)="disable = !disable">Disable group 2</dato-button>
-  <dato-accordion [closeOthers]="true" [activeIds]="activeIds" #accordion2="datoAccordion" [expandAll]="expandAll">
-    <dato-accordion-group>
-      <dato-accordion-header>
-        <div class="header">Title 1</div>
-      </dato-accordion-header>
-      <dato-accordion-content>
-        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet blanditiis distinctio eius
-          molestiae molestias nulla officiis perspiciatis! At, debitis ea ipsam iure magni maiores minus pariatur
-          perspiciatis soluta vero, voluptate?
-        </div>
-      </dato-accordion-content>
-    </dato-accordion-group>
 
-
-    <dato-accordion-group [disabled]="disable">
-      <dato-accordion-header>
-        <div class="header">Title 2</div>
-      </dato-accordion-header>
-      <dato-accordion-content>
-        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem dolore dolores labore
-          minima quae. Ab aperiam consectetur deleniti, dolor dolorum eaque fugiat nam nisi numquam placeat possimus
-          ratione tempore!
-        </div>
-      </dato-accordion-content>
-    </dato-accordion-group>
-
-    <dato-accordion-group>
-      <dato-accordion-header>
-        <div class="header">Title 3</div>
-      </dato-accordion-header>
-      <dato-accordion-content>
-        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem dolore dolores labore
-          minima quae. Ab aperiam consectetur deleniti, dolor dolorum eaque fugiat nam nisi numquam placeat possimus
-          ratione tempore!
-        </div>
-      </dato-accordion-content>
-    </dato-accordion-group>
-
-    <dato-accordion-group>
-      <dato-accordion-header>
-        <div class="header">Title 4</div>
-      </dato-accordion-header>
-      <dato-accordion-content>
-        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem dolore dolores labore
-          minima quae. Ab aperiam consectetur deleniti, dolor dolorum eaque fugiat nam nisi numquam placeat possimus
-          ratione tempore!
-        </div>
-      </dato-accordion-content>
-    </dato-accordion-group>
-  </dato-accordion>
-
-  <dato-tabs show="html">
-
-    <textarea datoHighlight="html">
-  <dato-accordion [closeOthers]="true" [activeIds]="activeIds" #accordion2="datoAccordion" [expandAll]="expandAll">
-    <dato-accordion-group>
-      <dato-accordion-header>
-        <div class="header">Title 1</div>
-      </dato-accordion-header>
-      <dato-accordion-content>
-        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet blanditiis distinctio eius molestiae molestias nulla officiis perspiciatis! At, debitis ea ipsam iure magni maiores minus pariatur perspiciatis soluta vero, voluptate?</div>
-      </dato-accordion-content>
-    </dato-accordion-group>
-
-
-    <dato-accordion-group [disabled]="disable">
-      <dato-accordion-header>
-        <div class="header">Title 2</div>
-      </dato-accordion-header>
-      <dato-accordion-content>
-        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem dolore dolores labore minima quae. Ab aperiam consectetur deleniti, dolor dolorum eaque fugiat nam nisi numquam placeat possimus ratione tempore!</div>
-      </dato-accordion-content>
-    </dato-accordion-group>
-
-    <dato-accordion-group>
-      <dato-accordion-header>
-        <div class="header">Title 3</div>
-      </dato-accordion-header>
-      <dato-accordion-content>
-        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem dolore dolores labore minima quae. Ab aperiam consectetur deleniti, dolor dolorum eaque fugiat nam nisi numquam placeat possimus ratione tempore!</div>
-      </dato-accordion-content>
-    </dato-accordion-group>
-
-    <dato-accordion-group>
-      <dato-accordion-header>
-        <div class="header">Title 4</div>
-      </dato-accordion-header>
-      <dato-accordion-content>
-        <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab autem dolore dolores labore minima quae. Ab aperiam consectetur deleniti, dolor dolorum eaque fugiat nam nisi numquam placeat possimus ratione tempore!</div>
-      </dato-accordion-content>
-    </dato-accordion-group>
-  </dato-accordion>
-
-
-    </textarea>
-
-  </dato-tabs>
-
-</dato-preview>
 
 <dato-preview title="Inside ng-content">
   <dato-button class="mb-6" (click)="accordion3.toggle(0)">Toggle third</dato-button>
@@ -187,7 +139,8 @@
           <div class="header">Title 1</div>
         </dato-accordion-header>
         <dato-accordion-content>
-          <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet blanditiis distinctio eius
+          <div class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet blanditiis distinctio
+            eius
             molestiae molestias nulla officiis perspiciatis! At, debitis ea ipsam iure magni maiores minus pariatur
             perspiciatis soluta vero, voluptate?
           </div>
@@ -253,6 +206,12 @@
         <td>boolean</td>
         <td>false</td>
         <td>Whether the group is disabled - This input is on the <b>group</b> element</td>
+      </tr>
+      <tr>
+        <td>includeArrows</td>
+        <td>boolean</td>
+        <td>false</td>
+        <td>Whether to add arrows</td>
       </tr>
     </dato-api-table>
 

@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
-import { setStyle } from '../internal/helpers';
+import { setStyle, addClass } from '../internal/helpers';
 import { zIndex } from '../internal/z-index';
 import { coerceCssPixelValue } from '@angular/cdk/coercion';
 
@@ -32,10 +32,15 @@ export class DatoPanelComponent {
     this.host.nativeElement.style.top = `${rect.top + (offset.top ? offset.top : 0)}px`;
   }
 
+  customClass = '';
+
   constructor(private host: ElementRef<HTMLElement>) {}
 
   ngOnInit() {
     setStyle(this.host.nativeElement, 'zIndex', `${zIndex.panel}`);
+    if (this.customClass) {
+      addClass(this.host.nativeElement, this.customClass);
+    }
   }
 
   get container(): HTMLElement {

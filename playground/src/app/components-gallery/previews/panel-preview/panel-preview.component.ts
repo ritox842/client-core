@@ -24,6 +24,7 @@ export class PanelPreviewComponent implements OnInit {
   openSmall() {
     this.panelService
       .open(this.tpl, {
+        customClass: 'netanel',
         relativeTo: '.custom-relative',
         height: 200,
         offset: { left: 62 }

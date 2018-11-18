@@ -19,6 +19,7 @@ import { CoreConfig, DATO_CORE_CONFIG } from '../config';
 import { zIndex } from '../internal/z-index';
 
 export type DatoPanelOptions<E = any> = {
+  customClass?: string;
   relativeTo?: E | string;
   height?: number | string;
   width?: number | string;
@@ -85,7 +86,7 @@ export class DatoPanel {
 
     const { nativeElement } = this.component.location;
     this.nativeElement = nativeElement;
-
+    this.component.instance.customClass = options.customClass;
     this.calcPosition(relativeTo, options);
 
     this.component.hostView.detectChanges();

@@ -122,16 +122,26 @@
 
 <dato-preview title="Text Overflow">
   <ul style="max-width: 100px;">
-    <li class="ellipsis" datoTooltip="Long Long All Text" datoTooltipPosition="right" datoTooltipOnOverflow="true" style="display: inline-block">Long Long All Text</li>
-    <li class="ellipsis" datoTooltip="Not visible" datoTooltipPosition="right" datoTooltipOnOverflow="true" style="display: inline-block">Short</li>
+    <li class="ellipsis" [datoTooltip]="longText" datoTooltipPosition="right" [datoTooltipOnTextOverflow]="true"
+        style="display: inline-block">
+      {{longText}}
+    </li>
+    <li class="ellipsis" [datoTooltip]="editableTextControl.value" datoTooltipPosition="right"
+        [datoTooltipOnTextOverflow]="true" style="display: inline-block">
+      <span-expanded [formControl]="editableTextControl"></span-expanded>
+    </li>
   </ul>
 
   <dato-tabs show="html">
 
     <textarea datoHighlight="html">
       <ul style="max-width: 100px;">
-        <li class="ellipsis" datoTooltip="Long Long All Text" datoTooltipPosition="right" datoTooltipOnOverflow="true" style="display: inline-block">Long Long All Text</li>
-        <li class="ellipsis" datoTooltip="Not visible" datoTooltipPosition="right" datoTooltipOnOverflow="true" style="display: inline-block">Short</li>
+        <li class="ellipsis" [datoTooltip]="longText" datoTooltipPosition="right" [datoTooltipOnTextOverflow]="true" style="display: inline-block">
+          {{longText}}
+        </li>
+        <li class="ellipsis" [datoTooltip]="editableTextControl.value" datoTooltipPosition="right" [datoTooltipOnTextOverflow]="true" style="display: inline-block">
+          Editable text element...
+        </li>
       </ul>
     </textarea>
 

@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/datorama/client-core/compare/v1.26.2...v1.27.0) (2018-11-18)
+
+
+### Features
+
+* **panel:** panel can take custom class ([94ee453](https://github.com/datorama/client-core/commit/94ee453))
+
 ## [1.26.2](https://github.com/datorama/client-core/compare/v1.26.1...v1.26.2) (2018-11-13)
 
 

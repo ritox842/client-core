@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/datorama/client-core/compare/v1.27.0...v1.28.0) (2018-11-18)
+
+
+### Features
+
+* **dato-tooltip:** add the ability to reinitiate tooltip on text change ([91e1549](https://github.com/datorama/client-core/commit/91e1549))
+
 # [1.27.0](https://github.com/datorama/client-core/compare/v1.26.2...v1.27.0) (2018-11-18)
 
 

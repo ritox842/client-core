@@ -7,7 +7,7 @@
  */
 
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
+import { fromEvent } from 'rxjs';
 import { getOptionTemplate } from './option-template';
 
 @Component({
@@ -33,6 +33,7 @@ export class DatoOptionComponent implements OnInit {
     this._permanentDisabled = !!value;
     if (value !== this._disabled) {
       this._disabled = value;
+      this._disabled ? this.addDisableTooltip() : this.removeDisableTooltip();
       this.detectChanges();
     }
   }
@@ -124,9 +125,15 @@ export class DatoOptionComponent implements OnInit {
     }
   }
 
-  getOptionTooltip() {
-    if (this.disabled) {
-      return this.active ? 'This item cannot be removed' : 'This item cannot be selected';
-    }
+  /**Add disable tooltip with text relative to
+   * option active state*/
+  private addDisableTooltip() {
+    // const tooltipText: string = this.translate.transform(this.active ? 'This item cannot be removed' : 'This item cannot be selected');
+    this.element.setAttribute('datoTooltip', 'blabla');
+  }
+
+  /**Remove disable tooltip*/
+  private removeDisableTooltip() {
+    this.element.removeAttribute('datoTooltip');
   }
 }

@@ -24,34 +24,20 @@ export class DatoTriggerMulti implements OnInit {
   input: ElementRef;
 
   _restCount = 0;
-  @Input()
-  control: FormControl;
-  @Input()
-  disabledIDs: string[] | number[] = [];
-  /**
-   *
-   * @type {string}
-   */
-  @Input()
-  labelKey = 'label';
-  @Output()
-  removeOption = new EventEmitter();
-  inputWidth: number;
-  showClear = false;
-  searchSubscription;
-
-  constructor(private host: ElementRef<HTMLElement>, private translate: TranslatePipe) {}
-
   private _isFocused = false;
 
   @HostBinding('class.dato-trigger-multi--focused')
   get isFocused() {
     return this._isFocused;
   }
-
   set isFocused(value: boolean) {
     this._isFocused = value;
   }
+
+  @Input()
+  control: FormControl;
+  @Input()
+  disabledIDs: (string | number)[] = [];
 
   /**
    *
@@ -60,24 +46,22 @@ export class DatoTriggerMulti implements OnInit {
    */
   private _placeholder = 'Search..';
 
-  get placeholder(): string {
-    return this._placeholder;
-  }
-
   @Input()
   set placeholder(value: string) {
     this._placeholder = value;
   }
+  get placeholder(): string {
+    return this._placeholder;
+  }
 
   private _isLoading = false;
-
-  get isLoading(): boolean {
-    return this._isLoading;
-  }
 
   @Input()
   set isLoading(value: boolean) {
     this._isLoading = value;
+  }
+  get isLoading(): boolean {
+    return this._isLoading;
   }
 
   /**
@@ -86,10 +70,6 @@ export class DatoTriggerMulti implements OnInit {
    * @private
    */
   private _options = [];
-
-  get options(): any[] {
-    return this._options;
-  }
 
   @Input()
   set options(value: any[]) {
@@ -100,6 +80,9 @@ export class DatoTriggerMulti implements OnInit {
       };
     });
     this.setRestCount();
+  }
+  get options(): any[] {
+    return this._options;
   }
 
   get showRest() {
@@ -113,14 +96,13 @@ export class DatoTriggerMulti implements OnInit {
    */
   private _limitTo = defaultOptionsDisplayLimit;
 
-  get limitTo(): number {
-    return this._limitTo;
-  }
-
   @Input()
   set limitTo(value: number) {
     this._limitTo = value;
     this.setRestCount();
+  }
+  get limitTo(): number {
+    return this._limitTo;
   }
 
   /**
@@ -130,14 +112,20 @@ export class DatoTriggerMulti implements OnInit {
    */
   private _disabled = false;
 
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
   @Input()
   set disabled(value: boolean) {
     this._disabled = value;
   }
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  /**
+   *
+   * @type {string}
+   */
+  @Input()
+  labelKey = 'label';
 
   /**
    *
@@ -152,11 +140,20 @@ export class DatoTriggerMulti implements OnInit {
     }
   }
 
+  @Output()
+  removeOption = new EventEmitter();
+
+  inputWidth: number;
+  showClear = false;
+  searchSubscription;
+
   @HostListener('click')
   onClick() {
     this.isFocused = true;
     Promise.resolve().then(() => this.input.nativeElement.focus());
   }
+
+  constructor(private host: ElementRef<HTMLElement>, private translate: TranslatePipe) {}
 
   ngOnInit() {
     const BASE_LENGTH = 13;
@@ -207,6 +204,11 @@ export class DatoTriggerMulti implements OnInit {
       const lastOption = last(this.options);
       this.removeOption.emit(lastOption);
     }
+  }
+
+  ngAfterViewInit() {
+    const SPACES = 100;
+    this.maxActiveElementWidth = `${this.host.nativeElement.getBoundingClientRect().width - SPACES}px`;
   }
 
   /**

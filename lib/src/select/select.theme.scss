@@ -12,7 +12,6 @@
 }
 
 .dato-select__placeholder,
-.dato-select__option--disabled,
 dato-select__not-found,
 .dato-select__group {
   color: themify(primary-300);
@@ -22,7 +21,7 @@ dato-select__not-found,
   border-top: themify(primary-200) 1px solid;
 }
 
-.dato-select__option--simple:not(.dato-select__option--disabled) {
+.dato-select__option--simple {
   color: themify((light: primary-600, dark: primary-100));
 }
 
@@ -83,10 +82,6 @@ dato-select__not-found,
   }
 }
 
-.dato-select__option--disabled [datoFont] {
-  color: themify(primary-300);
-}
-
 .dato-select-infinite-spinner {
   .dato-input__spinner {
     position: relative;
@@ -95,7 +90,7 @@ dato-select__not-found,
 }
 
 .dato-select__dropdown-container {
-  .dato-select__option:not(.dato-select__option--disabled):not(.dato-select__header) {
+  .dato-select__option:not(.dato-select__header) {
     color: themify((light: primary-700, dark: primary-0));
     .dato-checkbox {
       p {

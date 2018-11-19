@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://github.com/datorama/client-core/blob/master/LICENSE
  */
 
-import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Attribute, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ContentChildren, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, OnInit, Output, QueryList, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseCustomControl } from '../internal/base-custom-control';
 import { coerceArray, size } from '@datorama/utils';
@@ -45,7 +45,7 @@ const valueAccessor = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'datoSelect'
 })
-export class DatoSelectComponent extends BaseCustomControl implements OnInit, ControlValueAccessor, AfterContentInit {
+export class DatoSelectComponent extends BaseCustomControl implements OnInit, OnDestroy, ControlValueAccessor, AfterContentInit {
   /** The dropdown container element which is the portal  **/
   @ViewChild('dropdown')
   dropdown: TemplateRef<any>;
@@ -290,7 +290,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, Co
   _checked;
 
   /*Holds all disabled options ID's**/
-  disabledIDs: string[] | number[];
+  disabledIDs: (string | number)[];
 
   /** true until ngOnInit */
   private initialRun = true;
@@ -844,6 +844,14 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, Co
           this.fetch.emit(true);
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.searchSubscription && this.searchSubscription.unsubscribe();
+    this.clicksSubscription && this.clicksSubscription.unsubscribe();
+    this.infiniteSubscription && this.infiniteSubscription.unsubscribe();
+    this.keyboardEventsManagerSubscription && this.keyboardEventsManagerSubscription.unsubscribe();
+    this.datoOverlay.attached && this.datoOverlay.destroy();
   }
 
   /**

@@ -1,18 +1,19 @@
 import { DatoSelectComponent } from './select.component';
 import { createHostComponentFactory, dispatchKeyboardEvent, query, queryAll, SpectatorWithHost, typeInElement } from '@netbasal/spectator';
 import { DatoTriggerMulti } from './trigger-multi/trigger-multi.component';
-import { DatoButtonModule, DatoCheckboxModule, DatoIconModule, DatoInputModule, DatoLinkButtonModule, DatoSelectEmptyComponent, DatoMultiOptionComponent, DatoOptionComponent, DatoTranslateService, DatoTriggerSingle, IconRegistry } from '../..';
+import { DatoButtonModule, DatoCheckboxModule, DatoIconModule, DatoInputModule, DatoLinkButtonModule, DatoSelectEmptyComponent, DatoMultiOptionComponent, DatoOptionComponent, DatoTranslateService, DatoTriggerSingle, IconRegistry } from '../../index';
 import { DatoOverlay } from '../angular/overlay';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoGroupComponent } from '../options/group.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Component, Type } from '@angular/core';
 import { stubs } from '../services/public_api';
-import { fakeAsync, flush, flushMicrotasks, tick } from '@angular/core/testing';
+import { fakeAsync, flushMicrotasks, tick } from '@angular/core/testing';
 import { ESCAPE } from '@angular/cdk/keycodes';
 import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { DatoDirectivesModule } from '../directives/directives.module';
+import { TranslatePipe } from '../../../playground/src/app/translate.pipe';
 
 function generateOptions() {
   const arr = [];
@@ -111,7 +112,7 @@ function createHostFactory<T>(host: Type<T>) {
     component: DatoSelectComponent,
     host,
     declarations: [DatoTriggerSingle, DatoTriggerMulti, DatoSelectActiveDirective, DatoSelectEmptyComponent, DatoGroupComponent, DatoOptionComponent, DatoMultiOptionComponent],
-    providers: [DatoOverlay, DatoTranslateService, stubs.translate(), IconRegistry],
+    providers: [DatoOverlay, DatoTranslateService, stubs.translate(), IconRegistry, TranslatePipe],
     imports: [DatoIconModule, DatoInputModule, ReactiveFormsModule, DatoCheckboxModule, DatoLinkButtonModule, DatoButtonModule, DatoDirectivesModule]
   });
 }
@@ -177,19 +178,16 @@ describe('DatoSelect', () => {
       expect(query(DROPDOWN_SELECTOR)).toBeNull();
     });
 
-    it(
-      'should select the option and close the dropdown',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_SINGLE_SELECTOR);
-        host.click(query(OPTION_SELECTOR));
-        tick(11);
-        expect(query(DROPDOWN_SELECTOR)).toBeNull();
-        expect(host.hostComponent.control.value).toEqual({ id: 1, label: 'Item 1' });
-        host.hostFixture.detectChanges();
-        expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('Item 1');
-      })
-    );
+    it('should select the option and close the dropdown', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_SINGLE_SELECTOR);
+      host.click(query(OPTION_SELECTOR));
+      tick(11);
+      expect(query(DROPDOWN_SELECTOR)).toBeNull();
+      expect(host.hostComponent.control.value).toEqual({ id: 1, label: 'Item 1' });
+      host.hostFixture.detectChanges();
+      expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('Item 1');
+    }));
 
     it('should close the dropdown on escape', () => {
       host = createHost(select);
@@ -255,32 +253,26 @@ describe('DatoSelect', () => {
       expect(host.query(TRIGGER_SINGLE_SELECTOR)).toBeDefined();
     });
 
-    it(
-      'should work with async',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_SINGLE_SELECTOR);
-        expect(queryAll(OPTION_SELECTOR).length).toEqual(0);
-        tick(501);
-        host.hostFixture.detectChanges();
-        expect(queryAll(OPTION_SELECTOR).length).toEqual(15);
-      })
-    );
+    it('should work with async', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_SINGLE_SELECTOR);
+      expect(queryAll(OPTION_SELECTOR).length).toEqual(0);
+      tick(501);
+      host.hostFixture.detectChanges();
+      expect(queryAll(OPTION_SELECTOR).length).toEqual(15);
+    }));
 
-    it(
-      'should work with later updates',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_SINGLE_SELECTOR);
-        expect(queryAll(OPTION_SELECTOR).length).toEqual(0);
-        tick(501);
-        host.hostFixture.detectChanges();
-        expect(queryAll(OPTION_SELECTOR).length).toEqual(15);
-        host.hostComponent.subject.next([...host.hostComponent.options, { id: 16, label: 'Item 16' }]);
-        host.hostFixture.detectChanges();
-        expect(queryAll(OPTION_SELECTOR).length).toEqual(16);
-      })
-    );
+    it('should work with later updates', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_SINGLE_SELECTOR);
+      expect(queryAll(OPTION_SELECTOR).length).toEqual(0);
+      tick(501);
+      host.hostFixture.detectChanges();
+      expect(queryAll(OPTION_SELECTOR).length).toEqual(15);
+      host.hostComponent.subject.next([...host.hostComponent.options, { id: 16, label: 'Item 16' }]);
+      host.hostFixture.detectChanges();
+      expect(queryAll(OPTION_SELECTOR).length).toEqual(16);
+    }));
   });
 
   describe('Select Single - With Search', () => {
@@ -304,57 +296,48 @@ describe('DatoSelect', () => {
       expect(query('.dato-select__single dato-input')).toBeVisible();
     });
 
-    it(
-      'should filter by search term',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_SINGLE_SELECTOR);
-        typeInElement('12', query('.dato-select__single .dato-input'));
-        tick(301);
-        expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(14);
-        expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(14);
-        expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(14);
-        typeInElement('', query('.dato-select__single .dato-input'));
-        tick(301);
-        /** We have one initial disabled */
-        expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(1);
-        expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(0);
-        expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(0);
-      })
-    );
+    it('should filter by search term', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_SINGLE_SELECTOR);
+      typeInElement('12', query('.dato-select__single .dato-input'));
+      tick(301);
+      expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(14);
+      expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(14);
+      expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(14);
+      typeInElement('', query('.dato-select__single .dato-input'));
+      tick(301);
+      /** We have one initial disabled */
+      expect(host.component.options.filter(datoOption => datoOption.disabled).length).toEqual(1);
+      expect(host.component.options.filter(datoOption => datoOption.hide).length).toEqual(0);
+      expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(0);
+    }));
 
-    it(
-      'should select & search term',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_SINGLE_SELECTOR);
-        typeInElement('12', query('.dato-select__single .dato-input'));
-        tick(301);
-        host.detectChanges();
-        expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(14);
-        const visibleOption = getOptionsAsArray().filter(el => !isOptionHidden(el))[0];
-        visibleOption.click();
-        tick(312);
-        host.detectChanges();
-        expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('Item 12');
-        expect(host.hostComponent.control.value).toEqual({ id: 12, label: 'Item 12' });
-      })
-    );
+    it('should select & search term', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_SINGLE_SELECTOR);
+      typeInElement('12', query('.dato-select__single .dato-input'));
+      tick(301);
+      host.detectChanges();
+      expect(getOptionsAsArray().filter(isOptionHidden).length).toEqual(14);
+      const visibleOption = getOptionsAsArray().filter(el => !isOptionHidden(el))[0];
+      visibleOption.click();
+      tick(312);
+      host.detectChanges();
+      expect(host.query(TRIGGER_SINGLE_SELECTOR)).toHaveText('Item 12');
+      expect(host.hostComponent.control.value).toEqual({ id: 12, label: 'Item 12' });
+    }));
 
-    it(
-      'should show no items message',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_SINGLE_SELECTOR);
-        typeInElement('something that doesnt exists', query('.dato-select__single .dato-input'));
-        tick(301);
-        host.detectChanges();
-        expect(query('.dato-select__not-found')).toBeVisible();
-        typeInElement('12', query('.dato-select__single .dato-input'));
-        tick(301);
-        expect(query('.dato-select__not-found')).not.toBeVisible();
-      })
-    );
+    it('should show no items message', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_SINGLE_SELECTOR);
+      typeInElement('something that doesnt exists', query('.dato-select__single .dato-input'));
+      tick(301);
+      host.detectChanges();
+      expect(query('.dato-select__not-found')).toBeVisible();
+      typeInElement('12', query('.dato-select__single .dato-input'));
+      tick(301);
+      expect(query('.dato-select__not-found')).not.toBeVisible();
+    }));
   });
 
   describe('Server Side Search', () => {
@@ -376,27 +359,24 @@ describe('DatoSelect', () => {
       </dato-select>
     `;
 
-    it(
-      'should peform a server side search',
-      fakeAsync(() => {
-        host = createHost(select);
-        spyOn(host.hostComponent, 'onSearch').and.callThrough();
-        host.click(TRIGGER_SINGLE_SELECTOR);
-        typeInElement('a', query('.dato-select__single .dato-input'));
-        tick(301);
-        host.detectChanges();
-        expect(host.query('.dato-input__spinner')).toBeVisible();
-        tick(801);
-        host.detectChanges();
-        expect(host.query('.dato-input__spinner')).not.toBeVisible();
-        expect(host.hostComponent.onSearch).toHaveBeenCalledWith('a');
-        expect(queryAll(OPTION_SELECTOR).length).toEqual(1);
-        host.click('.dato-icon-close');
-        tick(1200);
-        host.detectChanges();
-        expect(queryAll(OPTION_SELECTOR).length).toEqual(5);
-      })
-    );
+    it('should peform a server side search', fakeAsync(() => {
+      host = createHost(select);
+      spyOn(host.hostComponent, 'onSearch').and.callThrough();
+      host.click(TRIGGER_SINGLE_SELECTOR);
+      typeInElement('a', query('.dato-select__single .dato-input'));
+      tick(301);
+      host.detectChanges();
+      expect(host.query('.dato-input__spinner')).toBeVisible();
+      tick(801);
+      host.detectChanges();
+      expect(host.query('.dato-input__spinner')).not.toBeVisible();
+      expect(host.hostComponent.onSearch).toHaveBeenCalledWith('a');
+      expect(queryAll(OPTION_SELECTOR).length).toEqual(1);
+      host.click('.dato-icon-close');
+      tick(1200);
+      host.detectChanges();
+      expect(queryAll(OPTION_SELECTOR).length).toEqual(5);
+    }));
   });
 
   describe('Select Multi', () => {
@@ -441,127 +421,150 @@ describe('DatoSelect', () => {
       expect(query('.dato-multi-search')).toBeVisible();
     });
 
-    it(
-      'should select multiple',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_MULTI_SELECTOR);
-        const [one, two, three, four] = getOptionsAsArray();
-        one.click();
-        tick(11);
-        two.click();
-        tick(22);
-        three.click();
-        tick(33);
-        host.detectChanges();
-        expect(host.hostComponent.control.value).toEqual([
-          {
-            id: 1,
-            label: 'Item 1'
-          },
-          {
-            id: 2,
-            label: 'Item 2'
-          },
-          {
-            id: 3,
-            label: 'Item 3'
-          }
-        ]);
-        expect(queryAll('.dato-trigger-multi__active').length).toEqual(3);
-        expect(queryAll('.dato-checkbox').length).toEqual(15);
-        expect(one.querySelector('input[type="checkbox"]')).toBeChecked();
-        expect(two.querySelector('input[type="checkbox"]')).toBeChecked();
-        expect(three.querySelector('input[type="checkbox"]')).toBeChecked();
-        expect(four.querySelector('input[type="checkbox"]')).not.toBeChecked();
-      })
-    );
+    it('should select multiple', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_MULTI_SELECTOR);
+      const [one, two, three, four] = getOptionsAsArray();
+      one.click();
+      tick(11);
+      two.click();
+      tick(22);
+      three.click();
+      tick(33);
+      host.detectChanges();
+      expect(host.hostComponent.control.value).toEqual([
+        {
+          id: 1,
+          label: 'Item 1'
+        },
+        {
+          id: 2,
+          label: 'Item 2'
+        },
+        {
+          id: 3,
+          label: 'Item 3'
+        }
+      ]);
+      expect(queryAll('.dato-trigger-multi__active').length).toEqual(3);
+      expect(queryAll('.dato-checkbox').length).toEqual(15);
+      expect(one.querySelector('input[type="checkbox"]')).toBeChecked();
+      expect(two.querySelector('input[type="checkbox"]')).toBeChecked();
+      expect(three.querySelector('input[type="checkbox"]')).toBeChecked();
+      expect(four.querySelector('input[type="checkbox"]')).not.toBeChecked();
+    }));
 
-    it(
-      'should remove items',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_MULTI_SELECTOR);
-        const [one] = getOptionsAsArray();
-        one.click();
-        tick(11);
-        host.detectChanges();
-        expect(host.hostComponent.control.value).toEqual([
-          {
-            id: 1,
-            label: 'Item 1'
-          }
-        ]);
-        expect(queryAll('.dato-trigger-multi__active').length).toEqual(1);
-        expect(one.querySelector('input[type="checkbox"]')).toBeChecked();
-        query('.dato-trigger-multi__active .dato-icon-close').click();
-        host.detectChanges();
-        expect(host.hostComponent.control.value).toEqual([]);
-        expect(queryAll('.dato-trigger-multi__active').length).toEqual(0);
-        expect(one.querySelector('input[type="checkbox"]')).not.toBeChecked();
-      })
-    );
+    it('should remove items', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_MULTI_SELECTOR);
+      const [one] = getOptionsAsArray();
+      one.click();
+      tick(11);
+      host.detectChanges();
+      expect(host.hostComponent.control.value).toEqual([
+        {
+          id: 1,
+          label: 'Item 1'
+        }
+      ]);
+      expect(queryAll('.dato-trigger-multi__active').length).toEqual(1);
+      expect(one.querySelector('input[type="checkbox"]')).toBeChecked();
+      query('.dato-trigger-multi__active .dato-icon-close').click();
+      host.detectChanges();
+      expect(host.hostComponent.control.value).toEqual([]);
+      expect(queryAll('.dato-trigger-multi__active').length).toEqual(0);
+      expect(one.querySelector('input[type="checkbox"]')).not.toBeChecked();
+    }));
 
-    it(
-      'should not remove when clicking the item and not the X',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_MULTI_SELECTOR);
-        const [one] = getOptionsAsArray();
-        one.click();
-        tick(11);
-        host.detectChanges();
-        expect(host.hostComponent.control.value).toEqual([
-          {
-            id: 1,
-            label: 'Item 1'
-          }
-        ]);
-        expect(queryAll('.dato-trigger-multi__active').length).toEqual(1);
-        expect(one.querySelector('input[type="checkbox"]')).toBeChecked();
-        query('.dato-trigger-multi__active').click();
-        host.detectChanges();
-        expect(host.hostComponent.control.value).toEqual([
-          {
-            id: 1,
-            label: 'Item 1'
-          }
-        ]);
-        expect(queryAll('.dato-trigger-multi__active').length).toEqual(1);
-        expect(one.querySelector('input[type="checkbox"]')).toBeChecked();
-      })
-    );
+    it('should not remove when clicking the item and not the X', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_MULTI_SELECTOR);
+      const [one] = getOptionsAsArray();
+      one.click();
+      tick(11);
+      host.detectChanges();
+      expect(host.hostComponent.control.value).toEqual([
+        {
+          id: 1,
+          label: 'Item 1'
+        }
+      ]);
+      expect(queryAll('.dato-trigger-multi__active').length).toEqual(1);
+      expect(one.querySelector('input[type="checkbox"]')).toBeChecked();
+      query('.dato-trigger-multi__active').click();
+      host.detectChanges();
+      expect(host.hostComponent.control.value).toEqual([
+        {
+          id: 1,
+          label: 'Item 1'
+        }
+      ]);
+      expect(queryAll('.dato-trigger-multi__active').length).toEqual(1);
+      expect(one.querySelector('input[type="checkbox"]')).toBeChecked();
+    }));
 
-    it(
-      'should set the items based on the form control',
-      fakeAsync(() => {
-        host = createHost(select);
-        expect(host.hostComponent.control.value).toEqual(null);
-        host.hostComponent.control.patchValue([
-          {
-            id: 1,
-            label: 'Item 1'
-          },
-          {
-            id: 2,
-            label: 'Item 2'
-          },
-          {
-            id: 3,
-            label: 'Item 3'
-          }
-        ]);
-        host.click(TRIGGER_MULTI_SELECTOR);
-        host.detectChanges();
-        const [one, two, three, four] = getOptionsAsArray();
-        expect(queryAll('.dato-trigger-multi__active').length).toEqual(3);
-        expect(queryAll('.dato-checkbox').length).toEqual(15);
-        expect(one.querySelector('input[type="checkbox"]')).toBeChecked();
-        expect(two.querySelector('input[type="checkbox"]')).toBeChecked();
-        expect(three.querySelector('input[type="checkbox"]')).toBeChecked();
-        expect(four.querySelector('input[type="checkbox"]')).not.toBeChecked();
-      })
-    );
+    it('should set the items based on the form control', fakeAsync(() => {
+      host = createHost(select);
+      expect(host.hostComponent.control.value).toEqual(null);
+      host.hostComponent.control.patchValue([
+        {
+          id: 1,
+          label: 'Item 1'
+        },
+        {
+          id: 2,
+          label: 'Item 2'
+        },
+        {
+          id: 3,
+          label: 'Item 3'
+        }
+      ]);
+      host.click(TRIGGER_MULTI_SELECTOR);
+      host.detectChanges();
+      const [one, two, three, four] = getOptionsAsArray();
+      expect(queryAll('.dato-trigger-multi__active').length).toEqual(3);
+      expect(queryAll('.dato-checkbox').length).toEqual(15);
+      expect(one.querySelector('input[type="checkbox"]')).toBeChecked();
+      expect(two.querySelector('input[type="checkbox"]')).toBeChecked();
+      expect(three.querySelector('input[type="checkbox"]')).toBeChecked();
+      expect(four.querySelector('input[type="checkbox"]')).not.toBeChecked();
+    }));
+  });
+
+  describe('Select Multi disabled options', () => {
+    let host: SpectatorWithHost<DatoSelectComponent, CustomHostComponent>;
+
+    const createHost = createHostFactory(CustomHostComponent);
+    const disableOptionsIncrementor = 3;
+    const select = `
+      <dato-select [formControl]="control" [dataSet]="options" #datoSelectSearch3 type="multi">
+
+        <dato-option *ngFor="let option of datoSelectSearch3.data;index as index" 
+        [disabled]="index % ${disableOptionsIncrementor} === 0"
+        [option]="option" multi>
+          {{option.label}}
+        </dato-option>
+
+      </dato-select>
+    `;
+
+    it('should be define', () => {
+      host = createHost(select);
+      expect(host.query(TRIGGER_MULTI_SELECTOR)).toBeDefined();
+    });
+
+    it('should hold disabledIDs in an array', () => {
+      host = createHost(select, false);
+      spyOn(host.component, 'setDisabledIDs').and.callThrough();
+      host.detectChanges();
+      expect(host.component.setDisabledIDs).toHaveBeenCalled();
+      expect(host.component.disabledIDs.length).toBe(host.component.options.length / disableOptionsIncrementor);
+      for (let i = 0; i < host.component.options.length; i += disableOptionsIncrementor) {
+        const optionID = host.component.options._results[i].option.id;
+        expect(host.component.disabledIDs).toContain(optionID);
+      }
+    });
   });
 
   describe('Select Group', () => {
@@ -589,26 +592,23 @@ describe('DatoSelect', () => {
       expect(host.query(TRIGGER_SINGLE_SELECTOR)).toBeDefined();
     });
 
-    it(
-      'should support groups',
-      fakeAsync(() => {
-        host = createHost(select);
-        tick(501);
-        host.click(TRIGGER_SINGLE_SELECTOR);
-        host.detectChanges();
-        tick(11);
-        const groups = queryAll(GROUP_SELECTOR);
-        expect(groups.length).toEqual(3);
-        expect(groups[0].querySelector('[groupLabel]')).toHaveText('Group A');
-        expect(groups[0].querySelectorAll(OPTION_SELECTOR).length).toEqual(3);
+    it('should support groups', fakeAsync(() => {
+      host = createHost(select);
+      tick(501);
+      host.click(TRIGGER_SINGLE_SELECTOR);
+      host.detectChanges();
+      tick(11);
+      const groups = queryAll(GROUP_SELECTOR);
+      expect(groups.length).toEqual(3);
+      expect(groups[0].querySelector('[groupLabel]')).toHaveText('Group A');
+      expect(groups[0].querySelectorAll(OPTION_SELECTOR).length).toEqual(3);
 
-        expect(groups[1].querySelector('[groupLabel]')).toHaveText('Group B');
-        expect(groups[1].querySelectorAll(OPTION_SELECTOR).length).toEqual(1);
+      expect(groups[1].querySelector('[groupLabel]')).toHaveText('Group B');
+      expect(groups[1].querySelectorAll(OPTION_SELECTOR).length).toEqual(1);
 
-        expect(groups[2].querySelector('[groupLabel]')).toHaveText('Group C');
-        expect(groups[2].querySelectorAll(OPTION_SELECTOR).length).toEqual(1);
-      })
-    );
+      expect(groups[2].querySelector('[groupLabel]')).toHaveText('Group C');
+      expect(groups[2].querySelectorAll(OPTION_SELECTOR).length).toEqual(1);
+    }));
   });
 
   describe('Disabled', () => {
@@ -710,47 +710,38 @@ describe('DatoSelect', () => {
       </dato-select>
     `;
 
-    it(
-      'should show save and cancel buttons',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_MULTI_SELECTOR);
-        flushMicrotasks();
-        host.detectChanges();
-        expect(query(`${DROPDOWN_SELECTOR} dato-link`)).toBeVisible();
-        expect(query(`${DROPDOWN_SELECTOR} dato-button`)).toBeVisible();
-      })
-    );
+    it('should show save and cancel buttons', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_MULTI_SELECTOR);
+      flushMicrotasks();
+      host.detectChanges();
+      expect(query(`${DROPDOWN_SELECTOR} dato-link`)).toBeVisible();
+      expect(query(`${DROPDOWN_SELECTOR} dato-button`)).toBeVisible();
+    }));
 
-    it(
-      'should close when clicking cancel',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_MULTI_SELECTOR);
-        tick();
-        host.detectChanges();
-        query(`${DROPDOWN_SELECTOR} dato-link`).click();
-        tick(301);
-        host.detectChanges();
-        expect(DROPDOWN_SELECTOR).not.toBeVisible();
-      })
-    );
+    it('should close when clicking cancel', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_MULTI_SELECTOR);
+      tick();
+      host.detectChanges();
+      query(`${DROPDOWN_SELECTOR} dato-link`).click();
+      tick(301);
+      host.detectChanges();
+      expect(DROPDOWN_SELECTOR).not.toBeVisible();
+    }));
 
-    it(
-      'should emit save when clicking save',
-      fakeAsync(() => {
-        host = createHost(select);
-        spyOn(host.hostComponent, 'save').and.callThrough();
-        host.click(TRIGGER_MULTI_SELECTOR);
-        tick();
-        host.detectChanges();
-        query(`${DROPDOWN_SELECTOR} dato-button`).click();
-        tick(301);
-        host.detectChanges();
-        expect(host.hostComponent.save).toHaveBeenCalledTimes(1);
-        expect(DROPDOWN_SELECTOR).not.toBeVisible();
-      })
-    );
+    it('should emit save when clicking save', fakeAsync(() => {
+      host = createHost(select);
+      spyOn(host.hostComponent, 'save').and.callThrough();
+      host.click(TRIGGER_MULTI_SELECTOR);
+      tick();
+      host.detectChanges();
+      query(`${DROPDOWN_SELECTOR} dato-button`).click();
+      tick(301);
+      host.detectChanges();
+      expect(host.hostComponent.save).toHaveBeenCalledTimes(1);
+      expect(DROPDOWN_SELECTOR).not.toBeVisible();
+    }));
   });
 
   describe('Custom Template', () => {
@@ -834,58 +825,49 @@ describe('DatoSelect', () => {
       </dato-select>
     `;
 
-    it(
-      'should show select all option',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_MULTI_SELECTOR);
-        flushMicrotasks();
-        host.detectChanges();
-        expect(query(`${DROPDOWN_SELECTOR} .dato-select__header`)).toBeVisible();
-      })
-    );
+    it('should show select all option', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_MULTI_SELECTOR);
+      flushMicrotasks();
+      host.detectChanges();
+      expect(query(`${DROPDOWN_SELECTOR} .dato-select__header`)).toBeVisible();
+    }));
 
-    it(
-      'should select all',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_MULTI_SELECTOR);
-        flushMicrotasks();
-        host.detectChanges();
-        query('.dato-select__header input[type="checkbox"]').click();
-        host.detectChanges();
-        expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).toBeChecked();
-        expect(host.hostComponent.control.value.length).toEqual(15);
-        expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(11);
-        query('.dato-select__header input[type="checkbox"]').click();
-        host.detectChanges();
-        expect(host.hostComponent.control.value.length).toEqual(0);
-        expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).not.toBeChecked();
-      })
-    );
+    it('should select all', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_MULTI_SELECTOR);
+      flushMicrotasks();
+      host.detectChanges();
+      query('.dato-select__header input[type="checkbox"]').click();
+      host.detectChanges();
+      expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).toBeChecked();
+      expect(host.hostComponent.control.value.length).toEqual(15);
+      expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(11);
+      query('.dato-select__header input[type="checkbox"]').click();
+      host.detectChanges();
+      expect(host.hostComponent.control.value.length).toEqual(0);
+      expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).not.toBeChecked();
+    }));
 
-    it(
-      'should unchecked the select all when one is not selected',
-      fakeAsync(() => {
-        host = createHost(select);
-        host.click(TRIGGER_MULTI_SELECTOR);
-        flushMicrotasks();
-        host.detectChanges();
-        query('.dato-select__header input[type="checkbox"]').click();
-        host.detectChanges();
-        expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).toBeChecked();
-        expect(query(`${DROPDOWN_SELECTOR} .dato-select__header`)).toHaveText('15/15');
-        expect(host.hostComponent.control.value.length).toEqual(15);
-        expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(11);
-        query(OPTION_SELECTOR).click();
-        tick(11);
-        host.detectChanges();
-        expect(host.hostComponent.control.value.length).toEqual(14);
-        expect(query(`${DROPDOWN_SELECTOR} .dato-select__header`)).toHaveText('14/15');
-        expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(11);
-        expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).not.toBeChecked();
-      })
-    );
+    it('should unchecked the select all when one is not selected', fakeAsync(() => {
+      host = createHost(select);
+      host.click(TRIGGER_MULTI_SELECTOR);
+      flushMicrotasks();
+      host.detectChanges();
+      query('.dato-select__header input[type="checkbox"]').click();
+      host.detectChanges();
+      expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).toBeChecked();
+      expect(query(`${DROPDOWN_SELECTOR} .dato-select__header`)).toHaveText('15/15');
+      expect(host.hostComponent.control.value.length).toEqual(15);
+      expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(11);
+      query(OPTION_SELECTOR).click();
+      tick(11);
+      host.detectChanges();
+      expect(host.hostComponent.control.value.length).toEqual(14);
+      expect(query(`${DROPDOWN_SELECTOR} .dato-select__header`)).toHaveText('14/15');
+      expect(host.queryAll('.dato-trigger-multi__active').length).toEqual(11);
+      expect(query(`${DROPDOWN_SELECTOR} .dato-select__header input[type="checkbox"]`)).not.toBeChecked();
+    }));
   });
 
   describe('Sizes', () => {

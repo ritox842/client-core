@@ -17,7 +17,7 @@ import { debounceTime, mapTo, take } from 'rxjs/operators';
 import { DatoSelectActiveDirective } from './select-active.directive';
 import { DatoSelectSearchStrategy, defaultClientSearchStrategy } from './search.strategy';
 import { Placement, PopperOptions } from 'popper.js';
-import { addClass, query, setStyle } from '../internal/helpers';
+import { query, setStyle } from '../internal/helpers';
 import { DatoOverlay, DatoTemplatePortal } from '../angular/overlay';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { DOWN_ARROW, ENTER, ESCAPE, UP_ARROW } from '@angular/cdk/keycodes';
@@ -27,7 +27,7 @@ import { zIndex } from '../internal/z-index';
 import { normalizeData } from '../internal/data-normalization';
 import { DatoAccordionComponent, DatoAccordionGroupComponent } from '../accordion/public_api';
 import { DatoGroupComponent } from '../options/group.component';
-import { ListGroupComponent, ListSearchResult } from '../list/list.types';
+import { ListGroupComponent } from '../list/list.types';
 
 const valueAccessor = {
   provide: NG_VALUE_ACCESSOR,

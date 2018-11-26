@@ -4,8 +4,8 @@ import { DatoInputComponent } from './input.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DatoDirectivesModule } from '../directives/directives.module';
 import { DatoIconModule } from '../icon/icon.module';
-import { IconRegistry } from '../..';
 import { fakeAsync, tick } from '@angular/core/testing';
+import { IconRegistry } from '../services/icon-registry';
 
 @Component({ selector: 'custom-host', template: '' })
 class CustomHostComponent {
@@ -40,14 +40,11 @@ describe('DatoInputComponent', () => {
     expect(host.query('input')).toHaveAttr({ attr: 'placeholder', val: 'Search' });
   });
 
-  it(
-    'should support autofocus',
-    fakeAsync(() => {
-      host = createHost(`<dato-input [formControl]="control" [isFocused]="true"></dato-input>`);
-      tick(0);
-      expect(host.query('input')).toBeFocused();
-    })
-  );
+  it('should support autofocus', fakeAsync(() => {
+    host = createHost(`<dato-input [formControl]="control" [isFocused]="true"></dato-input>`);
+    tick(0);
+    expect(host.query('input')).toBeFocused();
+  }));
 
   it('should update the control', () => {
     host = createHost(`<dato-input [formControl]="control"></dato-input>`);
@@ -87,14 +84,11 @@ describe('DatoInputComponent', () => {
     expect(host.query('input')).toHaveValue('');
   });
 
-  it(
-    'should support debounce',
-    fakeAsync(() => {
-      host = createHost(`<dato-input [formControl]="control" [debounceTime]="300"></dato-input>`);
-      host.typeInElement('hello', 'input');
-      tick(300);
-      expect(host.hostComponent.control.value).toBe('hello');
-      expect(host.query('input')).toHaveValue('hello');
-    })
-  );
+  it('should support debounce', fakeAsync(() => {
+    host = createHost(`<dato-input [formControl]="control" [debounceTime]="300"></dato-input>`);
+    host.typeInElement('hello', 'input');
+    tick(300);
+    expect(host.hostComponent.control.value).toBe('hello');
+    expect(host.query('input')).toHaveValue('hello');
+  }));
 });

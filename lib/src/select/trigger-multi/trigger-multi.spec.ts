@@ -69,7 +69,6 @@ describe('DatoTriggerMulti', () => {
         const currentElement = elements[i];
         const currentOption = host.component.options[i];
         if (!host.component.isDisabled(currentOption)) {
-          debugger;
           const closeIconElement = currentElement.getElementsByTagName('dato-icon')[0];
           expect(closeIconElement.style.visibility).not.toEqual('hidden');
         }

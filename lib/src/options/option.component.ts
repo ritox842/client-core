@@ -9,6 +9,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { getOptionTemplate } from './option-template';
+import { TranslatePipe } from '../../../playground/src/app/translate.pipe';
 
 @Component({
   selector: 'dato-option:not([multi])',
@@ -88,7 +89,7 @@ export class DatoOptionComponent implements OnInit {
 
   click$ = fromEvent(this.element, 'click');
 
-  constructor(protected cdr: ChangeDetectorRef, protected host: ElementRef) {}
+  constructor(protected cdr: ChangeDetectorRef, protected host: ElementRef, private translate: TranslatePipe) {}
 
   ngOnInit() {
     this.cdr.detach();
@@ -126,7 +127,7 @@ export class DatoOptionComponent implements OnInit {
 
   getOptionTooltip() {
     if (this.disabled) {
-      return this.active ? 'This item cannot be removed' : 'This item cannot be selected';
+      return this.translate.transform(this.active ? 'This item cannot be removed' : 'This item cannot be selected');
     }
   }
 }

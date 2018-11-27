@@ -124,10 +124,4 @@ export class DatoOptionComponent implements OnInit {
       this.detectChanges();
     }
   }
-
-  getOptionTooltip() {
-    if (this.disabled) {
-      return this.translate.transform(this.active ? 'This item cannot be removed' : 'This item cannot be selected');
-    }
-  }
 }

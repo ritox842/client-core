@@ -18,10 +18,6 @@ export function getOptionTemplate(isMulti = false) {
          dato-select__option--simple 
          dato-select__option--hover"
          [class.force-hide]="hide"
-         [datoTooltip]="getOptionTooltip()"
-         [datoTooltipDisabled]="!disabled"
-         datoTooltipPosition="right"
-         [datoTooltipOverflow]="true"
          ${isMulti ? '' : '[class.dato-option--active]="active"'}
          [class.dato-option--keyboard-active]="activeByKeyboard"
          >

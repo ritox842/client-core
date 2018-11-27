@@ -33,29 +33,8 @@ export class SelectPreviewComponent implements OnInit {
   options = [];
   optionsFromServer;
   infiniteOptions = [];
-  dayOfWeekOptions = [
-    { value: 1, label: 'Sunday' },
-    { value: 2, label: 'Monday' },
-    { value: 3, label: 'Tuesday' },
-    {
-      value: 4,
-      label: 'Wednesday'
-    },
-    { value: 5, label: 'Thursday' },
-    { value: 6, label: 'Friday' },
-    { value: 7, label: 'Saturday' }
-  ];
-  flattenedOptions = [
-    { id: 1, label: 'abc', group: 'A' },
-    { id: 2, label: 'efg', group: 'A' },
-    {
-      id: 3,
-      label: 'hij',
-      group: 'A'
-    },
-    { id: 4, label: 'klm', group: 'B' },
-    { id: 5, label: 'nop', group: 'C' }
-  ];
+  dayOfWeekOptions = [{ value: 1, label: 'Sunday' }, { value: 2, label: 'Monday' }, { value: 3, label: 'Tuesday' }, { value: 4, label: 'Wednesday' }, { value: 5, label: 'Thursday' }, { value: 6, label: 'Friday' }, { value: 7, label: 'Saturday' }];
+  flattenedOptions = [{ id: 1, label: 'abc', group: 'A' }, { id: 2, label: 'efg', group: 'A' }, { id: 3, label: 'hij', group: 'A' }, { id: 4, label: 'klm', group: 'B' }, { id: 5, label: 'nop', group: 'C' }];
   frequencyForm: FormGroup;
   dayOfWeek;
   dynamic;

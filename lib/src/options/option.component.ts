@@ -9,7 +9,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { getOptionTemplate } from './option-template';
-import { TranslatePipe } from '../../../playground/src/app/translate.pipe';
 
 @Component({
   selector: 'dato-option:not([multi])',
@@ -89,7 +88,7 @@ export class DatoOptionComponent implements OnInit {
 
   click$ = fromEvent(this.element, 'click');
 
-  constructor(protected cdr: ChangeDetectorRef, protected host: ElementRef, private translate: TranslatePipe) {}
+  constructor(protected cdr: ChangeDetectorRef, protected host: ElementRef) {}
 
   ngOnInit() {
     this.cdr.detach();

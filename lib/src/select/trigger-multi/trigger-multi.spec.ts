@@ -23,7 +23,7 @@ describe('DatoTriggerMulti', () => {
     imports: [DatoIconModule, DatoInputModule, DatoDirectivesModule, ReactiveFormsModule]
   });
 
-  fdescribe('With disabledIDs', () => {
+  describe('With disabledIDs', () => {
     const options = generateOptions();
     const disableOptionsIncrementor = 3;
     const disabledIDs = [];

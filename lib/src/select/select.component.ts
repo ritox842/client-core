@@ -860,11 +860,11 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    */
   private setDisabledIDs() {
     this.disabledIDs = [];
-    this.options._results.forEach(optionComponent => {
+    for (const optionComponent of this.options._results) {
       if (optionComponent.disabled) {
         this.disabledIDs.push(optionComponent.option.id);
       }
-    });
+    }
   }
 
   /**

@@ -38,7 +38,7 @@ export class DatoTriggerMulti implements OnInit {
   control: FormControl;
 
   @Input()
-  disabledIDs: (string | number)[] = [];
+  disabledIDs: any;
   /**
    *
    * @type {string}
@@ -209,14 +209,6 @@ export class DatoTriggerMulti implements OnInit {
   ngAfterViewInit() {
     const SPACES = 100;
     this.maxActiveElementWidth = `${this.host.nativeElement.getBoundingClientRect().width - SPACES}px`;
-  }
-
-  /**
-   * Check if given option id exist in disabledIDs array.
-   * @param option
-   */
-  isDisabled(option) {
-    return this.disabledIDs.indexOf(option.id) !== -1;
   }
 
   private setRestCount() {

@@ -162,6 +162,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
         this.subscribeToOptionClick(this.options);
         this.markAsActive(this._model);
       });
+      this.setDisabledIDs();
     }
 
     this._dataIsDirty = true;
@@ -290,7 +291,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   _checked;
 
   /*Holds all disabled options ID's**/
-  disabledIDs: (string | number)[];
+  disabledIDs: any;
 
   /** true until ngOnInit */
   private initialRun = true;
@@ -859,10 +860,10 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
    * all disabled option ID's
    */
   private setDisabledIDs() {
-    this.disabledIDs = [];
+    this.disabledIDs = {};
     for (const optionComponent of this.options._results) {
       if (optionComponent.disabled) {
-        this.disabledIDs.push(optionComponent.option.id);
+        this.disabledIDs[optionComponent.option.id] = true;
       }
     }
   }

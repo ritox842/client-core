@@ -8,7 +8,7 @@
 
 import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { last } from '@datorama/utils';
+import { isNil, last } from '@datorama/utils';
 import { defaultOptionsDisplayLimit } from '../select.types';
 import { TranslatePipe } from '../../../../playground/src/app/translate.pipe';
 
@@ -38,7 +38,7 @@ export class DatoTriggerMulti implements OnInit {
   control: FormControl;
 
   @Input()
-  disabledIDs: any;
+  disabledIDs: { [id: string]: boolean };
   /**
    *
    * @type {string}
@@ -73,14 +73,17 @@ export class DatoTriggerMulti implements OnInit {
 
   @Input()
   set options(value: any[]) {
-    this._options = value.map(option => {
-      return {
-        ...option,
-        [this.labelKey]: this.translate.transform(option[this.labelKey])
-      };
-    });
+    if (!isNil(value)) {
+      this._options = value.map(option => {
+        return {
+          ...option,
+          [this.labelKey]: this.translate.transform(option[this.labelKey])
+        };
+      });
+    }
     this.setRestCount();
   }
+
   get options(): any[] {
     return this._options;
   }

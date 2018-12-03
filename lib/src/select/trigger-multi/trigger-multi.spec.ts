@@ -2,6 +2,7 @@ import { createHostComponentFactory, SpectatorWithHost } from '@netbasal/spectat
 import { DatoDirectivesModule, DatoIconModule, DatoInputModule, DatoTranslateService, DatoTriggerMulti, IconRegistry } from '../../../public_api';
 import { TranslatePipe } from '../../../../playground/src/app/translate.pipe';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { isNil } from '@datorama/utils';
 
 function generateOptions() {
   const arr = [];
@@ -53,7 +54,7 @@ describe('DatoTriggerMulti', () => {
       for (let i = 0; i < elements.length; i++) {
         const currentElement = elements[i];
         const currentOption = host.component.options[i];
-        if (host.component.isDisabled(currentOption)) {
+        if (disabledIDs[currentOption.id]) {
           const closeIconElement = currentElement.getElementsByTagName('dato-icon')[0];
           expect(closeIconElement.style.visibility).toEqual('hidden');
         }
@@ -68,7 +69,7 @@ describe('DatoTriggerMulti', () => {
       for (let i = 0; i < elements.length; i++) {
         const currentElement = elements[i];
         const currentOption = host.component.options[i];
-        if (!host.component.isDisabled(currentOption)) {
+        if (isNil(disabledIDs[currentOption.id])) {
           const closeIconElement = currentElement.getElementsByTagName('dato-icon')[0];
           expect(closeIconElement.style.visibility).not.toEqual('hidden');
         }

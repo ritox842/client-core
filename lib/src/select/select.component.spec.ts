@@ -14,6 +14,7 @@ import { Subject, timer } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { DatoDirectivesModule } from '../directives/directives.module';
 import { TranslatePipe } from '../../../playground/src/app/translate.pipe';
+import { size } from '@datorama/utils';
 
 function generateOptions() {
   const arr = [];
@@ -559,10 +560,10 @@ describe('DatoSelect', () => {
       spyOn(host.component, 'setDisabledIDs').and.callThrough();
       host.detectChanges();
       expect(host.component.setDisabledIDs).toHaveBeenCalled();
-      expect(host.component.disabledIDs.length).toBe(host.component.options.length / disableOptionsIncrementor);
+      expect(size(host.component.disabledIDs)).toBe(host.component.options.length / disableOptionsIncrementor);
       for (let i = 0; i < host.component.options.length; i += disableOptionsIncrementor) {
         const optionID = host.component.options._results[i].option.id;
-        expect(host.component.disabledIDs).toContain(optionID);
+        expect(host.component.disabledIDs[optionID]).toBeDefined();
       }
     });
   });

@@ -291,7 +291,7 @@ export class DatoSelectComponent extends BaseCustomControl implements OnInit, On
   _checked;
 
   /*Holds all disabled options ID's**/
-  disabledIDs: any;
+  disabledIDs: { [id: string]: boolean };
 
   /** true until ngOnInit */
   private initialRun = true;

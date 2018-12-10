@@ -561,8 +561,9 @@ describe('DatoSelect', () => {
       host.detectChanges();
       expect(host.component.setDisabledIDs).toHaveBeenCalled();
       expect(size(host.component.disabledIDs)).toBe(host.component.options.length / disableOptionsIncrementor);
+      const optionComponents = host.component.options.toArray();
       for (let i = 0; i < host.component.options.length; i += disableOptionsIncrementor) {
-        const optionID = host.component.options._results[i].option.id;
+        const optionID = optionComponents[i].option.id;
         expect(host.component.disabledIDs[optionID]).toBeDefined();
       }
     });

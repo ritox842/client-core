@@ -222,8 +222,10 @@ dato-trigger-multi {
       cursor: pointer;
       transform: translateX(3px);
       margin-left: 10px;
+      &.visible-hidden {
+        visibility: hidden;
+      }
     }
-
   }
 
   .dato-multi-search {

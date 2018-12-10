@@ -10,7 +10,7 @@
           [datoTooltipOnTextOverflow]="true">{{option[labelKey]}}</span>
 
         <dato-icon class="d-flex-no-shrink" datoIcon="close"
-                   [style.visibility]="disabledIDs[option.id] ? 'hidden' : 'inherit'"
+                   [class.visible-hidden]="disabledIDs[option.id]"
                    (click)="remove(option); removeFocus($event)"></dato-icon>
 
     </div>
